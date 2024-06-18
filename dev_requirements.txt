@@ -1,0 +1,7 @@
+-e .
+
+# dev
+openapi-python-client>=0.20,<0.21
+pre-commit
+mypy
+ruff
