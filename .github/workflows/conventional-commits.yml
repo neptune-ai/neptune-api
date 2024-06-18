@@ -1,12 +1,19 @@
-name: Conventional Commits PR Title
+name: Check PR title
 
 on:
-  pull_request:
-    types: [opened, reopened, synchronize, edited, ready_for_review]
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
 
 jobs:
-  conventional-commits:
+  lint:
     runs-on: ubuntu-latest
+    permissions:
+      statuses: write
     steps:
-      - name: Conventional Commits
-        uses: crqra/conventional-commits-action@1.0.0
+      - uses: aslafy-z/conventional-pr-title-action@v3.2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

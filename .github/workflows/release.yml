@@ -14,7 +14,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
           running-workflow-name: 'wait-for-green-main'
-          repo-token: ${{ secrets.PAT }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 60
 
   build-package:
