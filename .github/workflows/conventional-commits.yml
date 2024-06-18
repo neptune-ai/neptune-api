@@ -1,0 +1,12 @@
+name: Conventional Commits PR Title
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+
+jobs:
+  conventional-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conventional Commits
+        uses: crqra/conventional-commits-action@1.0.0
