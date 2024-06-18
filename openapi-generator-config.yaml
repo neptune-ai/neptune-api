@@ -4,5 +4,6 @@ package_version_override: 0.1.0
 post_hooks:
    - "ruff check . --fix"
    - "ruff format ."
+   - "isort ."
 content_type_overrides:
   application/x-protobuf: application/json
