@@ -13,8 +13,11 @@ class UnexpectedStatus(Exception):
         )
 
 
-class NeptuneInvalidApiTokenException(Exception):
-    pass
+class InvalidApiTokenException(Exception):
+    """Raised when the api token is invalid"""
+
+    def __init__(self) -> None:
+        super().__init__("Invalid API token")
 
 
-__all__ = ["UnexpectedStatus", "NeptuneInvalidApiTokenException"]
+__all__ = ["UnexpectedStatus", "InvalidApiTokenException"]
