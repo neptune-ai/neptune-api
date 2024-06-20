@@ -21,7 +21,7 @@ DECODING_OPTIONS = {
 
 @define
 class OAuthToken:
-    _expiration_time: float = field(default=None, alias="expiration_time", kw_only=True)
+    _expiration_time: float = field(default=0.0, alias="expiration_time", kw_only=True)
     access_token: str
     refresh_token: str
 
