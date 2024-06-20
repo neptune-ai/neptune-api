@@ -176,6 +176,8 @@ class AuthenticatedClient:
             argument to the constructor.
     """
 
+    # TODO: Update docstring
+
     raise_on_unexpected_status: bool = field(default=False, kw_only=True)
     _base_url: str = field(alias="base_url")
     _cookies: Dict[str, str] = field(factory=dict, kw_only=True, alias="cookies")
