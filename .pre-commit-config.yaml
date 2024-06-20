@@ -29,5 +29,6 @@ repos:
         additional_dependencies:
           - attrs
           - httpx
+          - types-PyJWT
 default_language_version:
     python: python3

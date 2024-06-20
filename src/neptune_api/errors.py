@@ -13,4 +13,8 @@ class UnexpectedStatus(Exception):
         )
 
 
-__all__ = ["UnexpectedStatus"]
+class NeptuneInvalidApiTokenException(Exception):
+    pass
+
+
+__all__ = ["UnexpectedStatus", "NeptuneInvalidApiTokenException"]

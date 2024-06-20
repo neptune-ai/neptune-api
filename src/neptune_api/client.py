@@ -1,7 +1,10 @@
 import ssl
+import threading
 from typing import (
     Any,
+    Callable,
     Dict,
+    Generator,
     Optional,
     Union,
 )
@@ -12,6 +15,9 @@ from attrs import (
     evolve,
     field,
 )
+
+from neptune_api.credentials import Credentials
+from neptune_api.oauth_token import OAuthToken
 
 
 @define
@@ -143,36 +149,6 @@ class Client:
 
 @define
 class AuthenticatedClient:
-    """A Client which has been authenticated for use on secured endpoints
-
-    The following are accepted as keyword arguments and will be used to construct httpx Clients internally:
-
-        ``base_url``: The base URL for the API, all requests are made to a relative path to this URL
-
-        ``cookies``: A dictionary of cookies to be sent with every request
-
-        ``headers``: A dictionary of headers to be sent with every request
-
-        ``timeout``: The maximum amount of a time a request can take. API functions will raise
-        httpx.TimeoutException if this is exceeded.
-
-        ``verify_ssl``: Whether or not to verify the SSL certificate of the API server. This should be True in production,
-        but can be set to False for testing purposes.
-
-        ``follow_redirects``: Whether or not to follow redirects. Default value is False.
-
-        ``httpx_args``: A dictionary of additional arguments to be passed to the ``httpx.Client`` and ``httpx.AsyncClient`` constructor.
-
-
-    Attributes:
-        raise_on_unexpected_status: Whether or not to raise an errors.UnexpectedStatus if the API returns a
-            status code that was not documented in the source OpenAPI document. Can also be provided as a keyword
-            argument to the constructor.
-        token: The token to use for authentication
-        prefix: The prefix to use for the Authorization header
-        auth_header_name: The name of the Authorization header
-    """
-
     raise_on_unexpected_status: bool = field(default=False, kw_only=True)
     _base_url: str = field(alias="base_url")
     _cookies: Dict[str, str] = field(factory=dict, kw_only=True, alias="cookies")
@@ -183,8 +159,13 @@ class AuthenticatedClient:
     _httpx_args: Dict[str, Any] = field(factory=dict, kw_only=True, alias="httpx_args")
     _client: Optional[httpx.Client] = field(default=None, init=False)
     _async_client: Optional[httpx.AsyncClient] = field(default=None, init=False)
+    _token_factory: Callable[[Credentials, Client], OAuthToken] = field(
+        default=None, kw_only=True, alias="token_factory"
+    )
 
-    token: str
+    credentials: Credentials
+    openid_discovery: str
+    client_id: str
     prefix: str = "Bearer"
     auth_header_name: str = "Authorization"
 
@@ -223,9 +204,14 @@ class AuthenticatedClient:
     def get_httpx_client(self) -> httpx.Client:
         """Get the underlying httpx.Client, constructing a new one if not previously set"""
         if self._client is None:
-            self._headers[self.auth_header_name] = f"{self.prefix} {self.token}" if self.prefix else self.token
             self._client = httpx.Client(
                 base_url=self._base_url,
+                auth=NeptuneAuthenticator(
+                    credentials=self.credentials,
+                    client_id=self.client_id,
+                    openid_discovery=self.openid_discovery,
+                    token_factory=self._token_factory,
+                ),
                 cookies=self._cookies,
                 headers=self._headers,
                 timeout=self._timeout,
@@ -255,7 +241,7 @@ class AuthenticatedClient:
     def get_async_httpx_client(self) -> httpx.AsyncClient:
         """Get the underlying httpx.AsyncClient, constructing a new one if not previously set"""
         if self._async_client is None:
-            self._headers[self.auth_header_name] = f"{self.prefix} {self.token}" if self.prefix else self.token
+            # TODO: Implement it properly
             self._async_client = httpx.AsyncClient(
                 base_url=self._base_url,
                 cookies=self._cookies,
@@ -275,3 +261,90 @@ class AuthenticatedClient:
     async def __aexit__(self, *args: Any, **kwargs: Any) -> None:
         """Exit a context manager for underlying httpx.AsyncClient (see httpx docs)"""
         await self.get_async_httpx_client().__aexit__(*args, **kwargs)
+
+
+class NeptuneAuthenticator(httpx.Auth):
+    __LOCK = threading.RLock()
+
+    def __init__(
+        self,
+        credentials: Credentials,
+        client_id: str,
+        openid_discovery: str,
+        token_factory: Callable[[Credentials, Client], OAuthToken],
+    ):
+        self._credentials: Credentials = credentials
+        self._client_id: str = client_id
+        self._openid_discovery: str = openid_discovery
+        self._token_factory: Callable[[Credentials, Client], OAuthToken] = token_factory
+
+        # TODO: SSL verify flag, follow redirects
+        self._client = Client(base_url=credentials.base_url)
+        self._token: Optional[OAuthToken] = None
+
+    def __enter__(self) -> "NeptuneAuthenticator":
+        self._client.__enter__()
+        return self
+
+    def __exit__(self, *args: Any, **kwargs: Any) -> None:
+        self._client.__exit__(args, kwargs)
+
+    def _refresh_token(self) -> None:
+        with self.__LOCK:
+            print("Refreshing token")
+            if self._token is not None:
+                # TODO: Cache
+                urls = get_urls(client=self._client, openid_discovery_url=self._openid_discovery)
+                self._token = update_token(
+                    client=self._client,
+                    existing_token=self._token,
+                    client_id=self._client_id,
+                    token_endpoint=urls.token_endpoint,
+                )
+
+            if self._token is None:
+                self._token = self._token_factory(self._credentials, self._client)
+
+    def _refresh_token_if_expired(self) -> None:
+        if self._token is None or self._token.is_expired:
+            self._refresh_token()
+
+    def auth_flow(self, request: httpx.Request) -> Generator[httpx.Request, httpx.Response, None]:
+        self._refresh_token_if_expired()
+
+        if self._token is not None:
+            request.headers["Authorization"] = f"Bearer {self._token.access_token}"
+
+        yield request
+
+
+@define
+class TokenRefreshingURLs:
+    authorization_endpoint: str
+    token_endpoint: str
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "TokenRefreshingURLs":
+        return TokenRefreshingURLs(
+            authorization_endpoint=data["authorization_endpoint"], token_endpoint=data["token_endpoint"]
+        )
+
+
+def get_urls(client: Client, openid_discovery_url: str) -> TokenRefreshingURLs:
+    response = client.get_httpx_client().get(openid_discovery_url)
+    return TokenRefreshingURLs.from_dict(response.json())
+
+
+def update_token(client: Client, existing_token: OAuthToken, client_id: str, token_endpoint: str) -> OAuthToken:
+    response = client.get_httpx_client().post(
+        token_endpoint,
+        data={
+            "grant_type": "refresh_token",
+            "refresh_token": existing_token.refresh_token,
+            "client_id": client_id,
+            "expires_in": existing_token.seconds_left,
+        },
+    )
+    data = response.json()
+
+    return OAuthToken.from_tokens(access=data["access_token"], refresh=data["refresh_token"])
