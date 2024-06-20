@@ -164,7 +164,7 @@ class AuthenticatedClient:
     )
 
     credentials: Credentials
-    openid_discovery: str
+    token_endpoint: str
     client_id: str
     prefix: str = "Bearer"
     auth_header_name: str = "Authorization"
@@ -209,7 +209,7 @@ class AuthenticatedClient:
                 auth=NeptuneAuthenticator(
                     credentials=self.credentials,
                     client_id=self.client_id,
-                    openid_discovery=self.openid_discovery,
+                    token_endpoint=self.token_endpoint,
                     token_factory=self._token_factory,
                 ),
                 cookies=self._cookies,
@@ -270,15 +270,15 @@ class NeptuneAuthenticator(httpx.Auth):
         self,
         credentials: Credentials,
         client_id: str,
-        openid_discovery: str,
+        token_endpoint: str,
         token_factory: Callable[[Credentials, Client], OAuthToken],
     ):
         self._credentials: Credentials = credentials
         self._client_id: str = client_id
-        self._openid_discovery: str = openid_discovery
+        self._token_endpoint: str = token_endpoint
         self._token_factory: Callable[[Credentials, Client], OAuthToken] = token_factory
 
-        # TODO: SSL verify flag, follow redirects
+        # TODO: SSL verify flag, follow redirects, how to get rid of this?
         self._client = Client(base_url=credentials.base_url)
         self._token: Optional[OAuthToken] = None
 
@@ -293,13 +293,11 @@ class NeptuneAuthenticator(httpx.Auth):
         with self.__LOCK:
             print("Refreshing token")
             if self._token is not None:
-                # TODO: Cache
-                urls = get_urls(client=self._client, openid_discovery_url=self._openid_discovery)
                 self._token = update_token(
                     client=self._client,
                     existing_token=self._token,
                     client_id=self._client_id,
-                    token_endpoint=urls.token_endpoint,
+                    token_endpoint=self._token_endpoint,
                 )
 
             if self._token is None:
@@ -316,23 +314,6 @@ class NeptuneAuthenticator(httpx.Auth):
             request.headers["Authorization"] = f"Bearer {self._token.access_token}"
 
         yield request
-
-
-@define
-class TokenRefreshingURLs:
-    authorization_endpoint: str
-    token_endpoint: str
-
-    @classmethod
-    def from_dict(cls, data: dict) -> "TokenRefreshingURLs":
-        return TokenRefreshingURLs(
-            authorization_endpoint=data["authorization_endpoint"], token_endpoint=data["token_endpoint"]
-        )
-
-
-def get_urls(client: Client, openid_discovery_url: str) -> TokenRefreshingURLs:
-    response = client.get_httpx_client().get(openid_discovery_url)
-    return TokenRefreshingURLs.from_dict(response.json())
 
 
 def update_token(client: Client, existing_token: OAuthToken, client_id: str, token_endpoint: str) -> OAuthToken:
