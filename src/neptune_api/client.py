@@ -318,16 +318,31 @@ class NeptuneAuthenticator(httpx.Auth):
     def __exit__(self, *args: Any, **kwargs: Any) -> None:
         self._client.__exit__(args, kwargs)
 
+    # TODO: Better name
+    def _update_token(self) -> None:
+        if self._token is None:
+            # TODO: Better error handling
+            raise ValueError("Token is not set")
+
+        response = self._client.get_httpx_client().post(
+            url=self._token_endpoint,
+            data={
+                "grant_type": "refresh_token",
+                "refresh_token": self._token.refresh_token,
+                "client_id": self._client_id,
+                "expires_in": self._token.seconds_left,
+            },
+        )
+        # TODO: Error handling
+        data = response.json()
+
+        self._token = OAuthToken.from_tokens(access=data["access_token"], refresh=data["refresh_token"])
+
     def _refresh_token(self) -> None:
         with self.__LOCK:
-            print("Refreshing token")
+            # TODO: Add logging
             if self._token is not None:
-                self._token = update_token(
-                    client=self._client,
-                    existing_token=self._token,
-                    client_id=self._client_id,
-                    token_endpoint=self._token_endpoint,
-                )
+                self._update_token()
 
             if self._token is None:
                 self._token = self._token_factory(self._credentials, self._client)
@@ -343,18 +358,3 @@ class NeptuneAuthenticator(httpx.Auth):
             request.headers["Authorization"] = f"Bearer {self._token.access_token}"
 
         yield request
-
-
-def update_token(client: Client, existing_token: OAuthToken, client_id: str, token_endpoint: str) -> OAuthToken:
-    response = client.get_httpx_client().post(
-        token_endpoint,
-        data={
-            "grant_type": "refresh_token",
-            "refresh_token": existing_token.refresh_token,
-            "client_id": client_id,
-            "expires_in": existing_token.seconds_left,
-        },
-    )
-    data = response.json()
-
-    return OAuthToken.from_tokens(access=data["access_token"], refresh=data["refresh_token"])
