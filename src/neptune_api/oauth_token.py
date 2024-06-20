@@ -32,6 +32,7 @@ class OAuthToken:
             decoded_token = jwt.decode(access, options=DECODING_OPTIONS)
             expiration_time = float(decoded_token["exp"])
         except (jwt.ExpiredSignatureError, jwt.InvalidTokenError, KeyError):
+            # TODO: Better error handling
             expiration_time = 0.0
 
         return OAuthToken(access_token=access, refresh_token=refresh, expiration_time=expiration_time)
