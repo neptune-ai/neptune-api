@@ -149,7 +149,7 @@ class Client:
 
 @define
 class AuthenticatedClient:
-    """A class for keeping track of data related to the API
+    """A Client which has been authenticated for use on secured endpoints
 
     The following are accepted as keyword arguments and will be used to construct httpx Clients internally:
 
