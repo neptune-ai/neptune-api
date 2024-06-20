@@ -149,6 +149,33 @@ class Client:
 
 @define
 class AuthenticatedClient:
+    """A class for keeping track of data related to the API
+
+    The following are accepted as keyword arguments and will be used to construct httpx Clients internally:
+
+        ``base_url``: The base URL for the API, all requests are made to a relative path to this URL
+
+        ``cookies``: A dictionary of cookies to be sent with every request
+
+        ``headers``: A dictionary of headers to be sent with every request
+
+        ``timeout``: The maximum amount of a time a request can take. API functions will raise
+        httpx.TimeoutException if this is exceeded.
+
+        ``verify_ssl``: Whether or not to verify the SSL certificate of the API server. This should be True in production,
+        but can be set to False for testing purposes.
+
+        ``follow_redirects``: Whether or not to follow redirects. Default value is False.
+
+        ``httpx_args``: A dictionary of additional arguments to be passed to the ``httpx.Client`` and ``httpx.AsyncClient`` constructor.
+
+
+    Attributes:
+        raise_on_unexpected_status: Whether or not to raise an errors.UnexpectedStatus if the API returns a
+            status code that was not documented in the source OpenAPI document. Can also be provided as a keyword
+            argument to the constructor.
+    """
+
     raise_on_unexpected_status: bool = field(default=False, kw_only=True)
     _base_url: str = field(alias="base_url")
     _cookies: Dict[str, str] = field(factory=dict, kw_only=True, alias="cookies")
