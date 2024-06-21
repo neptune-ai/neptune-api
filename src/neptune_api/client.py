@@ -174,9 +174,13 @@ class AuthenticatedClient:
         raise_on_unexpected_status: Whether or not to raise an errors.UnexpectedStatus if the API returns a
             status code that was not documented in the source OpenAPI document. Can also be provided as a keyword
             argument to the constructor.
+        credentials: User credentials for authentication.
+        token_endpoint: Token refreshing endpoint url
+        client_id: Client identifier for the OAuth application.
+        token_factory: The Neptune API Token exchange function
+        prefix: The prefix to use for the Authorization header
+        auth_header_name: The name of the Authorization header
     """
-
-    # TODO: Update docstring
 
     raise_on_unexpected_status: bool = field(default=False, kw_only=True)
     _base_url: str = field(alias="base_url")
@@ -188,13 +192,11 @@ class AuthenticatedClient:
     _httpx_args: Dict[str, Any] = field(factory=dict, kw_only=True, alias="httpx_args")
     _client: Optional[httpx.Client] = field(default=None, init=False)
     _async_client: Optional[httpx.AsyncClient] = field(default=None, init=False)
-    _token_factory: Callable[[Credentials, Client], OAuthToken] = field(
-        default=None, kw_only=True, alias="token_factory"
-    )
 
     credentials: Credentials
     token_endpoint: str
     client_id: str
+    token_factory: Callable[[Client, Credentials], OAuthToken]
     prefix: str = "Bearer"
     auth_header_name: str = "Authorization"
 
@@ -234,13 +236,22 @@ class AuthenticatedClient:
         """Get the underlying httpx.Client, constructing a new one if not previously set"""
         if self._client is None:
             self._client = httpx.Client(
-                base_url=self._base_url,
                 auth=NeptuneAuthenticator(
                     credentials=self.credentials,
                     client_id=self.client_id,
                     token_endpoint=self.token_endpoint,
-                    token_factory=self._token_factory,
+                    token_factory=self.token_factory,
+                    httpx_args={
+                        "base_url": self.credentials.base_url,
+                        "cookies": self._cookies,
+                        "headers": self._headers,
+                        "timeout": self._timeout,
+                        "verify_ssl": self._verify_ssl,
+                        "follow_redirects": self._follow_redirects,
+                        **self._httpx_args,
+                    },
                 ),
+                base_url=self._base_url,
                 cookies=self._cookies,
                 headers=self._headers,
                 timeout=self._timeout,
@@ -300,15 +311,15 @@ class NeptuneAuthenticator(httpx.Auth):
         credentials: Credentials,
         client_id: str,
         token_endpoint: str,
-        token_factory: Callable[[Credentials, Client], OAuthToken],
+        token_factory: Callable[[Client, Credentials], OAuthToken],
+        httpx_args: Dict[str, Any],
     ):
         self._credentials: Credentials = credentials
         self._client_id: str = client_id
         self._token_endpoint: str = token_endpoint
-        self._token_factory: Callable[[Credentials, Client], OAuthToken] = token_factory
+        self._token_factory: Callable[[Client, Credentials], OAuthToken] = token_factory
 
-        # TODO: SSL verify flag, follow redirects, how to get rid of this?
-        self._client = Client(base_url=credentials.base_url)
+        self._client = Client(**httpx_args)
         self._token: Optional[OAuthToken] = None
 
     def __enter__(self) -> "NeptuneAuthenticator":
@@ -318,8 +329,7 @@ class NeptuneAuthenticator(httpx.Auth):
     def __exit__(self, *args: Any, **kwargs: Any) -> None:
         self._client.__exit__(args, kwargs)
 
-    # TODO: Better name
-    def _update_token(self) -> None:
+    def _refresh_existing_token(self) -> None:
         if self._token is None:
             # TODO: Better error handling
             raise ValueError("Token is not set")
@@ -342,10 +352,10 @@ class NeptuneAuthenticator(httpx.Auth):
         with self.__LOCK:
             # TODO: Add logging
             if self._token is not None:
-                self._update_token()
+                self._refresh_existing_token()
 
             if self._token is None:
-                self._token = self._token_factory(self._credentials, self._client)
+                self._token = self._token_factory(self._client, self._credentials)
 
     def _refresh_token_if_expired(self) -> None:
         if self._token is None or self._token.is_expired:

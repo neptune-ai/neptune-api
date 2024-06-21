@@ -15,7 +15,7 @@ from neptune_api.models import (
 )
 
 
-def exchange_to_access_token(credentials: Credentials, client: Client) -> Optional[OAuthToken]:
+def exchange_to_access_token(client: Client, credentials: Credentials) -> Optional[OAuthToken]:
     token_data: Union[NeptuneOauthToken, None, Error] = exchange_api_token.sync(
         client=client, x_neptune_api_token=credentials.token
     )
