@@ -7,12 +7,12 @@ from typing import (
 
 from neptune_api import Client
 from neptune_api.api.backend import exchange_api_token
-from neptune_api.client import OAuthToken
 from neptune_api.credentials import Credentials
 from neptune_api.models import (
     Error,
     NeptuneOauthToken,
 )
+from neptune_api.types import OAuthToken
 
 
 def exchange_to_access_token(client: Client, credentials: Credentials) -> Optional[OAuthToken]:

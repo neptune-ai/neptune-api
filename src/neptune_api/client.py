@@ -18,7 +18,7 @@ from attrs import (
 )
 
 from neptune_api.credentials import Credentials
-from neptune_api.oauth_token import OAuthToken
+from neptune_api.types import OAuthToken
 
 
 @define
