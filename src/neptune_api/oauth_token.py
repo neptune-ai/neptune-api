@@ -8,7 +8,7 @@ from attr import (
     field,
 )
 
-MINIMAL_EXPIRATION_SECONDS = 30
+MINIMAL_EXPIRATION_SECONDS = 299
 DECODING_OPTIONS = {
     "verify_signature": False,
     "verify_exp": False,
@@ -39,6 +39,7 @@ class OAuthToken:
 
     @property
     def seconds_left(self) -> float:
+        print("Seconds left:", self._expiration_time - time.time())
         return self._expiration_time - time.time()
 
     @property

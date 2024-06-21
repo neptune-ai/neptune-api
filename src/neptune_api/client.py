@@ -1,5 +1,6 @@
 import ssl
 import threading
+import typing
 from typing import (
     Any,
     Callable,
@@ -191,6 +192,7 @@ class AuthenticatedClient:
     _follow_redirects: bool = field(default=False, kw_only=True, alias="follow_redirects")
     _httpx_args: Dict[str, Any] = field(factory=dict, kw_only=True, alias="httpx_args")
     _client: Optional[httpx.Client] = field(default=None, init=False)
+    _auth_client: Optional[Client] = field(default=None, init=False)
     _async_client: Optional[httpx.AsyncClient] = field(default=None, init=False)
 
     credentials: Credentials
@@ -204,24 +206,39 @@ class AuthenticatedClient:
         """Get a new client matching this one with additional headers"""
         if self._client is not None:
             self._client.headers.update(headers)
+
         if self._async_client is not None:
             self._async_client.headers.update(headers)
+
+        if self._auth_client is not None:
+            self._auth_client.with_headers(headers)
+
         return evolve(self, headers={**self._headers, **headers})
 
     def with_cookies(self, cookies: Dict[str, str]) -> "AuthenticatedClient":
         """Get a new client matching this one with additional cookies"""
         if self._client is not None:
             self._client.cookies.update(cookies)
+
         if self._async_client is not None:
             self._async_client.cookies.update(cookies)
+
+        if self._auth_client is not None:
+            self._auth_client.with_cookies(cookies)
+
         return evolve(self, cookies={**self._cookies, **cookies})
 
     def with_timeout(self, timeout: httpx.Timeout) -> "AuthenticatedClient":
         """Get a new client matching this one with a new timeout (in seconds)"""
         if self._client is not None:
             self._client.timeout = timeout
+
         if self._async_client is not None:
             self._async_client.timeout = timeout
+
+        if self._auth_client is not None:
+            self._auth_client.with_timeout(timeout)
+
         return evolve(self, timeout=timeout)
 
     def set_httpx_client(self, client: httpx.Client) -> "AuthenticatedClient":
@@ -230,6 +247,28 @@ class AuthenticatedClient:
         **NOTE**: This will override any other settings on the client, including cookies, headers, and timeout.
         """
         self._client = client
+        return self
+
+    def get_auth_client(self) -> Client:
+        """Get the underlying Client, constructing a new one if not previously set"""
+        if self._auth_client is None:
+            self._auth_client = Client(
+                base_url=self._base_url,
+                cookies=self._cookies,
+                headers=self._headers,
+                timeout=self._timeout,
+                verify_ssl=self._verify_ssl,
+                follow_redirects=self._follow_redirects,
+                httpx_args=self._httpx_args,
+            )
+        return self._auth_client
+
+    def set_auth_client(self, client: Client) -> "AuthenticatedClient":
+        """Manually the underlying Client used for authentication
+
+        **NOTE**: This will override any other settings on the client, including cookies, headers, and timeout.
+        """
+        self._auth_client = client
         return self
 
     def get_httpx_client(self) -> httpx.Client:
@@ -241,15 +280,7 @@ class AuthenticatedClient:
                     client_id=self.client_id,
                     token_endpoint=self.token_endpoint,
                     token_factory=self.token_factory,
-                    httpx_args={
-                        "base_url": self.credentials.base_url,
-                        "cookies": self._cookies,
-                        "headers": self._headers,
-                        "timeout": self._timeout,
-                        "verify_ssl": self._verify_ssl,
-                        "follow_redirects": self._follow_redirects,
-                        **self._httpx_args,
-                    },
+                    client=self.get_auth_client(),
                 ),
                 base_url=self._base_url,
                 cookies=self._cookies,
@@ -263,11 +294,13 @@ class AuthenticatedClient:
 
     def __enter__(self) -> "AuthenticatedClient":
         """Enter a context manager for self.client—you cannot enter twice (see httpx docs)"""
+        self.get_auth_client().__enter__()
         self.get_httpx_client().__enter__()
         return self
 
     def __exit__(self, *args: Any, **kwargs: Any) -> None:
         """Exit a context manager for internal httpx.Client (see httpx docs)"""
+        self.get_auth_client().__exit__(*args, **kwargs)
         self.get_httpx_client().__exit__(*args, **kwargs)
 
     def set_async_httpx_client(self, async_client: httpx.AsyncClient) -> "AuthenticatedClient":
@@ -312,22 +345,15 @@ class NeptuneAuthenticator(httpx.Auth):
         client_id: str,
         token_endpoint: str,
         token_factory: Callable[[Client, Credentials], OAuthToken],
-        httpx_args: Dict[str, Any],
+        client: Client,
     ):
         self._credentials: Credentials = credentials
         self._client_id: str = client_id
         self._token_endpoint: str = token_endpoint
         self._token_factory: Callable[[Client, Credentials], OAuthToken] = token_factory
 
-        self._client = Client(**httpx_args)
+        self._client = client
         self._token: Optional[OAuthToken] = None
-
-    def __enter__(self) -> "NeptuneAuthenticator":
-        self._client.__enter__()
-        return self
-
-    def __exit__(self, *args: Any, **kwargs: Any) -> None:
-        self._client.__exit__(args, kwargs)
 
     def _refresh_existing_token(self) -> None:
         if self._token is None:
@@ -350,7 +376,8 @@ class NeptuneAuthenticator(httpx.Auth):
 
     def _refresh_token(self) -> None:
         with self.__LOCK:
-            # TODO: Add logging
+            print("Refreshing token")
+            # TODO: Better logging?
             if self._token is not None:
                 self._refresh_existing_token()
 
@@ -361,10 +388,13 @@ class NeptuneAuthenticator(httpx.Auth):
         if self._token is None or self._token.is_expired:
             self._refresh_token()
 
-    def auth_flow(self, request: httpx.Request) -> Generator[httpx.Request, httpx.Response, None]:
+    def sync_auth_flow(self, request: httpx.Request) -> Generator[httpx.Request, httpx.Response, None]:
         self._refresh_token_if_expired()
 
         if self._token is not None:
             request.headers["Authorization"] = f"Bearer {self._token.access_token}"
 
+        yield request
+
+    async def async_auth_flow(self, request: httpx.Request) -> typing.AsyncGenerator[httpx.Request, httpx.Response]:
         yield request
