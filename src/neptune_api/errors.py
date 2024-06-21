@@ -18,5 +18,5 @@ class UnexpectedStatus(Exception):
 class InvalidApiTokenException(Exception):
     """Raised when the api token is invalid"""
 
-    def __init__(self) -> None:
-        super().__init__("Invalid API token")
+    def __init__(self, reason: str = "") -> None:
+        super().__init__(f"Invalid API token. Reason: {reason}")

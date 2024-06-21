@@ -20,7 +20,9 @@ from attrs import (
     field,
 )
 
-MINIMAL_EXPIRATION_SECONDS = 299
+from neptune_api.errors import InvalidApiTokenException
+
+MINIMAL_EXPIRATION_SECONDS = 30
 DECODING_OPTIONS = {
     "verify_signature": False,
     "verify_exp": False,
@@ -80,14 +82,12 @@ class OAuthToken:
             decoded_token = jwt.decode(access, options=DECODING_OPTIONS)
             expiration_time = float(decoded_token["exp"])
         except (jwt.ExpiredSignatureError, jwt.InvalidTokenError, KeyError):
-            # TODO: Better error handling
-            expiration_time = 0.0
+            raise InvalidApiTokenException("Cannot decode the access token")
 
         return OAuthToken(access_token=access, refresh_token=refresh, expiration_time=expiration_time)
 
     @property
     def seconds_left(self) -> float:
-        print("Seconds left:", self._expiration_time - time.time())
         return self._expiration_time - time.time()
 
     @property

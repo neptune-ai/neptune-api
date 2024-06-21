@@ -17,6 +17,7 @@ PyJWT = "^2.0.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"
+freezegun = "^1.5.1"
 
 [tool.poetry]
 name = "neptune-api"
