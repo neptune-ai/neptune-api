@@ -16,7 +16,6 @@ from neptune_api.types import OAuthToken
 
 
 def exchange_to_access_token(client: Client, credentials: Credentials) -> Optional[OAuthToken]:
-    print("Token factory called")
     token_data: Union[NeptuneOauthToken, None, Error] = exchange_api_token.sync(
         client=client, x_neptune_api_token=credentials.token
     )
