@@ -1,5 +1,5 @@
 from neptune_api import Client
-from neptune_api.token_factory import exchange_to_access_token
+from neptune_api.token_factory import exchange_api_key
 
 
 def test_exchange_api_called(mocker, credentials, oauth_token):
@@ -18,7 +18,7 @@ def test_exchange_api_called(mocker, credentials, oauth_token):
     }
 
     # when
-    token = exchange_to_access_token(client_mock, credentials)
+    token = exchange_api_key(client_mock, credentials)
 
     # then
     assert token.access_token == access_token
@@ -34,7 +34,7 @@ def test_unauthorized(mocker, credentials):
     request_mock.request.return_value.status_code = 401
 
     # when
-    token = exchange_to_access_token(client_mock, credentials)
+    token = exchange_api_key(client_mock, credentials)
 
     # then
     assert token is None

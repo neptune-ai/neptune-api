@@ -1,6 +1,11 @@
 """Contains shared errors types that can be raised from API functions"""
 
-__all__ = ["UnexpectedStatus", "InvalidApiTokenException"]
+__all__ = [
+    "UnexpectedStatus",
+    "InvalidApiTokenException",
+    "UnableToExchangeApiKeyError",
+    "UnableToDeserializeApiKeyError",
+]
 
 
 class UnexpectedStatus(Exception):
@@ -20,3 +25,17 @@ class InvalidApiTokenException(Exception):
 
     def __init__(self, reason: str = "") -> None:
         super().__init__(f"Invalid API token. Reason: {reason}")
+
+
+class UnableToExchangeApiKeyError(Exception):
+    """Raised when the API key exchange fails"""
+
+    def __init__(self, reason: str = "Unknown") -> None:
+        super().__init__(f"Unable to exchange API key. Reason: {reason}")
+
+
+class UnableToDeserializeApiKeyError(Exception):
+    """Raised when the API key cannot be deserialized"""
+
+    def __init__(self) -> None:
+        super().__init__("Unable to deserialize API key")

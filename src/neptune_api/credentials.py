@@ -9,7 +9,7 @@ from typing import (
 
 from attr import define
 
-from neptune_api.errors import InvalidApiTokenException
+from neptune_api.errors import UnableToDeserializeApiKeyError
 
 
 @define
@@ -32,9 +32,9 @@ class Credentials:
         return Credentials(token=clean_token, base_url=api_url or token_origin_address)
 
 
-def deserialize(token: str) -> Dict[str, str]:
+def deserialize(api_key: str) -> Dict[str, Any]:
     try:
-        data: Dict[str, Any] = json.loads(base64.b64decode(token.encode()).decode("utf-8"))
+        data: Dict[str, Any] = json.loads(base64.b64decode(api_key.encode()).decode("utf-8"))
         return data
     except Exception:
-        raise InvalidApiTokenException()
+        raise UnableToDeserializeApiKeyError()
