@@ -15,11 +15,6 @@ attrs = ">=21.3.0"
 python-dateutil = "^2.8.0"
 PyJWT = "^2.0.0"
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.2.2"
-freezegun = "^1.5.1"
-pytest-mock = "^3.14.0"
-
 [tool.poetry]
 name = "neptune-api"
 version = "0.1.0"
