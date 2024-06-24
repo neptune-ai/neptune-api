@@ -308,32 +308,23 @@ class AuthenticatedClient:
 
         **NOTE**: This will override any other settings on the client, including cookies, headers, and timeout.
         """
-        self._async_client = async_client
-        return self
+        # TODO: Implement it properly
+        raise NotImplementedError
 
     def get_async_httpx_client(self) -> httpx.AsyncClient:
         """Get the underlying httpx.AsyncClient, constructing a new one if not previously set"""
-        if self._async_client is None:
-            # TODO: Implement it properly
-            self._async_client = httpx.AsyncClient(
-                base_url=self._base_url,
-                cookies=self._cookies,
-                headers=self._headers,
-                timeout=self._timeout,
-                verify=self._verify_ssl,
-                follow_redirects=self._follow_redirects,
-                **self._httpx_args,
-            )
-        return self._async_client
+        # TODO: Implement it properly
+        raise NotImplementedError
 
     async def __aenter__(self) -> "AuthenticatedClient":
         """Enter a context manager for underlying httpx.AsyncClient—you cannot enter twice (see httpx docs)"""
-        await self.get_async_httpx_client().__aenter__()
-        return self
+        # TODO: Implement it properly
+        raise NotImplementedError
 
     async def __aexit__(self, *args: Any, **kwargs: Any) -> None:
         """Exit a context manager for underlying httpx.AsyncClient (see httpx docs)"""
-        await self.get_async_httpx_client().__aexit__(*args, **kwargs)
+        # TODO: Implement it properly
+        raise NotImplementedError
 
 
 class NeptuneAuthenticator(httpx.Auth):
@@ -354,6 +345,8 @@ class NeptuneAuthenticator(httpx.Auth):
 
         self._client = client
         self._token: Optional[OAuthToken] = None
+
+        print("Initialized")
 
     def _refresh_existing_token(self) -> None:
         if self._token is None:
@@ -389,6 +382,7 @@ class NeptuneAuthenticator(httpx.Auth):
             self._refresh_token()
 
     def sync_auth_flow(self, request: httpx.Request) -> Generator[httpx.Request, httpx.Response, None]:
+        print("Called")
         self._refresh_token_if_expired()
 
         if self._token is not None:
