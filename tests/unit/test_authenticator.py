@@ -10,7 +10,7 @@ def test_use_token_factory(mocker, credentials, oauth_token):
         credentials=credentials,
         client_id="client_id",
         token_refreshing_endpoint="https://api.neptune.ai/oauth/token",
-        api_key_exchange_callback=(lambda _, __: oauth_token),
+        api_key_exchange_factory=(lambda _, __: oauth_token),
         client=client,
     )
     request = mocker.MagicMock()
@@ -32,7 +32,7 @@ def test_refresh(mocker, credentials, expired_oauth_token, oauth_token):
         client_id="client_id",
         token_refreshing_endpoint="https://api.neptune.ai/oauth/token",
         client=client,
-        api_key_exchange_callback=token_factory_stub,
+        api_key_exchange_factory=token_factory_stub,
     )
     request = mocker.MagicMock()
     request.headers = {}

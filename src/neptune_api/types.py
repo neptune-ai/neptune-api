@@ -81,8 +81,8 @@ class OAuthToken:
         try:
             decoded_token = jwt.decode(access, options=DECODING_OPTIONS)
             expiration_time = float(decoded_token["exp"])
-        except (jwt.ExpiredSignatureError, jwt.InvalidTokenError, KeyError):
-            raise InvalidApiTokenException("Cannot decode the access token")
+        except (jwt.ExpiredSignatureError, jwt.InvalidTokenError, KeyError) as e:
+            raise InvalidApiTokenException("Cannot decode the access token") from e
 
         return OAuthToken(access_token=access, refresh_token=refresh, expiration_time=expiration_time)
 

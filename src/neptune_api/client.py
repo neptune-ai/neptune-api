@@ -20,6 +20,7 @@ from attrs import (
 )
 
 from neptune_api.credentials import Credentials
+from neptune_api.errors import UnableToRefreshTokenError
 from neptune_api.types import OAuthToken
 
 
@@ -281,7 +282,7 @@ class AuthenticatedClient:
                     credentials=self.credentials,
                     client_id=self.client_id,
                     token_refreshing_endpoint=self.token_refreshing_endpoint,
-                    api_key_exchange_callback=self.api_key_exchange_callback,
+                    api_key_exchange_factory=self.api_key_exchange_callback,
                     client=self.get_token_refreshing_client(),
                 ),
                 base_url=self._base_url,
@@ -337,33 +338,36 @@ class NeptuneAuthenticator(httpx.Auth):
         credentials: Credentials,
         client_id: str,
         token_refreshing_endpoint: str,
-        api_key_exchange_callback: Callable[[Client, Credentials], OAuthToken],
+        api_key_exchange_factory: Callable[[Client, Credentials], OAuthToken],
         client: Client,
     ):
         self._credentials: Credentials = credentials
         self._client_id: str = client_id
         self._token_refreshing_endpoint: str = token_refreshing_endpoint
-        self._api_key_exchange_callback: Callable[[Client, Credentials], OAuthToken] = api_key_exchange_callback
+        self._api_key_exchange_factory: Callable[[Client, Credentials], OAuthToken] = api_key_exchange_factory
 
         self._client = client
         self._token: Optional[OAuthToken] = None
 
     def _refresh_existing_token(self) -> None:
         if self._token is None:
-            # TODO: Better error handling
-            raise ValueError("Token is not set")
+            # This should never happen, but just in case
+            self._token = self._api_key_exchange_factory(self._client, self._credentials)
+            return
 
-        response = self._client.get_httpx_client().post(
-            url=self._token_refreshing_endpoint,
-            data={
-                "grant_type": "refresh_token",
-                "refresh_token": self._token.refresh_token,
-                "client_id": self._client_id,
-                "expires_in": self._token.seconds_left,
-            },
-        )
-        # TODO: Error handling
-        data = response.json()
+        try:
+            response = self._client.get_httpx_client().post(
+                url=self._token_refreshing_endpoint,
+                data={
+                    "grant_type": "refresh_token",
+                    "refresh_token": self._token.refresh_token,
+                    "client_id": self._client_id,
+                    "expires_in": self._token.seconds_left,
+                },
+            )
+            data = response.json()
+        except Exception as e:
+            raise UnableToRefreshTokenError("Unable to refresh token") from e
 
         self._token = OAuthToken.from_tokens(access=data["access_token"], refresh=data["refresh_token"])
 
@@ -373,7 +377,7 @@ class NeptuneAuthenticator(httpx.Auth):
                 self._refresh_existing_token()
 
             if self._token is None:
-                self._token = self._api_key_exchange_callback(self._client, self._credentials)
+                self._token = self._api_key_exchange_factory(self._client, self._credentials)
 
     def _refresh_token_if_expired(self) -> None:
         if self._token is None or self._token.is_expired:

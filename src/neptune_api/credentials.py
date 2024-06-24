@@ -26,8 +26,8 @@ class Credentials:
 
         try:
             token_data = deserialize(api_key)
-        except UnableToDeserializeApiKeyError:
-            raise InvalidApiTokenException("Unable to deserialize API key")
+        except UnableToDeserializeApiKeyError as e:
+            raise InvalidApiTokenException("Unable to deserialize API key") from e
 
         token_origin_address, api_url = token_data.get("api_address"), token_data.get("api_url")
         if not token_origin_address and not api_url:
@@ -40,5 +40,5 @@ def deserialize(api_key: str) -> Dict[str, Any]:
     try:
         data: Dict[str, Any] = json.loads(base64.b64decode(api_key.encode()).decode("utf-8"))
         return data
-    except Exception:
-        raise UnableToDeserializeApiKeyError()
+    except Exception as e:
+        raise UnableToDeserializeApiKeyError() from e

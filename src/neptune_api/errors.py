@@ -5,6 +5,7 @@ __all__ = [
     "InvalidApiTokenException",
     "UnableToExchangeApiKeyError",
     "UnableToDeserializeApiKeyError",
+    "UnableToRefreshTokenError",
 ]
 
 
@@ -39,3 +40,10 @@ class UnableToDeserializeApiKeyError(Exception):
 
     def __init__(self) -> None:
         super().__init__("Unable to deserialize API key")
+
+
+class UnableToRefreshTokenError(Exception):
+    """Raised when the token refresh fails"""
+
+    def __init__(self, reason: str = "Unknown") -> None:
+        super().__init__(f"Unable to refresh token. Reason: {reason}")
