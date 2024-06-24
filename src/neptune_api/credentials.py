@@ -32,10 +32,8 @@ class Credentials:
         token_origin_address, api_url = token_data.get("api_address"), token_data.get("api_url")
         if not token_origin_address and not api_url:
             raise InvalidApiTokenException("API key is missing required fields")
-        else:
-            base_url: str = str(api_url) or str(token_origin_address)
 
-        return Credentials(api_key=api_key, base_url=base_url)
+        return Credentials(api_key=api_key, base_url=str(api_url) or str(token_origin_address))
 
 
 def deserialize(api_key: str) -> Dict[str, Any]:
