@@ -346,8 +346,6 @@ class NeptuneAuthenticator(httpx.Auth):
         self._client = client
         self._token: Optional[OAuthToken] = None
 
-        print("Initialized")
-
     def _refresh_existing_token(self) -> None:
         if self._token is None:
             # TODO: Better error handling
@@ -369,8 +367,6 @@ class NeptuneAuthenticator(httpx.Auth):
 
     def _refresh_token(self) -> None:
         with self.__LOCK:
-            print("Refreshing token")
-            # TODO: Better logging?
             if self._token is not None:
                 self._refresh_existing_token()
 
@@ -382,7 +378,6 @@ class NeptuneAuthenticator(httpx.Auth):
             self._refresh_token()
 
     def sync_auth_flow(self, request: httpx.Request) -> Generator[httpx.Request, httpx.Response, None]:
-        print("Called")
         self._refresh_token_if_expired()
 
         if self._token is not None:

@@ -1,3 +1,7 @@
+import base64
+import json
+import uuid
+
 import pytest
 
 from neptune_api.credentials import Credentials
@@ -6,7 +10,8 @@ from neptune_api.errors import InvalidApiTokenException
 
 def test_valid():
     # given
-    api_key = "eyJhcGlfYWRkcmVzcyI6Imhvc3QiLCJhcGlfdXJsIjoiaG9zdCIsImFwaV9rZXkiOiI0NDBlZTE0Ni00NDJlLTRkN2MtYThhYy0yNzZiYTk0MGEwNzEifQ=="
+    data = {"api_address": "host", "api_url": "host", "api_key": str(uuid.uuid4())}
+    api_key = base64.b64encode(json.dumps(data).encode("utf-8")).decode("utf-8")
 
     # when
     credentials = Credentials.from_token(token=api_key)
