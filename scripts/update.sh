@@ -9,7 +9,7 @@ mv src/neptune_api neptune_api
 # Preserve specific files
 mkdir -p tmp
 cat scripts/preserve_files.txt | while read file; do
-    mkdir p $(dirname $file)
+    mkdir -p $(dirname $file) | true
     mv $file tmp/$file
 done
 
@@ -28,7 +28,7 @@ cd $INITIAL_DIRECTORY
 
 # Restore specific files
 cat scripts/preserve_files.txt | while read file; do
-    mkdir --parents $(dirname $file)
+    mkdir -p $(dirname $file) | true
     mv tmp/$file $file
 done
 rm -rf tmp
