@@ -8,4 +8,5 @@ ruff
 isort
 pytest
 pytest-mock
+pytest-timeout
 freezegun
