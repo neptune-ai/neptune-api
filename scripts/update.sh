@@ -9,7 +9,7 @@ mv src/neptune_api neptune_api
 # Preserve specific files
 mkdir -p tmp
 cat scripts/preserve_files.txt | while read file; do
-    mkdir -p $(dirname $file) | true
+    mkdir -p tmp/$(dirname $file) | true
     mv $file tmp/$file
 done
 
