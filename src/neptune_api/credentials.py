@@ -9,27 +9,33 @@ from typing import (
 
 from attr import define
 
-from neptune_api.errors import UnableToDeserializeApiKeyError
+from neptune_api.errors import (
+    InvalidApiTokenException,
+    UnableToDeserializeApiKeyError,
+)
 
 
 @define
 class Credentials:
-    token: str
+    api_key: str
     base_url: str
 
     @classmethod
-    def from_token(cls, token: str) -> "Credentials":
-        clean_token = token.strip()
+    def from_api_key(cls, api_key: str) -> "Credentials":
+        api_key = api_key.strip()
 
-        token_data = deserialize(clean_token)
-        token_origin_address = token_data.get("api_address")
-        api_url = token_data.get("api_url")
+        try:
+            token_data = deserialize(api_key)
+        except UnableToDeserializeApiKeyError:
+            raise InvalidApiTokenException("Unable to deserialize API key")
 
-        # TODO: Better validation or mypy suggestions
-        assert token_origin_address is not None
-        assert api_url is not None
+        token_origin_address, api_url = token_data.get("api_address"), token_data.get("api_url")
+        if not token_origin_address and not api_url:
+            raise InvalidApiTokenException("API key is missing required fields")
+        else:
+            base_url: str = str(api_url) or str(token_origin_address)
 
-        return Credentials(token=clean_token, base_url=api_url or token_origin_address)
+        return Credentials(api_key=api_key, base_url=base_url)
 
 
 def deserialize(api_key: str) -> Dict[str, Any]:

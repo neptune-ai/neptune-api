@@ -14,11 +14,11 @@ def test_valid():
     api_key = base64.b64encode(json.dumps(data).encode("utf-8")).decode("utf-8")
 
     # when
-    credentials = Credentials.from_token(token=api_key)
+    credentials = Credentials.from_api_key(api_key=api_key)
 
     # then
     assert credentials.base_url == "host"
-    assert credentials.token == api_key
+    assert credentials.api_key == api_key
 
 
 def test_invalid_api_key():
@@ -27,4 +27,4 @@ def test_invalid_api_key():
 
     # then
     with pytest.raises(InvalidApiTokenException):
-        Credentials.from_token(token=api_key)
+        Credentials.from_api_key(api_key=api_key)

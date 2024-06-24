@@ -15,7 +15,7 @@ from neptune_api.types import OAuthToken
 
 def exchange_api_key(client: Client, credentials: Credentials) -> OAuthToken:
     token_data: Union[NeptuneOauthToken, None, Error] = exchange_api_token.sync(
-        client=client, x_neptune_api_token=credentials.token
+        client=client, x_neptune_api_token=credentials.api_key
     )
 
     if isinstance(token_data, Error):

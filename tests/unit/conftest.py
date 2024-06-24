@@ -24,7 +24,7 @@ EXPIRATION_TIME = FIXED_TIME + timedelta(seconds=MINIMAL_EXPIRATION_SECONDS + 1)
 def credentials() -> Credentials:
     data = {"api_address": "host", "api_url": "host", "api_key": str(uuid.uuid4())}
     base64_encoded = base64.b64encode(json.dumps(data).encode("utf-8")).decode("utf-8")
-    return Credentials.from_token(base64_encoded)
+    return Credentials.from_api_key(base64_encoded)
 
 
 @pytest.fixture
