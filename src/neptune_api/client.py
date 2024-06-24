@@ -1,3 +1,5 @@
+__all__ = ["Client", "AuthenticatedClient", "NeptuneAuthenticator"]
+
 import ssl
 import threading
 import typing
@@ -176,9 +178,9 @@ class AuthenticatedClient:
             status code that was not documented in the source OpenAPI document. Can also be provided as a keyword
             argument to the constructor.
         credentials: User credentials for authentication.
-        token_endpoint: Token refreshing endpoint url
+        token_refreshing_endpoint: Token refreshing endpoint url
         client_id: Client identifier for the OAuth application.
-        token_factory: The Neptune API Token exchange function
+        api_key_exchange_callback: The Neptune API Token exchange function
         prefix: The prefix to use for the Authorization header
         auth_header_name: The name of the Authorization header
     """
@@ -192,13 +194,13 @@ class AuthenticatedClient:
     _follow_redirects: bool = field(default=False, kw_only=True, alias="follow_redirects")
     _httpx_args: Dict[str, Any] = field(factory=dict, kw_only=True, alias="httpx_args")
     _client: Optional[httpx.Client] = field(default=None, init=False)
-    _auth_client: Optional[Client] = field(default=None, init=False)
+    _token_refreshing_client: Optional[Client] = field(default=None, init=False)
     _async_client: Optional[httpx.AsyncClient] = field(default=None, init=False)
 
     credentials: Credentials
-    token_endpoint: str
+    token_refreshing_endpoint: str
     client_id: str
-    token_factory: Callable[[Client, Credentials], OAuthToken]
+    api_key_exchange_callback: Callable[[Client, Credentials], OAuthToken]
     prefix: str = "Bearer"
     auth_header_name: str = "Authorization"
 
@@ -210,8 +212,8 @@ class AuthenticatedClient:
         if self._async_client is not None:
             self._async_client.headers.update(headers)
 
-        if self._auth_client is not None:
-            self._auth_client.with_headers(headers)
+        if self._token_refreshing_client is not None:
+            self._token_refreshing_client.with_headers(headers)
 
         return evolve(self, headers={**self._headers, **headers})
 
@@ -223,8 +225,8 @@ class AuthenticatedClient:
         if self._async_client is not None:
             self._async_client.cookies.update(cookies)
 
-        if self._auth_client is not None:
-            self._auth_client.with_cookies(cookies)
+        if self._token_refreshing_client is not None:
+            self._token_refreshing_client.with_cookies(cookies)
 
         return evolve(self, cookies={**self._cookies, **cookies})
 
@@ -236,8 +238,8 @@ class AuthenticatedClient:
         if self._async_client is not None:
             self._async_client.timeout = timeout
 
-        if self._auth_client is not None:
-            self._auth_client.with_timeout(timeout)
+        if self._token_refreshing_client is not None:
+            self._token_refreshing_client.with_timeout(timeout)
 
         return evolve(self, timeout=timeout)
 
@@ -249,10 +251,10 @@ class AuthenticatedClient:
         self._client = client
         return self
 
-    def get_auth_client(self) -> Client:
+    def get_token_refreshing_client(self) -> Client:
         """Get the underlying Client, constructing a new one if not previously set"""
-        if self._auth_client is None:
-            self._auth_client = Client(
+        if self._token_refreshing_client is None:
+            self._token_refreshing_client = Client(
                 base_url=self._base_url,
                 cookies=self._cookies,
                 headers=self._headers,
@@ -261,14 +263,14 @@ class AuthenticatedClient:
                 follow_redirects=self._follow_redirects,
                 httpx_args=self._httpx_args,
             )
-        return self._auth_client
+        return self._token_refreshing_client
 
-    def set_auth_client(self, client: Client) -> "AuthenticatedClient":
+    def set_token_refreshing_client(self, client: Client) -> "AuthenticatedClient":
         """Manually the underlying Client used for authentication
 
         **NOTE**: This will override any other settings on the client, including cookies, headers, and timeout.
         """
-        self._auth_client = client
+        self._token_refreshing_client = client
         return self
 
     def get_httpx_client(self) -> httpx.Client:
@@ -278,9 +280,9 @@ class AuthenticatedClient:
                 auth=NeptuneAuthenticator(
                     credentials=self.credentials,
                     client_id=self.client_id,
-                    token_endpoint=self.token_endpoint,
-                    token_factory=self.token_factory,
-                    client=self.get_auth_client(),
+                    token_refreshing_endpoint=self.token_refreshing_endpoint,
+                    api_key_exchange_callback=self.api_key_exchange_callback,
+                    client=self.get_token_refreshing_client(),
                 ),
                 base_url=self._base_url,
                 cookies=self._cookies,
@@ -294,13 +296,13 @@ class AuthenticatedClient:
 
     def __enter__(self) -> "AuthenticatedClient":
         """Enter a context manager for self.client—you cannot enter twice (see httpx docs)"""
-        self.get_auth_client().__enter__()
+        self.get_token_refreshing_client().__enter__()
         self.get_httpx_client().__enter__()
         return self
 
     def __exit__(self, *args: Any, **kwargs: Any) -> None:
         """Exit a context manager for internal httpx.Client (see httpx docs)"""
-        self.get_auth_client().__exit__(*args, **kwargs)
+        self.get_token_refreshing_client().__exit__(*args, **kwargs)
         self.get_httpx_client().__exit__(*args, **kwargs)
 
     def set_async_httpx_client(self, async_client: httpx.AsyncClient) -> "AuthenticatedClient":
@@ -308,22 +310,22 @@ class AuthenticatedClient:
 
         **NOTE**: This will override any other settings on the client, including cookies, headers, and timeout.
         """
-        # TODO: Implement it properly
+        # TODO: Missing implementation
         raise NotImplementedError
 
     def get_async_httpx_client(self) -> httpx.AsyncClient:
         """Get the underlying httpx.AsyncClient, constructing a new one if not previously set"""
-        # TODO: Implement it properly
+        # TODO: Missing implementation
         raise NotImplementedError
 
     async def __aenter__(self) -> "AuthenticatedClient":
         """Enter a context manager for underlying httpx.AsyncClient—you cannot enter twice (see httpx docs)"""
-        # TODO: Implement it properly
+        # TODO: Missing implementation
         raise NotImplementedError
 
     async def __aexit__(self, *args: Any, **kwargs: Any) -> None:
         """Exit a context manager for underlying httpx.AsyncClient (see httpx docs)"""
-        # TODO: Implement it properly
+        # TODO: Missing implementation
         raise NotImplementedError
 
 
@@ -334,14 +336,14 @@ class NeptuneAuthenticator(httpx.Auth):
         self,
         credentials: Credentials,
         client_id: str,
-        token_endpoint: str,
-        token_factory: Callable[[Client, Credentials], OAuthToken],
+        token_refreshing_endpoint: str,
+        api_key_exchange_callback: Callable[[Client, Credentials], OAuthToken],
         client: Client,
     ):
         self._credentials: Credentials = credentials
         self._client_id: str = client_id
-        self._token_endpoint: str = token_endpoint
-        self._token_factory: Callable[[Client, Credentials], OAuthToken] = token_factory
+        self._token_refreshing_endpoint: str = token_refreshing_endpoint
+        self._api_key_exchange_callback: Callable[[Client, Credentials], OAuthToken] = api_key_exchange_callback
 
         self._client = client
         self._token: Optional[OAuthToken] = None
@@ -352,7 +354,7 @@ class NeptuneAuthenticator(httpx.Auth):
             raise ValueError("Token is not set")
 
         response = self._client.get_httpx_client().post(
-            url=self._token_endpoint,
+            url=self._token_refreshing_endpoint,
             data={
                 "grant_type": "refresh_token",
                 "refresh_token": self._token.refresh_token,
@@ -371,7 +373,7 @@ class NeptuneAuthenticator(httpx.Auth):
                 self._refresh_existing_token()
 
             if self._token is None:
-                self._token = self._token_factory(self._client, self._credentials)
+                self._token = self._api_key_exchange_callback(self._client, self._credentials)
 
     def _refresh_token_if_expired(self) -> None:
         if self._token is None or self._token.is_expired:
@@ -386,4 +388,5 @@ class NeptuneAuthenticator(httpx.Auth):
         yield request
 
     async def async_auth_flow(self, request: httpx.Request) -> typing.AsyncGenerator[httpx.Request, httpx.Response]:
+        # TODO: Missing implementation
         yield request

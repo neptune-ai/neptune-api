@@ -1,5 +1,8 @@
+import pytest
+
 from neptune_api import Client
-from neptune_api.token_factory import exchange_api_key
+from neptune_api.auth_helpers import exchange_api_key
+from neptune_api.errors import UnableToExchangeApiKeyError
 
 
 def test_exchange_api_called(mocker, credentials, oauth_token):
@@ -34,7 +37,5 @@ def test_unauthorized(mocker, credentials):
     request_mock.request.return_value.status_code = 401
 
     # when
-    token = exchange_api_key(client_mock, credentials)
-
-    # then
-    assert token is None
+    with pytest.raises(UnableToExchangeApiKeyError):
+        exchange_api_key(client_mock, credentials)
