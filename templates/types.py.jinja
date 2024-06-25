@@ -40,19 +40,20 @@ class Unset:
 
 UNSET: Unset = Unset()
 
+{# Used as `FileProperty._json_type_string` #}
 FileJsonType = Tuple[Optional[str], BinaryIO, Optional[str]]
 
 
 @define
 class File:
-    """Contains information for file uploads"""
+    """ Contains information for file uploads """
 
     payload: BinaryIO
     file_name: Optional[str] = None
     mime_type: Optional[str] = None
 
     def to_tuple(self) -> FileJsonType:
-        """Return a tuple representation that httpx will accept for multipart/form-data"""
+        """ Return a tuple representation that httpx will accept for multipart/form-data """
         return self.file_name, self.payload, self.mime_type
 
 
@@ -61,7 +62,7 @@ T = TypeVar("T")
 
 @define
 class Response(Generic[T]):
-    """A response from an endpoint"""
+    """ A response from an endpoint """
 
     status_code: HTTPStatus
     content: bytes
@@ -88,8 +89,8 @@ class OAuthToken:
 
     @property
     def seconds_left(self) -> float:
-        return self._expiration_time - time.time() - MINIMAL_EXPIRATION_SECONDS
+        return self._expiration_time - time.time()
 
     @property
     def is_expired(self) -> bool:
-        return self.seconds_left <= 0
+        return self.seconds_left <= MINIMAL_EXPIRATION_SECONDS
