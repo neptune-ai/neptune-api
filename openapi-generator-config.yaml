@@ -7,4 +7,4 @@ post_hooks:
    - "isort ."
    - "echo >> neptune_api/py.typed"
 content_type_overrides:
-  application/x-protobuf: application/json
+  application/x-protobuf: application/octet-stream
