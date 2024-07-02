@@ -9,11 +9,11 @@ from typing import (
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="IngestResponse")
+T = TypeVar("T", bound="RequestStatus")
 
 
 @_attrs_define
-class IngestResponse:
+class RequestStatus:
     """ """
 
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -27,10 +27,10 @@ class IngestResponse:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        ingest_response = cls()
+        request_status = cls()
 
-        ingest_response.additional_properties = d
-        return ingest_response
+        request_status.additional_properties = d
+        return request_status
 
     @property
     def additional_keys(self) -> List[str]:

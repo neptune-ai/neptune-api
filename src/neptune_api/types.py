@@ -88,8 +88,8 @@ class OAuthToken:
 
     @property
     def seconds_left(self) -> float:
-        return self._expiration_time - time.time() - MINIMAL_EXPIRATION_SECONDS
+        return self._expiration_time - time.time()
 
     @property
     def is_expired(self) -> bool:
-        return self.seconds_left <= 0
+        return self.seconds_left <= MINIMAL_EXPIRATION_SECONDS
