@@ -26,10 +26,10 @@ class RequestId:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        d = src_dict.copy()
+        # d = src_dict.copy()
         request_id = cls()
 
-        request_id.additional_properties = d
+        # request_id.additional_properties = d
         return request_id
 
     @property

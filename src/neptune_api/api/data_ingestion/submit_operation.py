@@ -29,9 +29,9 @@ def _get_kwargs(
         "url": "/api/client/v1/ingest",
     }
 
-    _body = body.to_dict()
+    # _body = body.payload
 
-    _kwargs["json"] = _body
+    _kwargs["content"] = body
     headers["Content-Type"] = "application/x-protobuf"
 
     _kwargs["headers"] = headers
@@ -40,7 +40,7 @@ def _get_kwargs(
 
 def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[RequestId]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = RequestId.from_dict(response.json())
+        response_200 = RequestId.from_dict(response.content)
 
         return response_200
     if client.raise_on_unexpected_status:
