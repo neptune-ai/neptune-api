@@ -13,3 +13,4 @@ freezegun
 grpcio-tools==1.60.0
 mypy-protobuf
 protoletariat
+types-Pygments

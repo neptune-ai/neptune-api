@@ -73,9 +73,11 @@ exclude = '''
 profile = "black"
 line_length = 120
 force_grid_wrap = 2
+extend_skip = ["src/neptune_api/proto"]
 
 [tool.ruff]
 line-length = 120
+exclude = ["src/neptune_api/proto"]
 
 [tool.ruff.lint]
 select = ["F", "UP"]
