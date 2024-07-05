@@ -29,9 +29,9 @@ def _get_kwargs(
         "url": "/api/client/v1/ingest",
     }
 
-    # _body = body.payload
+    _body = body.payload
 
-    _kwargs["content"] = body
+    _kwargs["content"] = _body
     headers["Content-Type"] = "application/x-protobuf"
 
     _kwargs["headers"] = headers

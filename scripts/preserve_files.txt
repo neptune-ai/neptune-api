@@ -1,2 +1,3 @@
 neptune_api/credentials.py
 neptune_api/auth_helpers.py
+neptune_api/proto/
