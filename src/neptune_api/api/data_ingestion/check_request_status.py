@@ -13,7 +13,7 @@ from ...client import (
     AuthenticatedClient,
     Client,
 )
-from ...models.request_status import RequestStatus
+from ...proto.neptune_pb.ingest.v1.request_status_pb2 import RequestStatus
 from ...types import (
     UNSET,
     Response,
@@ -44,7 +44,8 @@ def _get_kwargs(
 
 def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[RequestStatus]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = RequestStatus.from_dict(response.content)
+        response_200 = RequestStatus()
+        response_200.ParseFromString(response.content)
 
         return response_200
     if client.raise_on_unexpected_status:
