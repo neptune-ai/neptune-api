@@ -3,6 +3,10 @@
 # Show every command and exit on error
 set -ex
 
+# Clean tmp directories
+rm -rf neptune_api
+rm -rf tmp
+
 # Preserve package structure
 mv src/neptune_api neptune_api
 
