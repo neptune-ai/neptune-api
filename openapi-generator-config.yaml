@@ -2,9 +2,9 @@ project_name_override: neptune-api
 package_name_override: neptune_api
 package_version_override: 0.1.0
 post_hooks:
-   - "ruff check . --fix"
-   - "ruff format ."
-   - "isort ."
+   - "ruff check neptune_api/ --fix"
+   - "ruff format neptune_api/"
+   - "isort neptune_api/"
    - "echo >> neptune_api/py.typed"
 content_type_overrides:
   application/x-protobuf: application/octet-stream
