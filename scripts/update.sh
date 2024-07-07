@@ -4,17 +4,23 @@
 set -ex
 
 # Clean tmp directories
-rm -rf neptune_api
-rm -rf tmp
+rm -rf neptune_api tmp || true
 
 # Preserve package structure
 mv src/neptune_api neptune_api
 
-# Preserve specific files
+## Preserve specific files
 mkdir -p tmp
-cat scripts/preserve_files.txt | while read file; do
-    mkdir -p tmp/$(dirname $file) | true
-    mv $file tmp/$file
+cat scripts/preserve_files.txt | while read entry; do
+    if [ -d "$entry" ]; then
+        # If entry is a directory, copy it recursively
+        mkdir -p tmp/$entry
+        cp -r $entry/* tmp/$entry/
+    elif [ -f "$entry" ]; then
+        # If entry is a file, move it
+        mkdir -p tmp/$(dirname $entry)
+        mv $entry tmp/$entry
+    fi
 done
 
 # To generate in the same directory
@@ -31,10 +37,9 @@ openapi-python-client update \
 cd $INITIAL_DIRECTORY
 
 # Restore specific files
-cat scripts/preserve_files.txt | while read file; do
-    mkdir -p $(dirname $file) | true
-    mv tmp/$file $file
-done
+cp -R tmp/* neptune_api/
+
+# Clean tmp directories
 rm -rf tmp
 
 # Restore package structure
