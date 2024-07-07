@@ -37,7 +37,7 @@ openapi-python-client update \
 cd $INITIAL_DIRECTORY
 
 # Restore specific files
-cp -R tmp/* neptune_api/
+cp -R tmp/* .
 
 # Clean tmp directories
 rm -rf tmp
