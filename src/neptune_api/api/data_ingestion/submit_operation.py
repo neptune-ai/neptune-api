@@ -8,14 +8,15 @@ from typing import (
 
 import httpx
 
+from neptune_api.proto.neptune_pb.ingest.v1.pub.client_pb2 import RequestId
+from neptune_api.proto.neptune_pb.ingest.v1.pub.ingest_pb2 import RunOperation
+from neptune_api.types import Response
+
 from ... import errors
 from ...client import (
     AuthenticatedClient,
     Client,
 )
-from ...proto.neptune_pb.ingest.v1.pub.client_pb2 import RequestId
-from ...proto.neptune_pb.ingest.v1.pub.ingest_pb2 import RunOperation
-from ...types import Response
 
 
 def _get_kwargs(
