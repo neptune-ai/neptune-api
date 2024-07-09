@@ -8,13 +8,13 @@ from typing import (
 
 import httpx
 
-from ... import errors
-from ...client import (
+from neptune_api import errors
+from neptune_api.client import (
     AuthenticatedClient,
     Client,
 )
-from ...proto.neptune_pb.ingest.v1.request_status_pb2 import RequestStatus
-from ...types import (
+from neptune_api.proto.neptune_pb.ingest.v1.request_status_pb2 import RequestStatus
+from neptune_api.types import (
     UNSET,
     Response,
 )
