@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added initial package setup and OpenAPI client ([#1](https://github.com/neptune-ai/neptune-api/pull/1))
 
-[unreleased]: https://github.com/neptune-ai/neptune-api/compare/0.2.0...HEAD
+[unreleased]: https://github.com/neptune-ai/neptune-api/compare/0.3.0...HEAD
+[0.3.0]: https://github.com/neptune-ai/neptune-api/compare/0.2.0...0.3.0
 [0.2.0]: https://github.com/neptune-ai/neptune-api/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/neptune-ai/neptune-api/commits/0.1.0
