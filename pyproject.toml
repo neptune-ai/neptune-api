@@ -14,6 +14,7 @@ httpx = ">=0.15.4,<0.25.0"
 attrs = ">=21.3.0"
 python-dateutil = "^2.8.0"
 PyJWT = "^2.0.0"
+protobuf = "^4.0.0"
 
 [tool.poetry]
 name = "neptune-api"
@@ -72,9 +73,11 @@ exclude = '''
 profile = "black"
 line_length = 120
 force_grid_wrap = 2
+extend_skip = ["src/neptune_api/proto"]
 
 [tool.ruff]
 line-length = 120
+exclude = ["src/neptune_api/proto"]
 
 [tool.ruff.lint]
 select = ["F", "UP"]

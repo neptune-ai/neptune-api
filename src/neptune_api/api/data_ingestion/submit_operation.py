@@ -8,14 +8,15 @@ from typing import (
 
 import httpx
 
+from neptune_api.proto.neptune_pb.ingest.v1.pub.client_pb2 import RequestId
+from neptune_api.proto.neptune_pb.ingest.v1.pub.ingest_pb2 import RunOperation
+from neptune_api.types import Response
+
 from ... import errors
 from ...client import (
     AuthenticatedClient,
     Client,
 )
-from ...models.request_id import RequestId
-from ...models.run_operation import RunOperation
-from ...types import Response
 
 
 def _get_kwargs(
@@ -24,14 +25,8 @@ def _get_kwargs(
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
-    _kwargs: Dict[str, Any] = {
-        "method": "post",
-        "url": "/api/client/v1/ingest",
-    }
+    _kwargs: Dict[str, Any] = {"method": "post", "url": "/api/client/v1/ingest", "content": body.SerializeToString()}
 
-    _body = body.to_dict()
-
-    _kwargs["json"] = _body
     headers["Content-Type"] = "application/x-protobuf"
 
     _kwargs["headers"] = headers
@@ -40,7 +35,8 @@ def _get_kwargs(
 
 def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[RequestId]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = RequestId.from_dict(response.json())
+        response_200 = RequestId()
+        response_200.ParseFromString(response.content)
 
         return response_200
     if client.raise_on_unexpected_status:
