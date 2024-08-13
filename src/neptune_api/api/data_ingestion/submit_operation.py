@@ -22,10 +22,18 @@ from ...client import (
 def _get_kwargs(
     *,
     body: RunOperation,
+    family: str,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
-    _kwargs: Dict[str, Any] = {"method": "post", "url": "/api/client/v1/ingest", "content": body.SerializeToString()}
+    _kwargs: Dict[str, Any] = {
+        "method": "post",
+        "url": "/api/client/v1/ingest",
+        "params": {
+            "family": family,
+        },
+        "content": body.SerializeToString(),
+    }
 
     headers["Content-Type"] = "application/x-protobuf"
 
@@ -58,11 +66,13 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     body: RunOperation,
+    family: str,
 ) -> Response[RequestId]:
     """Submits a new operation to be performed asynchronously
 
     Args:
-        body (RunOperation):
+        body (RunOperation): Operation to submit
+        family (str): Partition key
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -74,6 +84,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         body=body,
+        family=family,
     )
 
     response = client.get_httpx_client().request(
@@ -87,11 +98,13 @@ def sync(
     *,
     client: AuthenticatedClient,
     body: RunOperation,
+    family: str,
 ) -> Optional[RequestId]:
     """Submits a new operation to be performed asynchronously
 
     Args:
-        body (RunOperation):
+        body (RunOperation): Operation to submit
+        family (str): Partition key
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -104,6 +117,7 @@ def sync(
     return sync_detailed(
         client=client,
         body=body,
+        family=family,
     ).parsed
 
 
@@ -111,11 +125,13 @@ async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     body: RunOperation,
+    family: str,
 ) -> Response[RequestId]:
     """Submits a new operation to be performed asynchronously
 
     Args:
-        body (RunOperation):
+        body (RunOperation): Operation to submit
+        family (str): Partition key
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -127,6 +143,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         body=body,
+        family=family,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -138,11 +155,13 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
     body: RunOperation,
+    family: str,
 ) -> Optional[RequestId]:
     """Submits a new operation to be performed asynchronously
 
     Args:
-        body (RunOperation):
+        body (RunOperation): Operation to submit
+        family (str): Partition key
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -156,5 +175,6 @@ async def asyncio(
         await asyncio_detailed(
             client=client,
             body=body,
+            family=family,
         )
     ).parsed
