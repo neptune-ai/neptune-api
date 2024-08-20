@@ -2,4 +2,5 @@ neptune_api/credentials.py
 neptune_api/auth_helpers.py
 neptune_api/proto/
 neptune_api/api/data_ingestion/check_request_status.py
+neptune_api/api/data_ingestion/check_request_status_bulk.py
 neptune_api/api/data_ingestion/submit_operation.py
