@@ -3,8 +3,11 @@
 isort:skip_file
 """
 import builtins
+import collections.abc
 import google.protobuf.descriptor
+import google.protobuf.internal.containers
 import google.protobuf.message
+from ..... import neptune_pb
 import sys
 if sys.version_info >= (3, 8):
     import typing as typing_extensions
@@ -24,3 +27,39 @@ class RequestId(google.protobuf.message.Message):
     def ClearField(self, field_name: typing_extensions.Literal['value', b'value']) -> None:
         ...
 global___RequestId = RequestId
+
+@typing_extensions.final
+class RequestIdList(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    IDS_FIELD_NUMBER: builtins.int
+
+    @property
+    def ids(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___RequestId]:
+        ...
+
+    def __init__(self, *, ids: collections.abc.Iterable[global___RequestId] | None=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['ids', b'ids']) -> None:
+        ...
+global___RequestIdList = RequestIdList
+
+@typing_extensions.final
+class BulkRequestStatus(google.protobuf.message.Message):
+    """Maps a list of request identifiers to their respective statuses.
+    The backend API guarantees that the number of returned fields is equal
+    to the number of requested IDs, and the order is the same as requested.
+    """
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    STATUSES_FIELD_NUMBER: builtins.int
+
+    @property
+    def statuses(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[neptune_pb.ingest.v1.pub.request_status_pb2.RequestStatus]:
+        ...
+
+    def __init__(self, *, statuses: collections.abc.Iterable[neptune_pb.ingest.v1.pub.request_status_pb2.RequestStatus] | None=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['statuses', b'statuses']) -> None:
+        ...
+global___BulkRequestStatus = BulkRequestStatus
