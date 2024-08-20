@@ -13,38 +13,36 @@ from neptune_api.client import (
     AuthenticatedClient,
     Client,
 )
-from neptune_api.proto.neptune_pb.ingest.v1.pub.request_status_pb2 import RequestStatus
-from neptune_api.types import (
-    UNSET,
-    Response,
+from neptune_api.proto.neptune_pb.ingest.v1.pub.client_pb2 import (
+    BulkRequestStatus,
+    RequestIdList,
 )
+from neptune_api.types import Response
 
 
 def _get_kwargs(
     *,
+    body: RequestIdList,
     project_identifier: str,
-    request_id: str,
 ) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
-
-    params["projectIdentifier"] = project_identifier
-
-    params["requestId"] = request_id
-
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
-
-    _kwargs: Dict[str, Any] = {
-        "method": "get",
+    return {
+        "method": "post",
         "url": "/api/client/v1/ingest/check",
-        "params": params,
+        "params": {
+            "projectIdentifier": project_identifier,
+        },
+        "content": body.SerializeToString(),
+        "headers": {
+            "Content-Type": "application/x-protobuf",
+        },
     }
 
-    return _kwargs
 
-
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[RequestStatus]:
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[BulkRequestStatus]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = RequestStatus()
+        response_200 = BulkRequestStatus()
         response_200.ParseFromString(response.content)
 
         return response_200
@@ -54,7 +52,9 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[RequestStatus]:
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[BulkRequestStatus]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -66,26 +66,26 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     *,
     client: AuthenticatedClient,
+    body: RequestIdList,
     project_identifier: str,
-    request_id: str,
-) -> Response[RequestStatus]:
-    """Checks operation processing status
+) -> Response[BulkRequestStatus]:
+    """Checks the processing status of multiple operations
 
     Args:
         project_identifier (str):
-        request_id (str):
+        body (RequestIdList):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[RequestStatus]
+        Response[BulkRequestStatus]
     """
 
     kwargs = _get_kwargs(
+        body=body,
         project_identifier=project_identifier,
-        request_id=request_id,
     )
 
     response = client.get_httpx_client().request(
@@ -98,53 +98,53 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
+    body: RequestIdList,
     project_identifier: str,
-    request_id: str,
-) -> Optional[RequestStatus]:
-    """Checks operation processing status
+) -> Optional[BulkRequestStatus]:
+    """Checks the processing status of multiple operations
 
     Args:
         project_identifier (str):
-        request_id (str):
+        body (RequestIdList):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        RequestStatus
+        BulkRequestStatus
     """
 
     return sync_detailed(
         client=client,
+        body=body,
         project_identifier=project_identifier,
-        request_id=request_id,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
+    body: RequestIdList,
     project_identifier: str,
-    request_id: str,
-) -> Response[RequestStatus]:
-    """Checks operation processing status
+) -> Response[BulkRequestStatus]:
+    """Checks the processing status of multiple operations
 
     Args:
         project_identifier (str):
-        request_id (str):
+        body (RequestIdList):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[RequestStatus]
+        Response[BulkRequestStatus]
     """
 
     kwargs = _get_kwargs(
+        body=body,
         project_identifier=project_identifier,
-        request_id=request_id,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -155,27 +155,27 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
+    body: RequestIdList,
     project_identifier: str,
-    request_id: str,
-) -> Optional[RequestStatus]:
-    """Checks operation processing status
+) -> Optional[BulkRequestStatus]:
+    """Checks the processing status of multiple operations
 
     Args:
         project_identifier (str):
-        request_id (str):
+        body (RequestIdList):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        RequestStatus
+        BulkRequestStatus
     """
 
     return (
         await asyncio_detailed(
             client=client,
+            body=body,
             project_identifier=project_identifier,
-            request_id=request_id,
         )
     ).parsed

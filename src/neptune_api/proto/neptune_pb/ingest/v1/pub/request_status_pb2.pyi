@@ -7,7 +7,7 @@ import collections.abc
 import google.protobuf.descriptor
 import google.protobuf.internal.containers
 import google.protobuf.message
-from .... import google_rpc
+from ..... import google_rpc
 import sys
 if sys.version_info >= (3, 8):
     import typing as typing_extensions
