@@ -10,7 +10,7 @@ pytest
 pytest-mock
 pytest-timeout
 freezegun
-grpcio-tools==1.60.0
+grpcio-tools==1.66.0
 mypy-protobuf
 protoletariat
 types-Pygments
