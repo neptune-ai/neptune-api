@@ -1,0 +1,108 @@
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Dict,
+    List,
+    Type,
+    TypeVar,
+    Union,
+)
+
+from attrs import define as _attrs_define
+from attrs import field as _attrs_field
+
+from ..types import (
+    UNSET,
+    Unset,
+)
+
+if TYPE_CHECKING:
+    from ..models.filter_query_attribute_definitions_dto import FilterQueryAttributeDefinitionsDTO
+    from ..models.priority_query_attribute_definitions_dto import PriorityQueryAttributeDefinitionsDTO
+
+
+T = TypeVar("T", bound="QueryAttributeDefinitionsPrioritizedBodyDTO")
+
+
+@_attrs_define
+class QueryAttributeDefinitionsPrioritizedBodyDTO:
+    """
+    Attributes:
+        filter_query_attribute_definitions_dto (FilterQueryAttributeDefinitionsDTO):
+        limit (Union[Unset, int]):
+        priority_query_attribute_definitions_dto (Union[Unset, PriorityQueryAttributeDefinitionsDTO]):
+    """
+
+    filter_query_attribute_definitions_dto: "FilterQueryAttributeDefinitionsDTO"
+    limit: Union[Unset, int] = UNSET
+    priority_query_attribute_definitions_dto: Union[Unset, "PriorityQueryAttributeDefinitionsDTO"] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+
+    def to_dict(self) -> Dict[str, Any]:
+        filter_query_attribute_definitions_dto = self.filter_query_attribute_definitions_dto.to_dict()
+
+        limit = self.limit
+
+        priority_query_attribute_definitions_dto: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.priority_query_attribute_definitions_dto, Unset):
+            priority_query_attribute_definitions_dto = self.priority_query_attribute_definitions_dto.to_dict()
+
+        field_dict: Dict[str, Any] = {}
+        field_dict.update(self.additional_properties)
+        field_dict.update(
+            {
+                "filterQueryAttributeDefinitionsDTO": filter_query_attribute_definitions_dto,
+            }
+        )
+        if limit is not UNSET:
+            field_dict["limit"] = limit
+        if priority_query_attribute_definitions_dto is not UNSET:
+            field_dict["priorityQueryAttributeDefinitionsDTO"] = priority_query_attribute_definitions_dto
+
+        return field_dict
+
+    @classmethod
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.filter_query_attribute_definitions_dto import FilterQueryAttributeDefinitionsDTO
+        from ..models.priority_query_attribute_definitions_dto import PriorityQueryAttributeDefinitionsDTO
+
+        d = src_dict.copy()
+        filter_query_attribute_definitions_dto = FilterQueryAttributeDefinitionsDTO.from_dict(
+            d.pop("filterQueryAttributeDefinitionsDTO")
+        )
+
+        limit = d.pop("limit", UNSET)
+
+        _priority_query_attribute_definitions_dto = d.pop("priorityQueryAttributeDefinitionsDTO", UNSET)
+        priority_query_attribute_definitions_dto: Union[Unset, PriorityQueryAttributeDefinitionsDTO]
+        if isinstance(_priority_query_attribute_definitions_dto, Unset):
+            priority_query_attribute_definitions_dto = UNSET
+        else:
+            priority_query_attribute_definitions_dto = PriorityQueryAttributeDefinitionsDTO.from_dict(
+                _priority_query_attribute_definitions_dto
+            )
+
+        query_attribute_definitions_prioritized_body_dto = cls(
+            filter_query_attribute_definitions_dto=filter_query_attribute_definitions_dto,
+            limit=limit,
+            priority_query_attribute_definitions_dto=priority_query_attribute_definitions_dto,
+        )
+
+        query_attribute_definitions_prioritized_body_dto.additional_properties = d
+        return query_attribute_definitions_prioritized_body_dto
+
+    @property
+    def additional_keys(self) -> List[str]:
+        return list(self.additional_properties.keys())
+
+    def __getitem__(self, key: str) -> Any:
+        return self.additional_properties[key]
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        self.additional_properties[key] = value
+
+    def __delitem__(self, key: str) -> None:
+        del self.additional_properties[key]
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.additional_properties
