@@ -24,3 +24,5 @@ dmypy.json
 
 # Poetry
 poetry.lock
+venv
+tmp/
