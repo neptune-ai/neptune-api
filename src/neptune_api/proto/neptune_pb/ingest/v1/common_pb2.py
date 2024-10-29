@@ -9,16 +9,16 @@ DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n!neptune_pb/ingest
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'neptune_pb.ingest.v1.common_pb2', _globals)
-if not _descriptor._USE_C_DESCRIPTORS:
-    _globals['DESCRIPTOR']._loaded_options = None
+if _descriptor._USE_C_DESCRIPTORS == False:
+    _globals['DESCRIPTOR']._options = None
     _globals['DESCRIPTOR']._serialized_options = b'\n$ml.neptune.leaderboard.api.ingest.v1B\x0bCommonProtoP\x01'
-    _globals['_MODIFYSTRINGSET_VALUESENTRY']._loaded_options = None
+    _globals['_MODIFYSTRINGSET_VALUESENTRY']._options = None
     _globals['_MODIFYSTRINGSET_VALUESENTRY']._serialized_options = b'8\x01'
-    _globals['_UPDATERUNSNAPSHOT_ASSIGNENTRY']._loaded_options = None
+    _globals['_UPDATERUNSNAPSHOT_ASSIGNENTRY']._options = None
     _globals['_UPDATERUNSNAPSHOT_ASSIGNENTRY']._serialized_options = b'8\x01'
-    _globals['_UPDATERUNSNAPSHOT_MODIFYSETSENTRY']._loaded_options = None
+    _globals['_UPDATERUNSNAPSHOT_MODIFYSETSENTRY']._options = None
     _globals['_UPDATERUNSNAPSHOT_MODIFYSETSENTRY']._serialized_options = b'8\x01'
-    _globals['_UPDATERUNSNAPSHOT_APPENDENTRY']._loaded_options = None
+    _globals['_UPDATERUNSNAPSHOT_APPENDENTRY']._options = None
     _globals['_UPDATERUNSNAPSHOT_APPENDENTRY']._serialized_options = b'8\x01'
     _globals['_SET_OPERATION']._serialized_start = 1677
     _globals['_SET_OPERATION']._serialized_end = 1723

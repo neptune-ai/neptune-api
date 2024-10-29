@@ -9,8 +9,8 @@ DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n%neptune_pb/ingest
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'neptune_pb.ingest.v1.pub.client_pb2', _globals)
-if not _descriptor._USE_C_DESCRIPTORS:
-    _globals['DESCRIPTOR']._loaded_options = None
+if _descriptor._USE_C_DESCRIPTORS == False:
+    _globals['DESCRIPTOR']._options = None
     _globals['DESCRIPTOR']._serialized_options = b'\n\x1cml.neptune.client.api.modelsB\x11ClientIngestProtoP\x01'
     _globals['_REQUESTID']._serialized_start = 111
     _globals['_REQUESTID']._serialized_end = 137

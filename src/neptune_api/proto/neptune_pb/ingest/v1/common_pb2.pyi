@@ -34,7 +34,7 @@ ADD: SET_OPERATION.ValueType
 REMOVE: SET_OPERATION.ValueType
 global___SET_OPERATION = SET_OPERATION
 
-@typing_extensions.final
+@typing.final
 class Step(google.protobuf.message.Message):
     """Step is used to measure computational progress of the Run and it's used to stamp its state.
     For example, to express Step `3.5`, use `Step{whole: 3, micro: 500_000`}.
@@ -50,11 +50,11 @@ class Step(google.protobuf.message.Message):
     def __init__(self, *, whole: builtins.int=..., micro: builtins.int=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['micro', b'micro', 'whole', b'whole']) -> None:
+    def ClearField(self, field_name: typing.Literal['micro', b'micro', 'whole', b'whole']) -> None:
         ...
 global___Step = Step
 
-@typing_extensions.final
+@typing.final
 class ForkPoint(google.protobuf.message.Message):
     """ForkPoint is used to mark the parent and its last inherited state during Forking."""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -76,14 +76,14 @@ class ForkPoint(google.protobuf.message.Message):
     def __init__(self, *, parent_project: builtins.str=..., parent_run_id: builtins.str=..., step: global___Step | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['step', b'step']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['step', b'step']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['parent_project', b'parent_project', 'parent_run_id', b'parent_run_id', 'step', b'step']) -> None:
+    def ClearField(self, field_name: typing.Literal['parent_project', b'parent_project', 'parent_run_id', b'parent_run_id', 'step', b'step']) -> None:
         ...
 global___ForkPoint = ForkPoint
 
-@typing_extensions.final
+@typing.final
 class StringSet(google.protobuf.message.Message):
     """StringSet represents a set of strings. The order of strings is irrelevant and duplicates are ignored."""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -96,11 +96,11 @@ class StringSet(google.protobuf.message.Message):
     def __init__(self, *, values: collections.abc.Iterable[builtins.str] | None=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['values', b'values']) -> None:
+    def ClearField(self, field_name: typing.Literal['values', b'values']) -> None:
         ...
 global___StringSet = StringSet
 
-@typing_extensions.final
+@typing.final
 class Value(google.protobuf.message.Message):
     """Value is a union of all supported types that can be used to update a field.
     Different types of operations support different subset of this field, so please refer to the documentation.
@@ -128,21 +128,21 @@ class Value(google.protobuf.message.Message):
     def __init__(self, *, float64: builtins.float=..., int64: builtins.int=..., bool: builtins.bool=..., string: builtins.str=..., timestamp: google.protobuf.timestamp_pb2.Timestamp | None=..., string_set: global___StringSet | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['bool', b'bool', 'float64', b'float64', 'int64', b'int64', 'string', b'string', 'string_set', b'string_set', 'timestamp', b'timestamp', 'value', b'value']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['bool', b'bool', 'float64', b'float64', 'int64', b'int64', 'string', b'string', 'string_set', b'string_set', 'timestamp', b'timestamp', 'value', b'value']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['bool', b'bool', 'float64', b'float64', 'int64', b'int64', 'string', b'string', 'string_set', b'string_set', 'timestamp', b'timestamp', 'value', b'value']) -> None:
+    def ClearField(self, field_name: typing.Literal['bool', b'bool', 'float64', b'float64', 'int64', b'int64', 'string', b'string', 'string_set', b'string_set', 'timestamp', b'timestamp', 'value', b'value']) -> None:
         ...
 
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['value', b'value']) -> typing_extensions.Literal['float64', 'int64', 'bool', 'string', 'timestamp', 'string_set'] | None:
+    def WhichOneof(self, oneof_group: typing.Literal['value', b'value']) -> typing.Literal['float64', 'int64', 'bool', 'string', 'timestamp', 'string_set'] | None:
         ...
 global___Value = Value
 
-@typing_extensions.final
+@typing.final
 class ModifyStringSet(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    @typing_extensions.final
+    @typing.final
     class ValuesEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
@@ -153,7 +153,7 @@ class ModifyStringSet(google.protobuf.message.Message):
         def __init__(self, *, key: builtins.str=..., value: global___SET_OPERATION.ValueType=...) -> None:
             ...
 
-        def ClearField(self, field_name: typing_extensions.Literal['key', b'key', 'value', b'value']) -> None:
+        def ClearField(self, field_name: typing.Literal['key', b'key', 'value', b'value']) -> None:
             ...
     VALUES_FIELD_NUMBER: builtins.int
 
@@ -164,11 +164,11 @@ class ModifyStringSet(google.protobuf.message.Message):
     def __init__(self, *, values: collections.abc.Mapping[builtins.str, global___SET_OPERATION.ValueType] | None=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['values', b'values']) -> None:
+    def ClearField(self, field_name: typing.Literal['values', b'values']) -> None:
         ...
 global___ModifyStringSet = ModifyStringSet
 
-@typing_extensions.final
+@typing.final
 class ModifySet(google.protobuf.message.Message):
     """Allows to update tag values in an incremental way."""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -181,17 +181,17 @@ class ModifySet(google.protobuf.message.Message):
     def __init__(self, *, string: global___ModifyStringSet | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['string', b'string', 'type', b'type']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['string', b'string', 'type', b'type']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['string', b'string', 'type', b'type']) -> None:
+    def ClearField(self, field_name: typing.Literal['string', b'string', 'type', b'type']) -> None:
         ...
 
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['type', b'type']) -> typing_extensions.Literal['string'] | None:
+    def WhichOneof(self, oneof_group: typing.Literal['type', b'type']) -> typing.Literal['string'] | None:
         ...
 global___ModifySet = ModifySet
 
-@typing_extensions.final
+@typing.final
 class Owner(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     USER_ID_FIELD_NUMBER: builtins.int
@@ -204,17 +204,17 @@ class Owner(google.protobuf.message.Message):
     def __init__(self, *, user_id: builtins.str=..., service_account_id: builtins.str=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['owner_type', b'owner_type', 'service_account_id', b'service_account_id', 'user_id', b'user_id']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['owner_type', b'owner_type', 'service_account_id', b'service_account_id', 'user_id', b'user_id']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['owner_type', b'owner_type', 'service_account_id', b'service_account_id', 'user_id', b'user_id']) -> None:
+    def ClearField(self, field_name: typing.Literal['owner_type', b'owner_type', 'service_account_id', b'service_account_id', 'user_id', b'user_id']) -> None:
         ...
 
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['owner_type', b'owner_type']) -> typing_extensions.Literal['user_id', 'service_account_id'] | None:
+    def WhichOneof(self, oneof_group: typing.Literal['owner_type', b'owner_type']) -> typing.Literal['user_id', 'service_account_id'] | None:
         ...
 global___Owner = Owner
 
-@typing_extensions.final
+@typing.final
 class Run(google.protobuf.message.Message):
     """CreateRun can be used to create a new run. This can be done in two ways:
     1. Create a new run with no inherited state. You may specify a new run family that will be
@@ -237,14 +237,16 @@ class Run(google.protobuf.message.Message):
     'Id of the run to be created. Optional if parent context has already specified run_id. If both are set, they\n    must be equal, otherwise the operation will fail.\n    '
     experiment_id: builtins.str
     'Experiment Id to assign to this Run. If Experiment Id is already assigned to another Run, specifying it in this\n    field will move it from the previous Run, so that at most one Run in given project has a given Experiment Id.\n    Note: Experiment Id is currently exposed as "sys/name" field in the Run metadata.\n    '
+    family: builtins.str
+    'Specifies Family for the new run. Run Family is used to group forking runs that share common ancestry.\n    By default, the new forking run will be in the same family as the parent run.\n    '
+    request_id: builtins.str
+    'Optional. The request ID generated by the Neptune client, used for tracking outcome of run creation.'
 
     @property
     def fork_point(self) -> global___ForkPoint:
         """Optional. ForkPoint is used to identify the exact point in the parent history from which the new run continues.
         If not specified, the new run will start with no inherited state.
         """
-    family: builtins.str
-    'Specifies Family for the new run. Run Family is used to group forking runs that share common ancestry.\n    By default, the new forking run will be in the same family as the parent run.\n    '
 
     @property
     def creation_time(self) -> google.protobuf.timestamp_pb2.Timestamp:
@@ -258,49 +260,47 @@ class Run(google.protobuf.message.Message):
         """User that is the owner of the run/experiment being created.
         If not specified, it will be set to a user named "unspecified".
         """
-    request_id: builtins.str
-    'Optional. The request ID generated by the Neptune client, used for tracking outcome of run creation.'
 
     def __init__(self, *, run_id: builtins.str | None=..., experiment_id: builtins.str | None=..., fork_point: global___ForkPoint | None=..., family: builtins.str | None=..., creation_time: google.protobuf.timestamp_pb2.Timestamp | None=..., owner: global___Owner | None=..., request_id: builtins.str | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['_creation_time', b'_creation_time', '_experiment_id', b'_experiment_id', '_family', b'_family', '_owner', b'_owner', '_request_id', b'_request_id', '_run_id', b'_run_id', 'creation_time', b'creation_time', 'experiment_id', b'experiment_id', 'family', b'family', 'fork_point', b'fork_point', 'owner', b'owner', 'request_id', b'request_id', 'run_id', b'run_id']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['_creation_time', b'_creation_time', '_experiment_id', b'_experiment_id', '_family', b'_family', '_owner', b'_owner', '_request_id', b'_request_id', '_run_id', b'_run_id', 'creation_time', b'creation_time', 'experiment_id', b'experiment_id', 'family', b'family', 'fork_point', b'fork_point', 'owner', b'owner', 'request_id', b'request_id', 'run_id', b'run_id']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['_creation_time', b'_creation_time', '_experiment_id', b'_experiment_id', '_family', b'_family', '_owner', b'_owner', '_request_id', b'_request_id', '_run_id', b'_run_id', 'creation_time', b'creation_time', 'experiment_id', b'experiment_id', 'family', b'family', 'fork_point', b'fork_point', 'owner', b'owner', 'request_id', b'request_id', 'run_id', b'run_id']) -> None:
-        ...
-
-    @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['_creation_time', b'_creation_time']) -> typing_extensions.Literal['creation_time'] | None:
+    def ClearField(self, field_name: typing.Literal['_creation_time', b'_creation_time', '_experiment_id', b'_experiment_id', '_family', b'_family', '_owner', b'_owner', '_request_id', b'_request_id', '_run_id', b'_run_id', 'creation_time', b'creation_time', 'experiment_id', b'experiment_id', 'family', b'family', 'fork_point', b'fork_point', 'owner', b'owner', 'request_id', b'request_id', 'run_id', b'run_id']) -> None:
         ...
 
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['_experiment_id', b'_experiment_id']) -> typing_extensions.Literal['experiment_id'] | None:
+    def WhichOneof(self, oneof_group: typing.Literal['_creation_time', b'_creation_time']) -> typing.Literal['creation_time'] | None:
         ...
 
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['_family', b'_family']) -> typing_extensions.Literal['family'] | None:
+    def WhichOneof(self, oneof_group: typing.Literal['_experiment_id', b'_experiment_id']) -> typing.Literal['experiment_id'] | None:
         ...
 
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['_owner', b'_owner']) -> typing_extensions.Literal['owner'] | None:
+    def WhichOneof(self, oneof_group: typing.Literal['_family', b'_family']) -> typing.Literal['family'] | None:
         ...
 
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['_request_id', b'_request_id']) -> typing_extensions.Literal['request_id'] | None:
+    def WhichOneof(self, oneof_group: typing.Literal['_owner', b'_owner']) -> typing.Literal['owner'] | None:
         ...
 
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['_run_id', b'_run_id']) -> typing_extensions.Literal['run_id'] | None:
+    def WhichOneof(self, oneof_group: typing.Literal['_request_id', b'_request_id']) -> typing.Literal['request_id'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal['_run_id', b'_run_id']) -> typing.Literal['run_id'] | None:
         ...
 global___Run = Run
 
-@typing_extensions.final
+@typing.final
 class UpdateRunSnapshot(google.protobuf.message.Message):
     """Stores Snapshot information about updated fields for a single step. Only passed fields will be updated."""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    @typing_extensions.final
+    @typing.final
     class AssignEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
@@ -314,13 +314,13 @@ class UpdateRunSnapshot(google.protobuf.message.Message):
         def __init__(self, *, key: builtins.str=..., value: global___Value | None=...) -> None:
             ...
 
-        def HasField(self, field_name: typing_extensions.Literal['value', b'value']) -> builtins.bool:
+        def HasField(self, field_name: typing.Literal['value', b'value']) -> builtins.bool:
             ...
 
-        def ClearField(self, field_name: typing_extensions.Literal['key', b'key', 'value', b'value']) -> None:
+        def ClearField(self, field_name: typing.Literal['key', b'key', 'value', b'value']) -> None:
             ...
 
-    @typing_extensions.final
+    @typing.final
     class ModifySetsEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
@@ -334,13 +334,13 @@ class UpdateRunSnapshot(google.protobuf.message.Message):
         def __init__(self, *, key: builtins.str=..., value: global___ModifySet | None=...) -> None:
             ...
 
-        def HasField(self, field_name: typing_extensions.Literal['value', b'value']) -> builtins.bool:
+        def HasField(self, field_name: typing.Literal['value', b'value']) -> builtins.bool:
             ...
 
-        def ClearField(self, field_name: typing_extensions.Literal['key', b'key', 'value', b'value']) -> None:
+        def ClearField(self, field_name: typing.Literal['key', b'key', 'value', b'value']) -> None:
             ...
 
-    @typing_extensions.final
+    @typing.final
     class AppendEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
@@ -354,10 +354,10 @@ class UpdateRunSnapshot(google.protobuf.message.Message):
         def __init__(self, *, key: builtins.str=..., value: global___Value | None=...) -> None:
             ...
 
-        def HasField(self, field_name: typing_extensions.Literal['value', b'value']) -> builtins.bool:
+        def HasField(self, field_name: typing.Literal['value', b'value']) -> builtins.bool:
             ...
 
-        def ClearField(self, field_name: typing_extensions.Literal['key', b'key', 'value', b'value']) -> None:
+        def ClearField(self, field_name: typing.Literal['key', b'key', 'value', b'value']) -> None:
             ...
     STEP_FIELD_NUMBER: builtins.int
     TIMESTAMP_FIELD_NUMBER: builtins.int
@@ -365,6 +365,8 @@ class UpdateRunSnapshot(google.protobuf.message.Message):
     MODIFY_SETS_FIELD_NUMBER: builtins.int
     APPEND_FIELD_NUMBER: builtins.int
     REQUEST_ID_FIELD_NUMBER: builtins.int
+    request_id: builtins.str
+    'Optional. The request ID generated by the Neptune client, used for tracking outcome of run update.'
 
     @property
     def step(self) -> global___Step:
@@ -413,18 +415,16 @@ class UpdateRunSnapshot(google.protobuf.message.Message):
         Note: when using a StringSet value, this action will override the whole Set with the new values.
               If you want to add or remove tags individually, use `modify_set.string` instead.
         """
-    request_id: builtins.str
-    'Optional. The request ID generated by the Neptune client, used for tracking outcome of run update.'
 
     def __init__(self, *, step: global___Step | None=..., timestamp: google.protobuf.timestamp_pb2.Timestamp | None=..., assign: collections.abc.Mapping[builtins.str, global___Value] | None=..., modify_sets: collections.abc.Mapping[builtins.str, global___ModifySet] | None=..., append: collections.abc.Mapping[builtins.str, global___Value] | None=..., request_id: builtins.str | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['_request_id', b'_request_id', 'request_id', b'request_id', 'step', b'step', 'timestamp', b'timestamp']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['_request_id', b'_request_id', 'request_id', b'request_id', 'step', b'step', 'timestamp', b'timestamp']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['_request_id', b'_request_id', 'append', b'append', 'assign', b'assign', 'modify_sets', b'modify_sets', 'request_id', b'request_id', 'step', b'step', 'timestamp', b'timestamp']) -> None:
+    def ClearField(self, field_name: typing.Literal['_request_id', b'_request_id', 'append', b'append', 'assign', b'assign', 'modify_sets', b'modify_sets', 'request_id', b'request_id', 'step', b'step', 'timestamp', b'timestamp']) -> None:
         ...
 
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['_request_id', b'_request_id']) -> typing_extensions.Literal['request_id'] | None:
+    def WhichOneof(self, oneof_group: typing.Literal['_request_id', b'_request_id']) -> typing.Literal['request_id'] | None:
         ...
 global___UpdateRunSnapshot = UpdateRunSnapshot

@@ -9,18 +9,14 @@ import google.protobuf.internal.containers
 import google.protobuf.message
 from ..... import google_rpc
 from ..... import neptune_pb
-import sys
-if sys.version_info >= (3, 8):
-    import typing as typing_extensions
-else:
-    import typing_extensions
+import typing
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
-@typing_extensions.final
+@typing.final
 class RequestStatus(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    @typing_extensions.final
+    @typing.final
     class CodeByCount(google.protobuf.message.Message):
         """in case all operations are successful {"OK": 1}, otherwise errors are reported"""
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -34,7 +30,7 @@ class RequestStatus(google.protobuf.message.Message):
         def __init__(self, *, code: google_rpc.code_pb2.Code.ValueType=..., count: builtins.int=..., detail: neptune_pb.ingest.v1.ingest_pb2.IngestCode.ValueType=...) -> None:
             ...
 
-        def ClearField(self, field_name: typing_extensions.Literal['code', b'code', 'count', b'count', 'detail', b'detail']) -> None:
+        def ClearField(self, field_name: typing.Literal['code', b'code', 'count', b'count', 'detail', b'detail']) -> None:
             ...
     CODE_BY_COUNT_FIELD_NUMBER: builtins.int
 
@@ -45,6 +41,6 @@ class RequestStatus(google.protobuf.message.Message):
     def __init__(self, *, code_by_count: collections.abc.Iterable[global___RequestStatus.CodeByCount] | None=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['code_by_count', b'code_by_count']) -> None:
+    def ClearField(self, field_name: typing.Literal['code_by_count', b'code_by_count']) -> None:
         ...
 global___RequestStatus = RequestStatus
