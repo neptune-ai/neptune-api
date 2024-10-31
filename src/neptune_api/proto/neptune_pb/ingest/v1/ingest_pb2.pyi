@@ -126,43 +126,6 @@ INTERNAL: IngestCode.ValueType
 global___IngestCode = IngestCode
 
 @typing.final
-class UpdateRunSnapshots(google.protobuf.message.Message):
-    """UpdateSnapshots updates fields for a given step. Used to update current state of the run in a single step.
-    It's especially useful when user updates a large number of disparate fields in a single or few steps.
-    All fields that were seen in a single snapshot will be aligned to the same step. In case the step is not set,
-    it will select the successor of the highest step across applicable individual metric leaders for this run.
-    Example:
-    ```
-    [{step: {whole: 1},
-     timestamp: "2020-01-01T00:00:00Z",
-     assign: {
-       "parameters/learning_rate":  {float64: 0.001},
-       "parameters/param1":         {float64: 0.1}},
-     append: {
-       "metrics/precision":         {float64: 0.72}}},
-    {step: {whole: 2},
-     timestamp: "2020-01-01T00:00:00Z",
-     append: {
-       "metrics/recall":     {float64: 0.6},
-       "metrics/precision":  {float64: 0.74}}}]
-
-    ```
-    """
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    SNAPSHOTS_FIELD_NUMBER: builtins.int
-
-    @property
-    def snapshots(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[neptune_pb.ingest.v1.common_pb2.UpdateRunSnapshot]:
-        ...
-
-    def __init__(self, *, snapshots: collections.abc.Iterable[neptune_pb.ingest.v1.common_pb2.UpdateRunSnapshot] | None=...) -> None:
-        ...
-
-    def ClearField(self, field_name: typing.Literal['snapshots', b'snapshots']) -> None:
-        ...
-global___UpdateRunSnapshots = UpdateRunSnapshots
-
-@typing.final
 class BatchContext(google.protobuf.message.Message):
     """BatchContext"""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -187,12 +150,12 @@ class UpdateRun(google.protobuf.message.Message):
     UPDATE_SNAPSHOTS_FIELD_NUMBER: builtins.int
 
     @property
-    def update_snapshots(self) -> global___UpdateRunSnapshots:
+    def update_snapshots(self) -> neptune_pb.ingest.v1.common_pb2.UpdateRunSnapshots:
         """All included fields will be aligned to the same step. In case the step is not set, it will select the
         successor of the run step, which is the highest step across individual metric leaders for this run.
         """
 
-    def __init__(self, *, update_snapshots: global___UpdateRunSnapshots | None=...) -> None:
+    def __init__(self, *, update_snapshots: neptune_pb.ingest.v1.common_pb2.UpdateRunSnapshots | None=...) -> None:
         ...
 
     def HasField(self, field_name: typing.Literal['mode', b'mode', 'update_snapshots', b'update_snapshots']) -> builtins.bool:

@@ -8,7 +8,7 @@ from typing import (
 
 import httpx
 
-from neptune_api.proto.neptune_pb.ingest.v1.pub.client_pb2 import RequestId
+from neptune_api.proto.neptune_pb.ingest.v1.pub.client_pb2 import SubmitResponse
 from neptune_api.proto.neptune_pb.ingest.v1.pub.ingest_pb2 import RunOperation
 from neptune_api.types import Response
 
@@ -41,9 +41,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[RequestId]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[SubmitResponse]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = RequestId()
+        response_200 = SubmitResponse()
         response_200.ParseFromString(response.content)
 
         return response_200
@@ -53,7 +53,7 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[RequestId]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[SubmitResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -67,7 +67,7 @@ def sync_detailed(
     client: AuthenticatedClient,
     body: RunOperation,
     family: str,
-) -> Response[RequestId]:
+) -> Response[SubmitResponse]:
     """Submits a new operation to be performed asynchronously
 
     Args:
@@ -79,7 +79,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[RequestId]
+        Response[SubmitResponse]
     """
 
     kwargs = _get_kwargs(
@@ -99,7 +99,7 @@ def sync(
     client: AuthenticatedClient,
     body: RunOperation,
     family: str,
-) -> Optional[RequestId]:
+) -> Optional[SubmitResponse]:
     """Submits a new operation to be performed asynchronously
 
     Args:
@@ -111,7 +111,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        RequestId
+        SubmitResponse
     """
 
     return sync_detailed(
@@ -126,7 +126,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient,
     body: RunOperation,
     family: str,
-) -> Response[RequestId]:
+) -> Response[SubmitResponse]:
     """Submits a new operation to be performed asynchronously
 
     Args:
@@ -138,7 +138,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[RequestId]
+        Response[SubmitResponse]
     """
 
     kwargs = _get_kwargs(
@@ -156,7 +156,7 @@ async def asyncio(
     client: AuthenticatedClient,
     body: RunOperation,
     family: str,
-) -> Optional[RequestId]:
+) -> Optional[SubmitResponse]:
     """Submits a new operation to be performed asynchronously
 
     Args:
@@ -168,7 +168,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        RequestId
+        SubmitResponse
     """
 
     return (

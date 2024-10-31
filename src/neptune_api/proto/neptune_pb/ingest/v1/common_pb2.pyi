@@ -61,10 +61,13 @@ class ForkPoint(google.protobuf.message.Message):
     PARENT_PROJECT_FIELD_NUMBER: builtins.int
     PARENT_RUN_ID_FIELD_NUMBER: builtins.int
     STEP_FIELD_NUMBER: builtins.int
+    REQUESTED_PARENT_ID_FIELD_NUMBER: builtins.int
     parent_project: builtins.str
     'Optional. Parent project qualified name. If not set, it will default to the context project.'
     parent_run_id: builtins.str
     'Required. The id of the parent run within the parent project.'
+    requested_parent_id: builtins.str
+    'Internal. requested parent_id of the run.'
 
     @property
     def step(self) -> global___Step:
@@ -73,13 +76,16 @@ class ForkPoint(google.protobuf.message.Message):
         New run may start numbering steps from the next micro step after the fork step.
         """
 
-    def __init__(self, *, parent_project: builtins.str=..., parent_run_id: builtins.str=..., step: global___Step | None=...) -> None:
+    def __init__(self, *, parent_project: builtins.str=..., parent_run_id: builtins.str=..., step: global___Step | None=..., requested_parent_id: builtins.str | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing.Literal['step', b'step']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['_requested_parent_id', b'_requested_parent_id', 'requested_parent_id', b'requested_parent_id', 'step', b'step']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing.Literal['parent_project', b'parent_project', 'parent_run_id', b'parent_run_id', 'step', b'step']) -> None:
+    def ClearField(self, field_name: typing.Literal['_requested_parent_id', b'_requested_parent_id', 'parent_project', b'parent_project', 'parent_run_id', b'parent_run_id', 'requested_parent_id', b'requested_parent_id', 'step', b'step']) -> None:
+        ...
+
+    def WhichOneof(self, oneof_group: typing.Literal['_requested_parent_id', b'_requested_parent_id']) -> typing.Literal['requested_parent_id'] | None:
         ...
 global___ForkPoint = ForkPoint
 
@@ -428,3 +434,40 @@ class UpdateRunSnapshot(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing.Literal['_request_id', b'_request_id']) -> typing.Literal['request_id'] | None:
         ...
 global___UpdateRunSnapshot = UpdateRunSnapshot
+
+@typing.final
+class UpdateRunSnapshots(google.protobuf.message.Message):
+    """UpdateSnapshots updates fields for a given step. Used to update current state of the run in a single step.
+    It's especially useful when user updates a large number of disparate fields in a single or few steps.
+    All fields that were seen in a single snapshot will be aligned to the same step. In case the step is not set,
+    it will select the successor of the highest step across applicable individual metric leaders for this run.
+    Example:
+    ```
+    [{step: {whole: 1},
+     timestamp: "2020-01-01T00:00:00Z",
+     assign: {
+       "parameters/learning_rate":  {float64: 0.001},
+       "parameters/param1":         {float64: 0.1}},
+     append: {
+       "metrics/precision":         {float64: 0.72}}},
+    {step: {whole: 2},
+     timestamp: "2020-01-01T00:00:00Z",
+     append: {
+       "metrics/recall":     {float64: 0.6},
+       "metrics/precision":  {float64: 0.74}}}]
+
+    ```
+    """
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    SNAPSHOTS_FIELD_NUMBER: builtins.int
+
+    @property
+    def snapshots(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___UpdateRunSnapshot]:
+        ...
+
+    def __init__(self, *, snapshots: collections.abc.Iterable[global___UpdateRunSnapshot] | None=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing.Literal['snapshots', b'snapshots']) -> None:
+        ...
+global___UpdateRunSnapshots = UpdateRunSnapshots
