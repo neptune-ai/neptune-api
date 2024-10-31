@@ -41,7 +41,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[SubmitResponse]:
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[SubmitResponse]:
     if response.status_code == HTTPStatus.OK:
         response_200 = SubmitResponse()
         response_200.ParseFromString(response.content)
@@ -53,7 +55,9 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[SubmitResponse]:
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[SubmitResponse]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
