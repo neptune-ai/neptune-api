@@ -4,3 +4,4 @@ neptune_api/proto/
 neptune_api/api/data_ingestion/check_request_status.py
 neptune_api/api/data_ingestion/check_request_status_bulk.py
 neptune_api/api/data_ingestion/submit_operation.py
+neptune_api/api/data_ingestion/submit_operation_batch.py

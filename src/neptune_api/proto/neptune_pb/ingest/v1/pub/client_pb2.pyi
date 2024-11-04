@@ -8,14 +8,10 @@ import google.protobuf.descriptor
 import google.protobuf.internal.containers
 import google.protobuf.message
 from ..... import neptune_pb
-import sys
-if sys.version_info >= (3, 8):
-    import typing as typing_extensions
-else:
-    import typing_extensions
+import typing
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
-@typing_extensions.final
+@typing.final
 class RequestId(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     VALUE_FIELD_NUMBER: builtins.int
@@ -24,11 +20,11 @@ class RequestId(google.protobuf.message.Message):
     def __init__(self, *, value: builtins.str=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['value', b'value']) -> None:
+    def ClearField(self, field_name: typing.Literal['value', b'value']) -> None:
         ...
 global___RequestId = RequestId
 
-@typing_extensions.final
+@typing.final
 class RequestIdList(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     IDS_FIELD_NUMBER: builtins.int
@@ -40,11 +36,11 @@ class RequestIdList(google.protobuf.message.Message):
     def __init__(self, *, ids: collections.abc.Iterable[global___RequestId] | None=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['ids', b'ids']) -> None:
+    def ClearField(self, field_name: typing.Literal['ids', b'ids']) -> None:
         ...
 global___RequestIdList = RequestIdList
 
-@typing_extensions.final
+@typing.final
 class BulkRequestStatus(google.protobuf.message.Message):
     """Maps a list of request identifiers to their respective statuses.
     The backend API guarantees that the number of returned fields is equal
@@ -60,6 +56,25 @@ class BulkRequestStatus(google.protobuf.message.Message):
     def __init__(self, *, statuses: collections.abc.Iterable[neptune_pb.ingest.v1.pub.request_status_pb2.RequestStatus] | None=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['statuses', b'statuses']) -> None:
+    def ClearField(self, field_name: typing.Literal['statuses', b'statuses']) -> None:
         ...
 global___BulkRequestStatus = BulkRequestStatus
+
+@typing.final
+class SubmitResponse(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    REQUEST_ID_FIELD_NUMBER: builtins.int
+    REQUEST_IDS_FIELD_NUMBER: builtins.int
+    request_id: builtins.str
+    'wire-compatibility with RequestId. Will be deprecated'
+
+    @property
+    def request_ids(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.str]:
+        ...
+
+    def __init__(self, *, request_id: builtins.str=..., request_ids: collections.abc.Iterable[builtins.str] | None=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing.Literal['request_id', b'request_id', 'request_ids', b'request_ids']) -> None:
+        ...
+global___SubmitResponse = SubmitResponse

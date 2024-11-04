@@ -10,6 +10,7 @@ from .request_id import RequestId
 from .request_id_list import RequestIdList
 from .request_status import RequestStatus
 from .run_operation import RunOperation
+from .run_operation_batch import RunOperationBatch
 from .security_dto import SecurityDTO
 
 __all__ = (
@@ -23,5 +24,6 @@ __all__ = (
     "RequestIdList",
     "RequestStatus",
     "RunOperation",
+    "RunOperationBatch",
     "SecurityDTO",
 )
