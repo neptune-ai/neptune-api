@@ -78,5 +78,5 @@ Things to know:
 
 Run the following command to regenerate the OpenAPI client:
 ```bash
-scripts/update.sh https://<deployment>.neptune.ai/api/client/v1/api-docs
+scripts/update.sh https://<deployment>.neptune.ai
 ```

@@ -10,7 +10,7 @@ pattern = "default-unprefixed"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-httpx = ">=0.15.4,<0.27.2"
+httpx = { version = ">=0.15.4,<0.27.2", extras = ["http2"] }
 attrs = ">=21.3.0"
 python-dateutil = "^2.8.0"
 PyJWT = "^2.0.0"
@@ -26,6 +26,7 @@ readme = "README.md"
 license = "Apache License 2.0"
 packages = [
     { include = "neptune_api", from = "src" },
+    { include = "neptune_retrieval_api", from = "src" },
 ]
 include = ["CHANGELOG.md", "src/neptune_api/py.typed"]
 classifiers = [
@@ -73,11 +74,11 @@ exclude = '''
 profile = "black"
 line_length = 120
 force_grid_wrap = 2
-extend_skip = ["src/neptune_api/proto"]
+extend_skip = ["src/neptune_api/proto", "src/neptune_retrieval_api/proto"]
 
 [tool.ruff]
 line-length = 120
-exclude = ["src/neptune_api/proto"]
+exclude = ["src/neptune_api/proto", "src/neptune_retrieval_api/proto"]
 
 [tool.ruff.lint]
 select = ["F", "UP"]
