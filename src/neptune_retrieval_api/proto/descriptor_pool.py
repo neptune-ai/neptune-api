@@ -1,7 +1,9 @@
+from typing import Optional
+
 from google.protobuf import descriptor_pool
 
 _DEFAULT_POOL: descriptor_pool.DescriptorPool = descriptor_pool.Default()
-_LOCAL_POOL: descriptor_pool.DescriptorPool | None = None
+_LOCAL_POOL: Optional[descriptor_pool.DescriptorPool] = None
 
 
 if _LOCAL_POOL is None:

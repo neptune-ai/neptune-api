@@ -16,12 +16,6 @@ from neptune_retrieval_api.proto.neptune_pb.api.model import (
 )
 
 
-def test_hmm():
-    assert list(inspect.getmembers(common_pb2, lambda x: inspect.isclass(x) and issubclass(x, message.Message))) == [
-        "hmm"
-    ]
-
-
 @pytest.mark.parametrize(
     "cls",
     [cls for _, cls in inspect.getmembers(common_pb2, lambda x: inspect.isclass(x) and issubclass(x, message.Message))],
