@@ -78,5 +78,12 @@ Things to know:
 
 Run the following command to regenerate the OpenAPI client:
 ```bash
-scripts/update.sh https://<deployment>.neptune.ai
+scripts/generate_client.sh https://<deployment>.neptune.ai
+```
+
+## Update protobuf model
+
+Generating the protobuf model requires access to the proto files. They are not available publicly as of now.
+```bash
+scripts/generate_proto.sh "$HOME/Projects/neptune"
 ```
