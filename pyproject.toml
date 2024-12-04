@@ -15,6 +15,8 @@ attrs = ">=21.3.0"
 python-dateutil = "^2.8.0"
 PyJWT = "^2.0.0"
 protobuf = ">=4,<6"
+google-cloud-iam = "^2.0.0"
+google-auth = "^2.0.0"
 
 [tool.poetry]
 name = "neptune-api"
@@ -95,3 +97,4 @@ check_untyped_defs = "True"
 warn_return_any = "True"
 show_error_codes = "True"
 warn_unused_ignores = "True"
+ignore_missing_imports = "True"
