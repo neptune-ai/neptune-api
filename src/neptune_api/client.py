@@ -522,7 +522,8 @@ if USE_IAP:
             client=client,
         )
         try:
-            credentials = id_token.fetch_id_token_credentials(base_url, request=Request())
+            iap_client_id = _find_iap_client_id(base_url)
+            credentials = id_token.fetch_id_token_credentials(iap_client_id, request=Request())
             # If we can fetch an ID token, we're running on GKE
             return GKEIdentityAwareProxyAuthenticator(credentials=credentials, additional_authenticator=neptune_auth)
         except DefaultCredentialsError:
@@ -534,7 +535,8 @@ if USE_IAP:
 
     def create_proxy_auth(base_url: str) -> Optional[httpx.Auth]:
         try:
-            credentials = id_token.fetch_id_token_credentials(base_url, request=Request())
+            iap_client_id = _find_iap_client_id(base_url)
+            credentials = id_token.fetch_id_token_credentials(iap_client_id, request=Request())
             # If we can fetch an ID token, we're running on GKE
             return GKEIdentityAwareProxyAuthenticator(credentials=credentials)
         except DefaultCredentialsError:
