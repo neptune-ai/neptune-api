@@ -104,7 +104,7 @@ class Client:
         """Get the underlying httpx.Client, constructing a new one if not previously set"""
         if self._client is None:
             self._client = httpx.Client(
-                auth=create_proxy_auth(),
+                auth=create_proxy_auth(self._base_url),
                 base_url=self._base_url,
                 cookies=self._cookies,
                 headers=self._headers,
@@ -289,6 +289,7 @@ class AuthenticatedClient:
                     token_refreshing_endpoint=self.token_refreshing_endpoint,
                     api_key_exchange_factory=self.api_key_exchange_callback,
                     client=self.get_token_refreshing_client(),
+                    base_url=self._base_url,
                 ),
                 base_url=self._base_url,
                 cookies=self._cookies,
@@ -404,12 +405,34 @@ class NeptuneAuthenticator(httpx.Auth):
 USE_IAP = os.environ.get("NEPTUNE_GCP_USE_IAP", False) in {"true", "t", "1", "True"}
 
 if USE_IAP:
+    from urllib.parse import (
+        parse_qs,
+        urlparse,
+    )
+
     import google.auth
+    import requests
+    from google.auth.exceptions import DefaultCredentialsError
+    from google.auth.transport.requests import Request
     from google.cloud import iam_credentials_v1
+    from google.oauth2 import id_token
 
-    NEPTUNE_IAP_SERVICE_ACCOUNT = os.environ["NEPTUNE_IAP_SERVICE_ACCOUNT"]
+    def _find_iap_client_id(url: str) -> Optional[str]:
+        try:
+            response = requests.get(url, allow_redirects=False)
+            if response.status_code == 302:
+                location = response.headers.get("location")
+                if location:
+                    parsed_url = urlparse(location)
+                    query_params = parse_qs(parsed_url.query)
+                    client_id = query_params.get("client_id", [None])[0]
+                    return client_id
+            return None
+        except Exception as e:
+            print(f"Error fetching client_id: {e}")
+            return None
 
-    class IdentityAwareProxyAuthenticator(httpx.Auth):
+    class LocalIdentityAwareProxyAuthenticator(httpx.Auth):
         def __init__(
             self,
             service_account_email: str,
@@ -459,12 +482,37 @@ if USE_IAP:
             # TODO: Missing implementation
             yield request
 
+    class GKEIdentityAwareProxyAuthenticator(httpx.Auth):
+        def __init__(
+            self,
+            credentials: Any,
+            additional_authenticator: Optional[httpx.Auth] = None,
+        ):
+            self._credentials = credentials
+            self._additional_authenticator = additional_authenticator
+
+        def sync_auth_flow(self, request: httpx.Request) -> Generator[httpx.Request, httpx.Response, None]:
+            if self._credentials.expired:
+                self._credentials.refresh(Request())
+
+            request.headers["Proxy-Authorization"] = f"Bearer {self._credentials.token}"
+
+            if self._additional_authenticator is not None:
+                yield from self._additional_authenticator.sync_auth_flow(request)
+            else:
+                yield request
+
+        async def async_auth_flow(self, request: httpx.Request) -> typing.AsyncGenerator[httpx.Request, httpx.Response]:
+            # TODO: Missing implementation
+            yield request
+
     def create_auth(
         credentials: Credentials,
         client_id: str,
         token_refreshing_endpoint: str,
         api_key_exchange_factory: Callable[[Client, Credentials], OAuthToken],
         client: Client,
+        base_url: str,
     ) -> httpx.Auth:
         neptune_auth = NeptuneAuthenticator(
             credentials=credentials,
@@ -473,12 +521,26 @@ if USE_IAP:
             api_key_exchange_factory=api_key_exchange_factory,
             client=client,
         )
-        return IdentityAwareProxyAuthenticator(
-            service_account_email=NEPTUNE_IAP_SERVICE_ACCOUNT, additional_authenticator=neptune_auth
-        )
+        try:
+            credentials = id_token.fetch_id_token_credentials(base_url, request=Request())
+            # If we can fetch an ID token, we're running on GKE
+            return GKEIdentityAwareProxyAuthenticator(credentials=credentials, additional_authenticator=neptune_auth)
+        except DefaultCredentialsError:
+            # If we can't fetch an ID token, we're running locally
+            neptune_iap_service_account: str = os.environ["NEPTUNE_IAP_SERVICE_ACCOUNT"]
+            return LocalIdentityAwareProxyAuthenticator(
+                service_account_email=neptune_iap_service_account, additional_authenticator=neptune_auth
+            )
 
-    def create_proxy_auth() -> Optional[httpx.Auth]:
-        return IdentityAwareProxyAuthenticator(service_account_email=NEPTUNE_IAP_SERVICE_ACCOUNT)
+    def create_proxy_auth(base_url: str) -> Optional[httpx.Auth]:
+        try:
+            credentials = id_token.fetch_id_token_credentials(base_url, request=Request())
+            # If we can fetch an ID token, we're running on GKE
+            return GKEIdentityAwareProxyAuthenticator(credentials=credentials)
+        except DefaultCredentialsError:
+            # If we can't fetch an ID token, we're running locally
+            neptune_iap_service_account: str = os.environ["NEPTUNE_IAP_SERVICE_ACCOUNT"]
+            return LocalIdentityAwareProxyAuthenticator(service_account_email=neptune_iap_service_account)
 
 else:
 
@@ -488,6 +550,7 @@ else:
         token_refreshing_endpoint: str,
         api_key_exchange_factory: Callable[[Client, Credentials], OAuthToken],
         client: Client,
+        base_url: str,
     ) -> httpx.Auth:
         return NeptuneAuthenticator(
             credentials=credentials,
@@ -497,5 +560,5 @@ else:
             client=client,
         )
 
-    def create_proxy_auth() -> Optional[httpx.Auth]:
+    def create_proxy_auth(base_url: str) -> Optional[httpx.Auth]:
         return None
