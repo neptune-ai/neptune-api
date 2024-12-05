@@ -412,7 +412,6 @@ if USE_IAP:
 
     import google.auth
     import requests
-    from google.auth.exceptions import DefaultCredentialsError
     from google.auth.transport.requests import Request
     from google.cloud import iam_credentials_v1
     from google.oauth2 import id_token
@@ -521,14 +520,14 @@ if USE_IAP:
             api_key_exchange_factory=api_key_exchange_factory,
             client=client,
         )
-        try:
+        if not os.environ.get("NEPTUNE_IAP_SERVICE_ACCOUNT"):
             iap_client_id = _find_iap_client_id(base_url)
             request = Request()
             credentials = id_token.fetch_id_token_credentials(iap_client_id, request=request)
             credentials.refresh(request)  # type: ignore
             # If we can fetch an ID token, we're running on GKE
             return GKEIdentityAwareProxyAuthenticator(credentials=credentials, additional_authenticator=neptune_auth)
-        except DefaultCredentialsError:
+        else:
             # If we can't fetch an ID token, we're running locally
             neptune_iap_service_account: str = os.environ["NEPTUNE_IAP_SERVICE_ACCOUNT"]
             return LocalIdentityAwareProxyAuthenticator(
@@ -536,14 +535,14 @@ if USE_IAP:
             )
 
     def create_proxy_auth(base_url: str) -> Optional[httpx.Auth]:
-        try:
+        if not os.environ.get("NEPTUNE_IAP_SERVICE_ACCOUNT"):
             iap_client_id = _find_iap_client_id(base_url)
             request = Request()
             credentials = id_token.fetch_id_token_credentials(iap_client_id, request=request)
             credentials.refresh(request)
             # If we can fetch an ID token, we're running on GKE
             return GKEIdentityAwareProxyAuthenticator(credentials=credentials)
-        except DefaultCredentialsError:
+        else:
             # If we can't fetch an ID token, we're running locally
             neptune_iap_service_account: str = os.environ["NEPTUNE_IAP_SERVICE_ACCOUNT"]
             return LocalIdentityAwareProxyAuthenticator(service_account_email=neptune_iap_service_account)
