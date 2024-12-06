@@ -1,18 +1,24 @@
 __all__ = ["Client", "AuthenticatedClient", "NeptuneAuthenticator"]
 
+import datetime
+import json
+import os
 import ssl
 import threading
 import typing
+from datetime import timedelta
 from typing import (
     Any,
     Callable,
     Dict,
     Generator,
     Optional,
+    Tuple,
     Union,
 )
 
 import httpx
+from attr import dataclass
 from attrs import (
     define,
     evolve,
@@ -22,6 +28,13 @@ from attrs import (
 from neptune_api.credentials import Credentials
 from neptune_api.errors import UnableToRefreshTokenError
 from neptune_api.types import OAuthToken
+
+
+def _get_env(name: str, error: str) -> str:
+    value = os.environ.get(name)
+    if value is None:
+        raise ValueError(error)
+    return value
 
 
 @define
@@ -100,6 +113,7 @@ class Client:
         """Get the underlying httpx.Client, constructing a new one if not previously set"""
         if self._client is None:
             self._client = httpx.Client(
+                auth=create_proxy_auth(),
                 base_url=self._base_url,
                 cookies=self._cookies,
                 headers=self._headers,
@@ -278,7 +292,7 @@ class AuthenticatedClient:
         """Get the underlying httpx.Client, constructing a new one if not previously set"""
         if self._client is None:
             self._client = httpx.Client(
-                auth=NeptuneAuthenticator(
+                auth=create_auth(
                     credentials=self.credentials,
                     client_id=self.client_id,
                     token_refreshing_endpoint=self.token_refreshing_endpoint,
@@ -394,3 +408,114 @@ class NeptuneAuthenticator(httpx.Auth):
     async def async_auth_flow(self, request: httpx.Request) -> typing.AsyncGenerator[httpx.Request, httpx.Response]:
         # TODO: Missing implementation
         yield request
+
+
+USE_IAP = os.environ.get("NEPTUNE_GCP_USE_IAP", False) in {"true", "t", "1", "True"}
+
+if USE_IAP:
+    import google.auth
+    from google.cloud import iam_credentials_v1
+
+    NEPTUNE_IAP_SERVICE_ACCOUNT = _get_env(
+        "NEPTUNE_GCP_IAP_SERVICE_ACCOUNT", "NEPTUNE_GCP_IAP_SERVICE_ACCOUNT is not set"
+    )
+
+    @dataclass
+    class IAPToken:
+        access_token: str
+        expiration: datetime.datetime
+
+        def is_expired(self) -> bool:
+            return self.expiration - timedelta(minutes=1) < datetime.datetime.now(tz=datetime.timezone.utc)
+
+    class IdentityAwareProxyAuthenticator(httpx.Auth):
+        def __init__(
+            self,
+            service_account_email: str,
+            additional_authenticator: Optional[httpx.Auth] = None,
+        ):
+            self._additional_authenticator = additional_authenticator
+            self._service_account_email = service_account_email
+            self._tokens: Dict[str, IAPToken] = {}
+
+        def _generate_jwt_payload(self, resource_url: str) -> Tuple[dict, datetime.datetime]:
+            iat = datetime.datetime.now(tz=datetime.timezone.utc)
+            exp = iat + timedelta(hours=1)
+            return (
+                {
+                    "iss": self._service_account_email,
+                    "sub": self._service_account_email,
+                    "aud": resource_url,
+                    "iat": int(iat.timestamp()),
+                    "exp": int(exp.timestamp()),
+                },
+                exp,
+            )
+
+        def _sign_jwt(self, resource_url: str) -> IAPToken:
+            source_credentials, _ = google.auth.default()
+            iam_client = iam_credentials_v1.IAMCredentialsClient(credentials=source_credentials)
+            payload, exp = self._generate_jwt_payload(resource_url)
+            jwt: str = iam_client.sign_jwt(
+                name=iam_client.service_account_path("-", self._service_account_email),
+                payload=json.dumps(payload),
+            ).signed_jwt
+            return IAPToken(jwt, exp)
+
+        def sync_auth_flow(self, request: httpx.Request) -> Generator[httpx.Request, httpx.Response, None]:
+            url = str(request.url.copy_with(params=None))
+            token = self._tokens.get(url)
+            if token is None or token.is_expired():
+                token = self._sign_jwt(url)
+                self._tokens[url] = token
+            request.headers["Proxy-Authorization"] = f"Bearer {token.access_token}"
+
+            if self._additional_authenticator is not None:
+                yield from self._additional_authenticator.sync_auth_flow(request)
+            else:
+                yield request
+
+        async def async_auth_flow(self, request: httpx.Request) -> typing.AsyncGenerator[httpx.Request, httpx.Response]:
+            # TODO: Missing implementation
+            yield request
+
+    def create_auth(
+        credentials: Credentials,
+        client_id: str,
+        token_refreshing_endpoint: str,
+        api_key_exchange_factory: Callable[[Client, Credentials], OAuthToken],
+        client: Client,
+    ) -> httpx.Auth:
+        neptune_auth = NeptuneAuthenticator(
+            credentials=credentials,
+            client_id=client_id,
+            token_refreshing_endpoint=token_refreshing_endpoint,
+            api_key_exchange_factory=api_key_exchange_factory,
+            client=client,
+        )
+        return IdentityAwareProxyAuthenticator(
+            service_account_email=NEPTUNE_IAP_SERVICE_ACCOUNT, additional_authenticator=neptune_auth
+        )
+
+    def create_proxy_auth() -> Optional[httpx.Auth]:
+        return IdentityAwareProxyAuthenticator(service_account_email=NEPTUNE_IAP_SERVICE_ACCOUNT)
+
+else:
+
+    def create_auth(
+        credentials: Credentials,
+        client_id: str,
+        token_refreshing_endpoint: str,
+        api_key_exchange_factory: Callable[[Client, Credentials], OAuthToken],
+        client: Client,
+    ) -> httpx.Auth:
+        return NeptuneAuthenticator(
+            credentials=credentials,
+            client_id=client_id,
+            token_refreshing_endpoint=token_refreshing_endpoint,
+            api_key_exchange_factory=api_key_exchange_factory,
+            client=client,
+        )
+
+    def create_proxy_auth() -> Optional[httpx.Auth]:
+        return None
