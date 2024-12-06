@@ -13,10 +13,12 @@ from typing import (
     Dict,
     Generator,
     Optional,
+    Tuple,
     Union,
 )
 
 import httpx
+from attr import dataclass
 from attrs import (
     define,
     evolve,
@@ -26,6 +28,13 @@ from attrs import (
 from neptune_api.credentials import Credentials
 from neptune_api.errors import UnableToRefreshTokenError
 from neptune_api.types import OAuthToken
+
+
+def _get_env(name: str, error: str) -> str:
+    value = os.environ.get(name)
+    if value is None:
+        raise ValueError(error)
+    return value
 
 
 @define
@@ -407,7 +416,17 @@ if USE_IAP:
     import google.auth
     from google.cloud import iam_credentials_v1
 
-    NEPTUNE_IAP_SERVICE_ACCOUNT = os.environ["NEPTUNE_IAP_SERVICE_ACCOUNT"]
+    NEPTUNE_IAP_SERVICE_ACCOUNT = _get_env(
+        "NEPTUNE_GCP_IAP_SERVICE_ACCOUNT", "NEPTUNE_GCP_IAP_SERVICE_ACCOUNT is not set"
+    )
+
+    @dataclass
+    class IAPToken:
+        access_token: str
+        expiration: datetime.datetime
+
+        def is_expired(self) -> bool:
+            return self.expiration - timedelta(minutes=1) < datetime.datetime.now(tz=datetime.timezone.utc)
 
     class IdentityAwareProxyAuthenticator(httpx.Auth):
         def __init__(
@@ -417,38 +436,39 @@ if USE_IAP:
         ):
             self._additional_authenticator = additional_authenticator
             self._service_account_email = service_account_email
-            self._tokens: Dict[str, str] = {}
+            self._tokens: Dict[str, IAPToken] = {}
 
-        def _generate_jwt_payload(self, resource_url: str) -> str:
+        def _generate_jwt_payload(self, resource_url: str) -> Tuple[dict, datetime.datetime]:
             iat = datetime.datetime.now(tz=datetime.timezone.utc)
             exp = iat + timedelta(hours=1)
-            return json.dumps(
+            return (
                 {
                     "iss": self._service_account_email,
                     "sub": self._service_account_email,
                     "aud": resource_url,
                     "iat": int(iat.timestamp()),
                     "exp": int(exp.timestamp()),
-                }
+                },
+                exp,
             )
 
-        def _sign_jwt(self, resource_url: str) -> str:
+        def _sign_jwt(self, resource_url: str) -> IAPToken:
             source_credentials, _ = google.auth.default()
             iam_client = iam_credentials_v1.IAMCredentialsClient(credentials=source_credentials)
-            payload = self._generate_jwt_payload(resource_url)
+            payload, exp = self._generate_jwt_payload(resource_url)
             jwt: str = iam_client.sign_jwt(
                 name=iam_client.service_account_path("-", self._service_account_email),
-                payload=payload,
+                payload=json.dumps(payload),
             ).signed_jwt
-            return jwt
+            return IAPToken(jwt, exp)
 
         def sync_auth_flow(self, request: httpx.Request) -> Generator[httpx.Request, httpx.Response, None]:
             url = str(request.url.copy_with(params=None))
             token = self._tokens.get(url)
-            if token is None:
+            if token is None or token.is_expired():
                 token = self._sign_jwt(url)
                 self._tokens[url] = token
-            request.headers["Proxy-Authorization"] = f"Bearer {token}"
+            request.headers["Proxy-Authorization"] = f"Bearer {token.access_token}"
 
             if self._additional_authenticator is not None:
                 yield from self._additional_authenticator.sync_auth_flow(request)
