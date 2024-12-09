@@ -437,6 +437,7 @@ if USE_IAP:
             self._additional_authenticator = additional_authenticator
             self._service_account_email = service_account_email
             self._tokens: Dict[str, IAPToken] = {}
+            self._lock = threading.RLock()
 
         def _generate_jwt_payload(self, resource_url: str) -> Tuple[dict, datetime.datetime]:
             iat = datetime.datetime.now(tz=datetime.timezone.utc)
@@ -464,10 +465,12 @@ if USE_IAP:
 
         def sync_auth_flow(self, request: httpx.Request) -> Generator[httpx.Request, httpx.Response, None]:
             url = str(request.url.copy_with(params=None))
-            token = self._tokens.get(url)
+            with self._lock:
+                token = self._tokens.get(url)
             if token is None or token.is_expired():
                 token = self._sign_jwt(url)
-                self._tokens[url] = token
+                with self._lock:
+                    self._tokens[url] = token
             request.headers["Proxy-Authorization"] = f"Bearer {token.access_token}"
 
             if self._additional_authenticator is not None:
