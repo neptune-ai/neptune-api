@@ -410,14 +410,14 @@ class NeptuneAuthenticator(httpx.Auth):
         yield request
 
 
-USE_IAP = os.environ.get("NEPTUNE_GCP_USE_IAP", False) in {"true", "t", "1", "True"}
+USE_IAP = os.environ.get("NEPTUNE_GCP_USE_IAP", "false").lower() in {"true", "t", "1"}
 
 if USE_IAP:
     import google.auth
     from google.cloud import iam_credentials_v1
 
     NEPTUNE_IAP_SERVICE_ACCOUNT = _get_env(
-        "NEPTUNE_GCP_IAP_SERVICE_ACCOUNT", "NEPTUNE_GCP_IAP_SERVICE_ACCOUNT is not set"
+        "NEPTUNE_GCP_IAP_SERVICE_ACCOUNT", "NEPTUNE_GCP_IAP_SERVICE_ACCOUNT is not set for IAP authentication"
     )
 
     @dataclass
