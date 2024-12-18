@@ -1,1 +1,4 @@
-from . import v1
+from . import (
+    fields_pb2,
+    model,
+)
