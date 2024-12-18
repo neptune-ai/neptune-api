@@ -33,6 +33,6 @@ repos:
           - grpcio-tools
           - types-Pygments
           - types-protobuf
-exclude: "^src/(neptune_api|neptune_retrieval_api)/proto/"
+exclude: "^src/neptune_api/proto/"
 default_language_version:
     python: python3
