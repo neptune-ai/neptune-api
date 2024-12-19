@@ -1,5 +1,6 @@
 __all__ = ["Client", "AuthenticatedClient", "NeptuneAuthenticator"]
 
+import logging
 import ssl
 import threading
 import typing
@@ -12,6 +13,7 @@ from typing import (
     Union,
 )
 
+import backoff
 import httpx
 from attrs import (
     define,
@@ -22,6 +24,9 @@ from attrs import (
 from neptune_api.credentials import Credentials
 from neptune_api.errors import UnableToRefreshTokenError
 from neptune_api.types import OAuthToken
+
+# Disable httpx logging, httpx logs requests at INFO level
+logging.getLogger("httpx").setLevel(logging.WARN)
 
 
 @define
@@ -349,12 +354,9 @@ class NeptuneAuthenticator(httpx.Auth):
         self._client = client
         self._token: Optional[OAuthToken] = None
 
-    def _refresh_existing_token(self) -> None:
+    def _refresh_existing_token(self) -> OAuthToken:
         if self._token is None:
-            # This should never happen, but just in case
-            self._token = self._api_key_exchange_factory(self._client, self._credentials)
-            return
-
+            raise ValueError("Token must not be None")
         try:
             response = self._client.get_httpx_client().post(
                 url=self._token_refreshing_endpoint,
@@ -366,21 +368,26 @@ class NeptuneAuthenticator(httpx.Auth):
                 },
             )
             data = response.json()
+            return OAuthToken.from_tokens(access=data["access_token"], refresh=data["refresh_token"])
         except Exception as e:
             raise UnableToRefreshTokenError("Unable to refresh token") from e
 
-        self._token = OAuthToken.from_tokens(access=data["access_token"], refresh=data["refresh_token"])
-
+    @backoff.on_exception(backoff.expo, Exception, max_time=30, max_tries=3)
     def _refresh_token(self) -> None:
         with self.__LOCK:
             if self._token is not None:
-                self._refresh_existing_token()
+                self._token = self._refresh_existing_token()
 
             if self._token is None:
                 self._token = self._api_key_exchange_factory(self._client, self._credentials)
 
     def _refresh_token_if_expired(self) -> None:
-        if self._token is None or self._token.is_expired:
+        try:
+            if self._token is None or self._token.is_expired:
+                self._refresh_token()
+        except Exception:
+            # Reset the token to None to force a new token retrieval
+            self._token = None
             self._refresh_token()
 
     def sync_auth_flow(self, request: httpx.Request) -> Generator[httpx.Request, httpx.Response, None]:
