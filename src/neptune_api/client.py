@@ -356,7 +356,7 @@ class NeptuneAuthenticator(httpx.Auth):
 
     def _refresh_existing_token(self) -> OAuthToken:
         if self._token is None:
-            raise ValueError("Token must not be None")
+            raise ValueError("Cannot refresh an empty token")
         try:
             response = self._client.get_httpx_client().post(
                 url=self._token_refreshing_endpoint,
