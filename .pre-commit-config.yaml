@@ -33,6 +33,12 @@ repos:
           - grpcio-tools
           - types-Pygments
           - types-protobuf
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.4
+    hooks:
+      - id: insert-license
+        files: ^(src/(neptune_api|neptune_retrieval_api).*[^/]+\.py|templates/.*\.jinja)$
+        args: [ "--license-filepath", ".github/license_header.txt", "--allow-past-years"]
 exclude: "^src/(neptune_api|neptune_retrieval_api)/proto/"
 default_language_version:
     python: python3
