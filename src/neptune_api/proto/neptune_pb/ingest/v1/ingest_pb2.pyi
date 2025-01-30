@@ -65,9 +65,11 @@ class _IngestCodeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._Enu
     FLOAT_VALUE_NAN_INF_UNSUPPORTED: _IngestCode.ValueType
     'Unsupported value type for float64 field or float64 series. Applies to Inf and NaN values.'
     STRING_VALUE_EXCEEDS_SIZE_LIMIT: _IngestCode.ValueType
-    'String value is too long. Maximum length is 64KB.'
+    'String value is too long. Maximum length is 1MiB.'
     STRING_SET_EXCEEDS_SIZE_LIMIT: _IngestCode.ValueType
-    'String Set value is too long. Maximum length is 64KB.'
+    'String Set value is too long. Maximum length is 1MiB.'
+    FILE_REF_EXCEEDS_SIZE_LIMIT: _IngestCode.ValueType
+    'File Ref value is too long. Maximum length is 4KiB.'
     INGEST_SUSPENDED: _IngestCode.ValueType
     'Ingest is currently suspended'
     INTERNAL: _IngestCode.ValueType
@@ -116,9 +118,11 @@ SERIES_TIMESTAMP_DECREASING: IngestCode.ValueType
 FLOAT_VALUE_NAN_INF_UNSUPPORTED: IngestCode.ValueType
 'Unsupported value type for float64 field or float64 series. Applies to Inf and NaN values.'
 STRING_VALUE_EXCEEDS_SIZE_LIMIT: IngestCode.ValueType
-'String value is too long. Maximum length is 64KB.'
+'String value is too long. Maximum length is 1MiB.'
 STRING_SET_EXCEEDS_SIZE_LIMIT: IngestCode.ValueType
-'String Set value is too long. Maximum length is 64KB.'
+'String Set value is too long. Maximum length is 1MiB.'
+FILE_REF_EXCEEDS_SIZE_LIMIT: IngestCode.ValueType
+'File Ref value is too long. Maximum length is 4KiB.'
 INGEST_SUSPENDED: IngestCode.ValueType
 'Ingest is currently suspended'
 INTERNAL: IngestCode.ValueType

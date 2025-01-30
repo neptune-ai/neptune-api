@@ -85,7 +85,7 @@ exclude = ["src/neptune_api/proto", "src/neptune_retrieval_api/proto"]
 select = ["F", "UP"]
 
 [tool.mypy]
-files = ['src/neptune_api', 'src/neptune_retrieval_api']
+files = ['src/neptune_api', 'src/neptune_retrieval_api', 'src/neptune_storage_api']
 mypy_path = "stubs"
 install_types = "True"
 non_interactive = "True"
