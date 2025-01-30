@@ -4,6 +4,6 @@ post_hooks:
    - "ruff check . --fix"
    - "ruff format "
    - "isort ."
-   - "echo >> py.typed"
+   - "echo -n > py.typed"
 content_type_overrides:
   application/x-protobuf: application/octet-stream
