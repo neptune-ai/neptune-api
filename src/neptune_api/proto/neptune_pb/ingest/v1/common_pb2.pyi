@@ -239,6 +239,7 @@ class Run(google.protobuf.message.Message):
     CREATION_TIME_FIELD_NUMBER: builtins.int
     OWNER_FIELD_NUMBER: builtins.int
     REQUEST_ID_FIELD_NUMBER: builtins.int
+    START_PROCESSING_TIME_FIELD_NUMBER: builtins.int
     run_id: builtins.str
     'Id of the run to be created. Optional if parent context has already specified run_id. If both are set, they\n    must be equal, otherwise the operation will fail.\n    '
     experiment_id: builtins.str
@@ -267,13 +268,22 @@ class Run(google.protobuf.message.Message):
         If not specified, it will be set to a user named "unspecified".
         """
 
-    def __init__(self, *, run_id: builtins.str | None=..., experiment_id: builtins.str | None=..., fork_point: global___ForkPoint | None=..., family: builtins.str | None=..., creation_time: google.protobuf.timestamp_pb2.Timestamp | None=..., owner: global___Owner | None=..., request_id: builtins.str | None=...) -> None:
+    @property
+    def start_processing_time(self) -> google.protobuf.timestamp_pb2.Timestamp:
+        """System-set. This field marks the time when the Run was queued for Neptune to process.
+
+        It may significantly differ from the `creation_time` in cases of:
+        - offline mode data generation,
+        - data migrations of historical runs
+        """
+
+    def __init__(self, *, run_id: builtins.str | None=..., experiment_id: builtins.str | None=..., fork_point: global___ForkPoint | None=..., family: builtins.str | None=..., creation_time: google.protobuf.timestamp_pb2.Timestamp | None=..., owner: global___Owner | None=..., request_id: builtins.str | None=..., start_processing_time: google.protobuf.timestamp_pb2.Timestamp | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing.Literal['_creation_time', b'_creation_time', '_experiment_id', b'_experiment_id', '_family', b'_family', '_owner', b'_owner', '_request_id', b'_request_id', '_run_id', b'_run_id', 'creation_time', b'creation_time', 'experiment_id', b'experiment_id', 'family', b'family', 'fork_point', b'fork_point', 'owner', b'owner', 'request_id', b'request_id', 'run_id', b'run_id']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['_creation_time', b'_creation_time', '_experiment_id', b'_experiment_id', '_family', b'_family', '_owner', b'_owner', '_request_id', b'_request_id', '_run_id', b'_run_id', '_start_processing_time', b'_start_processing_time', 'creation_time', b'creation_time', 'experiment_id', b'experiment_id', 'family', b'family', 'fork_point', b'fork_point', 'owner', b'owner', 'request_id', b'request_id', 'run_id', b'run_id', 'start_processing_time', b'start_processing_time']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing.Literal['_creation_time', b'_creation_time', '_experiment_id', b'_experiment_id', '_family', b'_family', '_owner', b'_owner', '_request_id', b'_request_id', '_run_id', b'_run_id', 'creation_time', b'creation_time', 'experiment_id', b'experiment_id', 'family', b'family', 'fork_point', b'fork_point', 'owner', b'owner', 'request_id', b'request_id', 'run_id', b'run_id']) -> None:
+    def ClearField(self, field_name: typing.Literal['_creation_time', b'_creation_time', '_experiment_id', b'_experiment_id', '_family', b'_family', '_owner', b'_owner', '_request_id', b'_request_id', '_run_id', b'_run_id', '_start_processing_time', b'_start_processing_time', 'creation_time', b'creation_time', 'experiment_id', b'experiment_id', 'family', b'family', 'fork_point', b'fork_point', 'owner', b'owner', 'request_id', b'request_id', 'run_id', b'run_id', 'start_processing_time', b'start_processing_time']) -> None:
         ...
 
     @typing.overload
@@ -299,7 +309,29 @@ class Run(google.protobuf.message.Message):
     @typing.overload
     def WhichOneof(self, oneof_group: typing.Literal['_run_id', b'_run_id']) -> typing.Literal['run_id'] | None:
         ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal['_start_processing_time', b'_start_processing_time']) -> typing.Literal['start_processing_time'] | None:
+        ...
 global___Run = Run
+
+@typing.final
+class Preview(google.protobuf.message.Message):
+    """Preview allows to control whether values are preview or committed."""
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    IS_PREVIEW_FIELD_NUMBER: builtins.int
+    COMPLETION_RATIO_FIELD_NUMBER: builtins.int
+    is_preview: builtins.bool
+    'This flag marks the values as preview. Preview values are not yet fully committed.\n    When this flag is set, additional completion ratio can be set to indicate the progress of the preview.\n    Previews are only supported to series (`append` field).\n    '
+    completion_ratio: builtins.float
+    'Completion ratio is a progress of the metric value in a bounded computation.\n    `completion_ratio` value should be set in range between `[0, 1]`.\n\n    Validation:\n    - `non-NaN` values outside this range, including `+/-Inf`, are clamped to this range.\n    - `NaN` values are be treated as `0`.\n    - missing values are treated as `0`.\n\n    Completion and commitment are separate concepts. Preview value may be fully complete, but not committed.\n    In order to commit a value, unset `is_preview` flag.\n    '
+
+    def __init__(self, *, is_preview: builtins.bool=..., completion_ratio: builtins.float=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing.Literal['completion_ratio', b'completion_ratio', 'is_preview', b'is_preview']) -> None:
+        ...
+global___Preview = Preview
 
 @typing.final
 class UpdateRunSnapshot(google.protobuf.message.Message):
@@ -367,10 +399,12 @@ class UpdateRunSnapshot(google.protobuf.message.Message):
             ...
     STEP_FIELD_NUMBER: builtins.int
     TIMESTAMP_FIELD_NUMBER: builtins.int
+    PREVIEW_FIELD_NUMBER: builtins.int
     ASSIGN_FIELD_NUMBER: builtins.int
     MODIFY_SETS_FIELD_NUMBER: builtins.int
     APPEND_FIELD_NUMBER: builtins.int
     REQUEST_ID_FIELD_NUMBER: builtins.int
+    START_PROCESSING_TIME_FIELD_NUMBER: builtins.int
     request_id: builtins.str
     'Optional. The request ID generated by the Neptune client, used for tracking outcome of run update.'
 
@@ -383,6 +417,12 @@ class UpdateRunSnapshot(google.protobuf.message.Message):
     @property
     def timestamp(self) -> google.protobuf.timestamp_pb2.Timestamp:
         """Timestamp field common to all included operations"""
+
+    @property
+    def preview(self) -> global___Preview:
+        """Preview allows to control whether values are preview or committed.
+        When not specified, the values are considered committed.
+        """
 
     @property
     def assign(self) -> google.protobuf.internal.containers.MessageMap[builtins.str, global___Value]:
@@ -422,16 +462,35 @@ class UpdateRunSnapshot(google.protobuf.message.Message):
               If you want to add or remove tags individually, use `modify_set.string` instead.
         """
 
-    def __init__(self, *, step: global___Step | None=..., timestamp: google.protobuf.timestamp_pb2.Timestamp | None=..., assign: collections.abc.Mapping[builtins.str, global___Value] | None=..., modify_sets: collections.abc.Mapping[builtins.str, global___ModifySet] | None=..., append: collections.abc.Mapping[builtins.str, global___Value] | None=..., request_id: builtins.str | None=...) -> None:
+    @property
+    def start_processing_time(self) -> google.protobuf.timestamp_pb2.Timestamp:
+        """System-set. This field marks the time when the snapshot was queued for Neptune to process.
+
+        This timestamp may significantly differ from the `timestamp` in cases of:
+        - offline mode data generation,
+        - data migrations of historical runs,
+        - slow metric computation
+        """
+
+    def __init__(self, *, step: global___Step | None=..., timestamp: google.protobuf.timestamp_pb2.Timestamp | None=..., preview: global___Preview | None=..., assign: collections.abc.Mapping[builtins.str, global___Value] | None=..., modify_sets: collections.abc.Mapping[builtins.str, global___ModifySet] | None=..., append: collections.abc.Mapping[builtins.str, global___Value] | None=..., request_id: builtins.str | None=..., start_processing_time: google.protobuf.timestamp_pb2.Timestamp | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing.Literal['_request_id', b'_request_id', 'request_id', b'request_id', 'step', b'step', 'timestamp', b'timestamp']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['_preview', b'_preview', '_request_id', b'_request_id', '_start_processing_time', b'_start_processing_time', 'preview', b'preview', 'request_id', b'request_id', 'start_processing_time', b'start_processing_time', 'step', b'step', 'timestamp', b'timestamp']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing.Literal['_request_id', b'_request_id', 'append', b'append', 'assign', b'assign', 'modify_sets', b'modify_sets', 'request_id', b'request_id', 'step', b'step', 'timestamp', b'timestamp']) -> None:
+    def ClearField(self, field_name: typing.Literal['_preview', b'_preview', '_request_id', b'_request_id', '_start_processing_time', b'_start_processing_time', 'append', b'append', 'assign', b'assign', 'modify_sets', b'modify_sets', 'preview', b'preview', 'request_id', b'request_id', 'start_processing_time', b'start_processing_time', 'step', b'step', 'timestamp', b'timestamp']) -> None:
         ...
 
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal['_preview', b'_preview']) -> typing.Literal['preview'] | None:
+        ...
+
+    @typing.overload
     def WhichOneof(self, oneof_group: typing.Literal['_request_id', b'_request_id']) -> typing.Literal['request_id'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal['_start_processing_time', b'_start_processing_time']) -> typing.Literal['start_processing_time'] | None:
         ...
 global___UpdateRunSnapshot = UpdateRunSnapshot
 
