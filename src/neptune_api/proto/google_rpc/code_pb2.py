@@ -1,4 +1,5 @@
-"""Generated protocol buffer code."""
+
+'Generated protocol buffer code.'
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import symbol_database as _symbol_database
@@ -8,7 +9,7 @@ DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x15google_rpc/cod
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'google_rpc.code_pb2', _globals)
-if _descriptor._USE_C_DESCRIPTORS == False:
+if (_descriptor._USE_C_DESCRIPTORS == False):
     _globals['DESCRIPTOR']._options = None
     _globals['DESCRIPTOR']._serialized_options = b'\n\x0ecom.google.rpcB\tCodeProtoP\x01Z3google.golang.org/genproto/googleapis/rpc/code;code\xa2\x02\x03RPC'
     _globals['_CODE']._serialized_start = 38
