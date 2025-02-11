@@ -91,3 +91,5 @@ rm -rf tmp
 cat scripts/preserve_files.txt | while read entry; do
     git checkout HEAD -- $entry
 done
+
+pre-commit run --all-files
