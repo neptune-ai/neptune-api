@@ -78,6 +78,7 @@ extend_skip = ["src/neptune_api/proto", "src/neptune_retrieval_api/proto"]
 
 [tool.ruff]
 line-length = 120
+target-version = "py38"
 exclude = ["src/neptune_api/proto", "src/neptune_retrieval_api/proto"]
 
 [tool.ruff.lint]
