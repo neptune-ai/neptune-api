@@ -14,99 +14,85 @@
 # limitations under the License.
 
 from typing import (
-    TYPE_CHECKING,
     Any,
     Dict,
     List,
     Type,
     TypeVar,
-    Union,
 )
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..types import (
-    UNSET,
-    Unset,
-)
-
-if TYPE_CHECKING:
-    from ..models.single_time_series_view_bucket import SingleTimeSeriesViewBucket
-
-
-T = TypeVar("T", bound="Point")
+T = TypeVar("T", bound="SingleTimeSeriesViewBucket")
 
 
 @_attrs_define
-class Point:
+class SingleTimeSeriesViewBucket:
     """
     Attributes:
-        interpolation (bool):
-        x (float):
-        bucket (Union[Unset, SingleTimeSeriesViewBucket]):
-        y (Union[Unset, float]):
+        bucket_no (int):
+        count (int):
+        max_y (float):
+        min_y (float):
+        sum_ (float):
     """
 
-    interpolation: bool
-    x: float
-    bucket: Union[Unset, "SingleTimeSeriesViewBucket"] = UNSET
-    y: Union[Unset, float] = UNSET
+    bucket_no: int
+    count: int
+    max_y: float
+    min_y: float
+    sum_: float
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        interpolation = self.interpolation
+        bucket_no = self.bucket_no
 
-        x = self.x
+        count = self.count
 
-        bucket: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.bucket, Unset):
-            bucket = self.bucket.to_dict()
+        max_y = self.max_y
 
-        y = self.y
+        min_y = self.min_y
+
+        sum_ = self.sum_
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "interpolation": interpolation,
-                "x": x,
+                "bucketNo": bucket_no,
+                "count": count,
+                "maxY": max_y,
+                "minY": min_y,
+                "sum": sum_,
             }
         )
-        if bucket is not UNSET:
-            field_dict["bucket"] = bucket
-        if y is not UNSET:
-            field_dict["y"] = y
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.single_time_series_view_bucket import SingleTimeSeriesViewBucket
-
         d = src_dict.copy()
-        interpolation = d.pop("interpolation")
+        bucket_no = d.pop("bucketNo")
 
-        x = d.pop("x")
+        count = d.pop("count")
 
-        _bucket = d.pop("bucket", UNSET)
-        bucket: Union[Unset, SingleTimeSeriesViewBucket]
-        if isinstance(_bucket, Unset):
-            bucket = UNSET
-        else:
-            bucket = SingleTimeSeriesViewBucket.from_dict(_bucket)
+        max_y = d.pop("maxY")
 
-        y = d.pop("y", UNSET)
+        min_y = d.pop("minY")
 
-        point = cls(
-            interpolation=interpolation,
-            x=x,
-            bucket=bucket,
-            y=y,
+        sum_ = d.pop("sum")
+
+        single_time_series_view_bucket = cls(
+            bucket_no=bucket_no,
+            count=count,
+            max_y=max_y,
+            min_y=min_y,
+            sum_=sum_,
         )
 
-        point.additional_properties = d
-        return point
+        single_time_series_view_bucket.additional_properties = d
+        return single_time_series_view_bucket
 
     @property
     def additional_keys(self) -> List[str]:
