@@ -11,27 +11,6 @@ set -ex
 ## Preserve specific files
 mkdir -p tmp
 
-
-# Function to download Swagger JSON
-download_swagger() {
-    local swagger_url=$1
-    local output_file=$2
-
-    curl -o "${output_file}" "${swagger_url}"
-}
-
-# Function to convert Swagger 2.0 to OpenAPI 3.0
-convert_swagger_to_openapi() {
-    local input_file=$1
-    local output_file=$2
-
-    curl -X POST "https://converter.swagger.io/api/convert" \
-        -H "Content-Type: application/json" \
-        -d @"${input_file}" \
-        -o "${output_file}"
-}
-
-
 # Modify the Swagger JSON to support application/x-protobuf
 jq '
   .paths |= with_entries(
@@ -62,8 +41,6 @@ jq '
   )
 ' storagebridge_swagger.json > tmp/storagebridge_swagger.json && mv tmp/storagebridge_swagger.json storagebridge_swagger.json
 
-## Convert the Swagger JSON to OpenAPI 3.0
-convert_swagger_to_openapi "storagebridge_swagger.json" "storagebridge_openapi.json"
 # Add license information using jq
 jq '.info.license = {"name": "", "url": ""}' storagebridge_openapi.json > tmp_storagebridge_openapi.json && mv tmp_storagebridge_openapi.json storagebridge_openapi.json
 
