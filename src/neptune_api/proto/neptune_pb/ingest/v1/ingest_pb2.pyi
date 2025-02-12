@@ -56,6 +56,12 @@ class _IngestCodeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._Enu
     'Field type is different from the one that was previously logged for this series.\n    Once a field type is set, it cannot be changed.\n    '
     SERIES_POINT_DUPLICATE: _IngestCode.ValueType
     'Idempotency Warning: The exact same data point was already logged for this series.'
+    SERIES_STEP_TOO_LARGE: _IngestCode.ValueType
+    'Step value must be smaller than: `1_000_000_000_000`.'
+    SERIES_STEP_INVALID: _IngestCode.ValueType
+    'Invalid step value. Step `micro` part must be smaller than `1_000_000`.'
+    SERIES_PREVIEW_STEP_NOT_AFTER_LAST_COMMITTED_STEP: _IngestCode.ValueType
+    'Series preview step not after last committed step.'
     SERIES_STEP_NON_INCREASING: _IngestCode.ValueType
     "The step of a series value is lesser than the most recently logged step for this series or the step is exactly the\n    same, but the value is different (DUPLICATE_DATA_POINT doesn't apply).\n    "
     SERIES_STEP_NOT_AFTER_FORK_POINT: _IngestCode.ValueType
@@ -107,6 +113,12 @@ FIELD_TYPE_CONFLICTING: IngestCode.ValueType
 'Field type is different from the one that was previously logged for this series.\nOnce a field type is set, it cannot be changed.\n'
 SERIES_POINT_DUPLICATE: IngestCode.ValueType
 'Idempotency Warning: The exact same data point was already logged for this series.'
+SERIES_STEP_TOO_LARGE: IngestCode.ValueType
+'Step value must be smaller than: `1_000_000_000_000`.'
+SERIES_STEP_INVALID: IngestCode.ValueType
+'Invalid step value. Step `micro` part must be smaller than `1_000_000`.'
+SERIES_PREVIEW_STEP_NOT_AFTER_LAST_COMMITTED_STEP: IngestCode.ValueType
+'Series preview step not after last committed step.'
 SERIES_STEP_NON_INCREASING: IngestCode.ValueType
 "The step of a series value is lesser than the most recently logged step for this series or the step is exactly the\nsame, but the value is different (DUPLICATE_DATA_POINT doesn't apply).\n"
 SERIES_STEP_NOT_AFTER_FORK_POINT: IngestCode.ValueType

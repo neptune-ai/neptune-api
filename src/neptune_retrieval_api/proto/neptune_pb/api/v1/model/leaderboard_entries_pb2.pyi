@@ -262,6 +262,7 @@ class ProtoFloatSeriesAttributeDTO(google.protobuf.message.Message):
     AVERAGE_FIELD_NUMBER: builtins.int
     VARIANCE_FIELD_NUMBER: builtins.int
     CONFIG_FIELD_NUMBER: builtins.int
+    HAS_PREVIEW_FIELD_NUMBER: builtins.int
     attribute_name: builtins.str
     attribute_type: builtins.str
     last_step: builtins.float
@@ -270,18 +271,19 @@ class ProtoFloatSeriesAttributeDTO(google.protobuf.message.Message):
     max: builtins.float
     average: builtins.float
     variance: builtins.float
+    has_preview: builtins.bool
 
     @property
     def config(self) -> global___ProtoFloatSeriesAttributeConfigDTO:
         ...
 
-    def __init__(self, *, attribute_name: builtins.str=..., attribute_type: builtins.str=..., last_step: builtins.float | None=..., last: builtins.float | None=..., min: builtins.float | None=..., max: builtins.float | None=..., average: builtins.float | None=..., variance: builtins.float | None=..., config: global___ProtoFloatSeriesAttributeConfigDTO | None=...) -> None:
+    def __init__(self, *, attribute_name: builtins.str=..., attribute_type: builtins.str=..., last_step: builtins.float | None=..., last: builtins.float | None=..., min: builtins.float | None=..., max: builtins.float | None=..., average: builtins.float | None=..., variance: builtins.float | None=..., config: global___ProtoFloatSeriesAttributeConfigDTO | None=..., has_preview: builtins.bool=...) -> None:
         ...
 
     def HasField(self, field_name: typing.Literal['_average', b'_average', '_last', b'_last', '_last_step', b'_last_step', '_max', b'_max', '_min', b'_min', '_variance', b'_variance', 'average', b'average', 'config', b'config', 'last', b'last', 'last_step', b'last_step', 'max', b'max', 'min', b'min', 'variance', b'variance']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing.Literal['_average', b'_average', '_last', b'_last', '_last_step', b'_last_step', '_max', b'_max', '_min', b'_min', '_variance', b'_variance', 'attribute_name', b'attribute_name', 'attribute_type', b'attribute_type', 'average', b'average', 'config', b'config', 'last', b'last', 'last_step', b'last_step', 'max', b'max', 'min', b'min', 'variance', b'variance']) -> None:
+    def ClearField(self, field_name: typing.Literal['_average', b'_average', '_last', b'_last', '_last_step', b'_last_step', '_max', b'_max', '_min', b'_min', '_variance', b'_variance', 'attribute_name', b'attribute_name', 'attribute_type', b'attribute_type', 'average', b'average', 'config', b'config', 'has_preview', b'has_preview', 'last', b'last', 'last_step', b'last_step', 'max', b'max', 'min', b'min', 'variance', b'variance']) -> None:
         ...
 
     @typing.overload
