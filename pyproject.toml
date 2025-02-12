@@ -28,6 +28,7 @@ license = "Apache License 2.0"
 packages = [
     { include = "neptune_api", from = "src" },
     { include = "neptune_retrieval_api", from = "src" },
+    { include = "neptune_storage_api", from = "src" },
 ]
 include = ["CHANGELOG.md", "src/neptune_api/py.typed"]
 classifiers = [
