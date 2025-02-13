@@ -32,6 +32,7 @@ class AttributeTypeDTO(str, Enum):
     STRING = "string"
     STRINGSERIES = "stringSeries"
     STRINGSET = "stringSet"
+    FILEREF = "fileRef"
 
     def __str__(self) -> str:
         return str(self.value)
