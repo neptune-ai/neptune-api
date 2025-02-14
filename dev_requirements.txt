@@ -1,7 +1,7 @@
 -e .
 
 # dev
-openapi-python-client>=0.21.5
+openapi-python-client==0.21.5
 pre-commit
 mypy
 ruff
