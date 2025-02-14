@@ -246,6 +246,7 @@ from .signal import Signal
 from .signal_body import SignalBody
 from .single_custom_time_series_view import SingleCustomTimeSeriesView
 from .single_time_series_view import SingleTimeSeriesView
+from .single_time_series_view_bucket import SingleTimeSeriesViewBucket
 from .steps import Steps
 from .string_attribute_dto import StringAttributeDTO
 from .string_point_value_dto import StringPointValueDTO
@@ -498,6 +499,7 @@ __all__ = (
     "SignalBody",
     "SingleCustomTimeSeriesView",
     "SingleTimeSeriesView",
+    "SingleTimeSeriesViewBucket",
     "Steps",
     "StringAttributeDTO",
     "StringPointValueDTO",

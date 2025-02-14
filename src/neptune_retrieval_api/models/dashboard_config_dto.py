@@ -47,6 +47,7 @@ class DashboardConfigDTO:
         smoothing (Union[Unset, int]):
         xaxis_metric (Union[Unset, AttributeDefinitionDTO]):
         xaxis_mode (Union[Unset, str]):
+        xaxis_range (Union[Unset, OpenRangeDTO]):
         xaxis_scale (Union[Unset, str]):
         yaxis_scale (Union[Unset, str]):
     """
@@ -55,6 +56,7 @@ class DashboardConfigDTO:
     smoothing: Union[Unset, int] = UNSET
     xaxis_metric: Union[Unset, "AttributeDefinitionDTO"] = UNSET
     xaxis_mode: Union[Unset, str] = UNSET
+    xaxis_range: Union[Unset, "OpenRangeDTO"] = UNSET
     xaxis_scale: Union[Unset, str] = UNSET
     yaxis_scale: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -72,6 +74,10 @@ class DashboardConfigDTO:
 
         xaxis_mode = self.xaxis_mode
 
+        xaxis_range: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.xaxis_range, Unset):
+            xaxis_range = self.xaxis_range.to_dict()
+
         xaxis_scale = self.xaxis_scale
 
         yaxis_scale = self.yaxis_scale
@@ -87,6 +93,8 @@ class DashboardConfigDTO:
             field_dict["xaxisMetric"] = xaxis_metric
         if xaxis_mode is not UNSET:
             field_dict["xaxisMode"] = xaxis_mode
+        if xaxis_range is not UNSET:
+            field_dict["xaxisRange"] = xaxis_range
         if xaxis_scale is not UNSET:
             field_dict["xaxisScale"] = xaxis_scale
         if yaxis_scale is not UNSET:
@@ -118,6 +126,13 @@ class DashboardConfigDTO:
 
         xaxis_mode = d.pop("xaxisMode", UNSET)
 
+        _xaxis_range = d.pop("xaxisRange", UNSET)
+        xaxis_range: Union[Unset, OpenRangeDTO]
+        if isinstance(_xaxis_range, Unset):
+            xaxis_range = UNSET
+        else:
+            xaxis_range = OpenRangeDTO.from_dict(_xaxis_range)
+
         xaxis_scale = d.pop("xaxisScale", UNSET)
 
         yaxis_scale = d.pop("yaxisScale", UNSET)
@@ -127,6 +142,7 @@ class DashboardConfigDTO:
             smoothing=smoothing,
             xaxis_metric=xaxis_metric,
             xaxis_mode=xaxis_mode,
+            xaxis_range=xaxis_range,
             xaxis_scale=xaxis_scale,
             yaxis_scale=yaxis_scale,
         )
