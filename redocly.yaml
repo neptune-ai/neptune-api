@@ -1,0 +1,9 @@
+apis:
+  main:
+    root: ./test.json
+    decorators:
+      filter-in:
+        property: operationId
+        value: [queryAttributeDefinitionsWithinProject, listProjects]
+
+
