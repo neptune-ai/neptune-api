@@ -42,6 +42,7 @@ def _get_kwargs(
     *,
     attribute: str,
     experiment_id: Union[Unset, str] = UNSET,
+    include_preview: Union[Unset, bool] = False,
     limit: Union[Unset, int] = UNSET,
     lineage: Union[Unset, GetFloatSeriesValuesLineage] = UNSET,
     skip_to_step: Union[Unset, float] = UNSET,
@@ -51,6 +52,8 @@ def _get_kwargs(
     params["attribute"] = attribute
 
     params["experimentId"] = experiment_id
+
+    params["includePreview"] = include_preview
 
     params["limit"] = limit
 
@@ -126,6 +129,7 @@ def sync_detailed(
     client: Union[AuthenticatedClient, Client],
     attribute: str,
     experiment_id: Union[Unset, str] = UNSET,
+    include_preview: Union[Unset, bool] = False,
     limit: Union[Unset, int] = UNSET,
     lineage: Union[Unset, GetFloatSeriesValuesLineage] = UNSET,
     skip_to_step: Union[Unset, float] = UNSET,
@@ -135,6 +139,7 @@ def sync_detailed(
     Args:
         attribute (str):
         experiment_id (Union[Unset, str]):
+        include_preview (Union[Unset, bool]):  Default: False.
         limit (Union[Unset, int]):
         lineage (Union[Unset, GetFloatSeriesValuesLineage]):
         skip_to_step (Union[Unset, float]):
@@ -150,6 +155,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         attribute=attribute,
         experiment_id=experiment_id,
+        include_preview=include_preview,
         limit=limit,
         lineage=lineage,
         skip_to_step=skip_to_step,
@@ -167,6 +173,7 @@ def sync(
     client: Union[AuthenticatedClient, Client],
     attribute: str,
     experiment_id: Union[Unset, str] = UNSET,
+    include_preview: Union[Unset, bool] = False,
     limit: Union[Unset, int] = UNSET,
     lineage: Union[Unset, GetFloatSeriesValuesLineage] = UNSET,
     skip_to_step: Union[Unset, float] = UNSET,
@@ -176,6 +183,7 @@ def sync(
     Args:
         attribute (str):
         experiment_id (Union[Unset, str]):
+        include_preview (Union[Unset, bool]):  Default: False.
         limit (Union[Unset, int]):
         lineage (Union[Unset, GetFloatSeriesValuesLineage]):
         skip_to_step (Union[Unset, float]):
@@ -192,6 +200,7 @@ def sync(
         client=client,
         attribute=attribute,
         experiment_id=experiment_id,
+        include_preview=include_preview,
         limit=limit,
         lineage=lineage,
         skip_to_step=skip_to_step,
@@ -203,6 +212,7 @@ async def asyncio_detailed(
     client: Union[AuthenticatedClient, Client],
     attribute: str,
     experiment_id: Union[Unset, str] = UNSET,
+    include_preview: Union[Unset, bool] = False,
     limit: Union[Unset, int] = UNSET,
     lineage: Union[Unset, GetFloatSeriesValuesLineage] = UNSET,
     skip_to_step: Union[Unset, float] = UNSET,
@@ -212,6 +222,7 @@ async def asyncio_detailed(
     Args:
         attribute (str):
         experiment_id (Union[Unset, str]):
+        include_preview (Union[Unset, bool]):  Default: False.
         limit (Union[Unset, int]):
         lineage (Union[Unset, GetFloatSeriesValuesLineage]):
         skip_to_step (Union[Unset, float]):
@@ -227,6 +238,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         attribute=attribute,
         experiment_id=experiment_id,
+        include_preview=include_preview,
         limit=limit,
         lineage=lineage,
         skip_to_step=skip_to_step,
@@ -242,6 +254,7 @@ async def asyncio(
     client: Union[AuthenticatedClient, Client],
     attribute: str,
     experiment_id: Union[Unset, str] = UNSET,
+    include_preview: Union[Unset, bool] = False,
     limit: Union[Unset, int] = UNSET,
     lineage: Union[Unset, GetFloatSeriesValuesLineage] = UNSET,
     skip_to_step: Union[Unset, float] = UNSET,
@@ -251,6 +264,7 @@ async def asyncio(
     Args:
         attribute (str):
         experiment_id (Union[Unset, str]):
+        include_preview (Union[Unset, bool]):  Default: False.
         limit (Union[Unset, int]):
         lineage (Union[Unset, GetFloatSeriesValuesLineage]):
         skip_to_step (Union[Unset, float]):
@@ -268,6 +282,7 @@ async def asyncio(
             client=client,
             attribute=attribute,
             experiment_id=experiment_id,
+            include_preview=include_preview,
             limit=limit,
             lineage=lineage,
             skip_to_step=skip_to_step,

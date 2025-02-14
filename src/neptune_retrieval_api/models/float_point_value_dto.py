@@ -31,17 +31,25 @@ T = TypeVar("T", bound="FloatPointValueDTO")
 class FloatPointValueDTO:
     """
     Attributes:
+        completion_ratio (float):
+        is_preview (bool):
         step (float):
         timestamp_millis (int):
         value (float):
     """
 
+    completion_ratio: float
+    is_preview: bool
     step: float
     timestamp_millis: int
     value: float
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        completion_ratio = self.completion_ratio
+
+        is_preview = self.is_preview
+
         step = self.step
 
         timestamp_millis = self.timestamp_millis
@@ -52,6 +60,8 @@ class FloatPointValueDTO:
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
+                "completionRatio": completion_ratio,
+                "isPreview": is_preview,
                 "step": step,
                 "timestampMillis": timestamp_millis,
                 "value": value,
@@ -63,6 +73,10 @@ class FloatPointValueDTO:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
+        completion_ratio = d.pop("completionRatio")
+
+        is_preview = d.pop("isPreview")
+
         step = d.pop("step")
 
         timestamp_millis = d.pop("timestampMillis")
@@ -70,6 +84,8 @@ class FloatPointValueDTO:
         value = d.pop("value")
 
         float_point_value_dto = cls(
+            completion_ratio=completion_ratio,
+            is_preview=is_preview,
             step=step,
             timestamp_millis=timestamp_millis,
             value=value,

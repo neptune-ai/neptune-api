@@ -71,13 +71,17 @@ class ProtoFloatPointValueDTO(google.protobuf.message.Message):
     TIMESTAMP_MILLIS_FIELD_NUMBER: builtins.int
     STEP_FIELD_NUMBER: builtins.int
     VALUE_FIELD_NUMBER: builtins.int
+    IS_PREVIEW_FIELD_NUMBER: builtins.int
+    COMPLETION_RATIO_FIELD_NUMBER: builtins.int
     timestamp_millis: builtins.int
     step: builtins.float
     value: builtins.float
+    is_preview: builtins.bool
+    completion_ratio: builtins.float
 
-    def __init__(self, *, timestamp_millis: builtins.int=..., step: builtins.float=..., value: builtins.float=...) -> None:
+    def __init__(self, *, timestamp_millis: builtins.int=..., step: builtins.float=..., value: builtins.float=..., is_preview: builtins.bool=..., completion_ratio: builtins.float=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing.Literal['step', b'step', 'timestamp_millis', b'timestamp_millis', 'value', b'value']) -> None:
+    def ClearField(self, field_name: typing.Literal['completion_ratio', b'completion_ratio', 'is_preview', b'is_preview', 'step', b'step', 'timestamp_millis', b'timestamp_millis', 'value', b'value']) -> None:
         ...
 global___ProtoFloatPointValueDTO = ProtoFloatPointValueDTO
