@@ -21,6 +21,7 @@ from typing import (
     Type,
     TypeVar,
 )
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -35,15 +36,15 @@ class NotebookDTO:
     Attributes:
         creation_time (datetime.datetime):
         description (str):
-        id (str):
-        last_checkpoint_id (str):
+        id (UUID):
+        last_checkpoint_id (UUID):
         last_checkpoint_time (datetime.datetime):
         name (str):
-        organization_id (str):
+        organization_id (UUID):
         organization_name (str):
         owner (str):
         path (str):
-        project_id (str):
+        project_id (UUID):
         project_name (str):
         removable (bool):
         size (int):
@@ -52,15 +53,15 @@ class NotebookDTO:
 
     creation_time: datetime.datetime
     description: str
-    id: str
-    last_checkpoint_id: str
+    id: UUID
+    last_checkpoint_id: UUID
     last_checkpoint_time: datetime.datetime
     name: str
-    organization_id: str
+    organization_id: UUID
     organization_name: str
     owner: str
     path: str
-    project_id: str
+    project_id: UUID
     project_name: str
     removable: bool
     size: int
@@ -72,15 +73,15 @@ class NotebookDTO:
 
         description = self.description
 
-        id = self.id
+        id = str(self.id)
 
-        last_checkpoint_id = self.last_checkpoint_id
+        last_checkpoint_id = str(self.last_checkpoint_id)
 
         last_checkpoint_time = self.last_checkpoint_time.isoformat()
 
         name = self.name
 
-        organization_id = self.organization_id
+        organization_id = str(self.organization_id)
 
         organization_name = self.organization_name
 
@@ -88,7 +89,7 @@ class NotebookDTO:
 
         path = self.path
 
-        project_id = self.project_id
+        project_id = str(self.project_id)
 
         project_name = self.project_name
 
@@ -129,15 +130,15 @@ class NotebookDTO:
 
         description = d.pop("description")
 
-        id = d.pop("id")
+        id = UUID(d.pop("id"))
 
-        last_checkpoint_id = d.pop("lastCheckpointId")
+        last_checkpoint_id = UUID(d.pop("lastCheckpointId"))
 
         last_checkpoint_time = isoparse(d.pop("lastCheckpointTime"))
 
         name = d.pop("name")
 
-        organization_id = d.pop("organizationId")
+        organization_id = UUID(d.pop("organizationId"))
 
         organization_name = d.pop("organizationName")
 
@@ -145,7 +146,7 @@ class NotebookDTO:
 
         path = d.pop("path")
 
-        project_id = d.pop("projectId")
+        project_id = UUID(d.pop("projectId"))
 
         project_name = d.pop("projectName")
 

@@ -21,8 +21,8 @@ from typing import (
     Type,
     TypeVar,
     Union,
-    cast,
 )
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -43,7 +43,7 @@ T = TypeVar("T", bound="LeaderboardEntryGroupDTO")
 class LeaderboardEntryGroupDTO:
     """
     Attributes:
-        children_ids (List[str]):
+        children_ids (List[UUID]):
         id (str): ID of the group
         item_count (int): The number of entries in the group.
         key (List['LeaderboardFieldWithValueDTO']):
@@ -51,7 +51,7 @@ class LeaderboardEntryGroupDTO:
         continuation_token (Union[Unset, str]): Token for searching next group entries (in case of pagination)
     """
 
-    children_ids: List[str]
+    children_ids: List[UUID]
     id: str
     item_count: int
     key: List["LeaderboardFieldWithValueDTO"]
@@ -60,7 +60,10 @@ class LeaderboardEntryGroupDTO:
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        children_ids = self.children_ids
+        children_ids = []
+        for children_ids_item_data in self.children_ids:
+            children_ids_item = str(children_ids_item_data)
+            children_ids.append(children_ids_item)
 
         id = self.id
 
@@ -97,7 +100,12 @@ class LeaderboardEntryGroupDTO:
         from ..models.leaderboard_field_with_value_dto import LeaderboardFieldWithValueDTO
 
         d = src_dict.copy()
-        children_ids = cast(List[str], d.pop("childrenIds"))
+        children_ids = []
+        _children_ids = d.pop("childrenIds")
+        for children_ids_item_data in _children_ids:
+            children_ids_item = UUID(children_ids_item_data)
+
+            children_ids.append(children_ids_item)
 
         id = d.pop("id")
 

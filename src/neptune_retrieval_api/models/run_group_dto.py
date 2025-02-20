@@ -23,6 +23,7 @@ from typing import (
     Union,
     cast,
 )
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -43,30 +44,30 @@ T = TypeVar("T", bound="RunGroupDTO")
 class RunGroupDTO:
     """
     Attributes:
-        id (str):
+        id (UUID):
         show_only_selected_runs (bool):
         view_params (TableViewParamsDTO):
         color (Union[Unset, str]):
         experiment_member_keys (Union[Unset, List[str]]):
         first_members_by_query_count (Union[Unset, int]):
         name (Union[Unset, str]):
-        project_id (Union[Unset, str]):
+        project_id (Union[Unset, UUID]):
         run_member_keys (Union[Unset, List[str]]):
     """
 
-    id: str
+    id: UUID
     show_only_selected_runs: bool
     view_params: "TableViewParamsDTO"
     color: Union[Unset, str] = UNSET
     experiment_member_keys: Union[Unset, List[str]] = UNSET
     first_members_by_query_count: Union[Unset, int] = UNSET
     name: Union[Unset, str] = UNSET
-    project_id: Union[Unset, str] = UNSET
+    project_id: Union[Unset, UUID] = UNSET
     run_member_keys: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
+        id = str(self.id)
 
         show_only_selected_runs = self.show_only_selected_runs
 
@@ -82,7 +83,9 @@ class RunGroupDTO:
 
         name = self.name
 
-        project_id = self.project_id
+        project_id: Union[Unset, str] = UNSET
+        if not isinstance(self.project_id, Unset):
+            project_id = str(self.project_id)
 
         run_member_keys: Union[Unset, List[str]] = UNSET
         if not isinstance(self.run_member_keys, Unset):
@@ -117,7 +120,7 @@ class RunGroupDTO:
         from ..models.table_view_params_dto import TableViewParamsDTO
 
         d = src_dict.copy()
-        id = d.pop("id")
+        id = UUID(d.pop("id"))
 
         show_only_selected_runs = d.pop("showOnlySelectedRuns")
 
@@ -131,7 +134,12 @@ class RunGroupDTO:
 
         name = d.pop("name", UNSET)
 
-        project_id = d.pop("projectId", UNSET)
+        _project_id = d.pop("projectId", UNSET)
+        project_id: Union[Unset, UUID]
+        if isinstance(_project_id, Unset):
+            project_id = UNSET
+        else:
+            project_id = UUID(_project_id)
 
         run_member_keys = cast(List[str], d.pop("runMemberKeys", UNSET))
 

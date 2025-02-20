@@ -22,6 +22,7 @@ from typing import (
     TypeVar,
     Union,
 )
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -48,7 +49,7 @@ class LeaderboardViewDTO:
         column_list (LeaderboardViewColumnListDTO):
         default_view (bool):
         experiments_only (bool):
-        id (str):
+        id (UUID):
         name (str):
         runs_lineage (bool):
         sort_options (LeaderboardSortParamsDTO):
@@ -61,7 +62,7 @@ class LeaderboardViewDTO:
     column_list: "LeaderboardViewColumnListDTO"
     default_view: bool
     experiments_only: bool
-    id: str
+    id: UUID
     name: str
     runs_lineage: bool
     sort_options: "LeaderboardSortParamsDTO"
@@ -78,7 +79,7 @@ class LeaderboardViewDTO:
 
         experiments_only = self.experiments_only
 
-        id = self.id
+        id = str(self.id)
 
         name = self.name
 
@@ -135,7 +136,7 @@ class LeaderboardViewDTO:
 
         experiments_only = d.pop("experimentsOnly")
 
-        id = d.pop("id")
+        id = UUID(d.pop("id"))
 
         name = d.pop("name")
 

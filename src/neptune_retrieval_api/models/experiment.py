@@ -21,6 +21,7 @@ from typing import (
     TypeVar,
     Union,
 )
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -38,11 +39,11 @@ T = TypeVar("T", bound="Experiment")
 class Experiment:
     """
     Attributes:
-        id (str):
-        organization_id (str):
+        id (UUID):
+        organization_id (UUID):
         organization_name (str):
-        parent_id (str):
-        project_id (str):
+        parent_id (UUID):
+        project_id (UUID):
         project_name (str):
         short_id (str):
         trashed (bool):
@@ -50,11 +51,11 @@ class Experiment:
         custom_id (Union[Unset, str]):
     """
 
-    id: str
-    organization_id: str
+    id: UUID
+    organization_id: UUID
     organization_name: str
-    parent_id: str
-    project_id: str
+    parent_id: UUID
+    project_id: UUID
     project_name: str
     short_id: str
     trashed: bool
@@ -63,15 +64,15 @@ class Experiment:
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
+        id = str(self.id)
 
-        organization_id = self.organization_id
+        organization_id = str(self.organization_id)
 
         organization_name = self.organization_name
 
-        parent_id = self.parent_id
+        parent_id = str(self.parent_id)
 
-        project_id = self.project_id
+        project_id = str(self.project_id)
 
         project_name = self.project_name
 
@@ -106,15 +107,15 @@ class Experiment:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        id = d.pop("id")
+        id = UUID(d.pop("id"))
 
-        organization_id = d.pop("organizationId")
+        organization_id = UUID(d.pop("organizationId"))
 
         organization_name = d.pop("organizationName")
 
-        parent_id = d.pop("parentId")
+        parent_id = UUID(d.pop("parentId"))
 
-        project_id = d.pop("projectId")
+        project_id = UUID(d.pop("projectId"))
 
         project_name = d.pop("projectName")
 

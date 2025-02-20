@@ -22,6 +22,7 @@ from typing import (
     Union,
     cast,
 )
+from uuid import UUID
 
 import httpx
 
@@ -39,8 +40,8 @@ from ...types import (
 
 
 def _get_kwargs(
-    report_id: str,
-    version_id: str,
+    report_id: UUID,
+    version_id: UUID,
     *,
     body: ReportVersionDTO,
     project_identifier: str,
@@ -75,33 +76,33 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[Union[Any, DependencyOnInaccessibleProjectsErrorDTO, ReportVersionDTO]]:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
         response_200 = ReportVersionDTO.from_dict(response.json())
 
         return response_200
-    if response.status_code == HTTPStatus.BAD_REQUEST:
+    if response.status_code == 400:
         response_400 = cast(Any, None)
         return response_400
-    if response.status_code == HTTPStatus.UNAUTHORIZED:
+    if response.status_code == 401:
         response_401 = cast(Any, None)
         return response_401
-    if response.status_code == HTTPStatus.FORBIDDEN:
+    if response.status_code == 403:
         response_403 = DependencyOnInaccessibleProjectsErrorDTO.from_dict(response.json())
 
         return response_403
-    if response.status_code == HTTPStatus.NOT_FOUND:
+    if response.status_code == 404:
         response_404 = cast(Any, None)
         return response_404
-    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
+    if response.status_code == 408:
         response_408 = cast(Any, None)
         return response_408
-    if response.status_code == HTTPStatus.CONFLICT:
+    if response.status_code == 409:
         response_409 = cast(Any, None)
         return response_409
-    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
+    if response.status_code == 422:
         response_422 = cast(Any, None)
         return response_422
-    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
+    if response.status_code == 429:
         response_429 = cast(Any, None)
         return response_429
     if client.raise_on_unexpected_status:
@@ -122,8 +123,8 @@ def _build_response(
 
 
 def sync_detailed(
-    report_id: str,
-    version_id: str,
+    report_id: UUID,
+    version_id: UUID,
     *,
     client: Union[AuthenticatedClient, Client],
     body: ReportVersionDTO,
@@ -133,8 +134,8 @@ def sync_detailed(
     """Update a draft of a report
 
     Args:
-        report_id (str):
-        version_id (str):
+        report_id (UUID):
+        version_id (UUID):
         project_identifier (str):
         publish_if_unmodified_since (datetime.datetime):
         body (ReportVersionDTO):
@@ -163,8 +164,8 @@ def sync_detailed(
 
 
 def sync(
-    report_id: str,
-    version_id: str,
+    report_id: UUID,
+    version_id: UUID,
     *,
     client: Union[AuthenticatedClient, Client],
     body: ReportVersionDTO,
@@ -174,8 +175,8 @@ def sync(
     """Update a draft of a report
 
     Args:
-        report_id (str):
-        version_id (str):
+        report_id (UUID):
+        version_id (UUID):
         project_identifier (str):
         publish_if_unmodified_since (datetime.datetime):
         body (ReportVersionDTO):
@@ -199,8 +200,8 @@ def sync(
 
 
 async def asyncio_detailed(
-    report_id: str,
-    version_id: str,
+    report_id: UUID,
+    version_id: UUID,
     *,
     client: Union[AuthenticatedClient, Client],
     body: ReportVersionDTO,
@@ -210,8 +211,8 @@ async def asyncio_detailed(
     """Update a draft of a report
 
     Args:
-        report_id (str):
-        version_id (str):
+        report_id (UUID):
+        version_id (UUID):
         project_identifier (str):
         publish_if_unmodified_since (datetime.datetime):
         body (ReportVersionDTO):
@@ -238,8 +239,8 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    report_id: str,
-    version_id: str,
+    report_id: UUID,
+    version_id: UUID,
     *,
     client: Union[AuthenticatedClient, Client],
     body: ReportVersionDTO,
@@ -249,8 +250,8 @@ async def asyncio(
     """Update a draft of a report
 
     Args:
-        report_id (str):
-        version_id (str):
+        report_id (UUID):
+        version_id (UUID):
         project_identifier (str):
         publish_if_unmodified_since (datetime.datetime):
         body (ReportVersionDTO):

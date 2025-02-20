@@ -22,6 +22,7 @@ from typing import (
     Union,
     cast,
 )
+from uuid import UUID
 
 import httpx
 
@@ -41,7 +42,7 @@ from ...types import (
 def _get_kwargs(
     *,
     project_identifier: str,
-    report_ids: Union[Unset, List[str]] = UNSET,
+    report_ids: Union[Unset, List[UUID]] = UNSET,
 ) -> Dict[str, Any]:
     params: Dict[str, Any] = {}
 
@@ -49,7 +50,10 @@ def _get_kwargs(
 
     json_report_ids: Union[Unset, List[str]] = UNSET
     if not isinstance(report_ids, Unset):
-        json_report_ids = report_ids
+        json_report_ids = []
+        for report_ids_item_data in report_ids:
+            report_ids_item = str(report_ids_item_data)
+            json_report_ids.append(report_ids_item)
 
     params["reportIds"] = json_report_ids
 
@@ -67,32 +71,32 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[Union[Any, ReportMetadataListDTO]]:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
         response_200 = ReportMetadataListDTO.from_dict(response.json())
 
         return response_200
-    if response.status_code == HTTPStatus.BAD_REQUEST:
+    if response.status_code == 400:
         response_400 = cast(Any, None)
         return response_400
-    if response.status_code == HTTPStatus.UNAUTHORIZED:
+    if response.status_code == 401:
         response_401 = cast(Any, None)
         return response_401
-    if response.status_code == HTTPStatus.FORBIDDEN:
+    if response.status_code == 403:
         response_403 = cast(Any, None)
         return response_403
-    if response.status_code == HTTPStatus.NOT_FOUND:
+    if response.status_code == 404:
         response_404 = cast(Any, None)
         return response_404
-    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
+    if response.status_code == 408:
         response_408 = cast(Any, None)
         return response_408
-    if response.status_code == HTTPStatus.CONFLICT:
+    if response.status_code == 409:
         response_409 = cast(Any, None)
         return response_409
-    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
+    if response.status_code == 422:
         response_422 = cast(Any, None)
         return response_422
-    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
+    if response.status_code == 429:
         response_429 = cast(Any, None)
         return response_429
     if client.raise_on_unexpected_status:
@@ -116,13 +120,13 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     project_identifier: str,
-    report_ids: Union[Unset, List[str]] = UNSET,
+    report_ids: Union[Unset, List[UUID]] = UNSET,
 ) -> Response[Union[Any, ReportMetadataListDTO]]:
     """List reports' metadata
 
     Args:
         project_identifier (str):
-        report_ids (Union[Unset, List[str]]):
+        report_ids (Union[Unset, List[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -148,13 +152,13 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     project_identifier: str,
-    report_ids: Union[Unset, List[str]] = UNSET,
+    report_ids: Union[Unset, List[UUID]] = UNSET,
 ) -> Optional[Union[Any, ReportMetadataListDTO]]:
     """List reports' metadata
 
     Args:
         project_identifier (str):
-        report_ids (Union[Unset, List[str]]):
+        report_ids (Union[Unset, List[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -175,13 +179,13 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     project_identifier: str,
-    report_ids: Union[Unset, List[str]] = UNSET,
+    report_ids: Union[Unset, List[UUID]] = UNSET,
 ) -> Response[Union[Any, ReportMetadataListDTO]]:
     """List reports' metadata
 
     Args:
         project_identifier (str):
-        report_ids (Union[Unset, List[str]]):
+        report_ids (Union[Unset, List[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -205,13 +209,13 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     project_identifier: str,
-    report_ids: Union[Unset, List[str]] = UNSET,
+    report_ids: Union[Unset, List[UUID]] = UNSET,
 ) -> Optional[Union[Any, ReportMetadataListDTO]]:
     """List reports' metadata
 
     Args:
         project_identifier (str):
-        report_ids (Union[Unset, List[str]]):
+        report_ids (Union[Unset, List[UUID]]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

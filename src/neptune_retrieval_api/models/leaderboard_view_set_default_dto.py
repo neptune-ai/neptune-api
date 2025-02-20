@@ -21,6 +21,7 @@ from typing import (
     TypeVar,
     Union,
 )
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -38,17 +39,19 @@ class LeaderboardViewSetDefaultDTO:
     """
     Attributes:
         project_identifier (str):
-        view_id (Union[Unset, str]):
+        view_id (Union[Unset, UUID]):
     """
 
     project_identifier: str
-    view_id: Union[Unset, str] = UNSET
+    view_id: Union[Unset, UUID] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         project_identifier = self.project_identifier
 
-        view_id = self.view_id
+        view_id: Union[Unset, str] = UNSET
+        if not isinstance(self.view_id, Unset):
+            view_id = str(self.view_id)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -67,7 +70,12 @@ class LeaderboardViewSetDefaultDTO:
         d = src_dict.copy()
         project_identifier = d.pop("projectIdentifier")
 
-        view_id = d.pop("viewId", UNSET)
+        _view_id = d.pop("viewId", UNSET)
+        view_id: Union[Unset, UUID]
+        if isinstance(_view_id, Unset):
+            view_id = UNSET
+        else:
+            view_id = UUID(_view_id)
 
         leaderboard_view_set_default_dto = cls(
             project_identifier=project_identifier,

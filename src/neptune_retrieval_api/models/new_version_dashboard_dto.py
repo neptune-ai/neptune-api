@@ -23,6 +23,7 @@ from typing import (
     Union,
     cast,
 )
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -51,7 +52,7 @@ class NewVersionDashboardDTO:
         layouts (DashboardLayoutsDTO):
         name (str):
         type (NewVersionDashboardDTOType):
-        version_branch (str):
+        version_branch (UUID):
         widgets (List['WidgetDTO']):
         auto_compare_pool (Union[Unset, int]):
         color (Union[Unset, str]):
@@ -69,7 +70,7 @@ class NewVersionDashboardDTO:
     layouts: "DashboardLayoutsDTO"
     name: str
     type: NewVersionDashboardDTOType
-    version_branch: str
+    version_branch: UUID
     widgets: List["WidgetDTO"]
     auto_compare_pool: Union[Unset, int] = UNSET
     color: Union[Unset, str] = UNSET
@@ -91,7 +92,7 @@ class NewVersionDashboardDTO:
 
         type = self.type.value
 
-        version_branch = self.version_branch
+        version_branch = str(self.version_branch)
 
         widgets = []
         for widgets_item_data in self.widgets:
@@ -181,7 +182,7 @@ class NewVersionDashboardDTO:
 
         type = NewVersionDashboardDTOType(d.pop("type"))
 
-        version_branch = d.pop("versionBranch")
+        version_branch = UUID(d.pop("versionBranch"))
 
         widgets = []
         _widgets = d.pop("widgets")

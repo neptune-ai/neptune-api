@@ -22,8 +22,8 @@ from typing import (
     Type,
     TypeVar,
     Union,
-    cast,
 )
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -46,26 +46,27 @@ class ReportVersionMetadataDTO:
     """
     Attributes:
         draft (bool):
-        external_projects_dependencies (List[str]): Projects that this report version depends on, other than the project
-            that the report is in. In case the user calling the API does not have access to some of them, the version will
-            not be returned. The goal is to avoid a round trip to the server querying for access to the projects.
-        report_id (str):
+        external_projects_dependencies (List[UUID]): Projects that this report version depends on, other than the
+            project that the report is in. In case the user calling the API does not have access to some of them, the
+            version will not be returned. The goal is to avoid a round trip to the server querying for access to the
+            projects.
+        report_id (UUID):
         version_author (str):
         version_content_preview (ReportVersionContentPreviewDTO):
         version_creation_time (datetime.datetime):
-        version_id (str):
+        version_id (UUID):
         version_last_modification_time (datetime.datetime):
         version_description (Union[Unset, str]):
         version_name (Union[Unset, str]):
     """
 
     draft: bool
-    external_projects_dependencies: List[str]
-    report_id: str
+    external_projects_dependencies: List[UUID]
+    report_id: UUID
     version_author: str
     version_content_preview: "ReportVersionContentPreviewDTO"
     version_creation_time: datetime.datetime
-    version_id: str
+    version_id: UUID
     version_last_modification_time: datetime.datetime
     version_description: Union[Unset, str] = UNSET
     version_name: Union[Unset, str] = UNSET
@@ -74,9 +75,12 @@ class ReportVersionMetadataDTO:
     def to_dict(self) -> Dict[str, Any]:
         draft = self.draft
 
-        external_projects_dependencies = self.external_projects_dependencies
+        external_projects_dependencies = []
+        for external_projects_dependencies_item_data in self.external_projects_dependencies:
+            external_projects_dependencies_item = str(external_projects_dependencies_item_data)
+            external_projects_dependencies.append(external_projects_dependencies_item)
 
-        report_id = self.report_id
+        report_id = str(self.report_id)
 
         version_author = self.version_author
 
@@ -84,7 +88,7 @@ class ReportVersionMetadataDTO:
 
         version_creation_time = self.version_creation_time.isoformat()
 
-        version_id = self.version_id
+        version_id = str(self.version_id)
 
         version_last_modification_time = self.version_last_modification_time.isoformat()
 
@@ -120,9 +124,14 @@ class ReportVersionMetadataDTO:
         d = src_dict.copy()
         draft = d.pop("draft")
 
-        external_projects_dependencies = cast(List[str], d.pop("externalProjectsDependencies"))
+        external_projects_dependencies = []
+        _external_projects_dependencies = d.pop("externalProjectsDependencies")
+        for external_projects_dependencies_item_data in _external_projects_dependencies:
+            external_projects_dependencies_item = UUID(external_projects_dependencies_item_data)
 
-        report_id = d.pop("reportId")
+            external_projects_dependencies.append(external_projects_dependencies_item)
+
+        report_id = UUID(d.pop("reportId"))
 
         version_author = d.pop("versionAuthor")
 
@@ -130,7 +139,7 @@ class ReportVersionMetadataDTO:
 
         version_creation_time = isoparse(d.pop("versionCreationTime"))
 
-        version_id = d.pop("versionId")
+        version_id = UUID(d.pop("versionId"))
 
         version_last_modification_time = isoparse(d.pop("versionLastModificationTime"))
 

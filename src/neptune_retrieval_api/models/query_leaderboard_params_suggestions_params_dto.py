@@ -21,6 +21,7 @@ from typing import (
     TypeVar,
     Union,
 )
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -38,17 +39,19 @@ class QueryLeaderboardParamsSuggestionsParamsDTO:
     """
     Attributes:
         enabled (bool):
-        view_id (Union[Unset, str]):
+        view_id (Union[Unset, UUID]):
     """
 
     enabled: bool
-    view_id: Union[Unset, str] = UNSET
+    view_id: Union[Unset, UUID] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         enabled = self.enabled
 
-        view_id = self.view_id
+        view_id: Union[Unset, str] = UNSET
+        if not isinstance(self.view_id, Unset):
+            view_id = str(self.view_id)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -67,7 +70,12 @@ class QueryLeaderboardParamsSuggestionsParamsDTO:
         d = src_dict.copy()
         enabled = d.pop("enabled")
 
-        view_id = d.pop("viewId", UNSET)
+        _view_id = d.pop("viewId", UNSET)
+        view_id: Union[Unset, UUID]
+        if isinstance(_view_id, Unset):
+            view_id = UNSET
+        else:
+            view_id = UUID(_view_id)
 
         query_leaderboard_params_suggestions_params_dto = cls(
             enabled=enabled,

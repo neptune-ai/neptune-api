@@ -21,6 +21,7 @@ from typing import (
     Type,
     TypeVar,
 )
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -39,19 +40,19 @@ class AttributesDTO:
     """
     Attributes:
         attributes (List['AttributeDTO']):
-        experiment_id (str):
-        organization_id (str):
+        experiment_id (UUID):
+        organization_id (UUID):
         organization_name (str):
-        project_id (str):
+        project_id (UUID):
         project_name (str):
         type (ExperimentTypeDTO):
     """
 
     attributes: List["AttributeDTO"]
-    experiment_id: str
-    organization_id: str
+    experiment_id: UUID
+    organization_id: UUID
     organization_name: str
-    project_id: str
+    project_id: UUID
     project_name: str
     type: ExperimentTypeDTO
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -62,13 +63,13 @@ class AttributesDTO:
             attributes_item = attributes_item_data.to_dict()
             attributes.append(attributes_item)
 
-        experiment_id = self.experiment_id
+        experiment_id = str(self.experiment_id)
 
-        organization_id = self.organization_id
+        organization_id = str(self.organization_id)
 
         organization_name = self.organization_name
 
-        project_id = self.project_id
+        project_id = str(self.project_id)
 
         project_name = self.project_name
 
@@ -102,13 +103,13 @@ class AttributesDTO:
 
             attributes.append(attributes_item)
 
-        experiment_id = d.pop("experimentId")
+        experiment_id = UUID(d.pop("experimentId"))
 
-        organization_id = d.pop("organizationId")
+        organization_id = UUID(d.pop("organizationId"))
 
         organization_name = d.pop("organizationName")
 
-        project_id = d.pop("projectId")
+        project_id = UUID(d.pop("projectId"))
 
         project_name = d.pop("projectName")
 

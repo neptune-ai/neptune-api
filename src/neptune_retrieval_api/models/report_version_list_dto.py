@@ -37,9 +37,11 @@ class ReportVersionListDTO:
     """
     Attributes:
         report_versions_metadata (List['ReportVersionMetadataDTO']):
+        total (int):
     """
 
     report_versions_metadata: List["ReportVersionMetadataDTO"]
+    total: int
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -48,11 +50,14 @@ class ReportVersionListDTO:
             report_versions_metadata_item = report_versions_metadata_item_data.to_dict()
             report_versions_metadata.append(report_versions_metadata_item)
 
+        total = self.total
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "reportVersionsMetadata": report_versions_metadata,
+                "total": total,
             }
         )
 
@@ -70,8 +75,11 @@ class ReportVersionListDTO:
 
             report_versions_metadata.append(report_versions_metadata_item)
 
+        total = d.pop("total")
+
         report_version_list_dto = cls(
             report_versions_metadata=report_versions_metadata,
+            total=total,
         )
 
         report_version_list_dto.additional_properties = d

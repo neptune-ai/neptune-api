@@ -21,6 +21,7 @@ from typing import (
     TypeVar,
     cast,
 )
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -33,25 +34,25 @@ class Alias:
     """
     Attributes:
         channels (List[str]):
-        id (str):
+        id (UUID):
         name (str):
-        project_id (str):
+        project_id (UUID):
     """
 
     channels: List[str]
-    id: str
+    id: UUID
     name: str
-    project_id: str
+    project_id: UUID
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         channels = self.channels
 
-        id = self.id
+        id = str(self.id)
 
         name = self.name
 
-        project_id = self.project_id
+        project_id = str(self.project_id)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -71,11 +72,11 @@ class Alias:
         d = src_dict.copy()
         channels = cast(List[str], d.pop("channels"))
 
-        id = d.pop("id")
+        id = UUID(d.pop("id"))
 
         name = d.pop("name")
 
-        project_id = d.pop("projectId")
+        project_id = UUID(d.pop("projectId"))
 
         alias = cls(
             channels=channels,

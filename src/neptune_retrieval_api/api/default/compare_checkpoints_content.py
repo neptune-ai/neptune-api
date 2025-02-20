@@ -20,6 +20,7 @@ from typing import (
     Optional,
     Union,
 )
+from uuid import UUID
 
 import httpx
 
@@ -36,14 +37,16 @@ from ...types import (
 
 def _get_kwargs(
     *,
-    source_checkpoint_id: str,
-    target_checkpoint_id: str,
+    source_checkpoint_id: UUID,
+    target_checkpoint_id: UUID,
 ) -> Dict[str, Any]:
     params: Dict[str, Any] = {}
 
-    params["sourceCheckpointId"] = source_checkpoint_id
+    json_source_checkpoint_id = str(source_checkpoint_id)
+    params["sourceCheckpointId"] = json_source_checkpoint_id
 
-    params["targetCheckpointId"] = target_checkpoint_id
+    json_target_checkpoint_id = str(target_checkpoint_id)
+    params["targetCheckpointId"] = json_target_checkpoint_id
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -57,21 +60,21 @@ def _get_kwargs(
 
 
 def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
-    if response.status_code == HTTPStatus.BAD_REQUEST:
+    if response.status_code == 400:
         return None
-    if response.status_code == HTTPStatus.UNAUTHORIZED:
+    if response.status_code == 401:
         return None
-    if response.status_code == HTTPStatus.FORBIDDEN:
+    if response.status_code == 403:
         return None
-    if response.status_code == HTTPStatus.NOT_FOUND:
+    if response.status_code == 404:
         return None
-    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
+    if response.status_code == 408:
         return None
-    if response.status_code == HTTPStatus.CONFLICT:
+    if response.status_code == 409:
         return None
-    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
+    if response.status_code == 422:
         return None
-    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
+    if response.status_code == 429:
         return None
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
@@ -91,14 +94,14 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    source_checkpoint_id: str,
-    target_checkpoint_id: str,
+    source_checkpoint_id: UUID,
+    target_checkpoint_id: UUID,
 ) -> Response[Any]:
     """Compare notebook checkpoint content, response is in nbdime rest api format
 
     Args:
-        source_checkpoint_id (str):
-        target_checkpoint_id (str):
+        source_checkpoint_id (UUID):
+        target_checkpoint_id (UUID):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -123,14 +126,14 @@ def sync_detailed(
 async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    source_checkpoint_id: str,
-    target_checkpoint_id: str,
+    source_checkpoint_id: UUID,
+    target_checkpoint_id: UUID,
 ) -> Response[Any]:
     """Compare notebook checkpoint content, response is in nbdime rest api format
 
     Args:
-        source_checkpoint_id (str):
-        target_checkpoint_id (str):
+        source_checkpoint_id (UUID):
+        target_checkpoint_id (UUID):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

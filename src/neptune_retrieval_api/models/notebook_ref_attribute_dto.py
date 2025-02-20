@@ -22,6 +22,7 @@ from typing import (
     TypeVar,
     Union,
 )
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -43,10 +44,10 @@ class NotebookRefAttributeDTO:
         attribute_name (str):
         attribute_type (AttributeTypeDTO):
         notebook_deleted (bool):
-        notebook_id (str):
+        notebook_id (UUID):
         checkpoint_created (Union[Unset, datetime.datetime]):
         checkpoint_deleted (Union[Unset, bool]):
-        checkpoint_id (Union[Unset, str]):
+        checkpoint_id (Union[Unset, UUID]):
         checkpoint_name (Union[Unset, str]):
         notebook_name (Union[Unset, str]):
     """
@@ -54,10 +55,10 @@ class NotebookRefAttributeDTO:
     attribute_name: str
     attribute_type: AttributeTypeDTO
     notebook_deleted: bool
-    notebook_id: str
+    notebook_id: UUID
     checkpoint_created: Union[Unset, datetime.datetime] = UNSET
     checkpoint_deleted: Union[Unset, bool] = UNSET
-    checkpoint_id: Union[Unset, str] = UNSET
+    checkpoint_id: Union[Unset, UUID] = UNSET
     checkpoint_name: Union[Unset, str] = UNSET
     notebook_name: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -69,7 +70,7 @@ class NotebookRefAttributeDTO:
 
         notebook_deleted = self.notebook_deleted
 
-        notebook_id = self.notebook_id
+        notebook_id = str(self.notebook_id)
 
         checkpoint_created: Union[Unset, str] = UNSET
         if not isinstance(self.checkpoint_created, Unset):
@@ -77,7 +78,9 @@ class NotebookRefAttributeDTO:
 
         checkpoint_deleted = self.checkpoint_deleted
 
-        checkpoint_id = self.checkpoint_id
+        checkpoint_id: Union[Unset, str] = UNSET
+        if not isinstance(self.checkpoint_id, Unset):
+            checkpoint_id = str(self.checkpoint_id)
 
         checkpoint_name = self.checkpoint_name
 
@@ -115,7 +118,7 @@ class NotebookRefAttributeDTO:
 
         notebook_deleted = d.pop("notebookDeleted")
 
-        notebook_id = d.pop("notebookId")
+        notebook_id = UUID(d.pop("notebookId"))
 
         _checkpoint_created = d.pop("checkpointCreated", UNSET)
         checkpoint_created: Union[Unset, datetime.datetime]
@@ -126,7 +129,12 @@ class NotebookRefAttributeDTO:
 
         checkpoint_deleted = d.pop("checkpointDeleted", UNSET)
 
-        checkpoint_id = d.pop("checkpointId", UNSET)
+        _checkpoint_id = d.pop("checkpointId", UNSET)
+        checkpoint_id: Union[Unset, UUID]
+        if isinstance(_checkpoint_id, Unset):
+            checkpoint_id = UNSET
+        else:
+            checkpoint_id = UUID(_checkpoint_id)
 
         checkpoint_name = d.pop("checkpointName", UNSET)
 

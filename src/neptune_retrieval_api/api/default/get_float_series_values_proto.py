@@ -43,7 +43,6 @@ def _get_kwargs(
     *,
     attribute: str,
     experiment_id: Union[Unset, str] = UNSET,
-    include_preview: Union[Unset, bool] = False,
     limit: Union[Unset, int] = 10000,
     lineage: Union[Unset, GetFloatSeriesValuesProtoLineage] = UNSET,
     skip_to_step: Union[Unset, float] = UNSET,
@@ -53,8 +52,6 @@ def _get_kwargs(
     params["attribute"] = attribute
 
     params["experimentId"] = experiment_id
-
-    params["includePreview"] = include_preview
 
     params["limit"] = limit
 
@@ -80,32 +77,32 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[Union[Any, File]]:
-    if response.status_code == HTTPStatus.OK:
+    if response.status_code == 200:
         response_200 = File(payload=BytesIO(response.content))
 
         return response_200
-    if response.status_code == HTTPStatus.BAD_REQUEST:
+    if response.status_code == 400:
         response_400 = cast(Any, None)
         return response_400
-    if response.status_code == HTTPStatus.UNAUTHORIZED:
+    if response.status_code == 401:
         response_401 = cast(Any, None)
         return response_401
-    if response.status_code == HTTPStatus.FORBIDDEN:
+    if response.status_code == 403:
         response_403 = cast(Any, None)
         return response_403
-    if response.status_code == HTTPStatus.NOT_FOUND:
+    if response.status_code == 404:
         response_404 = cast(Any, None)
         return response_404
-    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
+    if response.status_code == 408:
         response_408 = cast(Any, None)
         return response_408
-    if response.status_code == HTTPStatus.CONFLICT:
+    if response.status_code == 409:
         response_409 = cast(Any, None)
         return response_409
-    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
+    if response.status_code == 422:
         response_422 = cast(Any, None)
         return response_422
-    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
+    if response.status_code == 429:
         response_429 = cast(Any, None)
         return response_429
     if client.raise_on_unexpected_status:
@@ -130,7 +127,6 @@ def sync_detailed(
     client: Union[AuthenticatedClient, Client],
     attribute: str,
     experiment_id: Union[Unset, str] = UNSET,
-    include_preview: Union[Unset, bool] = False,
     limit: Union[Unset, int] = 10000,
     lineage: Union[Unset, GetFloatSeriesValuesProtoLineage] = UNSET,
     skip_to_step: Union[Unset, float] = UNSET,
@@ -140,7 +136,6 @@ def sync_detailed(
     Args:
         attribute (str):
         experiment_id (Union[Unset, str]):
-        include_preview (Union[Unset, bool]):  Default: False.
         limit (Union[Unset, int]):  Default: 10000.
         lineage (Union[Unset, GetFloatSeriesValuesProtoLineage]):
         skip_to_step (Union[Unset, float]):
@@ -156,7 +151,6 @@ def sync_detailed(
     kwargs = _get_kwargs(
         attribute=attribute,
         experiment_id=experiment_id,
-        include_preview=include_preview,
         limit=limit,
         lineage=lineage,
         skip_to_step=skip_to_step,
@@ -174,7 +168,6 @@ def sync(
     client: Union[AuthenticatedClient, Client],
     attribute: str,
     experiment_id: Union[Unset, str] = UNSET,
-    include_preview: Union[Unset, bool] = False,
     limit: Union[Unset, int] = 10000,
     lineage: Union[Unset, GetFloatSeriesValuesProtoLineage] = UNSET,
     skip_to_step: Union[Unset, float] = UNSET,
@@ -184,7 +177,6 @@ def sync(
     Args:
         attribute (str):
         experiment_id (Union[Unset, str]):
-        include_preview (Union[Unset, bool]):  Default: False.
         limit (Union[Unset, int]):  Default: 10000.
         lineage (Union[Unset, GetFloatSeriesValuesProtoLineage]):
         skip_to_step (Union[Unset, float]):
@@ -201,7 +193,6 @@ def sync(
         client=client,
         attribute=attribute,
         experiment_id=experiment_id,
-        include_preview=include_preview,
         limit=limit,
         lineage=lineage,
         skip_to_step=skip_to_step,
@@ -213,7 +204,6 @@ async def asyncio_detailed(
     client: Union[AuthenticatedClient, Client],
     attribute: str,
     experiment_id: Union[Unset, str] = UNSET,
-    include_preview: Union[Unset, bool] = False,
     limit: Union[Unset, int] = 10000,
     lineage: Union[Unset, GetFloatSeriesValuesProtoLineage] = UNSET,
     skip_to_step: Union[Unset, float] = UNSET,
@@ -223,7 +213,6 @@ async def asyncio_detailed(
     Args:
         attribute (str):
         experiment_id (Union[Unset, str]):
-        include_preview (Union[Unset, bool]):  Default: False.
         limit (Union[Unset, int]):  Default: 10000.
         lineage (Union[Unset, GetFloatSeriesValuesProtoLineage]):
         skip_to_step (Union[Unset, float]):
@@ -239,7 +228,6 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         attribute=attribute,
         experiment_id=experiment_id,
-        include_preview=include_preview,
         limit=limit,
         lineage=lineage,
         skip_to_step=skip_to_step,
@@ -255,7 +243,6 @@ async def asyncio(
     client: Union[AuthenticatedClient, Client],
     attribute: str,
     experiment_id: Union[Unset, str] = UNSET,
-    include_preview: Union[Unset, bool] = False,
     limit: Union[Unset, int] = 10000,
     lineage: Union[Unset, GetFloatSeriesValuesProtoLineage] = UNSET,
     skip_to_step: Union[Unset, float] = UNSET,
@@ -265,7 +252,6 @@ async def asyncio(
     Args:
         attribute (str):
         experiment_id (Union[Unset, str]):
-        include_preview (Union[Unset, bool]):  Default: False.
         limit (Union[Unset, int]):  Default: 10000.
         lineage (Union[Unset, GetFloatSeriesValuesProtoLineage]):
         skip_to_step (Union[Unset, float]):
@@ -283,7 +269,6 @@ async def asyncio(
             client=client,
             attribute=attribute,
             experiment_id=experiment_id,
-            include_preview=include_preview,
             limit=limit,
             lineage=lineage,
             skip_to_step=skip_to_step,

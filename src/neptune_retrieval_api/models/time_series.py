@@ -45,13 +45,11 @@ class TimeSeries:
     Attributes:
         attribute (str):
         holder (AttributesHolderIdentifier):
-        include_preview (Union[Unset, bool]):
         lineage (Union[Unset, TimeSeriesLineage]):
     """
 
     attribute: str
     holder: "AttributesHolderIdentifier"
-    include_preview: Union[Unset, bool] = UNSET
     lineage: Union[Unset, TimeSeriesLineage] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -59,8 +57,6 @@ class TimeSeries:
         attribute = self.attribute
 
         holder = self.holder.to_dict()
-
-        include_preview = self.include_preview
 
         lineage: Union[Unset, str] = UNSET
         if not isinstance(self.lineage, Unset):
@@ -74,8 +70,6 @@ class TimeSeries:
                 "holder": holder,
             }
         )
-        if include_preview is not UNSET:
-            field_dict["includePreview"] = include_preview
         if lineage is not UNSET:
             field_dict["lineage"] = lineage
 
@@ -90,8 +84,6 @@ class TimeSeries:
 
         holder = AttributesHolderIdentifier.from_dict(d.pop("holder"))
 
-        include_preview = d.pop("includePreview", UNSET)
-
         _lineage = d.pop("lineage", UNSET)
         lineage: Union[Unset, TimeSeriesLineage]
         if isinstance(_lineage, Unset):
@@ -102,7 +94,6 @@ class TimeSeries:
         time_series = cls(
             attribute=attribute,
             holder=holder,
-            include_preview=include_preview,
             lineage=lineage,
         )
 

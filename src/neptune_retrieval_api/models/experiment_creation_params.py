@@ -22,6 +22,7 @@ from typing import (
     TypeVar,
     Union,
 )
+from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -43,32 +44,34 @@ T = TypeVar("T", bound="ExperimentCreationParams")
 class ExperimentCreationParams:
     """
     Attributes:
-        checkpoint_id (Union[Unset, str]):
+        checkpoint_id (Union[Unset, UUID]):
         custom_id (Union[Unset, str]):
         git_info (Union[Unset, GitInfoDTO]):
         is_head (Union[Unset, bool]):
         key (Union[Unset, str]):
-        notebook_id (Union[Unset, str]):
-        parent_id (Union[Unset, str]):
-        project_id (Union[Unset, str]):
+        notebook_id (Union[Unset, UUID]):
+        parent_id (Union[Unset, UUID]):
+        project_id (Union[Unset, UUID]):
         project_identifier (Union[Unset, str]):
         type (Union[Unset, ExperimentTypeDTO]):
     """
 
-    checkpoint_id: Union[Unset, str] = UNSET
+    checkpoint_id: Union[Unset, UUID] = UNSET
     custom_id: Union[Unset, str] = UNSET
     git_info: Union[Unset, "GitInfoDTO"] = UNSET
     is_head: Union[Unset, bool] = UNSET
     key: Union[Unset, str] = UNSET
-    notebook_id: Union[Unset, str] = UNSET
-    parent_id: Union[Unset, str] = UNSET
-    project_id: Union[Unset, str] = UNSET
+    notebook_id: Union[Unset, UUID] = UNSET
+    parent_id: Union[Unset, UUID] = UNSET
+    project_id: Union[Unset, UUID] = UNSET
     project_identifier: Union[Unset, str] = UNSET
     type: Union[Unset, ExperimentTypeDTO] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        checkpoint_id = self.checkpoint_id
+        checkpoint_id: Union[Unset, str] = UNSET
+        if not isinstance(self.checkpoint_id, Unset):
+            checkpoint_id = str(self.checkpoint_id)
 
         custom_id = self.custom_id
 
@@ -80,11 +83,17 @@ class ExperimentCreationParams:
 
         key = self.key
 
-        notebook_id = self.notebook_id
+        notebook_id: Union[Unset, str] = UNSET
+        if not isinstance(self.notebook_id, Unset):
+            notebook_id = str(self.notebook_id)
 
-        parent_id = self.parent_id
+        parent_id: Union[Unset, str] = UNSET
+        if not isinstance(self.parent_id, Unset):
+            parent_id = str(self.parent_id)
 
-        project_id = self.project_id
+        project_id: Union[Unset, str] = UNSET
+        if not isinstance(self.project_id, Unset):
+            project_id = str(self.project_id)
 
         project_identifier = self.project_identifier
 
@@ -123,7 +132,12 @@ class ExperimentCreationParams:
         from ..models.git_info_dto import GitInfoDTO
 
         d = src_dict.copy()
-        checkpoint_id = d.pop("checkpointId", UNSET)
+        _checkpoint_id = d.pop("checkpointId", UNSET)
+        checkpoint_id: Union[Unset, UUID]
+        if isinstance(_checkpoint_id, Unset):
+            checkpoint_id = UNSET
+        else:
+            checkpoint_id = UUID(_checkpoint_id)
 
         custom_id = d.pop("customId", UNSET)
 
@@ -138,11 +152,26 @@ class ExperimentCreationParams:
 
         key = d.pop("key", UNSET)
 
-        notebook_id = d.pop("notebookId", UNSET)
+        _notebook_id = d.pop("notebookId", UNSET)
+        notebook_id: Union[Unset, UUID]
+        if isinstance(_notebook_id, Unset):
+            notebook_id = UNSET
+        else:
+            notebook_id = UUID(_notebook_id)
 
-        parent_id = d.pop("parentId", UNSET)
+        _parent_id = d.pop("parentId", UNSET)
+        parent_id: Union[Unset, UUID]
+        if isinstance(_parent_id, Unset):
+            parent_id = UNSET
+        else:
+            parent_id = UUID(_parent_id)
 
-        project_id = d.pop("projectId", UNSET)
+        _project_id = d.pop("projectId", UNSET)
+        project_id: Union[Unset, UUID]
+        if isinstance(_project_id, Unset):
+            project_id = UNSET
+        else:
+            project_id = UUID(_project_id)
 
         project_identifier = d.pop("projectIdentifier", UNSET)
 

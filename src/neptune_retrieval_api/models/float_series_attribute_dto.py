@@ -46,7 +46,6 @@ class FloatSeriesAttributeDTO:
         attribute_name (str):
         attribute_type (AttributeTypeDTO):
         config (FloatSeriesAttributeConfigDTO):
-        has_preview (bool):
         average (Union[Unset, float]):
         last (Union[Unset, float]):
         last_step (Union[Unset, float]):
@@ -58,7 +57,6 @@ class FloatSeriesAttributeDTO:
     attribute_name: str
     attribute_type: AttributeTypeDTO
     config: "FloatSeriesAttributeConfigDTO"
-    has_preview: bool
     average: Union[Unset, float] = UNSET
     last: Union[Unset, float] = UNSET
     last_step: Union[Unset, float] = UNSET
@@ -73,8 +71,6 @@ class FloatSeriesAttributeDTO:
         attribute_type = self.attribute_type.value
 
         config = self.config.to_dict()
-
-        has_preview = self.has_preview
 
         average = self.average
 
@@ -95,7 +91,6 @@ class FloatSeriesAttributeDTO:
                 "attributeName": attribute_name,
                 "attributeType": attribute_type,
                 "config": config,
-                "hasPreview": has_preview,
             }
         )
         if average is not UNSET:
@@ -124,8 +119,6 @@ class FloatSeriesAttributeDTO:
 
         config = FloatSeriesAttributeConfigDTO.from_dict(d.pop("config"))
 
-        has_preview = d.pop("hasPreview")
-
         average = d.pop("average", UNSET)
 
         last = d.pop("last", UNSET)
@@ -142,7 +135,6 @@ class FloatSeriesAttributeDTO:
             attribute_name=attribute_name,
             attribute_type=attribute_type,
             config=config,
-            has_preview=has_preview,
             average=average,
             last=last,
             last_step=last_step,

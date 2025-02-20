@@ -48,7 +48,6 @@ class CustomMetric:
         custom_id (str):
         holder (AttributesHolderIdentifier):
         custom_y_formula (Union[Unset, str]):
-        include_preview (Union[Unset, bool]):
         lineage (Union[Unset, CustomMetricLineage]):
     """
 
@@ -56,7 +55,6 @@ class CustomMetric:
     custom_id: str
     holder: "AttributesHolderIdentifier"
     custom_y_formula: Union[Unset, str] = UNSET
-    include_preview: Union[Unset, bool] = UNSET
     lineage: Union[Unset, CustomMetricLineage] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -68,8 +66,6 @@ class CustomMetric:
         holder = self.holder.to_dict()
 
         custom_y_formula = self.custom_y_formula
-
-        include_preview = self.include_preview
 
         lineage: Union[Unset, str] = UNSET
         if not isinstance(self.lineage, Unset):
@@ -86,8 +82,6 @@ class CustomMetric:
         )
         if custom_y_formula is not UNSET:
             field_dict["customYFormula"] = custom_y_formula
-        if include_preview is not UNSET:
-            field_dict["includePreview"] = include_preview
         if lineage is not UNSET:
             field_dict["lineage"] = lineage
 
@@ -106,8 +100,6 @@ class CustomMetric:
 
         custom_y_formula = d.pop("customYFormula", UNSET)
 
-        include_preview = d.pop("includePreview", UNSET)
-
         _lineage = d.pop("lineage", UNSET)
         lineage: Union[Unset, CustomMetricLineage]
         if isinstance(_lineage, Unset):
@@ -120,7 +112,6 @@ class CustomMetric:
             custom_id=custom_id,
             holder=holder,
             custom_y_formula=custom_y_formula,
-            include_preview=include_preview,
             lineage=lineage,
         )
 

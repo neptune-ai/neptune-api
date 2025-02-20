@@ -20,6 +20,7 @@ from typing import (
     Optional,
     Union,
 )
+from uuid import UUID
 
 import httpx
 
@@ -32,7 +33,7 @@ from ...types import Response
 
 
 def _get_kwargs(
-    id: str,
+    id: UUID,
 ) -> Dict[str, Any]:
     _kwargs: Dict[str, Any] = {
         "method": "delete",
@@ -43,23 +44,23 @@ def _get_kwargs(
 
 
 def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
-    if response.status_code == HTTPStatus.NO_CONTENT:
+    if response.status_code == 204:
         return None
-    if response.status_code == HTTPStatus.BAD_REQUEST:
+    if response.status_code == 400:
         return None
-    if response.status_code == HTTPStatus.UNAUTHORIZED:
+    if response.status_code == 401:
         return None
-    if response.status_code == HTTPStatus.FORBIDDEN:
+    if response.status_code == 403:
         return None
-    if response.status_code == HTTPStatus.NOT_FOUND:
+    if response.status_code == 404:
         return None
-    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
+    if response.status_code == 408:
         return None
-    if response.status_code == HTTPStatus.CONFLICT:
+    if response.status_code == 409:
         return None
-    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
+    if response.status_code == 422:
         return None
-    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
+    if response.status_code == 429:
         return None
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
@@ -77,14 +78,14 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 
 
 def sync_detailed(
-    id: str,
+    id: UUID,
     *,
     client: Union[AuthenticatedClient, Client],
 ) -> Response[Any]:
     """Delete notebook
 
     Args:
-        id (str):
+        id (UUID):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -106,14 +107,14 @@ def sync_detailed(
 
 
 async def asyncio_detailed(
-    id: str,
+    id: UUID,
     *,
     client: Union[AuthenticatedClient, Client],
 ) -> Response[Any]:
     """Delete notebook
 
     Args:
-        id (str):
+        id (UUID):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
