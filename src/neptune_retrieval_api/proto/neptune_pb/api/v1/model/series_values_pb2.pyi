@@ -16,10 +16,10 @@ class ProtoSeriesValuesResponseDTO(google.protobuf.message.Message):
     nextPageToken: builtins.str
 
     @property
-    def series(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___ProtoFloatSeriesValuesSingleSeriesResponseDTO]:
+    def series(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___ProtoSeriesValuesSingleSeriesResponseDTO]:
         ...
 
-    def __init__(self, *, series: (collections.abc.Iterable[global___ProtoFloatSeriesValuesSingleSeriesResponseDTO] | None)=..., nextPageToken: (builtins.str | None)=...) -> None:
+    def __init__(self, *, series: (collections.abc.Iterable[global___ProtoSeriesValuesSingleSeriesResponseDTO] | None)=..., nextPageToken: (builtins.str | None)=...) -> None:
         ...
 
     def HasField(self, field_name: typing.Literal[('_nextPageToken', b'_nextPageToken', 'nextPageToken', b'nextPageToken')]) -> builtins.bool:

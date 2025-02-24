@@ -103,7 +103,7 @@ class ProtoAttributeDTO(google.protobuf.message.Message):
 
     @property
     def float_series_properties(self) -> global___ProtoFloatSeriesAttributeDTO:
-        ...
+        '   optional ProtoStringSeriesAttributeDTO string_series_properties = 10;'
 
     def __init__(self, *, name: builtins.str=..., type: builtins.str=..., int_properties: (global___ProtoIntAttributeDTO | None)=..., float_properties: (global___ProtoFloatAttributeDTO | None)=..., string_properties: (global___ProtoStringAttributeDTO | None)=..., bool_properties: (global___ProtoBoolAttributeDTO | None)=..., datetime_properties: (global___ProtoDatetimeAttributeDTO | None)=..., string_set_properties: (global___ProtoStringSetAttributeDTO | None)=..., float_series_properties: (global___ProtoFloatSeriesAttributeDTO | None)=...) -> None:
         ...
