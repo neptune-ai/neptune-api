@@ -14,76 +14,85 @@
 # limitations under the License.
 
 from typing import (
-    TYPE_CHECKING,
     Any,
     Dict,
     List,
     Type,
     TypeVar,
-    Union,
 )
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..types import (
-    UNSET,
-    Unset,
-)
-
-if TYPE_CHECKING:
-    from ..models.colors_dto import ColorsDTO
-
-
-T = TypeVar("T", bound="ColorsConfigDTO")
+T = TypeVar("T", bound="SingleTimeSeriesViewBucket")
 
 
 @_attrs_define
-class ColorsConfigDTO:
+class SingleTimeSeriesViewBucket:
     """
     Attributes:
-        colors (Union[Unset, List['ColorsDTO']]):
+        bucket_no (int):
+        count (int):
+        max_y (float):
+        min_y (float):
+        sum_ (float):
     """
 
-    colors: Union[Unset, List["ColorsDTO"]] = UNSET
+    bucket_no: int
+    count: int
+    max_y: float
+    min_y: float
+    sum_: float
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        colors: Union[Unset, List[Dict[str, Any]]] = UNSET
-        if not isinstance(self.colors, Unset):
-            colors = []
-            for colors_item_data in self.colors:
-                colors_item = colors_item_data.to_dict()
-                colors.append(colors_item)
+        bucket_no = self.bucket_no
+
+        count = self.count
+
+        max_y = self.max_y
+
+        min_y = self.min_y
+
+        sum_ = self.sum_
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if colors is not UNSET:
-            field_dict["colors"] = colors
+        field_dict.update(
+            {
+                "bucketNo": bucket_no,
+                "count": count,
+                "maxY": max_y,
+                "minY": min_y,
+                "sum": sum_,
+            }
+        )
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.colors_dto import ColorsDTO
-
         d = src_dict.copy()
-        colors: Union[Unset, List[ColorsDTO]] = UNSET
-        _colors = d.pop("colors", UNSET)
-        if not isinstance(_colors, Unset):
-            colors = []
-            for colors_item_data in _colors:
-                colors_item = ColorsDTO.from_dict(colors_item_data)
+        bucket_no = d.pop("bucketNo")
 
-                colors.append(colors_item)
+        count = d.pop("count")
 
-        colors_config_dto = cls(
-            colors=colors,
+        max_y = d.pop("maxY")
+
+        min_y = d.pop("minY")
+
+        sum_ = d.pop("sum")
+
+        single_time_series_view_bucket = cls(
+            bucket_no=bucket_no,
+            count=count,
+            max_y=max_y,
+            min_y=min_y,
+            sum_=sum_,
         )
 
-        colors_config_dto.additional_properties = d
-        return colors_config_dto
+        single_time_series_view_bucket.additional_properties = d
+        return single_time_series_view_bucket
 
     @property
     def additional_keys(self) -> List[str]:

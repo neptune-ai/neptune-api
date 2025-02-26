@@ -75,12 +75,14 @@ class UploadMetadataDTO:
         from ..models.operation_error import OperationError
 
         d = src_dict.copy()
-        errors = []
+        errors: Union[Unset, List[OperationError]] = UNSET
         _errors = d.pop("errors", UNSET)
-        for errors_item_data in _errors or []:
-            errors_item = OperationError.from_dict(errors_item_data)
+        if not isinstance(_errors, Unset):
+            errors = []
+            for errors_item_data in _errors:
+                errors_item = OperationError.from_dict(errors_item_data)
 
-            errors.append(errors_item)
+                errors.append(errors_item)
 
         upload_id = d.pop("uploadId", UNSET)
 

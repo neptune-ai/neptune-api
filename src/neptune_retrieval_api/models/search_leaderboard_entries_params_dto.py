@@ -131,12 +131,14 @@ class SearchLeaderboardEntriesParamsDTO:
         from ..models.query_leaderboard_params_suggestions_params_dto import QueryLeaderboardParamsSuggestionsParamsDTO
 
         d = src_dict.copy()
-        attribute_filters = []
+        attribute_filters: Union[Unset, List[QueryLeaderboardParamsAttributeFilterDTO]] = UNSET
         _attribute_filters = d.pop("attributeFilters", UNSET)
-        for attribute_filters_item_data in _attribute_filters or []:
-            attribute_filters_item = QueryLeaderboardParamsAttributeFilterDTO.from_dict(attribute_filters_item_data)
+        if not isinstance(_attribute_filters, Unset):
+            attribute_filters = []
+            for attribute_filters_item_data in _attribute_filters:
+                attribute_filters_item = QueryLeaderboardParamsAttributeFilterDTO.from_dict(attribute_filters_item_data)
 
-            attribute_filters.append(attribute_filters_item)
+                attribute_filters.append(attribute_filters_item)
 
         experiment_leader = d.pop("experimentLeader", UNSET)
 

@@ -100,28 +100,34 @@ class LeaderboardSortParamsDTO:
         d = src_dict.copy()
         sort_by = cast(List[str], d.pop("sortBy", UNSET))
 
-        sort_field_type = []
+        sort_field_type: Union[Unset, List[AttributeTypeDTO]] = UNSET
         _sort_field_type = d.pop("sortFieldType", UNSET)
-        for sort_field_type_item_data in _sort_field_type or []:
-            sort_field_type_item = AttributeTypeDTO(sort_field_type_item_data)
+        if not isinstance(_sort_field_type, Unset):
+            sort_field_type = []
+            for sort_field_type_item_data in _sort_field_type:
+                sort_field_type_item = AttributeTypeDTO(sort_field_type_item_data)
 
-            sort_field_type.append(sort_field_type_item)
+                sort_field_type.append(sort_field_type_item)
 
-        sort_field_aggregation_mode = []
+        sort_field_aggregation_mode: Union[Unset, List[LeaderboardSortParamsDTOSortFieldAggregationModeItem]] = UNSET
         _sort_field_aggregation_mode = d.pop("sortFieldAggregationMode", UNSET)
-        for sort_field_aggregation_mode_item_data in _sort_field_aggregation_mode or []:
-            sort_field_aggregation_mode_item = LeaderboardSortParamsDTOSortFieldAggregationModeItem(
-                sort_field_aggregation_mode_item_data
-            )
+        if not isinstance(_sort_field_aggregation_mode, Unset):
+            sort_field_aggregation_mode = []
+            for sort_field_aggregation_mode_item_data in _sort_field_aggregation_mode:
+                sort_field_aggregation_mode_item = LeaderboardSortParamsDTOSortFieldAggregationModeItem(
+                    sort_field_aggregation_mode_item_data
+                )
 
-            sort_field_aggregation_mode.append(sort_field_aggregation_mode_item)
+                sort_field_aggregation_mode.append(sort_field_aggregation_mode_item)
 
-        sort_direction = []
+        sort_direction: Union[Unset, List[LeaderboardSortParamsDTOSortDirectionItem]] = UNSET
         _sort_direction = d.pop("sortDirection", UNSET)
-        for sort_direction_item_data in _sort_direction or []:
-            sort_direction_item = LeaderboardSortParamsDTOSortDirectionItem(sort_direction_item_data)
+        if not isinstance(_sort_direction, Unset):
+            sort_direction = []
+            for sort_direction_item_data in _sort_direction:
+                sort_direction_item = LeaderboardSortParamsDTOSortDirectionItem(sort_direction_item_data)
 
-            sort_direction.append(sort_direction_item)
+                sort_direction.append(sort_direction_item)
 
         leaderboard_sort_params_dto = cls(
             sort_by=sort_by,

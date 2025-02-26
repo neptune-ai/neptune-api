@@ -52,6 +52,7 @@ class RunGroupDTO:
         name (Union[Unset, str]):
         project_id (Union[Unset, str]):
         run_member_keys (Union[Unset, List[str]]):
+        show_selected_hidden_by_filter (Union[Unset, bool]):
     """
 
     id: str
@@ -63,6 +64,7 @@ class RunGroupDTO:
     name: Union[Unset, str] = UNSET
     project_id: Union[Unset, str] = UNSET
     run_member_keys: Union[Unset, List[str]] = UNSET
+    show_selected_hidden_by_filter: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -88,6 +90,8 @@ class RunGroupDTO:
         if not isinstance(self.run_member_keys, Unset):
             run_member_keys = self.run_member_keys
 
+        show_selected_hidden_by_filter = self.show_selected_hidden_by_filter
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -109,6 +113,8 @@ class RunGroupDTO:
             field_dict["projectId"] = project_id
         if run_member_keys is not UNSET:
             field_dict["runMemberKeys"] = run_member_keys
+        if show_selected_hidden_by_filter is not UNSET:
+            field_dict["showSelectedHiddenByFilter"] = show_selected_hidden_by_filter
 
         return field_dict
 
@@ -135,6 +141,8 @@ class RunGroupDTO:
 
         run_member_keys = cast(List[str], d.pop("runMemberKeys", UNSET))
 
+        show_selected_hidden_by_filter = d.pop("showSelectedHiddenByFilter", UNSET)
+
         run_group_dto = cls(
             id=id,
             show_only_selected_runs=show_only_selected_runs,
@@ -145,6 +153,7 @@ class RunGroupDTO:
             name=name,
             project_id=project_id,
             run_member_keys=run_member_keys,
+            show_selected_hidden_by_filter=show_selected_hidden_by_filter,
         )
 
         run_group_dto.additional_properties = d

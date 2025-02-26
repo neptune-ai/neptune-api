@@ -14,6 +14,7 @@
 # limitations under the License.
 
 from typing import (
+    TYPE_CHECKING,
     Any,
     Dict,
     List,
@@ -30,6 +31,10 @@ from ..types import (
     Unset,
 )
 
+if TYPE_CHECKING:
+    from ..models.single_time_series_view_bucket import SingleTimeSeriesViewBucket
+
+
 T = TypeVar("T", bound="Point")
 
 
@@ -39,15 +44,13 @@ class Point:
     Attributes:
         interpolation (bool):
         x (float):
-        max_y (Union[Unset, float]):
-        min_y (Union[Unset, float]):
+        bucket (Union[Unset, SingleTimeSeriesViewBucket]):
         y (Union[Unset, float]):
     """
 
     interpolation: bool
     x: float
-    max_y: Union[Unset, float] = UNSET
-    min_y: Union[Unset, float] = UNSET
+    bucket: Union[Unset, "SingleTimeSeriesViewBucket"] = UNSET
     y: Union[Unset, float] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -56,9 +59,9 @@ class Point:
 
         x = self.x
 
-        max_y = self.max_y
-
-        min_y = self.min_y
+        bucket: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.bucket, Unset):
+            bucket = self.bucket.to_dict()
 
         y = self.y
 
@@ -70,10 +73,8 @@ class Point:
                 "x": x,
             }
         )
-        if max_y is not UNSET:
-            field_dict["maxY"] = max_y
-        if min_y is not UNSET:
-            field_dict["minY"] = min_y
+        if bucket is not UNSET:
+            field_dict["bucket"] = bucket
         if y is not UNSET:
             field_dict["y"] = y
 
@@ -81,22 +82,26 @@ class Point:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.single_time_series_view_bucket import SingleTimeSeriesViewBucket
+
         d = src_dict.copy()
         interpolation = d.pop("interpolation")
 
         x = d.pop("x")
 
-        max_y = d.pop("maxY", UNSET)
-
-        min_y = d.pop("minY", UNSET)
+        _bucket = d.pop("bucket", UNSET)
+        bucket: Union[Unset, SingleTimeSeriesViewBucket]
+        if isinstance(_bucket, Unset):
+            bucket = UNSET
+        else:
+            bucket = SingleTimeSeriesViewBucket.from_dict(_bucket)
 
         y = d.pop("y", UNSET)
 
         point = cls(
             interpolation=interpolation,
             x=x,
-            max_y=max_y,
-            min_y=min_y,
+            bucket=bucket,
             y=y,
         )
 

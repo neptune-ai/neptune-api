@@ -51,6 +51,7 @@ class LeaderboardViewDTO:
         id (str):
         name (str):
         runs_lineage (bool):
+        show_selected_hidden_by_filter (bool):
         sort_options (LeaderboardSortParamsDTO):
         suggestions_enabled (bool):
         group_options (Union[Unset, LeaderboardGroupParamsDTO]):
@@ -64,6 +65,7 @@ class LeaderboardViewDTO:
     id: str
     name: str
     runs_lineage: bool
+    show_selected_hidden_by_filter: bool
     sort_options: "LeaderboardSortParamsDTO"
     suggestions_enabled: bool
     group_options: Union[Unset, "LeaderboardGroupParamsDTO"] = UNSET
@@ -83,6 +85,8 @@ class LeaderboardViewDTO:
         name = self.name
 
         runs_lineage = self.runs_lineage
+
+        show_selected_hidden_by_filter = self.show_selected_hidden_by_filter
 
         sort_options = self.sort_options.to_dict()
 
@@ -108,6 +112,7 @@ class LeaderboardViewDTO:
                 "id": id,
                 "name": name,
                 "runsLineage": runs_lineage,
+                "showSelectedHiddenByFilter": show_selected_hidden_by_filter,
                 "sortOptions": sort_options,
                 "suggestionsEnabled": suggestions_enabled,
             }
@@ -141,6 +146,8 @@ class LeaderboardViewDTO:
 
         runs_lineage = d.pop("runsLineage")
 
+        show_selected_hidden_by_filter = d.pop("showSelectedHiddenByFilter")
+
         sort_options = LeaderboardSortParamsDTO.from_dict(d.pop("sortOptions"))
 
         suggestions_enabled = d.pop("suggestionsEnabled")
@@ -168,6 +175,7 @@ class LeaderboardViewDTO:
             id=id,
             name=name,
             runs_lineage=runs_lineage,
+            show_selected_hidden_by_filter=show_selected_hidden_by_filter,
             sort_options=sort_options,
             suggestions_enabled=suggestions_enabled,
             group_options=group_options,

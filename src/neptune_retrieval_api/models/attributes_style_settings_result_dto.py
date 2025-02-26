@@ -69,12 +69,14 @@ class AttributesStyleSettingsResultDTO:
         from ..models.attribute_style_settings_dto import AttributeStyleSettingsDTO
 
         d = src_dict.copy()
-        settings = []
+        settings: Union[Unset, List[AttributeStyleSettingsDTO]] = UNSET
         _settings = d.pop("settings", UNSET)
-        for settings_item_data in _settings or []:
-            settings_item = AttributeStyleSettingsDTO.from_dict(settings_item_data)
+        if not isinstance(_settings, Unset):
+            settings = []
+            for settings_item_data in _settings:
+                settings_item = AttributeStyleSettingsDTO.from_dict(settings_item_data)
 
-            settings.append(settings_item)
+                settings.append(settings_item)
 
         attributes_style_settings_result_dto = cls(
             settings=settings,

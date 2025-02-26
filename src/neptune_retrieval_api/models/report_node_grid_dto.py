@@ -20,11 +20,17 @@ from typing import (
     List,
     Type,
     TypeVar,
+    Union,
     cast,
 )
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+
+from ..types import (
+    UNSET,
+    Unset,
+)
 
 if TYPE_CHECKING:
     from ..models.colors_config_dto import ColorsConfigDTO
@@ -51,6 +57,7 @@ class ReportNodeGridDTO:
         selected_run_groups (List[str]):
         widget_layouts (List['WidgetLayoutDTO']):
         widgets (List['WidgetDTO']):
+        preset_colors (Union[Unset, List[str]]):
     """
 
     aggregate_by_group: bool
@@ -63,6 +70,7 @@ class ReportNodeGridDTO:
     selected_run_groups: List[str]
     widget_layouts: List["WidgetLayoutDTO"]
     widgets: List["WidgetDTO"]
+    preset_colors: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -95,6 +103,10 @@ class ReportNodeGridDTO:
             widgets_item = widgets_item_data.to_dict()
             widgets.append(widgets_item)
 
+        preset_colors: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.preset_colors, Unset):
+            preset_colors = self.preset_colors
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -111,6 +123,8 @@ class ReportNodeGridDTO:
                 "widgets": widgets,
             }
         )
+        if preset_colors is not UNSET:
+            field_dict["presetColors"] = preset_colors
 
         return field_dict
 
@@ -158,6 +172,8 @@ class ReportNodeGridDTO:
 
             widgets.append(widgets_item)
 
+        preset_colors = cast(List[str], d.pop("presetColors", UNSET))
+
         report_node_grid_dto = cls(
             aggregate_by_group=aggregate_by_group,
             charts_config=charts_config,
@@ -169,6 +185,7 @@ class ReportNodeGridDTO:
             selected_run_groups=selected_run_groups,
             widget_layouts=widget_layouts,
             widgets=widgets,
+            preset_colors=preset_colors,
         )
 
         report_node_grid_dto.additional_properties = d

@@ -98,21 +98,27 @@ class LeaderboardGroupParamsDTO:
         d = src_dict.copy()
         group_by = cast(List[str], d.pop("groupBy", UNSET))
 
-        group_by_field_type = []
+        group_by_field_type: Union[Unset, List[AttributeTypeDTO]] = UNSET
         _group_by_field_type = d.pop("groupByFieldType", UNSET)
-        for group_by_field_type_item_data in _group_by_field_type or []:
-            group_by_field_type_item = AttributeTypeDTO(group_by_field_type_item_data)
+        if not isinstance(_group_by_field_type, Unset):
+            group_by_field_type = []
+            for group_by_field_type_item_data in _group_by_field_type:
+                group_by_field_type_item = AttributeTypeDTO(group_by_field_type_item_data)
 
-            group_by_field_type.append(group_by_field_type_item)
+                group_by_field_type.append(group_by_field_type_item)
 
-        group_by_field_aggregation_mode = []
+        group_by_field_aggregation_mode: Union[
+            Unset, List[LeaderboardGroupParamsDTOGroupByFieldAggregationModeItem]
+        ] = UNSET
         _group_by_field_aggregation_mode = d.pop("groupByFieldAggregationMode", UNSET)
-        for group_by_field_aggregation_mode_item_data in _group_by_field_aggregation_mode or []:
-            group_by_field_aggregation_mode_item = LeaderboardGroupParamsDTOGroupByFieldAggregationModeItem(
-                group_by_field_aggregation_mode_item_data
-            )
+        if not isinstance(_group_by_field_aggregation_mode, Unset):
+            group_by_field_aggregation_mode = []
+            for group_by_field_aggregation_mode_item_data in _group_by_field_aggregation_mode:
+                group_by_field_aggregation_mode_item = LeaderboardGroupParamsDTOGroupByFieldAggregationModeItem(
+                    group_by_field_aggregation_mode_item_data
+                )
 
-            group_by_field_aggregation_mode.append(group_by_field_aggregation_mode_item)
+                group_by_field_aggregation_mode.append(group_by_field_aggregation_mode_item)
 
         opened_groups = cast(List[str], d.pop("openedGroups", UNSET))
 
