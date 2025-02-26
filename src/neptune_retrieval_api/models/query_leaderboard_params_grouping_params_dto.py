@@ -106,14 +106,18 @@ class QueryLeaderboardParamsGroupingParamsDTO:
 
         opened_groups = cast(List[str], d.pop("openedGroups", UNSET))
 
-        opened_groups_with_pagination = []
+        opened_groups_with_pagination: Union[Unset, List[QueryLeaderboardParamsOpenedGroupWithPaginationParamsDTO]] = (
+            UNSET
+        )
         _opened_groups_with_pagination = d.pop("openedGroupsWithPagination", UNSET)
-        for opened_groups_with_pagination_item_data in _opened_groups_with_pagination or []:
-            opened_groups_with_pagination_item = QueryLeaderboardParamsOpenedGroupWithPaginationParamsDTO.from_dict(
-                opened_groups_with_pagination_item_data
-            )
+        if not isinstance(_opened_groups_with_pagination, Unset):
+            opened_groups_with_pagination = []
+            for opened_groups_with_pagination_item_data in _opened_groups_with_pagination:
+                opened_groups_with_pagination_item = QueryLeaderboardParamsOpenedGroupWithPaginationParamsDTO.from_dict(
+                    opened_groups_with_pagination_item_data
+                )
 
-            opened_groups_with_pagination.append(opened_groups_with_pagination_item)
+                opened_groups_with_pagination.append(opened_groups_with_pagination_item)
 
         query_leaderboard_params_grouping_params_dto = cls(
             group_by=group_by,

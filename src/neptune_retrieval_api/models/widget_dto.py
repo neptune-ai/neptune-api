@@ -47,8 +47,11 @@ class WidgetDTO:
     Attributes:
         id (str):
         type (WidgetDTOType):
+        attribute_name_must_match_regexes (Union[Unset, List[str]]):
+        attribute_name_must_not_match_regexes (Union[Unset, List[str]]):
         attributes (Union[Unset, List['WidgetAttributeDTO']]):
         experiment_short_ids (Union[Unset, List[str]]):
+        free_text (Union[Unset, str]):
         name (Union[Unset, str]):
         namespaces (Union[Unset, List[str]]):
         options (Union[Unset, WidgetDTOOptions]):
@@ -56,8 +59,11 @@ class WidgetDTO:
 
     id: str
     type: WidgetDTOType
+    attribute_name_must_match_regexes: Union[Unset, List[str]] = UNSET
+    attribute_name_must_not_match_regexes: Union[Unset, List[str]] = UNSET
     attributes: Union[Unset, List["WidgetAttributeDTO"]] = UNSET
     experiment_short_ids: Union[Unset, List[str]] = UNSET
+    free_text: Union[Unset, str] = UNSET
     name: Union[Unset, str] = UNSET
     namespaces: Union[Unset, List[str]] = UNSET
     options: Union[Unset, "WidgetDTOOptions"] = UNSET
@@ -67,6 +73,14 @@ class WidgetDTO:
         id = self.id
 
         type = self.type.value
+
+        attribute_name_must_match_regexes: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.attribute_name_must_match_regexes, Unset):
+            attribute_name_must_match_regexes = self.attribute_name_must_match_regexes
+
+        attribute_name_must_not_match_regexes: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.attribute_name_must_not_match_regexes, Unset):
+            attribute_name_must_not_match_regexes = self.attribute_name_must_not_match_regexes
 
         attributes: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.attributes, Unset):
@@ -78,6 +92,8 @@ class WidgetDTO:
         experiment_short_ids: Union[Unset, List[str]] = UNSET
         if not isinstance(self.experiment_short_ids, Unset):
             experiment_short_ids = self.experiment_short_ids
+
+        free_text = self.free_text
 
         name = self.name
 
@@ -97,10 +113,16 @@ class WidgetDTO:
                 "type": type,
             }
         )
+        if attribute_name_must_match_regexes is not UNSET:
+            field_dict["attributeNameMustMatchRegexes"] = attribute_name_must_match_regexes
+        if attribute_name_must_not_match_regexes is not UNSET:
+            field_dict["attributeNameMustNotMatchRegexes"] = attribute_name_must_not_match_regexes
         if attributes is not UNSET:
             field_dict["attributes"] = attributes
         if experiment_short_ids is not UNSET:
             field_dict["experimentShortIds"] = experiment_short_ids
+        if free_text is not UNSET:
+            field_dict["freeText"] = free_text
         if name is not UNSET:
             field_dict["name"] = name
         if namespaces is not UNSET:
@@ -120,14 +142,22 @@ class WidgetDTO:
 
         type = WidgetDTOType(d.pop("type"))
 
-        attributes = []
-        _attributes = d.pop("attributes", UNSET)
-        for attributes_item_data in _attributes or []:
-            attributes_item = WidgetAttributeDTO.from_dict(attributes_item_data)
+        attribute_name_must_match_regexes = cast(List[str], d.pop("attributeNameMustMatchRegexes", UNSET))
 
-            attributes.append(attributes_item)
+        attribute_name_must_not_match_regexes = cast(List[str], d.pop("attributeNameMustNotMatchRegexes", UNSET))
+
+        attributes: Union[Unset, List[WidgetAttributeDTO]] = UNSET
+        _attributes = d.pop("attributes", UNSET)
+        if not isinstance(_attributes, Unset):
+            attributes = []
+            for attributes_item_data in _attributes:
+                attributes_item = WidgetAttributeDTO.from_dict(attributes_item_data)
+
+                attributes.append(attributes_item)
 
         experiment_short_ids = cast(List[str], d.pop("experimentShortIds", UNSET))
+
+        free_text = d.pop("freeText", UNSET)
 
         name = d.pop("name", UNSET)
 
@@ -143,8 +173,11 @@ class WidgetDTO:
         widget_dto = cls(
             id=id,
             type=type,
+            attribute_name_must_match_regexes=attribute_name_must_match_regexes,
+            attribute_name_must_not_match_regexes=attribute_name_must_not_match_regexes,
             attributes=attributes,
             experiment_short_ids=experiment_short_ids,
+            free_text=free_text,
             name=name,
             namespaces=namespaces,
             options=options,
