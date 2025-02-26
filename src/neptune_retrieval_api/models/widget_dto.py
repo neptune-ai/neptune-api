@@ -146,14 +146,12 @@ class WidgetDTO:
 
         attribute_name_must_not_match_regexes = cast(List[str], d.pop("attributeNameMustNotMatchRegexes", UNSET))
 
-        attributes: Union[Unset, List[WidgetAttributeDTO]] = UNSET
+        attributes = []
         _attributes = d.pop("attributes", UNSET)
-        if not isinstance(_attributes, Unset):
-            attributes = []
-            for attributes_item_data in _attributes:
-                attributes_item = WidgetAttributeDTO.from_dict(attributes_item_data)
+        for attributes_item_data in _attributes or []:
+            attributes_item = WidgetAttributeDTO.from_dict(attributes_item_data)
 
-                attributes.append(attributes_item)
+            attributes.append(attributes_item)
 
         experiment_short_ids = cast(List[str], d.pop("experimentShortIds", UNSET))
 

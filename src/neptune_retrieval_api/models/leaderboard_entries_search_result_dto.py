@@ -116,23 +116,19 @@ class LeaderboardEntriesSearchResultDTO:
 
         matching_item_count = d.pop("matchingItemCount")
 
-        groups: Union[Unset, List[LeaderboardEntryGroupDTO]] = UNSET
+        groups = []
         _groups = d.pop("groups", UNSET)
-        if not isinstance(_groups, Unset):
-            groups = []
-            for groups_item_data in _groups:
-                groups_item = LeaderboardEntryGroupDTO.from_dict(groups_item_data)
+        for groups_item_data in _groups or []:
+            groups_item = LeaderboardEntryGroupDTO.from_dict(groups_item_data)
 
-                groups.append(groups_item)
+            groups.append(groups_item)
 
-        suggestions: Union[Unset, List[AttributeDefinitionDTO]] = UNSET
+        suggestions = []
         _suggestions = d.pop("suggestions", UNSET)
-        if not isinstance(_suggestions, Unset):
-            suggestions = []
-            for suggestions_item_data in _suggestions:
-                suggestions_item = AttributeDefinitionDTO.from_dict(suggestions_item_data)
+        for suggestions_item_data in _suggestions or []:
+            suggestions_item = AttributeDefinitionDTO.from_dict(suggestions_item_data)
 
-                suggestions.append(suggestions_item)
+            suggestions.append(suggestions_item)
 
         total_group_count = d.pop("totalGroupCount", UNSET)
 

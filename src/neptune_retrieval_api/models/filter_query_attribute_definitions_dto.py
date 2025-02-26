@@ -93,14 +93,12 @@ class FilterQueryAttributeDefinitionsDTO:
         from ..models.attribute_name_filter_dto import AttributeNameFilterDTO
 
         d = src_dict.copy()
-        attribute_filter: Union[Unset, List[AttributeFilterDTO]] = UNSET
+        attribute_filter = []
         _attribute_filter = d.pop("attributeFilter", UNSET)
-        if not isinstance(_attribute_filter, Unset):
-            attribute_filter = []
-            for attribute_filter_item_data in _attribute_filter:
-                attribute_filter_item = AttributeFilterDTO.from_dict(attribute_filter_item_data)
+        for attribute_filter_item_data in _attribute_filter or []:
+            attribute_filter_item = AttributeFilterDTO.from_dict(attribute_filter_item_data)
 
-                attribute_filter.append(attribute_filter_item)
+            attribute_filter.append(attribute_filter_item)
 
         _attribute_name_filter = d.pop("attributeNameFilter", UNSET)
         attribute_name_filter: Union[Unset, AttributeNameFilterDTO]

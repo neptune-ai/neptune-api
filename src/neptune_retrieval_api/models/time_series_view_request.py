@@ -103,23 +103,19 @@ class TimeSeriesViewRequest:
 
         xaxis = XAxis.from_dict(d.pop("xaxis"))
 
-        metrics: Union[Unset, List[CustomMetric]] = UNSET
+        metrics = []
         _metrics = d.pop("metrics", UNSET)
-        if not isinstance(_metrics, Unset):
-            metrics = []
-            for metrics_item_data in _metrics:
-                metrics_item = CustomMetric.from_dict(metrics_item_data)
+        for metrics_item_data in _metrics or []:
+            metrics_item = CustomMetric.from_dict(metrics_item_data)
 
-                metrics.append(metrics_item)
+            metrics.append(metrics_item)
 
-        series: Union[Unset, List[TimeSeries]] = UNSET
+        series = []
         _series = d.pop("series", UNSET)
-        if not isinstance(_series, Unset):
-            series = []
-            for series_item_data in _series:
-                series_item = TimeSeries.from_dict(series_item_data)
+        for series_item_data in _series or []:
+            series_item = TimeSeries.from_dict(series_item_data)
 
-                series.append(series_item)
+            series.append(series_item)
 
         time_series_view_request = cls(
             view=view,

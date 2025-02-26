@@ -138,14 +138,12 @@ class LeaderboardViewQuickFilterDTO:
 
         search_term = d.pop("searchTerm", UNSET)
 
-        status: Union[Unset, List[ExperimentStateDTO]] = UNSET
+        status = []
         _status = d.pop("status", UNSET)
-        if not isinstance(_status, Unset):
-            status = []
-            for status_item_data in _status:
-                status_item = ExperimentStateDTO(status_item_data)
+        for status_item_data in _status or []:
+            status_item = ExperimentStateDTO(status_item_data)
 
-                status.append(status_item)
+            status.append(status_item)
 
         tags = cast(List[str], d.pop("tags", UNSET))
 

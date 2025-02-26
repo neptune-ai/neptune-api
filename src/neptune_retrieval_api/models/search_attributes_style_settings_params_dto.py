@@ -79,14 +79,12 @@ class SearchAttributesStyleSettingsParamsDTO:
         d = src_dict.copy()
         project_identifier = d.pop("projectIdentifier")
 
-        attributes: Union[Unset, List[AttributeStyleIdentifierDTO]] = UNSET
+        attributes = []
         _attributes = d.pop("attributes", UNSET)
-        if not isinstance(_attributes, Unset):
-            attributes = []
-            for attributes_item_data in _attributes:
-                attributes_item = AttributeStyleIdentifierDTO.from_dict(attributes_item_data)
+        for attributes_item_data in _attributes or []:
+            attributes_item = AttributeStyleIdentifierDTO.from_dict(attributes_item_data)
 
-                attributes.append(attributes_item)
+            attributes.append(attributes_item)
 
         search_attributes_style_settings_params_dto = cls(
             project_identifier=project_identifier,
