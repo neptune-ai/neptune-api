@@ -74,6 +74,7 @@ class ProtoAttributeDTO(google.protobuf.message.Message):
     DATETIME_PROPERTIES_FIELD_NUMBER: builtins.int
     STRING_SET_PROPERTIES_FIELD_NUMBER: builtins.int
     FLOAT_SERIES_PROPERTIES_FIELD_NUMBER: builtins.int
+    STRING_SERIES_PROPERTIES_FIELD_NUMBER: builtins.int
     name: builtins.str
     type: builtins.str
 
@@ -103,15 +104,19 @@ class ProtoAttributeDTO(google.protobuf.message.Message):
 
     @property
     def float_series_properties(self) -> global___ProtoFloatSeriesAttributeDTO:
-        '   optional ProtoStringSeriesAttributeDTO string_series_properties = 10;'
-
-    def __init__(self, *, name: builtins.str=..., type: builtins.str=..., int_properties: (global___ProtoIntAttributeDTO | None)=..., float_properties: (global___ProtoFloatAttributeDTO | None)=..., string_properties: (global___ProtoStringAttributeDTO | None)=..., bool_properties: (global___ProtoBoolAttributeDTO | None)=..., datetime_properties: (global___ProtoDatetimeAttributeDTO | None)=..., string_set_properties: (global___ProtoStringSetAttributeDTO | None)=..., float_series_properties: (global___ProtoFloatSeriesAttributeDTO | None)=...) -> None:
         ...
 
-    def HasField(self, field_name: typing.Literal[('_bool_properties', b'_bool_properties', '_datetime_properties', b'_datetime_properties', '_float_properties', b'_float_properties', '_float_series_properties', b'_float_series_properties', '_int_properties', b'_int_properties', '_string_properties', b'_string_properties', '_string_set_properties', b'_string_set_properties', 'bool_properties', b'bool_properties', 'datetime_properties', b'datetime_properties', 'float_properties', b'float_properties', 'float_series_properties', b'float_series_properties', 'int_properties', b'int_properties', 'string_properties', b'string_properties', 'string_set_properties', b'string_set_properties')]) -> builtins.bool:
+    @property
+    def string_series_properties(self) -> global___ProtoStringSeriesAttributeDTO:
         ...
 
-    def ClearField(self, field_name: typing.Literal[('_bool_properties', b'_bool_properties', '_datetime_properties', b'_datetime_properties', '_float_properties', b'_float_properties', '_float_series_properties', b'_float_series_properties', '_int_properties', b'_int_properties', '_string_properties', b'_string_properties', '_string_set_properties', b'_string_set_properties', 'bool_properties', b'bool_properties', 'datetime_properties', b'datetime_properties', 'float_properties', b'float_properties', 'float_series_properties', b'float_series_properties', 'int_properties', b'int_properties', 'name', b'name', 'string_properties', b'string_properties', 'string_set_properties', b'string_set_properties', 'type', b'type')]) -> None:
+    def __init__(self, *, name: builtins.str=..., type: builtins.str=..., int_properties: (global___ProtoIntAttributeDTO | None)=..., float_properties: (global___ProtoFloatAttributeDTO | None)=..., string_properties: (global___ProtoStringAttributeDTO | None)=..., bool_properties: (global___ProtoBoolAttributeDTO | None)=..., datetime_properties: (global___ProtoDatetimeAttributeDTO | None)=..., string_set_properties: (global___ProtoStringSetAttributeDTO | None)=..., float_series_properties: (global___ProtoFloatSeriesAttributeDTO | None)=..., string_series_properties: (global___ProtoStringSeriesAttributeDTO | None)=...) -> None:
+        ...
+
+    def HasField(self, field_name: typing.Literal[('_bool_properties', b'_bool_properties', '_datetime_properties', b'_datetime_properties', '_float_properties', b'_float_properties', '_float_series_properties', b'_float_series_properties', '_int_properties', b'_int_properties', '_string_properties', b'_string_properties', '_string_series_properties', b'_string_series_properties', '_string_set_properties', b'_string_set_properties', 'bool_properties', b'bool_properties', 'datetime_properties', b'datetime_properties', 'float_properties', b'float_properties', 'float_series_properties', b'float_series_properties', 'int_properties', b'int_properties', 'string_properties', b'string_properties', 'string_series_properties', b'string_series_properties', 'string_set_properties', b'string_set_properties')]) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing.Literal[('_bool_properties', b'_bool_properties', '_datetime_properties', b'_datetime_properties', '_float_properties', b'_float_properties', '_float_series_properties', b'_float_series_properties', '_int_properties', b'_int_properties', '_string_properties', b'_string_properties', '_string_series_properties', b'_string_series_properties', '_string_set_properties', b'_string_set_properties', 'bool_properties', b'bool_properties', 'datetime_properties', b'datetime_properties', 'float_properties', b'float_properties', 'float_series_properties', b'float_series_properties', 'int_properties', b'int_properties', 'name', b'name', 'string_properties', b'string_properties', 'string_series_properties', b'string_series_properties', 'string_set_properties', b'string_set_properties', 'type', b'type')]) -> None:
         ...
 
     @typing.overload
@@ -136,6 +141,10 @@ class ProtoAttributeDTO(google.protobuf.message.Message):
 
     @typing.overload
     def WhichOneof(self, oneof_group: typing.Literal[('_string_properties', b'_string_properties')]) -> (typing.Literal['string_properties'] | None):
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal[('_string_series_properties', b'_string_series_properties')]) -> (typing.Literal['string_series_properties'] | None):
         ...
 
     @typing.overload
@@ -260,6 +269,7 @@ class ProtoFloatSeriesAttributeDTO(google.protobuf.message.Message):
     AVERAGE_FIELD_NUMBER: builtins.int
     VARIANCE_FIELD_NUMBER: builtins.int
     CONFIG_FIELD_NUMBER: builtins.int
+    HAS_PREVIEW_FIELD_NUMBER: builtins.int
     attribute_name: builtins.str
     attribute_type: builtins.str
     last_step: builtins.float
@@ -268,18 +278,19 @@ class ProtoFloatSeriesAttributeDTO(google.protobuf.message.Message):
     max: builtins.float
     average: builtins.float
     variance: builtins.float
+    has_preview: builtins.bool
 
     @property
     def config(self) -> global___ProtoFloatSeriesAttributeConfigDTO:
         ...
 
-    def __init__(self, *, attribute_name: builtins.str=..., attribute_type: builtins.str=..., last_step: (builtins.float | None)=..., last: (builtins.float | None)=..., min: (builtins.float | None)=..., max: (builtins.float | None)=..., average: (builtins.float | None)=..., variance: (builtins.float | None)=..., config: (global___ProtoFloatSeriesAttributeConfigDTO | None)=...) -> None:
+    def __init__(self, *, attribute_name: builtins.str=..., attribute_type: builtins.str=..., last_step: (builtins.float | None)=..., last: (builtins.float | None)=..., min: (builtins.float | None)=..., max: (builtins.float | None)=..., average: (builtins.float | None)=..., variance: (builtins.float | None)=..., config: (global___ProtoFloatSeriesAttributeConfigDTO | None)=..., has_preview: builtins.bool=...) -> None:
         ...
 
     def HasField(self, field_name: typing.Literal[('_average', b'_average', '_last', b'_last', '_last_step', b'_last_step', '_max', b'_max', '_min', b'_min', '_variance', b'_variance', 'average', b'average', 'config', b'config', 'last', b'last', 'last_step', b'last_step', 'max', b'max', 'min', b'min', 'variance', b'variance')]) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing.Literal[('_average', b'_average', '_last', b'_last', '_last_step', b'_last_step', '_max', b'_max', '_min', b'_min', '_variance', b'_variance', 'attribute_name', b'attribute_name', 'attribute_type', b'attribute_type', 'average', b'average', 'config', b'config', 'last', b'last', 'last_step', b'last_step', 'max', b'max', 'min', b'min', 'variance', b'variance')]) -> None:
+    def ClearField(self, field_name: typing.Literal[('_average', b'_average', '_last', b'_last', '_last_step', b'_last_step', '_max', b'_max', '_min', b'_min', '_variance', b'_variance', 'attribute_name', b'attribute_name', 'attribute_type', b'attribute_type', 'average', b'average', 'config', b'config', 'has_preview', b'has_preview', 'last', b'last', 'last_step', b'last_step', 'max', b'max', 'min', b'min', 'variance', b'variance')]) -> None:
         ...
 
     @typing.overload
@@ -338,3 +349,39 @@ class ProtoFloatSeriesAttributeConfigDTO(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing.Literal[('_unit', b'_unit')]) -> (typing.Literal['unit'] | None):
         ...
 global___ProtoFloatSeriesAttributeConfigDTO = ProtoFloatSeriesAttributeConfigDTO
+
+@typing.final
+class ProtoStringSeriesAttributeDTO(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    ATTRIBUTE_NAME_FIELD_NUMBER: builtins.int
+    ATTRIBUTE_TYPE_FIELD_NUMBER: builtins.int
+    LAST_STEP_FIELD_NUMBER: builtins.int
+    LAST_FIELD_NUMBER: builtins.int
+    SIZE_FIELD_NUMBER: builtins.int
+    attribute_name: builtins.str
+    attribute_type: builtins.str
+    last_step: builtins.float
+    last: builtins.str
+    size: builtins.int
+
+    def __init__(self, *, attribute_name: builtins.str=..., attribute_type: builtins.str=..., last_step: (builtins.float | None)=..., last: (builtins.str | None)=..., size: (builtins.int | None)=...) -> None:
+        ...
+
+    def HasField(self, field_name: typing.Literal[('_last', b'_last', '_last_step', b'_last_step', '_size', b'_size', 'last', b'last', 'last_step', b'last_step', 'size', b'size')]) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing.Literal[('_last', b'_last', '_last_step', b'_last_step', '_size', b'_size', 'attribute_name', b'attribute_name', 'attribute_type', b'attribute_type', 'last', b'last', 'last_step', b'last_step', 'size', b'size')]) -> None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal[('_last', b'_last')]) -> (typing.Literal['last'] | None):
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal[('_last_step', b'_last_step')]) -> (typing.Literal['last_step'] | None):
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal[('_size', b'_size')]) -> (typing.Literal['size'] | None):
+        ...
+global___ProtoStringSeriesAttributeDTO = ProtoStringSeriesAttributeDTO
