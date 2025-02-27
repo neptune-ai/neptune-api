@@ -21,7 +21,6 @@ from typing import (
     Type,
     TypeVar,
 )
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -39,13 +38,13 @@ class ProjectChartDTO:
     """
     Attributes:
         filters (ProjectChartFiltersDTO):
-        id (UUID): Chart id
+        id (str): Chart id
         metrics (List['ProjectChartMetricDTO']): Chart metrics
         name (str): Chart name
     """
 
     filters: "ProjectChartFiltersDTO"
-    id: UUID
+    id: str
     metrics: List["ProjectChartMetricDTO"]
     name: str
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -53,7 +52,7 @@ class ProjectChartDTO:
     def to_dict(self) -> Dict[str, Any]:
         filters = self.filters.to_dict()
 
-        id = str(self.id)
+        id = self.id
 
         metrics = []
         for metrics_item_data in self.metrics:
@@ -83,7 +82,7 @@ class ProjectChartDTO:
         d = src_dict.copy()
         filters = ProjectChartFiltersDTO.from_dict(d.pop("filters"))
 
-        id = UUID(d.pop("id"))
+        id = d.pop("id")
 
         metrics = []
         _metrics = d.pop("metrics")

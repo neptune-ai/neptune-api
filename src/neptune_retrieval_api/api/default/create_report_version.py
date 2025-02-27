@@ -21,7 +21,6 @@ from typing import (
     Union,
     cast,
 )
-from uuid import UUID
 
 import httpx
 
@@ -43,7 +42,7 @@ def _get_kwargs(
     *,
     body: ReportVersionDTO,
     project_identifier: str,
-    report_id: Union[Unset, UUID] = UNSET,
+    report_id: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
@@ -51,10 +50,7 @@ def _get_kwargs(
 
     params["projectIdentifier"] = project_identifier
 
-    json_report_id: Union[Unset, str] = UNSET
-    if not isinstance(report_id, Unset):
-        json_report_id = str(report_id)
-    params["reportId"] = json_report_id
+    params["reportId"] = report_id
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -76,33 +72,33 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[Union[Any, DependencyOnInaccessibleProjectsErrorDTO, ReportVersionDTO]]:
-    if response.status_code == 200:
+    if response.status_code == HTTPStatus.OK:
         response_200 = ReportVersionDTO.from_dict(response.json())
 
         return response_200
-    if response.status_code == 400:
+    if response.status_code == HTTPStatus.BAD_REQUEST:
         response_400 = cast(Any, None)
         return response_400
-    if response.status_code == 401:
+    if response.status_code == HTTPStatus.UNAUTHORIZED:
         response_401 = cast(Any, None)
         return response_401
-    if response.status_code == 403:
+    if response.status_code == HTTPStatus.FORBIDDEN:
         response_403 = DependencyOnInaccessibleProjectsErrorDTO.from_dict(response.json())
 
         return response_403
-    if response.status_code == 404:
+    if response.status_code == HTTPStatus.NOT_FOUND:
         response_404 = cast(Any, None)
         return response_404
-    if response.status_code == 408:
+    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
         response_408 = cast(Any, None)
         return response_408
-    if response.status_code == 409:
+    if response.status_code == HTTPStatus.CONFLICT:
         response_409 = cast(Any, None)
         return response_409
-    if response.status_code == 422:
+    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
         response_422 = cast(Any, None)
         return response_422
-    if response.status_code == 429:
+    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
         response_429 = cast(Any, None)
         return response_429
     if client.raise_on_unexpected_status:
@@ -127,13 +123,13 @@ def sync_detailed(
     client: Union[AuthenticatedClient, Client],
     body: ReportVersionDTO,
     project_identifier: str,
-    report_id: Union[Unset, UUID] = UNSET,
+    report_id: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, DependencyOnInaccessibleProjectsErrorDTO, ReportVersionDTO]]:
     """Create a new report version
 
     Args:
         project_identifier (str):
-        report_id (Union[Unset, UUID]):
+        report_id (Union[Unset, str]):
         body (ReportVersionDTO):
 
     Raises:
@@ -162,13 +158,13 @@ def sync(
     client: Union[AuthenticatedClient, Client],
     body: ReportVersionDTO,
     project_identifier: str,
-    report_id: Union[Unset, UUID] = UNSET,
+    report_id: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, DependencyOnInaccessibleProjectsErrorDTO, ReportVersionDTO]]:
     """Create a new report version
 
     Args:
         project_identifier (str):
-        report_id (Union[Unset, UUID]):
+        report_id (Union[Unset, str]):
         body (ReportVersionDTO):
 
     Raises:
@@ -192,13 +188,13 @@ async def asyncio_detailed(
     client: Union[AuthenticatedClient, Client],
     body: ReportVersionDTO,
     project_identifier: str,
-    report_id: Union[Unset, UUID] = UNSET,
+    report_id: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, DependencyOnInaccessibleProjectsErrorDTO, ReportVersionDTO]]:
     """Create a new report version
 
     Args:
         project_identifier (str):
-        report_id (Union[Unset, UUID]):
+        report_id (Union[Unset, str]):
         body (ReportVersionDTO):
 
     Raises:
@@ -225,13 +221,13 @@ async def asyncio(
     client: Union[AuthenticatedClient, Client],
     body: ReportVersionDTO,
     project_identifier: str,
-    report_id: Union[Unset, UUID] = UNSET,
+    report_id: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, DependencyOnInaccessibleProjectsErrorDTO, ReportVersionDTO]]:
     """Create a new report version
 
     Args:
         project_identifier (str):
-        report_id (Union[Unset, UUID]):
+        report_id (Union[Unset, str]):
         body (ReportVersionDTO):
 
     Raises:

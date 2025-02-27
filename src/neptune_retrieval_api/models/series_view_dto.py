@@ -21,7 +21,6 @@ from typing import (
     Type,
     TypeVar,
 )
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -45,7 +44,7 @@ class SeriesViewDTO:
         last_point_index (int):
         max_y (float):
         min_y (float):
-        project_id (UUID):
+        project_id (str):
         project_name (str):
         values (List['SeriesViewPointDTO']):
     """
@@ -58,7 +57,7 @@ class SeriesViewDTO:
     last_point_index: int
     max_y: float
     min_y: float
-    project_id: UUID
+    project_id: str
     project_name: str
     values: List["SeriesViewPointDTO"]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -80,7 +79,7 @@ class SeriesViewDTO:
 
         min_y = self.min_y
 
-        project_id = str(self.project_id)
+        project_id = self.project_id
 
         project_name = self.project_name
 
@@ -130,7 +129,7 @@ class SeriesViewDTO:
 
         min_y = d.pop("minY")
 
-        project_id = UUID(d.pop("projectId"))
+        project_id = d.pop("projectId")
 
         project_name = d.pop("projectName")
 

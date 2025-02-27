@@ -48,12 +48,14 @@ class SeriesValuesRequest:
         requests (List['SeriesValuesRequestSeries']):
         next_page (Union[Unset, NextPageDTO]):
         order (Union[Unset, SeriesValuesRequestOrder]):
+        per_series_points_limit (Union[Unset, int]):
         step_range (Union[Unset, OpenRangeDTO]):
     """
 
     requests: List["SeriesValuesRequestSeries"]
     next_page: Union[Unset, "NextPageDTO"] = UNSET
     order: Union[Unset, SeriesValuesRequestOrder] = UNSET
+    per_series_points_limit: Union[Unset, int] = UNSET
     step_range: Union[Unset, "OpenRangeDTO"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -71,6 +73,8 @@ class SeriesValuesRequest:
         if not isinstance(self.order, Unset):
             order = self.order.value
 
+        per_series_points_limit = self.per_series_points_limit
+
         step_range: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.step_range, Unset):
             step_range = self.step_range.to_dict()
@@ -86,6 +90,8 @@ class SeriesValuesRequest:
             field_dict["nextPage"] = next_page
         if order is not UNSET:
             field_dict["order"] = order
+        if per_series_points_limit is not UNSET:
+            field_dict["perSeriesPointsLimit"] = per_series_points_limit
         if step_range is not UNSET:
             field_dict["stepRange"] = step_range
 
@@ -119,6 +125,8 @@ class SeriesValuesRequest:
         else:
             order = SeriesValuesRequestOrder(_order)
 
+        per_series_points_limit = d.pop("perSeriesPointsLimit", UNSET)
+
         _step_range = d.pop("stepRange", UNSET)
         step_range: Union[Unset, OpenRangeDTO]
         if isinstance(_step_range, Unset):
@@ -130,6 +138,7 @@ class SeriesValuesRequest:
             requests=requests,
             next_page=next_page,
             order=order,
+            per_series_points_limit=per_series_points_limit,
             step_range=step_range,
         )
 

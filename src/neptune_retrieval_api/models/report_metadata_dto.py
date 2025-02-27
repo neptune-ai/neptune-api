@@ -22,7 +22,6 @@ from typing import (
     Type,
     TypeVar,
 )
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -43,14 +42,14 @@ class ReportMetadataDTO:
         initial_author (str):
         latest_publish_time (datetime.datetime):
         latest_version_metadata (ReportVersionMetadataDTO):
-        report_id (UUID):
+        report_id (str):
     """
 
     creation_time: datetime.datetime
     initial_author: str
     latest_publish_time: datetime.datetime
     latest_version_metadata: "ReportVersionMetadataDTO"
-    report_id: UUID
+    report_id: str
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -62,7 +61,7 @@ class ReportMetadataDTO:
 
         latest_version_metadata = self.latest_version_metadata.to_dict()
 
-        report_id = str(self.report_id)
+        report_id = self.report_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -91,7 +90,7 @@ class ReportMetadataDTO:
 
         latest_version_metadata = ReportVersionMetadataDTO.from_dict(d.pop("latestVersionMetadata"))
 
-        report_id = UUID(d.pop("reportId"))
+        report_id = d.pop("reportId")
 
         report_metadata_dto = cls(
             creation_time=creation_time,

@@ -23,7 +23,6 @@ from typing import (
     Union,
     cast,
 )
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -44,30 +43,32 @@ T = TypeVar("T", bound="RunGroupDTO")
 class RunGroupDTO:
     """
     Attributes:
-        id (UUID):
+        id (str):
         show_only_selected_runs (bool):
         view_params (TableViewParamsDTO):
         color (Union[Unset, str]):
         experiment_member_keys (Union[Unset, List[str]]):
         first_members_by_query_count (Union[Unset, int]):
         name (Union[Unset, str]):
-        project_id (Union[Unset, UUID]):
+        project_id (Union[Unset, str]):
         run_member_keys (Union[Unset, List[str]]):
+        show_selected_hidden_by_filter (Union[Unset, bool]):
     """
 
-    id: UUID
+    id: str
     show_only_selected_runs: bool
     view_params: "TableViewParamsDTO"
     color: Union[Unset, str] = UNSET
     experiment_member_keys: Union[Unset, List[str]] = UNSET
     first_members_by_query_count: Union[Unset, int] = UNSET
     name: Union[Unset, str] = UNSET
-    project_id: Union[Unset, UUID] = UNSET
+    project_id: Union[Unset, str] = UNSET
     run_member_keys: Union[Unset, List[str]] = UNSET
+    show_selected_hidden_by_filter: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = str(self.id)
+        id = self.id
 
         show_only_selected_runs = self.show_only_selected_runs
 
@@ -83,13 +84,13 @@ class RunGroupDTO:
 
         name = self.name
 
-        project_id: Union[Unset, str] = UNSET
-        if not isinstance(self.project_id, Unset):
-            project_id = str(self.project_id)
+        project_id = self.project_id
 
         run_member_keys: Union[Unset, List[str]] = UNSET
         if not isinstance(self.run_member_keys, Unset):
             run_member_keys = self.run_member_keys
+
+        show_selected_hidden_by_filter = self.show_selected_hidden_by_filter
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -112,6 +113,8 @@ class RunGroupDTO:
             field_dict["projectId"] = project_id
         if run_member_keys is not UNSET:
             field_dict["runMemberKeys"] = run_member_keys
+        if show_selected_hidden_by_filter is not UNSET:
+            field_dict["showSelectedHiddenByFilter"] = show_selected_hidden_by_filter
 
         return field_dict
 
@@ -120,7 +123,7 @@ class RunGroupDTO:
         from ..models.table_view_params_dto import TableViewParamsDTO
 
         d = src_dict.copy()
-        id = UUID(d.pop("id"))
+        id = d.pop("id")
 
         show_only_selected_runs = d.pop("showOnlySelectedRuns")
 
@@ -134,14 +137,11 @@ class RunGroupDTO:
 
         name = d.pop("name", UNSET)
 
-        _project_id = d.pop("projectId", UNSET)
-        project_id: Union[Unset, UUID]
-        if isinstance(_project_id, Unset):
-            project_id = UNSET
-        else:
-            project_id = UUID(_project_id)
+        project_id = d.pop("projectId", UNSET)
 
         run_member_keys = cast(List[str], d.pop("runMemberKeys", UNSET))
+
+        show_selected_hidden_by_filter = d.pop("showSelectedHiddenByFilter", UNSET)
 
         run_group_dto = cls(
             id=id,
@@ -153,6 +153,7 @@ class RunGroupDTO:
             name=name,
             project_id=project_id,
             run_member_keys=run_member_keys,
+            show_selected_hidden_by_filter=show_selected_hidden_by_filter,
         )
 
         run_group_dto.additional_properties = d

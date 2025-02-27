@@ -21,7 +21,6 @@ from typing import (
     Union,
     cast,
 )
-from uuid import UUID
 
 import httpx
 
@@ -40,7 +39,7 @@ from ...types import (
 
 
 def _get_kwargs(
-    version_branch: UUID,
+    version_branch: str,
     *,
     drafts: Union[Unset, ListDashboardBranchVersionsDrafts] = ListDashboardBranchVersionsDrafts.FALSE,
     limit: Union[Unset, int] = 200,
@@ -78,32 +77,32 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[Union[Any, PageDTODashboardVersionDTO]]:
-    if response.status_code == 200:
+    if response.status_code == HTTPStatus.OK:
         response_200 = PageDTODashboardVersionDTO.from_dict(response.json())
 
         return response_200
-    if response.status_code == 400:
+    if response.status_code == HTTPStatus.BAD_REQUEST:
         response_400 = cast(Any, None)
         return response_400
-    if response.status_code == 401:
+    if response.status_code == HTTPStatus.UNAUTHORIZED:
         response_401 = cast(Any, None)
         return response_401
-    if response.status_code == 403:
+    if response.status_code == HTTPStatus.FORBIDDEN:
         response_403 = cast(Any, None)
         return response_403
-    if response.status_code == 404:
+    if response.status_code == HTTPStatus.NOT_FOUND:
         response_404 = cast(Any, None)
         return response_404
-    if response.status_code == 408:
+    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
         response_408 = cast(Any, None)
         return response_408
-    if response.status_code == 409:
+    if response.status_code == HTTPStatus.CONFLICT:
         response_409 = cast(Any, None)
         return response_409
-    if response.status_code == 422:
+    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
         response_422 = cast(Any, None)
         return response_422
-    if response.status_code == 429:
+    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
         response_429 = cast(Any, None)
         return response_429
     if client.raise_on_unexpected_status:
@@ -124,7 +123,7 @@ def _build_response(
 
 
 def sync_detailed(
-    version_branch: UUID,
+    version_branch: str,
     *,
     client: Union[AuthenticatedClient, Client],
     drafts: Union[Unset, ListDashboardBranchVersionsDrafts] = ListDashboardBranchVersionsDrafts.FALSE,
@@ -136,7 +135,7 @@ def sync_detailed(
     """List dashboard versions of a branch
 
     Args:
-        version_branch (UUID):
+        version_branch (str):
         drafts (Union[Unset, ListDashboardBranchVersionsDrafts]):  Default:
             ListDashboardBranchVersionsDrafts.FALSE.
         limit (Union[Unset, int]):  Default: 200.
@@ -169,7 +168,7 @@ def sync_detailed(
 
 
 def sync(
-    version_branch: UUID,
+    version_branch: str,
     *,
     client: Union[AuthenticatedClient, Client],
     drafts: Union[Unset, ListDashboardBranchVersionsDrafts] = ListDashboardBranchVersionsDrafts.FALSE,
@@ -181,7 +180,7 @@ def sync(
     """List dashboard versions of a branch
 
     Args:
-        version_branch (UUID):
+        version_branch (str):
         drafts (Union[Unset, ListDashboardBranchVersionsDrafts]):  Default:
             ListDashboardBranchVersionsDrafts.FALSE.
         limit (Union[Unset, int]):  Default: 200.
@@ -209,7 +208,7 @@ def sync(
 
 
 async def asyncio_detailed(
-    version_branch: UUID,
+    version_branch: str,
     *,
     client: Union[AuthenticatedClient, Client],
     drafts: Union[Unset, ListDashboardBranchVersionsDrafts] = ListDashboardBranchVersionsDrafts.FALSE,
@@ -221,7 +220,7 @@ async def asyncio_detailed(
     """List dashboard versions of a branch
 
     Args:
-        version_branch (UUID):
+        version_branch (str):
         drafts (Union[Unset, ListDashboardBranchVersionsDrafts]):  Default:
             ListDashboardBranchVersionsDrafts.FALSE.
         limit (Union[Unset, int]):  Default: 200.
@@ -252,7 +251,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    version_branch: UUID,
+    version_branch: str,
     *,
     client: Union[AuthenticatedClient, Client],
     drafts: Union[Unset, ListDashboardBranchVersionsDrafts] = ListDashboardBranchVersionsDrafts.FALSE,
@@ -264,7 +263,7 @@ async def asyncio(
     """List dashboard versions of a branch
 
     Args:
-        version_branch (UUID):
+        version_branch (str):
         drafts (Union[Unset, ListDashboardBranchVersionsDrafts]):  Default:
             ListDashboardBranchVersionsDrafts.FALSE.
         limit (Union[Unset, int]):  Default: 200.

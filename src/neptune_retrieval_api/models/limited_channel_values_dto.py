@@ -21,7 +21,6 @@ from typing import (
     Type,
     TypeVar,
 )
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -37,18 +36,18 @@ T = TypeVar("T", bound="LimitedChannelValuesDTO")
 class LimitedChannelValuesDTO:
     """
     Attributes:
-        channel_id (UUID):
+        channel_id (str):
         total_item_count (int):
         values (List['PointValueDTO']):
     """
 
-    channel_id: UUID
+    channel_id: str
     total_item_count: int
     values: List["PointValueDTO"]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        channel_id = str(self.channel_id)
+        channel_id = self.channel_id
 
         total_item_count = self.total_item_count
 
@@ -74,7 +73,7 @@ class LimitedChannelValuesDTO:
         from ..models.point_value_dto import PointValueDTO
 
         d = src_dict.copy()
-        channel_id = UUID(d.pop("channelId"))
+        channel_id = d.pop("channelId")
 
         total_item_count = d.pop("totalItemCount")
 

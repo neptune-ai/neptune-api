@@ -22,7 +22,6 @@ from typing import (
     TypeVar,
     Union,
 )
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -42,11 +41,11 @@ class DashboardVersionDTO:
     """
     Attributes:
         created_time (datetime.datetime):
-        id (UUID):
+        id (str):
         last_updated_time (datetime.datetime):
         name (str):
         type (DashboardVersionDTOType):
-        version_branch (UUID):
+        version_branch (str):
         draft (Union[Unset, bool]):
         owner (Union[Unset, str]):
         version_description (Union[Unset, str]):
@@ -54,11 +53,11 @@ class DashboardVersionDTO:
     """
 
     created_time: datetime.datetime
-    id: UUID
+    id: str
     last_updated_time: datetime.datetime
     name: str
     type: DashboardVersionDTOType
-    version_branch: UUID
+    version_branch: str
     draft: Union[Unset, bool] = UNSET
     owner: Union[Unset, str] = UNSET
     version_description: Union[Unset, str] = UNSET
@@ -68,7 +67,7 @@ class DashboardVersionDTO:
     def to_dict(self) -> Dict[str, Any]:
         created_time = self.created_time.isoformat()
 
-        id = str(self.id)
+        id = self.id
 
         last_updated_time = self.last_updated_time.isoformat()
 
@@ -76,7 +75,7 @@ class DashboardVersionDTO:
 
         type = self.type.value
 
-        version_branch = str(self.version_branch)
+        version_branch = self.version_branch
 
         draft = self.draft
 
@@ -114,7 +113,7 @@ class DashboardVersionDTO:
         d = src_dict.copy()
         created_time = isoparse(d.pop("createdTime"))
 
-        id = UUID(d.pop("id"))
+        id = d.pop("id")
 
         last_updated_time = isoparse(d.pop("lastUpdatedTime"))
 
@@ -122,7 +121,7 @@ class DashboardVersionDTO:
 
         type = DashboardVersionDTOType(d.pop("type"))
 
-        version_branch = UUID(d.pop("versionBranch"))
+        version_branch = d.pop("versionBranch")
 
         draft = d.pop("draft", UNSET)
 

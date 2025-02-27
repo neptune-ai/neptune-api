@@ -21,7 +21,6 @@ from typing import (
     Union,
     cast,
 )
-from uuid import UUID
 
 import httpx
 
@@ -36,7 +35,7 @@ from ...types import Response
 
 
 def _get_kwargs(
-    notebook_id: UUID,
+    notebook_id: str,
     *,
     body: NewCheckpointDTO,
 ) -> Dict[str, Any]:
@@ -59,32 +58,32 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[Union[Any, CheckpointDTO]]:
-    if response.status_code == 200:
+    if response.status_code == HTTPStatus.OK:
         response_200 = CheckpointDTO.from_dict(response.json())
 
         return response_200
-    if response.status_code == 400:
+    if response.status_code == HTTPStatus.BAD_REQUEST:
         response_400 = cast(Any, None)
         return response_400
-    if response.status_code == 401:
+    if response.status_code == HTTPStatus.UNAUTHORIZED:
         response_401 = cast(Any, None)
         return response_401
-    if response.status_code == 403:
+    if response.status_code == HTTPStatus.FORBIDDEN:
         response_403 = cast(Any, None)
         return response_403
-    if response.status_code == 404:
+    if response.status_code == HTTPStatus.NOT_FOUND:
         response_404 = cast(Any, None)
         return response_404
-    if response.status_code == 408:
+    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
         response_408 = cast(Any, None)
         return response_408
-    if response.status_code == 409:
+    if response.status_code == HTTPStatus.CONFLICT:
         response_409 = cast(Any, None)
         return response_409
-    if response.status_code == 422:
+    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
         response_422 = cast(Any, None)
         return response_422
-    if response.status_code == 429:
+    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
         response_429 = cast(Any, None)
         return response_429
     if client.raise_on_unexpected_status:
@@ -105,7 +104,7 @@ def _build_response(
 
 
 def sync_detailed(
-    notebook_id: UUID,
+    notebook_id: str,
     *,
     client: Union[AuthenticatedClient, Client],
     body: NewCheckpointDTO,
@@ -113,7 +112,7 @@ def sync_detailed(
     """Create checkpoint
 
     Args:
-        notebook_id (UUID):
+        notebook_id (str):
         body (NewCheckpointDTO):
 
     Raises:
@@ -137,7 +136,7 @@ def sync_detailed(
 
 
 def sync(
-    notebook_id: UUID,
+    notebook_id: str,
     *,
     client: Union[AuthenticatedClient, Client],
     body: NewCheckpointDTO,
@@ -145,7 +144,7 @@ def sync(
     """Create checkpoint
 
     Args:
-        notebook_id (UUID):
+        notebook_id (str):
         body (NewCheckpointDTO):
 
     Raises:
@@ -164,7 +163,7 @@ def sync(
 
 
 async def asyncio_detailed(
-    notebook_id: UUID,
+    notebook_id: str,
     *,
     client: Union[AuthenticatedClient, Client],
     body: NewCheckpointDTO,
@@ -172,7 +171,7 @@ async def asyncio_detailed(
     """Create checkpoint
 
     Args:
-        notebook_id (UUID):
+        notebook_id (str):
         body (NewCheckpointDTO):
 
     Raises:
@@ -194,7 +193,7 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    notebook_id: UUID,
+    notebook_id: str,
     *,
     client: Union[AuthenticatedClient, Client],
     body: NewCheckpointDTO,
@@ -202,7 +201,7 @@ async def asyncio(
     """Create checkpoint
 
     Args:
-        notebook_id (UUID):
+        notebook_id (str):
         body (NewCheckpointDTO):
 
     Raises:

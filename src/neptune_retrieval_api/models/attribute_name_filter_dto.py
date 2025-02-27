@@ -85,12 +85,14 @@ class AttributeNameFilterDTO:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        must_match_any = []
+        must_match_any: Union[Unset, List[AttributeNameFilterDTO]] = UNSET
         _must_match_any = d.pop("mustMatchAny", UNSET)
-        for must_match_any_item_data in _must_match_any or []:
-            must_match_any_item = AttributeNameFilterDTO.from_dict(must_match_any_item_data)
+        if not isinstance(_must_match_any, Unset):
+            must_match_any = []
+            for must_match_any_item_data in _must_match_any:
+                must_match_any_item = AttributeNameFilterDTO.from_dict(must_match_any_item_data)
 
-            must_match_any.append(must_match_any_item)
+                must_match_any.append(must_match_any_item)
 
         must_match_regexes = cast(List[str], d.pop("mustMatchRegexes", UNSET))
 

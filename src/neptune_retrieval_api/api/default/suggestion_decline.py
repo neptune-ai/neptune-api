@@ -20,7 +20,6 @@ from typing import (
     Optional,
     Union,
 )
-from uuid import UUID
 
 import httpx
 
@@ -41,7 +40,7 @@ def _get_kwargs(
     *,
     body: LeaderboardFieldSuggestionDTO,
     project_identifier: str,
-    view_id: Union[Unset, UUID] = UNSET,
+    view_id: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
@@ -49,10 +48,7 @@ def _get_kwargs(
 
     params["projectIdentifier"] = project_identifier
 
-    json_view_id: Union[Unset, str] = UNSET
-    if not isinstance(view_id, Unset):
-        json_view_id = str(view_id)
-    params["viewId"] = json_view_id
+    params["viewId"] = view_id
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -72,23 +68,23 @@ def _get_kwargs(
 
 
 def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
-    if response.status_code == 200:
+    if response.status_code == HTTPStatus.OK:
         return None
-    if response.status_code == 400:
+    if response.status_code == HTTPStatus.BAD_REQUEST:
         return None
-    if response.status_code == 401:
+    if response.status_code == HTTPStatus.UNAUTHORIZED:
         return None
-    if response.status_code == 403:
+    if response.status_code == HTTPStatus.FORBIDDEN:
         return None
-    if response.status_code == 404:
+    if response.status_code == HTTPStatus.NOT_FOUND:
         return None
-    if response.status_code == 408:
+    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
         return None
-    if response.status_code == 409:
+    if response.status_code == HTTPStatus.CONFLICT:
         return None
-    if response.status_code == 422:
+    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
         return None
-    if response.status_code == 429:
+    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
         return None
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
@@ -110,13 +106,13 @@ def sync_detailed(
     client: Union[AuthenticatedClient, Client],
     body: LeaderboardFieldSuggestionDTO,
     project_identifier: str,
-    view_id: Union[Unset, UUID] = UNSET,
+    view_id: Union[Unset, str] = UNSET,
 ) -> Response[Any]:
     """Decline column suggestion from the project
 
     Args:
         project_identifier (str):
-        view_id (Union[Unset, UUID]):
+        view_id (Union[Unset, str]):
         body (LeaderboardFieldSuggestionDTO):
 
     Raises:
@@ -145,13 +141,13 @@ async def asyncio_detailed(
     client: Union[AuthenticatedClient, Client],
     body: LeaderboardFieldSuggestionDTO,
     project_identifier: str,
-    view_id: Union[Unset, UUID] = UNSET,
+    view_id: Union[Unset, str] = UNSET,
 ) -> Response[Any]:
     """Decline column suggestion from the project
 
     Args:
         project_identifier (str):
-        view_id (Union[Unset, UUID]):
+        view_id (Union[Unset, str]):
         body (LeaderboardFieldSuggestionDTO):
 
     Raises:

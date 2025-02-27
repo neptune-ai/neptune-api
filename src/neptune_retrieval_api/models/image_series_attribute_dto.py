@@ -21,7 +21,6 @@ from typing import (
     TypeVar,
     Union,
 )
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -41,13 +40,13 @@ class ImageSeriesAttributeDTO:
     Attributes:
         attribute_name (str):
         attribute_type (AttributeTypeDTO):
-        channel_id (UUID):
+        channel_id (str):
         last_step (Union[Unset, float]):
     """
 
     attribute_name: str
     attribute_type: AttributeTypeDTO
-    channel_id: UUID
+    channel_id: str
     last_step: Union[Unset, float] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -56,7 +55,7 @@ class ImageSeriesAttributeDTO:
 
         attribute_type = self.attribute_type.value
 
-        channel_id = str(self.channel_id)
+        channel_id = self.channel_id
 
         last_step = self.last_step
 
@@ -81,7 +80,7 @@ class ImageSeriesAttributeDTO:
 
         attribute_type = AttributeTypeDTO(d.pop("attributeType"))
 
-        channel_id = UUID(d.pop("channelId"))
+        channel_id = d.pop("channelId")
 
         last_step = d.pop("lastStep", UNSET)
 

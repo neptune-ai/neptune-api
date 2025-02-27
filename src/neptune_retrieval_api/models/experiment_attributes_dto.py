@@ -21,7 +21,6 @@ from typing import (
     Type,
     TypeVar,
 )
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -39,20 +38,20 @@ class ExperimentAttributesDTO:
     """
     Attributes:
         attributes (List['AttributeDTO']):
-        id (UUID):
-        organization_id (UUID):
+        id (str):
+        organization_id (str):
         organization_name (str):
-        project_id (UUID):
+        project_id (str):
         project_name (str):
         system_attributes (SystemAttributesDTO):
         trashed (bool):
     """
 
     attributes: List["AttributeDTO"]
-    id: UUID
-    organization_id: UUID
+    id: str
+    organization_id: str
     organization_name: str
-    project_id: UUID
+    project_id: str
     project_name: str
     system_attributes: "SystemAttributesDTO"
     trashed: bool
@@ -64,13 +63,13 @@ class ExperimentAttributesDTO:
             attributes_item = attributes_item_data.to_dict()
             attributes.append(attributes_item)
 
-        id = str(self.id)
+        id = self.id
 
-        organization_id = str(self.organization_id)
+        organization_id = self.organization_id
 
         organization_name = self.organization_name
 
-        project_id = str(self.project_id)
+        project_id = self.project_id
 
         project_name = self.project_name
 
@@ -108,13 +107,13 @@ class ExperimentAttributesDTO:
 
             attributes.append(attributes_item)
 
-        id = UUID(d.pop("id"))
+        id = d.pop("id")
 
-        organization_id = UUID(d.pop("organizationId"))
+        organization_id = d.pop("organizationId")
 
         organization_name = d.pop("organizationName")
 
-        project_id = UUID(d.pop("projectId"))
+        project_id = d.pop("projectId")
 
         project_name = d.pop("projectName")
 

@@ -69,12 +69,14 @@ class ColorsConfigDTO:
         from ..models.colors_dto import ColorsDTO
 
         d = src_dict.copy()
-        colors = []
+        colors: Union[Unset, List[ColorsDTO]] = UNSET
         _colors = d.pop("colors", UNSET)
-        for colors_item_data in _colors or []:
-            colors_item = ColorsDTO.from_dict(colors_item_data)
+        if not isinstance(_colors, Unset):
+            colors = []
+            for colors_item_data in _colors:
+                colors_item = ColorsDTO.from_dict(colors_item_data)
 
-            colors.append(colors_item)
+                colors.append(colors_item)
 
         colors_config_dto = cls(
             colors=colors,

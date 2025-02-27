@@ -23,7 +23,6 @@ from typing import (
     Union,
     cast,
 )
-from uuid import UUID
 
 import httpx
 
@@ -44,7 +43,7 @@ from ...types import (
 
 def _get_kwargs(
     *,
-    id: Union[Unset, List[UUID]] = UNSET,
+    id: Union[Unset, List[str]] = UNSET,
     limit: Union[Unset, int] = 100,
     max_creation_time: Union[Unset, datetime.datetime] = UNSET,
     min_creation_time: Union[Unset, datetime.datetime] = UNSET,
@@ -58,10 +57,7 @@ def _get_kwargs(
 
     json_id: Union[Unset, List[str]] = UNSET
     if not isinstance(id, Unset):
-        json_id = []
-        for id_item_data in id:
-            id_item = str(id_item_data)
-            json_id.append(id_item)
+        json_id = id
 
     params["id"] = json_id
 
@@ -113,32 +109,32 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[Union[Any, NotebookListDTO]]:
-    if response.status_code == 200:
+    if response.status_code == HTTPStatus.OK:
         response_200 = NotebookListDTO.from_dict(response.json())
 
         return response_200
-    if response.status_code == 400:
+    if response.status_code == HTTPStatus.BAD_REQUEST:
         response_400 = cast(Any, None)
         return response_400
-    if response.status_code == 401:
+    if response.status_code == HTTPStatus.UNAUTHORIZED:
         response_401 = cast(Any, None)
         return response_401
-    if response.status_code == 403:
+    if response.status_code == HTTPStatus.FORBIDDEN:
         response_403 = cast(Any, None)
         return response_403
-    if response.status_code == 404:
+    if response.status_code == HTTPStatus.NOT_FOUND:
         response_404 = cast(Any, None)
         return response_404
-    if response.status_code == 408:
+    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
         response_408 = cast(Any, None)
         return response_408
-    if response.status_code == 409:
+    if response.status_code == HTTPStatus.CONFLICT:
         response_409 = cast(Any, None)
         return response_409
-    if response.status_code == 422:
+    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
         response_422 = cast(Any, None)
         return response_422
-    if response.status_code == 429:
+    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
         response_429 = cast(Any, None)
         return response_429
     if client.raise_on_unexpected_status:
@@ -161,7 +157,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    id: Union[Unset, List[UUID]] = UNSET,
+    id: Union[Unset, List[str]] = UNSET,
     limit: Union[Unset, int] = 100,
     max_creation_time: Union[Unset, datetime.datetime] = UNSET,
     min_creation_time: Union[Unset, datetime.datetime] = UNSET,
@@ -174,7 +170,7 @@ def sync_detailed(
     """Get notebooks
 
     Args:
-        id (Union[Unset, List[UUID]]):
+        id (Union[Unset, List[str]]):
         limit (Union[Unset, int]):  Default: 100.
         max_creation_time (Union[Unset, datetime.datetime]):
         min_creation_time (Union[Unset, datetime.datetime]):
@@ -214,7 +210,7 @@ def sync_detailed(
 def sync(
     *,
     client: Union[AuthenticatedClient, Client],
-    id: Union[Unset, List[UUID]] = UNSET,
+    id: Union[Unset, List[str]] = UNSET,
     limit: Union[Unset, int] = 100,
     max_creation_time: Union[Unset, datetime.datetime] = UNSET,
     min_creation_time: Union[Unset, datetime.datetime] = UNSET,
@@ -227,7 +223,7 @@ def sync(
     """Get notebooks
 
     Args:
-        id (Union[Unset, List[UUID]]):
+        id (Union[Unset, List[str]]):
         limit (Union[Unset, int]):  Default: 100.
         max_creation_time (Union[Unset, datetime.datetime]):
         min_creation_time (Union[Unset, datetime.datetime]):
@@ -262,7 +258,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    id: Union[Unset, List[UUID]] = UNSET,
+    id: Union[Unset, List[str]] = UNSET,
     limit: Union[Unset, int] = 100,
     max_creation_time: Union[Unset, datetime.datetime] = UNSET,
     min_creation_time: Union[Unset, datetime.datetime] = UNSET,
@@ -275,7 +271,7 @@ async def asyncio_detailed(
     """Get notebooks
 
     Args:
-        id (Union[Unset, List[UUID]]):
+        id (Union[Unset, List[str]]):
         limit (Union[Unset, int]):  Default: 100.
         max_creation_time (Union[Unset, datetime.datetime]):
         min_creation_time (Union[Unset, datetime.datetime]):
@@ -313,7 +309,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
-    id: Union[Unset, List[UUID]] = UNSET,
+    id: Union[Unset, List[str]] = UNSET,
     limit: Union[Unset, int] = 100,
     max_creation_time: Union[Unset, datetime.datetime] = UNSET,
     min_creation_time: Union[Unset, datetime.datetime] = UNSET,
@@ -326,7 +322,7 @@ async def asyncio(
     """Get notebooks
 
     Args:
-        id (Union[Unset, List[UUID]]):
+        id (Union[Unset, List[str]]):
         limit (Union[Unset, int]):  Default: 100.
         max_creation_time (Union[Unset, datetime.datetime]):
         min_creation_time (Union[Unset, datetime.datetime]):

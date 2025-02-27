@@ -22,7 +22,6 @@ from typing import (
     Union,
     cast,
 )
-from uuid import UUID
 
 import httpx
 
@@ -40,8 +39,8 @@ from ...types import (
 
 
 def _get_kwargs(
-    report_id: UUID,
-    version_id: UUID,
+    report_id: str,
+    version_id: str,
     *,
     body: ReportVersionMetadataDTO,
     project_identifier: str,
@@ -76,33 +75,33 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[Union[Any, DependencyOnInaccessibleProjectsErrorDTO, ReportVersionMetadataDTO]]:
-    if response.status_code == 200:
+    if response.status_code == HTTPStatus.OK:
         response_200 = ReportVersionMetadataDTO.from_dict(response.json())
 
         return response_200
-    if response.status_code == 400:
+    if response.status_code == HTTPStatus.BAD_REQUEST:
         response_400 = cast(Any, None)
         return response_400
-    if response.status_code == 401:
+    if response.status_code == HTTPStatus.UNAUTHORIZED:
         response_401 = cast(Any, None)
         return response_401
-    if response.status_code == 403:
+    if response.status_code == HTTPStatus.FORBIDDEN:
         response_403 = DependencyOnInaccessibleProjectsErrorDTO.from_dict(response.json())
 
         return response_403
-    if response.status_code == 404:
+    if response.status_code == HTTPStatus.NOT_FOUND:
         response_404 = cast(Any, None)
         return response_404
-    if response.status_code == 408:
+    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
         response_408 = cast(Any, None)
         return response_408
-    if response.status_code == 409:
+    if response.status_code == HTTPStatus.CONFLICT:
         response_409 = cast(Any, None)
         return response_409
-    if response.status_code == 422:
+    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
         response_422 = cast(Any, None)
         return response_422
-    if response.status_code == 429:
+    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
         response_429 = cast(Any, None)
         return response_429
     if client.raise_on_unexpected_status:
@@ -123,8 +122,8 @@ def _build_response(
 
 
 def sync_detailed(
-    report_id: UUID,
-    version_id: UUID,
+    report_id: str,
+    version_id: str,
     *,
     client: Union[AuthenticatedClient, Client],
     body: ReportVersionMetadataDTO,
@@ -134,8 +133,8 @@ def sync_detailed(
     """Update metadata of a report version
 
     Args:
-        report_id (UUID):
-        version_id (UUID):
+        report_id (str):
+        version_id (str):
         project_identifier (str):
         publish_if_unmodified_since (datetime.datetime):
         body (ReportVersionMetadataDTO):
@@ -164,8 +163,8 @@ def sync_detailed(
 
 
 def sync(
-    report_id: UUID,
-    version_id: UUID,
+    report_id: str,
+    version_id: str,
     *,
     client: Union[AuthenticatedClient, Client],
     body: ReportVersionMetadataDTO,
@@ -175,8 +174,8 @@ def sync(
     """Update metadata of a report version
 
     Args:
-        report_id (UUID):
-        version_id (UUID):
+        report_id (str):
+        version_id (str):
         project_identifier (str):
         publish_if_unmodified_since (datetime.datetime):
         body (ReportVersionMetadataDTO):
@@ -200,8 +199,8 @@ def sync(
 
 
 async def asyncio_detailed(
-    report_id: UUID,
-    version_id: UUID,
+    report_id: str,
+    version_id: str,
     *,
     client: Union[AuthenticatedClient, Client],
     body: ReportVersionMetadataDTO,
@@ -211,8 +210,8 @@ async def asyncio_detailed(
     """Update metadata of a report version
 
     Args:
-        report_id (UUID):
-        version_id (UUID):
+        report_id (str):
+        version_id (str):
         project_identifier (str):
         publish_if_unmodified_since (datetime.datetime):
         body (ReportVersionMetadataDTO):
@@ -239,8 +238,8 @@ async def asyncio_detailed(
 
 
 async def asyncio(
-    report_id: UUID,
-    version_id: UUID,
+    report_id: str,
+    version_id: str,
     *,
     client: Union[AuthenticatedClient, Client],
     body: ReportVersionMetadataDTO,
@@ -250,8 +249,8 @@ async def asyncio(
     """Update metadata of a report version
 
     Args:
-        report_id (UUID):
-        version_id (UUID):
+        report_id (str):
+        version_id (str):
         project_identifier (str):
         publish_if_unmodified_since (datetime.datetime):
         body (ReportVersionMetadataDTO):

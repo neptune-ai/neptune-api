@@ -24,7 +24,6 @@ from typing import (
     Union,
     cast,
 )
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -52,11 +51,11 @@ class DashboardDTO:
     """
     Attributes:
         draft (bool):
-        id (UUID):
+        id (str):
         layouts (DashboardLayoutsDTO):
         name (str):
         type (DashboardDTOType):
-        version_branch (UUID):
+        version_branch (str):
         widgets (List['WidgetDTO']):
         auto_compare_pool (Union[Unset, int]):
         color (Union[Unset, str]):
@@ -75,11 +74,11 @@ class DashboardDTO:
     """
 
     draft: bool
-    id: UUID
+    id: str
     layouts: "DashboardLayoutsDTO"
     name: str
     type: DashboardDTOType
-    version_branch: UUID
+    version_branch: str
     widgets: List["WidgetDTO"]
     auto_compare_pool: Union[Unset, int] = UNSET
     color: Union[Unset, str] = UNSET
@@ -100,7 +99,7 @@ class DashboardDTO:
     def to_dict(self) -> Dict[str, Any]:
         draft = self.draft
 
-        id = str(self.id)
+        id = self.id
 
         layouts = self.layouts.to_dict()
 
@@ -108,7 +107,7 @@ class DashboardDTO:
 
         type = self.type.value
 
-        version_branch = str(self.version_branch)
+        version_branch = self.version_branch
 
         widgets = []
         for widgets_item_data in self.widgets:
@@ -212,7 +211,7 @@ class DashboardDTO:
         d = src_dict.copy()
         draft = d.pop("draft")
 
-        id = UUID(d.pop("id"))
+        id = d.pop("id")
 
         layouts = DashboardLayoutsDTO.from_dict(d.pop("layouts"))
 
@@ -220,7 +219,7 @@ class DashboardDTO:
 
         type = DashboardDTOType(d.pop("type"))
 
-        version_branch = UUID(d.pop("versionBranch"))
+        version_branch = d.pop("versionBranch")
 
         widgets = []
         _widgets = d.pop("widgets")

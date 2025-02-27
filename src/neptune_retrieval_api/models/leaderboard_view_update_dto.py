@@ -55,6 +55,7 @@ class LeaderboardViewUpdateDTO:
         query (Union[Unset, str]):
         quick_filters (Union[Unset, LeaderboardViewQuickFilterDTO]):
         runs_lineage (Union[Unset, bool]):
+        show_selected_hidden_by_filter (Union[Unset, bool]):
     """
 
     column_list: "LeaderboardViewColumnListDTO"
@@ -67,6 +68,7 @@ class LeaderboardViewUpdateDTO:
     query: Union[Unset, str] = UNSET
     quick_filters: Union[Unset, "LeaderboardViewQuickFilterDTO"] = UNSET
     runs_lineage: Union[Unset, bool] = UNSET
+    show_selected_hidden_by_filter: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -94,6 +96,8 @@ class LeaderboardViewUpdateDTO:
 
         runs_lineage = self.runs_lineage
 
+        show_selected_hidden_by_filter = self.show_selected_hidden_by_filter
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -115,6 +119,8 @@ class LeaderboardViewUpdateDTO:
             field_dict["quickFilters"] = quick_filters
         if runs_lineage is not UNSET:
             field_dict["runsLineage"] = runs_lineage
+        if show_selected_hidden_by_filter is not UNSET:
+            field_dict["showSelectedHiddenByFilter"] = show_selected_hidden_by_filter
 
         return field_dict
 
@@ -156,6 +162,8 @@ class LeaderboardViewUpdateDTO:
 
         runs_lineage = d.pop("runsLineage", UNSET)
 
+        show_selected_hidden_by_filter = d.pop("showSelectedHiddenByFilter", UNSET)
+
         leaderboard_view_update_dto = cls(
             column_list=column_list,
             default_view=default_view,
@@ -167,6 +175,7 @@ class LeaderboardViewUpdateDTO:
             query=query,
             quick_filters=quick_filters,
             runs_lineage=runs_lineage,
+            show_selected_hidden_by_filter=show_selected_hidden_by_filter,
         )
 
         leaderboard_view_update_dto.additional_properties = d

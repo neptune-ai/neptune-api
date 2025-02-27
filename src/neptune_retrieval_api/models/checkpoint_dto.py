@@ -21,7 +21,6 @@ from typing import (
     Type,
     TypeVar,
 )
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -36,9 +35,9 @@ class CheckpointDTO:
     Attributes:
         creation_time (datetime.datetime):
         description (str):
-        id (UUID):
+        id (str):
         name (str):
-        notebook_id (UUID):
+        notebook_id (str):
         owner (str):
         path (str):
         removable (bool):
@@ -47,9 +46,9 @@ class CheckpointDTO:
 
     creation_time: datetime.datetime
     description: str
-    id: UUID
+    id: str
     name: str
-    notebook_id: UUID
+    notebook_id: str
     owner: str
     path: str
     removable: bool
@@ -61,11 +60,11 @@ class CheckpointDTO:
 
         description = self.description
 
-        id = str(self.id)
+        id = self.id
 
         name = self.name
 
-        notebook_id = str(self.notebook_id)
+        notebook_id = self.notebook_id
 
         owner = self.owner
 
@@ -100,11 +99,11 @@ class CheckpointDTO:
 
         description = d.pop("description")
 
-        id = UUID(d.pop("id"))
+        id = d.pop("id")
 
         name = d.pop("name")
 
-        notebook_id = UUID(d.pop("notebookId"))
+        notebook_id = d.pop("notebookId")
 
         owner = d.pop("owner")
 

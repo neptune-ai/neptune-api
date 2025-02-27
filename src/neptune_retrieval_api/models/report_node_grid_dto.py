@@ -23,7 +23,6 @@ from typing import (
     Union,
     cast,
 )
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -52,10 +51,10 @@ class ReportNodeGridDTO:
         charts_config (DashboardConfigDTO):
         colors_config (ColorsConfigDTO):
         inherit_run_color_from_group (bool):
-        open_run_groups (List[UUID]):
+        open_run_groups (List[str]):
         run_groups (List['RunGroupDTO']):
         runs_lineage (bool):
-        selected_run_groups (List[UUID]):
+        selected_run_groups (List[str]):
         widget_layouts (List['WidgetLayoutDTO']):
         widgets (List['WidgetDTO']):
         preset_colors (Union[Unset, List[str]]):
@@ -65,10 +64,10 @@ class ReportNodeGridDTO:
     charts_config: "DashboardConfigDTO"
     colors_config: "ColorsConfigDTO"
     inherit_run_color_from_group: bool
-    open_run_groups: List[UUID]
+    open_run_groups: List[str]
     run_groups: List["RunGroupDTO"]
     runs_lineage: bool
-    selected_run_groups: List[UUID]
+    selected_run_groups: List[str]
     widget_layouts: List["WidgetLayoutDTO"]
     widgets: List["WidgetDTO"]
     preset_colors: Union[Unset, List[str]] = UNSET
@@ -83,10 +82,7 @@ class ReportNodeGridDTO:
 
         inherit_run_color_from_group = self.inherit_run_color_from_group
 
-        open_run_groups = []
-        for open_run_groups_item_data in self.open_run_groups:
-            open_run_groups_item = str(open_run_groups_item_data)
-            open_run_groups.append(open_run_groups_item)
+        open_run_groups = self.open_run_groups
 
         run_groups = []
         for run_groups_item_data in self.run_groups:
@@ -95,10 +91,7 @@ class ReportNodeGridDTO:
 
         runs_lineage = self.runs_lineage
 
-        selected_run_groups = []
-        for selected_run_groups_item_data in self.selected_run_groups:
-            selected_run_groups_item = str(selected_run_groups_item_data)
-            selected_run_groups.append(selected_run_groups_item)
+        selected_run_groups = self.selected_run_groups
 
         widget_layouts = []
         for widget_layouts_item_data in self.widget_layouts:
@@ -152,12 +145,7 @@ class ReportNodeGridDTO:
 
         inherit_run_color_from_group = d.pop("inheritRunColorFromGroup")
 
-        open_run_groups = []
-        _open_run_groups = d.pop("openRunGroups")
-        for open_run_groups_item_data in _open_run_groups:
-            open_run_groups_item = UUID(open_run_groups_item_data)
-
-            open_run_groups.append(open_run_groups_item)
+        open_run_groups = cast(List[str], d.pop("openRunGroups"))
 
         run_groups = []
         _run_groups = d.pop("runGroups")
@@ -168,12 +156,7 @@ class ReportNodeGridDTO:
 
         runs_lineage = d.pop("runsLineage")
 
-        selected_run_groups = []
-        _selected_run_groups = d.pop("selectedRunGroups")
-        for selected_run_groups_item_data in _selected_run_groups:
-            selected_run_groups_item = UUID(selected_run_groups_item_data)
-
-            selected_run_groups.append(selected_run_groups_item)
+        selected_run_groups = cast(List[str], d.pop("selectedRunGroups"))
 
         widget_layouts = []
         _widget_layouts = d.pop("widgetLayouts")

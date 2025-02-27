@@ -21,7 +21,6 @@ from typing import (
     Type,
     TypeVar,
 )
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -36,16 +35,16 @@ class NotebookWithNoContentDTO:
     Attributes:
         creation_time (datetime.datetime):
         description (str):
-        id (UUID):
+        id (str):
         owner (str):
-        project_id (UUID):
+        project_id (str):
     """
 
     creation_time: datetime.datetime
     description: str
-    id: UUID
+    id: str
     owner: str
-    project_id: UUID
+    project_id: str
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -53,11 +52,11 @@ class NotebookWithNoContentDTO:
 
         description = self.description
 
-        id = str(self.id)
+        id = self.id
 
         owner = self.owner
 
-        project_id = str(self.project_id)
+        project_id = self.project_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -80,11 +79,11 @@ class NotebookWithNoContentDTO:
 
         description = d.pop("description")
 
-        id = UUID(d.pop("id"))
+        id = d.pop("id")
 
         owner = d.pop("owner")
 
-        project_id = UUID(d.pop("projectId"))
+        project_id = d.pop("projectId")
 
         notebook_with_no_content_dto = cls(
             creation_time=creation_time,

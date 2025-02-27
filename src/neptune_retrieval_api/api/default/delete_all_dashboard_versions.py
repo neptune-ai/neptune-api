@@ -20,7 +20,6 @@ from typing import (
     Optional,
     Union,
 )
-from uuid import UUID
 
 import httpx
 
@@ -36,7 +35,7 @@ from ...types import (
 
 
 def _get_kwargs(
-    branch_version_id: UUID,
+    branch_version_id: str,
     *,
     project_identifier: str,
 ) -> Dict[str, Any]:
@@ -56,23 +55,23 @@ def _get_kwargs(
 
 
 def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
-    if response.status_code == 204:
+    if response.status_code == HTTPStatus.NO_CONTENT:
         return None
-    if response.status_code == 400:
+    if response.status_code == HTTPStatus.BAD_REQUEST:
         return None
-    if response.status_code == 401:
+    if response.status_code == HTTPStatus.UNAUTHORIZED:
         return None
-    if response.status_code == 403:
+    if response.status_code == HTTPStatus.FORBIDDEN:
         return None
-    if response.status_code == 404:
+    if response.status_code == HTTPStatus.NOT_FOUND:
         return None
-    if response.status_code == 408:
+    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
         return None
-    if response.status_code == 409:
+    if response.status_code == HTTPStatus.CONFLICT:
         return None
-    if response.status_code == 422:
+    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
         return None
-    if response.status_code == 429:
+    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
         return None
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
@@ -90,7 +89,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 
 
 def sync_detailed(
-    branch_version_id: UUID,
+    branch_version_id: str,
     *,
     client: Union[AuthenticatedClient, Client],
     project_identifier: str,
@@ -98,7 +97,7 @@ def sync_detailed(
     """Delete all versions of a dashboard by branch version
 
     Args:
-        branch_version_id (UUID):
+        branch_version_id (str):
         project_identifier (str):
 
     Raises:
@@ -122,7 +121,7 @@ def sync_detailed(
 
 
 async def asyncio_detailed(
-    branch_version_id: UUID,
+    branch_version_id: str,
     *,
     client: Union[AuthenticatedClient, Client],
     project_identifier: str,
@@ -130,7 +129,7 @@ async def asyncio_detailed(
     """Delete all versions of a dashboard by branch version
 
     Args:
-        branch_version_id (UUID):
+        branch_version_id (str):
         project_identifier (str):
 
     Raises:

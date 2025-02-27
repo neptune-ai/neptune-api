@@ -22,7 +22,6 @@ from typing import (
     Union,
     cast,
 )
-from uuid import UUID
 
 import httpx
 
@@ -43,7 +42,7 @@ from ...types import (
 
 def _get_kwargs(
     *,
-    branch_ids: Union[Unset, List[UUID]] = UNSET,
+    branch_ids: Union[Unset, List[str]] = UNSET,
     dashboard_type: Union[Unset, ListDashboardsDashboardType] = UNSET,
     drafts: Union[Unset, ListDashboardsDrafts] = ListDashboardsDrafts.FALSE,
     owners: Union[Unset, List[str]] = UNSET,
@@ -53,10 +52,7 @@ def _get_kwargs(
 
     json_branch_ids: Union[Unset, List[str]] = UNSET
     if not isinstance(branch_ids, Unset):
-        json_branch_ids = []
-        for branch_ids_item_data in branch_ids:
-            branch_ids_item = str(branch_ids_item_data)
-            json_branch_ids.append(branch_ids_item)
+        json_branch_ids = branch_ids
 
     params["branchIds"] = json_branch_ids
 
@@ -94,32 +90,32 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[Union[Any, DashboardListDTO]]:
-    if response.status_code == 200:
+    if response.status_code == HTTPStatus.OK:
         response_200 = DashboardListDTO.from_dict(response.json())
 
         return response_200
-    if response.status_code == 400:
+    if response.status_code == HTTPStatus.BAD_REQUEST:
         response_400 = cast(Any, None)
         return response_400
-    if response.status_code == 401:
+    if response.status_code == HTTPStatus.UNAUTHORIZED:
         response_401 = cast(Any, None)
         return response_401
-    if response.status_code == 403:
+    if response.status_code == HTTPStatus.FORBIDDEN:
         response_403 = cast(Any, None)
         return response_403
-    if response.status_code == 404:
+    if response.status_code == HTTPStatus.NOT_FOUND:
         response_404 = cast(Any, None)
         return response_404
-    if response.status_code == 408:
+    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
         response_408 = cast(Any, None)
         return response_408
-    if response.status_code == 409:
+    if response.status_code == HTTPStatus.CONFLICT:
         response_409 = cast(Any, None)
         return response_409
-    if response.status_code == 422:
+    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
         response_422 = cast(Any, None)
         return response_422
-    if response.status_code == 429:
+    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
         response_429 = cast(Any, None)
         return response_429
     if client.raise_on_unexpected_status:
@@ -142,7 +138,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    branch_ids: Union[Unset, List[UUID]] = UNSET,
+    branch_ids: Union[Unset, List[str]] = UNSET,
     dashboard_type: Union[Unset, ListDashboardsDashboardType] = UNSET,
     drafts: Union[Unset, ListDashboardsDrafts] = ListDashboardsDrafts.FALSE,
     owners: Union[Unset, List[str]] = UNSET,
@@ -151,7 +147,7 @@ def sync_detailed(
     """List latest versions of dashboard
 
     Args:
-        branch_ids (Union[Unset, List[UUID]]):
+        branch_ids (Union[Unset, List[str]]):
         dashboard_type (Union[Unset, ListDashboardsDashboardType]):
         drafts (Union[Unset, ListDashboardsDrafts]):  Default: ListDashboardsDrafts.FALSE.
         owners (Union[Unset, List[str]]):
@@ -183,7 +179,7 @@ def sync_detailed(
 def sync(
     *,
     client: Union[AuthenticatedClient, Client],
-    branch_ids: Union[Unset, List[UUID]] = UNSET,
+    branch_ids: Union[Unset, List[str]] = UNSET,
     dashboard_type: Union[Unset, ListDashboardsDashboardType] = UNSET,
     drafts: Union[Unset, ListDashboardsDrafts] = ListDashboardsDrafts.FALSE,
     owners: Union[Unset, List[str]] = UNSET,
@@ -192,7 +188,7 @@ def sync(
     """List latest versions of dashboard
 
     Args:
-        branch_ids (Union[Unset, List[UUID]]):
+        branch_ids (Union[Unset, List[str]]):
         dashboard_type (Union[Unset, ListDashboardsDashboardType]):
         drafts (Union[Unset, ListDashboardsDrafts]):  Default: ListDashboardsDrafts.FALSE.
         owners (Union[Unset, List[str]]):
@@ -219,7 +215,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    branch_ids: Union[Unset, List[UUID]] = UNSET,
+    branch_ids: Union[Unset, List[str]] = UNSET,
     dashboard_type: Union[Unset, ListDashboardsDashboardType] = UNSET,
     drafts: Union[Unset, ListDashboardsDrafts] = ListDashboardsDrafts.FALSE,
     owners: Union[Unset, List[str]] = UNSET,
@@ -228,7 +224,7 @@ async def asyncio_detailed(
     """List latest versions of dashboard
 
     Args:
-        branch_ids (Union[Unset, List[UUID]]):
+        branch_ids (Union[Unset, List[str]]):
         dashboard_type (Union[Unset, ListDashboardsDashboardType]):
         drafts (Union[Unset, ListDashboardsDrafts]):  Default: ListDashboardsDrafts.FALSE.
         owners (Union[Unset, List[str]]):
@@ -258,7 +254,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
-    branch_ids: Union[Unset, List[UUID]] = UNSET,
+    branch_ids: Union[Unset, List[str]] = UNSET,
     dashboard_type: Union[Unset, ListDashboardsDashboardType] = UNSET,
     drafts: Union[Unset, ListDashboardsDrafts] = ListDashboardsDrafts.FALSE,
     owners: Union[Unset, List[str]] = UNSET,
@@ -267,7 +263,7 @@ async def asyncio(
     """List latest versions of dashboard
 
     Args:
-        branch_ids (Union[Unset, List[UUID]]):
+        branch_ids (Union[Unset, List[str]]):
         dashboard_type (Union[Unset, ListDashboardsDashboardType]):
         drafts (Union[Unset, ListDashboardsDrafts]):  Default: ListDashboardsDrafts.FALSE.
         owners (Union[Unset, List[str]]):

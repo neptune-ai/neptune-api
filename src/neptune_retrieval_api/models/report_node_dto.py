@@ -22,7 +22,6 @@ from typing import (
     TypeVar,
     Union,
 )
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -44,20 +43,20 @@ T = TypeVar("T", bound="ReportNodeDTO")
 class ReportNodeDTO:
     """
     Attributes:
-        id (UUID):
+        id (str):
         type (ReportNodeDTOType):
         grid_properties (Union[Unset, ReportNodeGridDTO]):
         name (Union[Unset, str]):
     """
 
-    id: UUID
+    id: str
     type: ReportNodeDTOType
     grid_properties: Union[Unset, "ReportNodeGridDTO"] = UNSET
     name: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = str(self.id)
+        id = self.id
 
         type = self.type.value
 
@@ -87,7 +86,7 @@ class ReportNodeDTO:
         from ..models.report_node_grid_dto import ReportNodeGridDTO
 
         d = src_dict.copy()
-        id = UUID(d.pop("id"))
+        id = d.pop("id")
 
         type = ReportNodeDTOType(d.pop("type"))
 

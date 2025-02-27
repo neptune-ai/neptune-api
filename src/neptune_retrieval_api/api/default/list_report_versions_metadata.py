@@ -22,7 +22,6 @@ from typing import (
     Union,
     cast,
 )
-from uuid import UUID
 
 import httpx
 
@@ -42,17 +41,14 @@ from ...types import (
 def _get_kwargs(
     *,
     project_identifier: str,
-    report_ids: List[UUID],
+    report_ids: List[str],
     search_term: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     params: Dict[str, Any] = {}
 
     params["projectIdentifier"] = project_identifier
 
-    json_report_ids = []
-    for report_ids_item_data in report_ids:
-        report_ids_item = str(report_ids_item_data)
-        json_report_ids.append(report_ids_item)
+    json_report_ids = report_ids
 
     params["reportIds"] = json_report_ids
 
@@ -72,32 +68,32 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[Union[Any, ReportVersionListDTO]]:
-    if response.status_code == 200:
+    if response.status_code == HTTPStatus.OK:
         response_200 = ReportVersionListDTO.from_dict(response.json())
 
         return response_200
-    if response.status_code == 400:
+    if response.status_code == HTTPStatus.BAD_REQUEST:
         response_400 = cast(Any, None)
         return response_400
-    if response.status_code == 401:
+    if response.status_code == HTTPStatus.UNAUTHORIZED:
         response_401 = cast(Any, None)
         return response_401
-    if response.status_code == 403:
+    if response.status_code == HTTPStatus.FORBIDDEN:
         response_403 = cast(Any, None)
         return response_403
-    if response.status_code == 404:
+    if response.status_code == HTTPStatus.NOT_FOUND:
         response_404 = cast(Any, None)
         return response_404
-    if response.status_code == 408:
+    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
         response_408 = cast(Any, None)
         return response_408
-    if response.status_code == 409:
+    if response.status_code == HTTPStatus.CONFLICT:
         response_409 = cast(Any, None)
         return response_409
-    if response.status_code == 422:
+    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
         response_422 = cast(Any, None)
         return response_422
-    if response.status_code == 429:
+    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
         response_429 = cast(Any, None)
         return response_429
     if client.raise_on_unexpected_status:
@@ -121,14 +117,14 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     project_identifier: str,
-    report_ids: List[UUID],
+    report_ids: List[str],
     search_term: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, ReportVersionListDTO]]:
     """List report versions' metadata
 
     Args:
         project_identifier (str):
-        report_ids (List[UUID]):
+        report_ids (List[str]):
         search_term (Union[Unset, str]):
 
     Raises:
@@ -156,14 +152,14 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     project_identifier: str,
-    report_ids: List[UUID],
+    report_ids: List[str],
     search_term: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, ReportVersionListDTO]]:
     """List report versions' metadata
 
     Args:
         project_identifier (str):
-        report_ids (List[UUID]):
+        report_ids (List[str]):
         search_term (Union[Unset, str]):
 
     Raises:
@@ -186,14 +182,14 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     project_identifier: str,
-    report_ids: List[UUID],
+    report_ids: List[str],
     search_term: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, ReportVersionListDTO]]:
     """List report versions' metadata
 
     Args:
         project_identifier (str):
-        report_ids (List[UUID]):
+        report_ids (List[str]):
         search_term (Union[Unset, str]):
 
     Raises:
@@ -219,14 +215,14 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     project_identifier: str,
-    report_ids: List[UUID],
+    report_ids: List[str],
     search_term: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, ReportVersionListDTO]]:
     """List report versions' metadata
 
     Args:
         project_identifier (str):
-        report_ids (List[UUID]):
+        report_ids (List[str]):
         search_term (Union[Unset, str]):
 
     Raises:
