@@ -57,6 +57,7 @@ from .custom import Custom
 from .custom_metric import CustomMetric
 from .custom_metric_lineage import CustomMetricLineage
 from .dashboard_config_dto import DashboardConfigDTO
+from .dashboard_config_dto_show_metric_by import DashboardConfigDTOShowMetricBy
 from .dashboard_dto import DashboardDTO
 from .dashboard_dto_type import DashboardDTOType
 from .dashboard_layouts_dto import DashboardLayoutsDTO
@@ -246,6 +247,7 @@ from .signal import Signal
 from .signal_body import SignalBody
 from .single_custom_time_series_view import SingleCustomTimeSeriesView
 from .single_time_series_view import SingleTimeSeriesView
+from .single_time_series_view_bucket import SingleTimeSeriesViewBucket
 from .steps import Steps
 from .string_attribute_dto import StringAttributeDTO
 from .string_point_value_dto import StringPointValueDTO
@@ -321,6 +323,7 @@ __all__ = (
     "CustomMetric",
     "CustomMetricLineage",
     "DashboardConfigDTO",
+    "DashboardConfigDTOShowMetricBy",
     "DashboardDTO",
     "DashboardDTOType",
     "DashboardLayoutsDTO",
@@ -498,6 +501,7 @@ __all__ = (
     "SignalBody",
     "SingleCustomTimeSeriesView",
     "SingleTimeSeriesView",
+    "SingleTimeSeriesViewBucket",
     "Steps",
     "StringAttributeDTO",
     "StringPointValueDTO",
