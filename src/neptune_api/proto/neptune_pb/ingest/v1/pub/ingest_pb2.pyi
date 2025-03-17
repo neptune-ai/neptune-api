@@ -6,10 +6,13 @@ import builtins
 import google.protobuf.descriptor
 import google.protobuf.message
 from ..... import neptune_pb
-import typing
+import sys
+if sys.version_info >= (3, 8):
+    import typing as typing_extensions
+else:
+    import typing_extensions
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
-@typing.final
 class RunOperation(google.protobuf.message.Message):
     """RunOperation is a message body for the operation to be performed on the run."""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -26,8 +29,6 @@ class RunOperation(google.protobuf.message.Message):
     "Required. Subject run id of the operation. In case of `CreateRun` it's the id of the new run.\n    User must ensure uniqueness of the id within the project.\n    "
     create_missing_project: builtins.bool
     "Optional. Will create project if it doesn't yet exist. This operation is idempotent."
-    api_key: builtins.bytes
-    'API Key used for authorization of operations.\n    See https://docs.neptune.ai/setup/setting_api_token/ for more information on how to obtain an API Key.\n    '
 
     @property
     def create(self) -> neptune_pb.ingest.v1.common_pb2.Run:
@@ -42,16 +43,18 @@ class RunOperation(google.protobuf.message.Message):
     @property
     def update_batch(self) -> neptune_pb.ingest.v1.common_pb2.UpdateRunSnapshots:
         """repeated UpdateRunSnapshot"""
+    api_key: builtins.bytes
+    'API Key used for authorization of operations.\n    See https://docs.neptune.ai/setup/setting_api_token/ for more information on how to obtain an API Key.\n    '
 
     def __init__(self, *, project: builtins.str=..., run_id: builtins.str=..., create_missing_project: builtins.bool=..., create: neptune_pb.ingest.v1.common_pb2.Run | None=..., update: neptune_pb.ingest.v1.common_pb2.UpdateRunSnapshot | None=..., update_batch: neptune_pb.ingest.v1.common_pb2.UpdateRunSnapshots | None=..., api_key: builtins.bytes=...) -> None:
         ...
 
-    def HasField(self, field_name: typing.Literal['create', b'create', 'operation', b'operation', 'update', b'update', 'update_batch', b'update_batch']) -> builtins.bool:
+    def HasField(self, field_name: typing_extensions.Literal['create', b'create', 'operation', b'operation', 'update', b'update', 'update_batch', b'update_batch']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing.Literal['api_key', b'api_key', 'create', b'create', 'create_missing_project', b'create_missing_project', 'operation', b'operation', 'project', b'project', 'run_id', b'run_id', 'update', b'update', 'update_batch', b'update_batch']) -> None:
+    def ClearField(self, field_name: typing_extensions.Literal['api_key', b'api_key', 'create', b'create', 'create_missing_project', b'create_missing_project', 'operation', b'operation', 'project', b'project', 'run_id', b'run_id', 'update', b'update', 'update_batch', b'update_batch']) -> None:
         ...
 
-    def WhichOneof(self, oneof_group: typing.Literal['operation', b'operation']) -> typing.Literal['create', 'update', 'update_batch'] | None:
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['operation', b'operation']) -> typing_extensions.Literal['create', 'update', 'update_batch'] | None:
         ...
 global___RunOperation = RunOperation
