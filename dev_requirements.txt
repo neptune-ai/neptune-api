@@ -23,7 +23,7 @@ openapi-python-client==0.21.5
 # Note that this specific version will not compile on Python versions higher than 3.10.
 # Using 3.9 for generating the code is preferred anyway, as this is our lowest supported Python release.
 
-grpcio-tools==1.48.2
+grpcio-tools==1.68.1
 protobuf==3.19.6
 mypy-protobuf==3.3.0
 protoletariat==3.3.9
