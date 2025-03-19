@@ -7,10 +7,13 @@ import collections.abc
 import google.protobuf.descriptor
 import google.protobuf.internal.containers
 import google.protobuf.message
-import typing
+import sys
+if sys.version_info >= (3, 8):
+    import typing as typing_extensions
+else:
+    import typing_extensions
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
-@typing.final
 class ProtoFloatSeriesValuesResponseDTO(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     SERIES_FIELD_NUMBER: builtins.int
@@ -22,11 +25,10 @@ class ProtoFloatSeriesValuesResponseDTO(google.protobuf.message.Message):
     def __init__(self, *, series: collections.abc.Iterable[global___ProtoFloatSeriesValuesSingleSeriesResponseDTO] | None=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing.Literal['series', b'series']) -> None:
+    def ClearField(self, field_name: typing_extensions.Literal['series', b'series']) -> None:
         ...
 global___ProtoFloatSeriesValuesResponseDTO = ProtoFloatSeriesValuesResponseDTO
 
-@typing.final
 class ProtoFloatSeriesValuesSingleSeriesResponseDTO(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     REQUESTID_FIELD_NUMBER: builtins.int
@@ -40,14 +42,13 @@ class ProtoFloatSeriesValuesSingleSeriesResponseDTO(google.protobuf.message.Mess
     def __init__(self, *, requestId: builtins.str=..., series: global___ProtoFloatSeriesValuesDTO | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing.Literal['series', b'series']) -> builtins.bool:
+    def HasField(self, field_name: typing_extensions.Literal['series', b'series']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing.Literal['requestId', b'requestId', 'series', b'series']) -> None:
+    def ClearField(self, field_name: typing_extensions.Literal['requestId', b'requestId', 'series', b'series']) -> None:
         ...
 global___ProtoFloatSeriesValuesSingleSeriesResponseDTO = ProtoFloatSeriesValuesSingleSeriesResponseDTO
 
-@typing.final
 class ProtoFloatSeriesValuesDTO(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     TOTAL_ITEM_COUNT_FIELD_NUMBER: builtins.int
@@ -61,11 +62,10 @@ class ProtoFloatSeriesValuesDTO(google.protobuf.message.Message):
     def __init__(self, *, total_item_count: builtins.int=..., values: collections.abc.Iterable[global___ProtoFloatPointValueDTO] | None=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing.Literal['total_item_count', b'total_item_count', 'values', b'values']) -> None:
+    def ClearField(self, field_name: typing_extensions.Literal['total_item_count', b'total_item_count', 'values', b'values']) -> None:
         ...
 global___ProtoFloatSeriesValuesDTO = ProtoFloatSeriesValuesDTO
 
-@typing.final
 class ProtoFloatPointValueDTO(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     TIMESTAMP_MILLIS_FIELD_NUMBER: builtins.int
@@ -82,6 +82,6 @@ class ProtoFloatPointValueDTO(google.protobuf.message.Message):
     def __init__(self, *, timestamp_millis: builtins.int=..., step: builtins.float=..., value: builtins.float=..., is_preview: builtins.bool=..., completion_ratio: builtins.float=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing.Literal['completion_ratio', b'completion_ratio', 'is_preview', b'is_preview', 'step', b'step', 'timestamp_millis', b'timestamp_millis', 'value', b'value']) -> None:
+    def ClearField(self, field_name: typing_extensions.Literal['completion_ratio', b'completion_ratio', 'is_preview', b'is_preview', 'step', b'step', 'timestamp_millis', b'timestamp_millis', 'value', b'value']) -> None:
         ...
 global___ProtoFloatPointValueDTO = ProtoFloatPointValueDTO
