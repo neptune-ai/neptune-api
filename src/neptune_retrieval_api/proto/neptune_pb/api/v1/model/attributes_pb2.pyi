@@ -8,14 +8,10 @@ import google.protobuf.descriptor
 import google.protobuf.internal.containers
 import google.protobuf.message
 from ..... import neptune_pb
-import sys
 import typing
-if sys.version_info >= (3, 8):
-    import typing as typing_extensions
-else:
-    import typing_extensions
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
+@typing.final
 class ProtoAttributesSearchResultDTO(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     ENTRIES_FIELD_NUMBER: builtins.int
@@ -27,10 +23,11 @@ class ProtoAttributesSearchResultDTO(google.protobuf.message.Message):
     def __init__(self, *, entries: collections.abc.Iterable[global___ProtoAttributeDefinitionDTO] | None=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['entries', b'entries']) -> None:
+    def ClearField(self, field_name: typing.Literal['entries', b'entries']) -> None:
         ...
 global___ProtoAttributesSearchResultDTO = ProtoAttributesSearchResultDTO
 
+@typing.final
 class ProtoAttributeDefinitionDTO(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     NAME_FIELD_NUMBER: builtins.int
@@ -41,10 +38,11 @@ class ProtoAttributeDefinitionDTO(google.protobuf.message.Message):
     def __init__(self, *, name: builtins.str=..., type: builtins.str=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['name', b'name', 'type', b'type']) -> None:
+    def ClearField(self, field_name: typing.Literal['name', b'name', 'type', b'type']) -> None:
         ...
 global___ProtoAttributeDefinitionDTO = ProtoAttributeDefinitionDTO
 
+@typing.final
 class ProtoQueryAttributesResultDTO(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     ENTRIES_FIELD_NUMBER: builtins.int
@@ -61,13 +59,14 @@ class ProtoQueryAttributesResultDTO(google.protobuf.message.Message):
     def __init__(self, *, entries: collections.abc.Iterable[global___ProtoQueryAttributesExperimentResultDTO] | None=..., nextPage: global___ProtoNextPageDTO | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['nextPage', b'nextPage']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['nextPage', b'nextPage']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['entries', b'entries', 'nextPage', b'nextPage']) -> None:
+    def ClearField(self, field_name: typing.Literal['entries', b'entries', 'nextPage', b'nextPage']) -> None:
         ...
 global___ProtoQueryAttributesResultDTO = ProtoQueryAttributesResultDTO
 
+@typing.final
 class ProtoNextPageDTO(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     NEXTPAGETOKEN_FIELD_NUMBER: builtins.int
@@ -78,21 +77,22 @@ class ProtoNextPageDTO(google.protobuf.message.Message):
     def __init__(self, *, nextPageToken: builtins.str | None=..., limit: builtins.int | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['_limit', b'_limit', '_nextPageToken', b'_nextPageToken', 'limit', b'limit', 'nextPageToken', b'nextPageToken']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['_limit', b'_limit', '_nextPageToken', b'_nextPageToken', 'limit', b'limit', 'nextPageToken', b'nextPageToken']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['_limit', b'_limit', '_nextPageToken', b'_nextPageToken', 'limit', b'limit', 'nextPageToken', b'nextPageToken']) -> None:
-        ...
-
-    @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['_limit', b'_limit']) -> typing_extensions.Literal['limit'] | None:
+    def ClearField(self, field_name: typing.Literal['_limit', b'_limit', '_nextPageToken', b'_nextPageToken', 'limit', b'limit', 'nextPageToken', b'nextPageToken']) -> None:
         ...
 
     @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['_nextPageToken', b'_nextPageToken']) -> typing_extensions.Literal['nextPageToken'] | None:
+    def WhichOneof(self, oneof_group: typing.Literal['_limit', b'_limit']) -> typing.Literal['limit'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal['_nextPageToken', b'_nextPageToken']) -> typing.Literal['nextPageToken'] | None:
         ...
 global___ProtoNextPageDTO = ProtoNextPageDTO
 
+@typing.final
 class ProtoQueryAttributesExperimentResultDTO(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     EXPERIMENTID_FIELD_NUMBER: builtins.int
@@ -108,6 +108,6 @@ class ProtoQueryAttributesExperimentResultDTO(google.protobuf.message.Message):
     def __init__(self, *, experimentId: builtins.str=..., experimentShortId: builtins.str=..., attributes: collections.abc.Iterable[neptune_pb.api.v1.model.leaderboard_entries_pb2.ProtoAttributeDTO] | None=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['attributes', b'attributes', 'experimentId', b'experimentId', 'experimentShortId', b'experimentShortId']) -> None:
+    def ClearField(self, field_name: typing.Literal['attributes', b'attributes', 'experimentId', b'experimentId', 'experimentShortId', b'experimentShortId']) -> None:
         ...
 global___ProtoQueryAttributesExperimentResultDTO = ProtoQueryAttributesExperimentResultDTO
