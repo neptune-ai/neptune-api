@@ -137,6 +137,7 @@ INTERNAL: IngestCode.ValueType
 'Internal failure'
 global___IngestCode = IngestCode
 
+@typing.final
 class BatchContext(google.protobuf.message.Message):
     """BatchContext"""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -150,10 +151,11 @@ class BatchContext(google.protobuf.message.Message):
     def __init__(self, *, project: builtins.str=..., api_key: builtins.bytes=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['api_key', b'api_key', 'project', b'project']) -> None:
+    def ClearField(self, field_name: typing.Literal['api_key', b'api_key', 'project', b'project']) -> None:
         ...
 global___BatchContext = BatchContext
 
+@typing.final
 class UpdateRun(google.protobuf.message.Message):
     """Mode of update run. We currently support only Update Snapshots."""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -168,16 +170,17 @@ class UpdateRun(google.protobuf.message.Message):
     def __init__(self, *, update_snapshots: neptune_pb.ingest.v1.common_pb2.UpdateRunSnapshots | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['mode', b'mode', 'update_snapshots', b'update_snapshots']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['mode', b'mode', 'update_snapshots', b'update_snapshots']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['mode', b'mode', 'update_snapshots', b'update_snapshots']) -> None:
+    def ClearField(self, field_name: typing.Literal['mode', b'mode', 'update_snapshots', b'update_snapshots']) -> None:
         ...
 
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['mode', b'mode']) -> typing_extensions.Literal['update_snapshots'] | None:
+    def WhichOneof(self, oneof_group: typing.Literal['mode', b'mode']) -> typing.Literal['update_snapshots'] | None:
         ...
 global___UpdateRun = UpdateRun
 
+@typing.final
 class BatchProjectOperations(google.protobuf.message.Message):
     """BatchProjectOperations will execute operations within provided `context`. It will execute `create_runs` first and
     then `update_run_fields`. All operations within each group are unordered and may be executed simultaneously.
@@ -187,6 +190,7 @@ class BatchProjectOperations(google.protobuf.message.Message):
     """
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
+    @typing.final
     class UpdateRunsEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
@@ -200,21 +204,21 @@ class BatchProjectOperations(google.protobuf.message.Message):
         def __init__(self, *, key: builtins.str=..., value: global___UpdateRun | None=...) -> None:
             ...
 
-        def HasField(self, field_name: typing_extensions.Literal['value', b'value']) -> builtins.bool:
+        def HasField(self, field_name: typing.Literal['value', b'value']) -> builtins.bool:
             ...
 
-        def ClearField(self, field_name: typing_extensions.Literal['key', b'key', 'value', b'value']) -> None:
+        def ClearField(self, field_name: typing.Literal['key', b'key', 'value', b'value']) -> None:
             ...
     CONTEXT_FIELD_NUMBER: builtins.int
     CREATE_MISSING_PROJECT_FIELD_NUMBER: builtins.int
     CREATE_RUNS_FIELD_NUMBER: builtins.int
     UPDATE_RUNS_FIELD_NUMBER: builtins.int
+    create_missing_project: builtins.bool
+    "Optional. This option will instrument the server to create project if it doesn't yet exist.\n    This operation is idempotent.\n    "
 
     @property
     def context(self) -> global___BatchContext:
         """Required. Context of the operation: workspace, project and api key used for authorization"""
-    create_missing_project: builtins.bool
-    "Optional. This option will instrument the server to create project if it doesn't yet exist.\n    This operation is idempotent.\n    "
 
     @property
     def create_runs(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[neptune_pb.ingest.v1.common_pb2.Run]:
@@ -229,13 +233,14 @@ class BatchProjectOperations(google.protobuf.message.Message):
     def __init__(self, *, context: global___BatchContext | None=..., create_missing_project: builtins.bool=..., create_runs: collections.abc.Iterable[neptune_pb.ingest.v1.common_pb2.Run] | None=..., update_runs: collections.abc.Mapping[builtins.str, global___UpdateRun] | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['context', b'context']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['context', b'context']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['context', b'context', 'create_missing_project', b'create_missing_project', 'create_runs', b'create_runs', 'update_runs', b'update_runs']) -> None:
+    def ClearField(self, field_name: typing.Literal['context', b'context', 'create_missing_project', b'create_missing_project', 'create_runs', b'create_runs', 'update_runs', b'update_runs']) -> None:
         ...
 global___BatchProjectOperations = BatchProjectOperations
 
+@typing.final
 class CreateRunError(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     GRPC_CODE_FIELD_NUMBER: builtins.int
@@ -251,10 +256,11 @@ class CreateRunError(google.protobuf.message.Message):
     def __init__(self, *, grpc_code: google_rpc.code_pb2.Code.ValueType=..., ingest_code: global___IngestCode.ValueType=..., message: builtins.str=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['grpc_code', b'grpc_code', 'ingest_code', b'ingest_code', 'message', b'message']) -> None:
+    def ClearField(self, field_name: typing.Literal['grpc_code', b'grpc_code', 'ingest_code', b'ingest_code', 'message', b'message']) -> None:
         ...
 global___CreateRunError = CreateRunError
 
+@typing.final
 class CreateRunResult(google.protobuf.message.Message):
     """Run create results"""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -272,20 +278,22 @@ class CreateRunResult(google.protobuf.message.Message):
     def __init__(self, *, run: neptune_pb.ingest.v1.common_pb2.Run | None=..., error: global___CreateRunError | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['error', b'error', 'run', b'run', 'type', b'type']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['error', b'error', 'run', b'run', 'type', b'type']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['error', b'error', 'run', b'run', 'type', b'type']) -> None:
+    def ClearField(self, field_name: typing.Literal['error', b'error', 'run', b'run', 'type', b'type']) -> None:
         ...
 
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['type', b'type']) -> typing_extensions.Literal['run', 'error'] | None:
+    def WhichOneof(self, oneof_group: typing.Literal['type', b'type']) -> typing.Literal['run', 'error'] | None:
         ...
 global___CreateRunResult = CreateRunResult
 
+@typing.final
 class ResultSummary(google.protobuf.message.Message):
     """counters for the operations performed in the request, batch or run update"""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
+    @typing.final
     class FailedByGRPCCodeCounters(google.protobuf.message.Message):
         """Mapping of failed operations counts by error code."""
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
@@ -297,9 +305,10 @@ class ResultSummary(google.protobuf.message.Message):
         def __init__(self, *, grpc_code: google_rpc.code_pb2.Code.ValueType=..., count: builtins.int=...) -> None:
             ...
 
-        def ClearField(self, field_name: typing_extensions.Literal['count', b'count', 'grpc_code', b'grpc_code']) -> None:
+        def ClearField(self, field_name: typing.Literal['count', b'count', 'grpc_code', b'grpc_code']) -> None:
             ...
 
+    @typing.final
     class IngestCodeCounters(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         INGEST_CODE_FIELD_NUMBER: builtins.int
@@ -310,7 +319,7 @@ class ResultSummary(google.protobuf.message.Message):
         def __init__(self, *, ingest_code: global___IngestCode.ValueType=..., count: builtins.int=...) -> None:
             ...
 
-        def ClearField(self, field_name: typing_extensions.Literal['count', b'count', 'ingest_code', b'ingest_code']) -> None:
+        def ClearField(self, field_name: typing.Literal['count', b'count', 'ingest_code', b'ingest_code']) -> None:
             ...
     TOTAL_OPERATIONS_COUNT_FIELD_NUMBER: builtins.int
     SUCCESSFUL_COUNT_FIELD_NUMBER: builtins.int
@@ -333,10 +342,11 @@ class ResultSummary(google.protobuf.message.Message):
     def __init__(self, *, total_operations_count: builtins.int=..., successful_count: builtins.int=..., failed_count: builtins.int=..., failed_by_grpc_code: collections.abc.Iterable[global___ResultSummary.FailedByGRPCCodeCounters] | None=..., failed_by_ingest_code: collections.abc.Iterable[global___ResultSummary.IngestCodeCounters] | None=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['failed_by_grpc_code', b'failed_by_grpc_code', 'failed_by_ingest_code', b'failed_by_ingest_code', 'failed_count', b'failed_count', 'successful_count', b'successful_count', 'total_operations_count', b'total_operations_count']) -> None:
+    def ClearField(self, field_name: typing.Literal['failed_by_grpc_code', b'failed_by_grpc_code', 'failed_by_ingest_code', b'failed_by_ingest_code', 'failed_count', b'failed_count', 'successful_count', b'successful_count', 'total_operations_count', b'total_operations_count']) -> None:
         ...
 global___ResultSummary = ResultSummary
 
+@typing.final
 class UpdateRunError(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     GRPC_CODE_FIELD_NUMBER: builtins.int
@@ -355,10 +365,11 @@ class UpdateRunError(google.protobuf.message.Message):
     def __init__(self, *, grpc_code: google_rpc.code_pb2.Code.ValueType=..., ingest_code: global___IngestCode.ValueType=..., message: builtins.str=..., field: builtins.str=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['field', b'field', 'grpc_code', b'grpc_code', 'ingest_code', b'ingest_code', 'message', b'message']) -> None:
+    def ClearField(self, field_name: typing.Literal['field', b'field', 'grpc_code', b'grpc_code', 'ingest_code', b'ingest_code', 'message', b'message']) -> None:
         ...
 global___UpdateRunError = UpdateRunError
 
+@typing.final
 class UpdateRunResults(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     OPERATIONS_SUMMARY_FIELD_NUMBER: builtins.int
@@ -377,16 +388,18 @@ class UpdateRunResults(google.protobuf.message.Message):
     def __init__(self, *, operations_summary: global___ResultSummary | None=..., update_errors: collections.abc.Iterable[global___UpdateRunError] | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['operations_summary', b'operations_summary']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['operations_summary', b'operations_summary']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['operations_summary', b'operations_summary', 'update_errors', b'update_errors']) -> None:
+    def ClearField(self, field_name: typing.Literal['operations_summary', b'operations_summary', 'update_errors', b'update_errors']) -> None:
         ...
 global___UpdateRunResults = UpdateRunResults
 
+@typing.final
 class BatchResult(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
+    @typing.final
     class UpdateRunResultsEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
@@ -400,10 +413,10 @@ class BatchResult(google.protobuf.message.Message):
         def __init__(self, *, key: builtins.str=..., value: global___UpdateRunResults | None=...) -> None:
             ...
 
-        def HasField(self, field_name: typing_extensions.Literal['value', b'value']) -> builtins.bool:
+        def HasField(self, field_name: typing.Literal['value', b'value']) -> builtins.bool:
             ...
 
-        def ClearField(self, field_name: typing_extensions.Literal['key', b'key', 'value', b'value']) -> None:
+        def ClearField(self, field_name: typing.Literal['key', b'key', 'value', b'value']) -> None:
             ...
     GRPC_CODE_FIELD_NUMBER: builtins.int
     INGEST_CODE_FIELD_NUMBER: builtins.int
@@ -415,12 +428,14 @@ class BatchResult(google.protobuf.message.Message):
     grpc_code: google_rpc.code_pb2.Code.ValueType
     "Error code that applies to the whole batch. Used codes:\n    - OK: when the batch is partially successful, but there could be some operations that failed.\n      Operation-specific errors will be listed in `operation_errors`.\n    - UNAUTHENTICATED: when `api_key` is not provided.\n    - PERMISSION_DENIED: when provided `api_key` is not authorized to perform the operations on a provided context.\n    - NOT_FOUND: when `workspace` or `project` does not exist or provided`api_key` doesn't have read access to them.\n    - INVALID_ARGUMENT: when the batch is malformed to a degree that no operation can be performed.\n    - INTERNAL: when an unexpected error occurred.\n    - UNAVAILABLE: when the service is unavailable.\n    - DATA_LOSS: when the service experienced a data loss.\n    "
     ingest_code: global___IngestCode.ValueType
+    project: builtins.str
+    'Project associated with the batch.'
+    message: builtins.str
+    'Error message related to the batch failure.'
 
     @property
     def operations_summary(self) -> global___ResultSummary:
         """Summary of the operations performed in the batch."""
-    project: builtins.str
-    'Project associated with the batch.'
 
     @property
     def create_run_results(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___CreateRunResult]:
@@ -431,19 +446,18 @@ class BatchResult(google.protobuf.message.Message):
     @property
     def update_run_results(self) -> google.protobuf.internal.containers.MessageMap[builtins.str, global___UpdateRunResults]:
         """Run update results."""
-    message: builtins.str
-    'Error message related to the batch failure.'
 
     def __init__(self, *, grpc_code: google_rpc.code_pb2.Code.ValueType=..., ingest_code: global___IngestCode.ValueType=..., operations_summary: global___ResultSummary | None=..., project: builtins.str=..., create_run_results: collections.abc.Iterable[global___CreateRunResult] | None=..., update_run_results: collections.abc.Mapping[builtins.str, global___UpdateRunResults] | None=..., message: builtins.str=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['operations_summary', b'operations_summary']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['operations_summary', b'operations_summary']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['create_run_results', b'create_run_results', 'grpc_code', b'grpc_code', 'ingest_code', b'ingest_code', 'message', b'message', 'operations_summary', b'operations_summary', 'project', b'project', 'update_run_results', b'update_run_results']) -> None:
+    def ClearField(self, field_name: typing.Literal['create_run_results', b'create_run_results', 'grpc_code', b'grpc_code', 'ingest_code', b'ingest_code', 'message', b'message', 'operations_summary', b'operations_summary', 'project', b'project', 'update_run_results', b'update_run_results']) -> None:
         ...
 global___BatchResult = BatchResult
 
+@typing.final
 class IngestRequest(google.protobuf.message.Message):
     """Ingest Request is a request body for the Ingest method. It contains a list of batches of operations to be performed.
     Each Batch of operations is executed within the provided context.
@@ -465,22 +479,23 @@ class IngestRequest(google.protobuf.message.Message):
     def __init__(self, *, batches: collections.abc.Iterable[global___BatchProjectOperations] | None=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['batches', b'batches']) -> None:
+    def ClearField(self, field_name: typing.Literal['batches', b'batches']) -> None:
         ...
 global___IngestRequest = IngestRequest
 
+@typing.final
 class IngestResponse(google.protobuf.message.Message):
     """Ingest Response returns a list of errors for each batch of operations"""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     SUMMARY_FIELD_NUMBER: builtins.int
     ERROR_MESSAGE_FIELD_NUMBER: builtins.int
     BATCH_RESULTS_FIELD_NUMBER: builtins.int
+    error_message: builtins.str
+    'Error message related to the whole request. Corresponding error code is set in the response header'
 
     @property
     def summary(self) -> global___ResultSummary:
         """summary of the results of the operations performed in the request."""
-    error_message: builtins.str
-    'Error message related to the whole request. Corresponding error code is set in the response header'
 
     @property
     def batch_results(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___BatchResult]:
@@ -491,9 +506,9 @@ class IngestResponse(google.protobuf.message.Message):
     def __init__(self, *, summary: global___ResultSummary | None=..., error_message: builtins.str=..., batch_results: collections.abc.Iterable[global___BatchResult] | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['summary', b'summary']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['summary', b'summary']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['batch_results', b'batch_results', 'error_message', b'error_message', 'summary', b'summary']) -> None:
+    def ClearField(self, field_name: typing.Literal['batch_results', b'batch_results', 'error_message', b'error_message', 'summary', b'summary']) -> None:
         ...
 global___IngestResponse = IngestResponse
