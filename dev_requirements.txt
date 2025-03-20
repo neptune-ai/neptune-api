@@ -13,18 +13,5 @@ types-Pygments
 icecream
 
 openapi-python-client==0.21.5
-
-# WARNING: Do NOT bump any of the packages below without a good reason.
-#
-# We intentionally keep the versions as they are, to generate code that is compatible
-# with protobuf 3.19.6, which is our minimum requirement. The package versions have been verified
-# against this protobuf version. Code generated will newer packages will break compatibility.
-#
-# Note that this specific version will not compile on Python versions higher than 3.10.
-# Using 3.9 for generating the code is preferred anyway, as this is our lowest supported Python release.
-
-grpcio-tools==1.48.2
-protobuf==3.19.6
-mypy-protobuf==3.3.0
-protoletariat==3.3.9
-types-protobuf==3.19.22
+types-protobuf
+mypy-protobuf
