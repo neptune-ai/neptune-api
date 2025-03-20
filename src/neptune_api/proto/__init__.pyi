@@ -1,2 +1,1 @@
-from . import neptune_pb
-from . import google_rpc
+from .protobuf_v3 import google_rpc, neptune_pb
