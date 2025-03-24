@@ -27,4 +27,4 @@ grpcio-tools==1.48.2
 protobuf==3.19.6
 mypy-protobuf==3.3.0
 protoletariat==3.3.9
-types-protobuf==3.19.22
+types-protobuf==5.29.1.20250315
