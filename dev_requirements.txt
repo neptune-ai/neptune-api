@@ -26,5 +26,5 @@ openapi-python-client==0.21.5
 grpcio-tools==1.48.2
 protobuf==3.19.6
 mypy-protobuf==3.3.0
-protoletariat==3.3.9
+protoletariat==3.3.10
 types-protobuf==3.19.22
