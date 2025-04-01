@@ -28,7 +28,6 @@ from typing import (
     Union,
 )
 
-import backoff
 import httpx
 from attrs import (
     define,
@@ -387,7 +386,6 @@ class NeptuneAuthenticator(httpx.Auth):
         except Exception as e:
             raise UnableToRefreshTokenError("Unable to refresh token") from e
 
-    @backoff.on_exception(backoff.expo, Exception, max_time=30, max_tries=3)
     def _refresh_token(self) -> None:
         with self.__LOCK:
             if self._token is not None:
@@ -400,8 +398,11 @@ class NeptuneAuthenticator(httpx.Auth):
         try:
             if self._token is None or self._token.is_expired:
                 self._refresh_token()
+        # Don't reset the token on network errors. Raise them immediately for the user to retry.
+        except httpx.RequestError:
+            raise
+        # On any other error reset the token to None to force a new token retrieval
         except Exception:
-            # Reset the token to None to force a new token retrieval
             self._token = None
             self._refresh_token()
 

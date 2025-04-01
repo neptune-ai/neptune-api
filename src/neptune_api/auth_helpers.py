@@ -15,27 +15,31 @@
 
 __all__ = ["exchange_api_key"]
 
-from typing import Union
-
 from neptune_api import Client
 from neptune_api.api.backend import exchange_api_token
 from neptune_api.credentials import Credentials
-from neptune_api.errors import UnableToExchangeApiKeyError
-from neptune_api.models import (
-    Error,
-    NeptuneOauthToken,
+from neptune_api.errors import (
+    ApiKeyRejectedError,
+    UnableToExchangeApiKeyError,
 )
+from neptune_api.models import Error
 from neptune_api.types import OAuthToken
 
 
 def exchange_api_key(client: Client, credentials: Credentials) -> OAuthToken:
-    token_data: Union[NeptuneOauthToken, None, Error] = exchange_api_token.sync(
-        client=client, x_neptune_api_token=credentials.api_key
-    )
+    response = exchange_api_token.sync_detailed(client=client, x_neptune_api_token=credentials.api_key)
 
+    # HTTP 401 is an indicator that the API token is rejected by the server
+    if response.status_code == 401:
+        raise ApiKeyRejectedError()
+
+    token_data = response.parsed
     if isinstance(token_data, Error):
-        raise UnableToExchangeApiKeyError(reason=str(token_data.message))
-    if not token_data:
-        raise UnableToExchangeApiKeyError()
+        raise UnableToExchangeApiKeyError(
+            reason=f"Unexpected response from Neptune API: HTTP {response.status_code} ({token_data.message})"
+        )
+
+    if response.status_code != 200 or not token_data:
+        raise UnableToExchangeApiKeyError(reason=f"Unexpected response from Neptune API: HTTP {response.status_code}")
 
     return OAuthToken.from_tokens(access=token_data.access_token, refresh=token_data.refresh_token)
