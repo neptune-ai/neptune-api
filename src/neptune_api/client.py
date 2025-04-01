@@ -398,8 +398,11 @@ class NeptuneAuthenticator(httpx.Auth):
         try:
             if self._token is None or self._token.is_expired:
                 self._refresh_token()
+        # Don't reset the token on network errors. Raise them immediately for the user to retry.
+        except httpx.RequestError:
+            raise
+        # On any other error reset the token to None to force a new token retrieval
         except Exception:
-            # Reset the token to None to force a new token retrieval
             self._token = None
             self._refresh_token()
 
