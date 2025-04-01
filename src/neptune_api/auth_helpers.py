@@ -34,7 +34,12 @@ def exchange_api_key(client: Client, credentials: Credentials) -> OAuthToken:
         raise ApiKeyRejectedError()
 
     token_data = response.parsed
-    if response.status_code != 200 or not token_data or isinstance(token_data, Error):
+    if isinstance(token_data, Error):
+        raise UnableToExchangeApiKeyError(
+            reason=f"Unexpected response from Neptune API: HTTP {response.status_code} ({token_data.message})"
+        )
+
+    if response.status_code != 200 or not token_data:
         raise UnableToExchangeApiKeyError(reason=f"Unexpected response from Neptune API: HTTP {response.status_code}")
 
     return OAuthToken.from_tokens(access=token_data.access_token, refresh=token_data.refresh_token)
