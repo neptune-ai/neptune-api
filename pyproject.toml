@@ -27,6 +27,7 @@ license = "Apache License 2.0"
 packages = [
     { include = "neptune_api", from = "src" },
     { include = "neptune_retrieval_api", from = "src" },
+    { include = "neptune_storage_api", from = "src" },
 ]
 include = ["CHANGELOG.md", "src/neptune_api/py.typed"]
 classifiers = [
@@ -85,7 +86,7 @@ exclude = ["src/neptune_api/proto", "src/neptune_retrieval_api/proto"]
 select = ["F", "UP"]
 
 [tool.mypy]
-files = ['src/neptune_api', 'src/neptune_retrieval_api']
+files = ['src/neptune_api', 'src/neptune_retrieval_api', 'src/neptune_storage_api']
 install_types = "True"
 non_interactive = "True"
 disallow_untyped_defs = "True"
