@@ -46,6 +46,7 @@ class DashboardConfigDTO:
     Attributes:
         metrics_steps_range (Union[Unset, OpenRangeDTO]):
         show_metric_by (Union[Unset, DashboardConfigDTOShowMetricBy]):
+        show_previews (Union[Unset, bool]):
         smoothing (Union[Unset, int]):
         xaxis_metric (Union[Unset, AttributeDefinitionDTO]):
         xaxis_mode (Union[Unset, str]):
@@ -56,6 +57,7 @@ class DashboardConfigDTO:
 
     metrics_steps_range: Union[Unset, "OpenRangeDTO"] = UNSET
     show_metric_by: Union[Unset, DashboardConfigDTOShowMetricBy] = UNSET
+    show_previews: Union[Unset, bool] = UNSET
     smoothing: Union[Unset, int] = UNSET
     xaxis_metric: Union[Unset, "AttributeDefinitionDTO"] = UNSET
     xaxis_mode: Union[Unset, str] = UNSET
@@ -72,6 +74,8 @@ class DashboardConfigDTO:
         show_metric_by: Union[Unset, str] = UNSET
         if not isinstance(self.show_metric_by, Unset):
             show_metric_by = self.show_metric_by.value
+
+        show_previews = self.show_previews
 
         smoothing = self.smoothing
 
@@ -96,6 +100,8 @@ class DashboardConfigDTO:
             field_dict["metricsStepsRange"] = metrics_steps_range
         if show_metric_by is not UNSET:
             field_dict["showMetricBy"] = show_metric_by
+        if show_previews is not UNSET:
+            field_dict["showPreviews"] = show_previews
         if smoothing is not UNSET:
             field_dict["smoothing"] = smoothing
         if xaxis_metric is not UNSET:
@@ -131,6 +137,8 @@ class DashboardConfigDTO:
         else:
             show_metric_by = DashboardConfigDTOShowMetricBy(_show_metric_by)
 
+        show_previews = d.pop("showPreviews", UNSET)
+
         smoothing = d.pop("smoothing", UNSET)
 
         _xaxis_metric = d.pop("xaxisMetric", UNSET)
@@ -156,6 +164,7 @@ class DashboardConfigDTO:
         dashboard_config_dto = cls(
             metrics_steps_range=metrics_steps_range,
             show_metric_by=show_metric_by,
+            show_previews=show_previews,
             smoothing=smoothing,
             xaxis_metric=xaxis_metric,
             xaxis_mode=xaxis_mode,
