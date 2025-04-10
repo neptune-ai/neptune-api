@@ -22,6 +22,7 @@ class AttributeTypeDTO(str, Enum):
     DATETIME = "datetime"
     EXPERIMENTSTATE = "experimentState"
     FILE = "file"
+    FILEREF = "fileRef"
     FILESET = "fileSet"
     FLOAT = "float"
     FLOATSERIES = "floatSeries"

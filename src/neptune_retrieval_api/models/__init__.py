@@ -83,6 +83,7 @@ from .experiments_data_dto import ExperimentsDataDTO
 from .file_attribute_dto import FileAttributeDTO
 from .file_entry import FileEntry
 from .file_entry_file_type import FileEntryFileType
+from .file_ref_attribute_dto import FileRefAttributeDTO
 from .file_set_attribute_dto import FileSetAttributeDTO
 from .filter_query_attribute_definitions_dto import FilterQueryAttributeDefinitionsDTO
 from .float_attribute_dto import FloatAttributeDTO
@@ -349,6 +350,7 @@ __all__ = (
     "FileAttributeDTO",
     "FileEntry",
     "FileEntryFileType",
+    "FileRefAttributeDTO",
     "FileSetAttributeDTO",
     "FilterQueryAttributeDefinitionsDTO",
     "FloatAttributeDTO",
