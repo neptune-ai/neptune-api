@@ -38,6 +38,7 @@ if TYPE_CHECKING:
     from ..models.datetime_attribute_dto import DatetimeAttributeDTO
     from ..models.experiment_state_attribute_dto import ExperimentStateAttributeDTO
     from ..models.file_attribute_dto import FileAttributeDTO
+    from ..models.file_ref_attribute_dto import FileRefAttributeDTO
     from ..models.file_set_attribute_dto import FileSetAttributeDTO
     from ..models.float_attribute_dto import FloatAttributeDTO
     from ..models.float_series_attribute_dto import FloatSeriesAttributeDTO
@@ -64,6 +65,7 @@ class AttributeDTO:
         datetime_properties (Union[Unset, DatetimeAttributeDTO]):
         experiment_state_properties (Union[Unset, ExperimentStateAttributeDTO]):
         file_properties (Union[Unset, FileAttributeDTO]):
+        file_ref_properties (Union[Unset, FileRefAttributeDTO]):
         file_set_properties (Union[Unset, FileSetAttributeDTO]):
         float_properties (Union[Unset, FloatAttributeDTO]):
         float_series_properties (Union[Unset, FloatSeriesAttributeDTO]):
@@ -83,6 +85,7 @@ class AttributeDTO:
     datetime_properties: Union[Unset, "DatetimeAttributeDTO"] = UNSET
     experiment_state_properties: Union[Unset, "ExperimentStateAttributeDTO"] = UNSET
     file_properties: Union[Unset, "FileAttributeDTO"] = UNSET
+    file_ref_properties: Union[Unset, "FileRefAttributeDTO"] = UNSET
     file_set_properties: Union[Unset, "FileSetAttributeDTO"] = UNSET
     float_properties: Union[Unset, "FloatAttributeDTO"] = UNSET
     float_series_properties: Union[Unset, "FloatSeriesAttributeDTO"] = UNSET
@@ -119,6 +122,10 @@ class AttributeDTO:
         file_properties: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.file_properties, Unset):
             file_properties = self.file_properties.to_dict()
+
+        file_ref_properties: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.file_ref_properties, Unset):
+            file_ref_properties = self.file_ref_properties.to_dict()
 
         file_set_properties: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.file_set_properties, Unset):
@@ -178,6 +185,8 @@ class AttributeDTO:
             field_dict["experimentStateProperties"] = experiment_state_properties
         if file_properties is not UNSET:
             field_dict["fileProperties"] = file_properties
+        if file_ref_properties is not UNSET:
+            field_dict["fileRefProperties"] = file_ref_properties
         if file_set_properties is not UNSET:
             field_dict["fileSetProperties"] = file_set_properties
         if float_properties is not UNSET:
@@ -208,6 +217,7 @@ class AttributeDTO:
         from ..models.datetime_attribute_dto import DatetimeAttributeDTO
         from ..models.experiment_state_attribute_dto import ExperimentStateAttributeDTO
         from ..models.file_attribute_dto import FileAttributeDTO
+        from ..models.file_ref_attribute_dto import FileRefAttributeDTO
         from ..models.file_set_attribute_dto import FileSetAttributeDTO
         from ..models.float_attribute_dto import FloatAttributeDTO
         from ..models.float_series_attribute_dto import FloatSeriesAttributeDTO
@@ -258,6 +268,13 @@ class AttributeDTO:
             file_properties = UNSET
         else:
             file_properties = FileAttributeDTO.from_dict(_file_properties)
+
+        _file_ref_properties = d.pop("fileRefProperties", UNSET)
+        file_ref_properties: Union[Unset, FileRefAttributeDTO]
+        if isinstance(_file_ref_properties, Unset):
+            file_ref_properties = UNSET
+        else:
+            file_ref_properties = FileRefAttributeDTO.from_dict(_file_ref_properties)
 
         _file_set_properties = d.pop("fileSetProperties", UNSET)
         file_set_properties: Union[Unset, FileSetAttributeDTO]
@@ -337,6 +354,7 @@ class AttributeDTO:
             datetime_properties=datetime_properties,
             experiment_state_properties=experiment_state_properties,
             file_properties=file_properties,
+            file_ref_properties=file_ref_properties,
             file_set_properties=file_set_properties,
             float_properties=float_properties,
             float_series_properties=float_series_properties,
