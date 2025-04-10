@@ -26,6 +26,7 @@ from typing import (
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.new_leaderboard_view_dto_name_search_mode import NewLeaderboardViewDTONameSearchMode
 from ..types import (
     UNSET,
     Unset,
@@ -52,6 +53,8 @@ class NewLeaderboardViewDTO:
         suggestions_enabled (bool):
         experiments_only (Union[Unset, bool]):
         group_options (Union[Unset, LeaderboardGroupParamsDTO]):
+        name_search_mode (Union[Unset, NewLeaderboardViewDTONameSearchMode]):
+        name_search_query (Union[Unset, str]):
         query (Union[Unset, str]):
         quick_filters (Union[Unset, LeaderboardViewQuickFilterDTO]):
         runs_lineage (Union[Unset, bool]):
@@ -65,6 +68,8 @@ class NewLeaderboardViewDTO:
     suggestions_enabled: bool
     experiments_only: Union[Unset, bool] = UNSET
     group_options: Union[Unset, "LeaderboardGroupParamsDTO"] = UNSET
+    name_search_mode: Union[Unset, NewLeaderboardViewDTONameSearchMode] = UNSET
+    name_search_query: Union[Unset, str] = UNSET
     query: Union[Unset, str] = UNSET
     quick_filters: Union[Unset, "LeaderboardViewQuickFilterDTO"] = UNSET
     runs_lineage: Union[Unset, bool] = UNSET
@@ -87,6 +92,12 @@ class NewLeaderboardViewDTO:
         group_options: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.group_options, Unset):
             group_options = self.group_options.to_dict()
+
+        name_search_mode: Union[Unset, str] = UNSET
+        if not isinstance(self.name_search_mode, Unset):
+            name_search_mode = self.name_search_mode.value
+
+        name_search_query = self.name_search_query
 
         query = self.query
 
@@ -113,6 +124,10 @@ class NewLeaderboardViewDTO:
             field_dict["experimentsOnly"] = experiments_only
         if group_options is not UNSET:
             field_dict["groupOptions"] = group_options
+        if name_search_mode is not UNSET:
+            field_dict["nameSearchMode"] = name_search_mode
+        if name_search_query is not UNSET:
+            field_dict["nameSearchQuery"] = name_search_query
         if query is not UNSET:
             field_dict["query"] = query
         if quick_filters is not UNSET:
@@ -151,6 +166,15 @@ class NewLeaderboardViewDTO:
         else:
             group_options = LeaderboardGroupParamsDTO.from_dict(_group_options)
 
+        _name_search_mode = d.pop("nameSearchMode", UNSET)
+        name_search_mode: Union[Unset, NewLeaderboardViewDTONameSearchMode]
+        if isinstance(_name_search_mode, Unset):
+            name_search_mode = UNSET
+        else:
+            name_search_mode = NewLeaderboardViewDTONameSearchMode(_name_search_mode)
+
+        name_search_query = d.pop("nameSearchQuery", UNSET)
+
         query = d.pop("query", UNSET)
 
         _quick_filters = d.pop("quickFilters", UNSET)
@@ -172,6 +196,8 @@ class NewLeaderboardViewDTO:
             suggestions_enabled=suggestions_enabled,
             experiments_only=experiments_only,
             group_options=group_options,
+            name_search_mode=name_search_mode,
+            name_search_query=name_search_query,
             query=query,
             quick_filters=quick_filters,
             runs_lineage=runs_lineage,

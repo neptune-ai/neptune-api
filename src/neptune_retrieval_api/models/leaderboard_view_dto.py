@@ -26,6 +26,7 @@ from typing import (
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.leaderboard_view_dto_name_search_mode import LeaderboardViewDTONameSearchMode
 from ..types import (
     UNSET,
     Unset,
@@ -55,6 +56,8 @@ class LeaderboardViewDTO:
         sort_options (LeaderboardSortParamsDTO):
         suggestions_enabled (bool):
         group_options (Union[Unset, LeaderboardGroupParamsDTO]):
+        name_search_mode (Union[Unset, LeaderboardViewDTONameSearchMode]):
+        name_search_query (Union[Unset, str]):
         query (Union[Unset, str]):
         quick_filters (Union[Unset, LeaderboardViewQuickFilterDTO]):
     """
@@ -69,6 +72,8 @@ class LeaderboardViewDTO:
     sort_options: "LeaderboardSortParamsDTO"
     suggestions_enabled: bool
     group_options: Union[Unset, "LeaderboardGroupParamsDTO"] = UNSET
+    name_search_mode: Union[Unset, LeaderboardViewDTONameSearchMode] = UNSET
+    name_search_query: Union[Unset, str] = UNSET
     query: Union[Unset, str] = UNSET
     quick_filters: Union[Unset, "LeaderboardViewQuickFilterDTO"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -96,6 +101,12 @@ class LeaderboardViewDTO:
         if not isinstance(self.group_options, Unset):
             group_options = self.group_options.to_dict()
 
+        name_search_mode: Union[Unset, str] = UNSET
+        if not isinstance(self.name_search_mode, Unset):
+            name_search_mode = self.name_search_mode.value
+
+        name_search_query = self.name_search_query
+
         query = self.query
 
         quick_filters: Union[Unset, Dict[str, Any]] = UNSET
@@ -119,6 +130,10 @@ class LeaderboardViewDTO:
         )
         if group_options is not UNSET:
             field_dict["groupOptions"] = group_options
+        if name_search_mode is not UNSET:
+            field_dict["nameSearchMode"] = name_search_mode
+        if name_search_query is not UNSET:
+            field_dict["nameSearchQuery"] = name_search_query
         if query is not UNSET:
             field_dict["query"] = query
         if quick_filters is not UNSET:
@@ -159,6 +174,15 @@ class LeaderboardViewDTO:
         else:
             group_options = LeaderboardGroupParamsDTO.from_dict(_group_options)
 
+        _name_search_mode = d.pop("nameSearchMode", UNSET)
+        name_search_mode: Union[Unset, LeaderboardViewDTONameSearchMode]
+        if isinstance(_name_search_mode, Unset):
+            name_search_mode = UNSET
+        else:
+            name_search_mode = LeaderboardViewDTONameSearchMode(_name_search_mode)
+
+        name_search_query = d.pop("nameSearchQuery", UNSET)
+
         query = d.pop("query", UNSET)
 
         _quick_filters = d.pop("quickFilters", UNSET)
@@ -179,6 +203,8 @@ class LeaderboardViewDTO:
             sort_options=sort_options,
             suggestions_enabled=suggestions_enabled,
             group_options=group_options,
+            name_search_mode=name_search_mode,
+            name_search_query=name_search_query,
             query=query,
             quick_filters=quick_filters,
         )

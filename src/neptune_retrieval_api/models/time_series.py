@@ -27,6 +27,7 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.time_series_lineage import TimeSeriesLineage
+from ..models.time_series_lineage_entity_type import TimeSeriesLineageEntityType
 from ..types import (
     UNSET,
     Unset,
@@ -47,12 +48,14 @@ class TimeSeries:
         holder (AttributesHolderIdentifier):
         include_preview (Union[Unset, bool]):
         lineage (Union[Unset, TimeSeriesLineage]):
+        lineage_entity_type (Union[Unset, TimeSeriesLineageEntityType]):
     """
 
     attribute: str
     holder: "AttributesHolderIdentifier"
     include_preview: Union[Unset, bool] = UNSET
     lineage: Union[Unset, TimeSeriesLineage] = UNSET
+    lineage_entity_type: Union[Unset, TimeSeriesLineageEntityType] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -66,6 +69,10 @@ class TimeSeries:
         if not isinstance(self.lineage, Unset):
             lineage = self.lineage.value
 
+        lineage_entity_type: Union[Unset, str] = UNSET
+        if not isinstance(self.lineage_entity_type, Unset):
+            lineage_entity_type = self.lineage_entity_type.value
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -78,6 +85,8 @@ class TimeSeries:
             field_dict["includePreview"] = include_preview
         if lineage is not UNSET:
             field_dict["lineage"] = lineage
+        if lineage_entity_type is not UNSET:
+            field_dict["lineageEntityType"] = lineage_entity_type
 
         return field_dict
 
@@ -99,11 +108,19 @@ class TimeSeries:
         else:
             lineage = TimeSeriesLineage(_lineage)
 
+        _lineage_entity_type = d.pop("lineageEntityType", UNSET)
+        lineage_entity_type: Union[Unset, TimeSeriesLineageEntityType]
+        if isinstance(_lineage_entity_type, Unset):
+            lineage_entity_type = UNSET
+        else:
+            lineage_entity_type = TimeSeriesLineageEntityType(_lineage_entity_type)
+
         time_series = cls(
             attribute=attribute,
             holder=holder,
             include_preview=include_preview,
             lineage=lineage,
+            lineage_entity_type=lineage_entity_type,
         )
 
         time_series.additional_properties = d

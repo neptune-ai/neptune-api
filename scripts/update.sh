@@ -1,19 +1,10 @@
 #!/usr/bin/env bash
 
+# Usage: ./scripts/update.sh leaderboardSwagger.json neptune_retrieval_api
+# (with python 3.8)
+
 # Show every command and exit on error
 set -ex
-
-## Preserve specific files
-mkdir -p tmp
-
-
-# Function to download Swagger JSON
-download_swagger() {
-    local swagger_url=$1
-    local output_file=$2
-
-    curl -o "${output_file}" "${swagger_url}"
-}
 
 # Function to convert Swagger 2.0 to OpenAPI 3.0
 convert_swagger_to_openapi() {
@@ -26,9 +17,7 @@ convert_swagger_to_openapi() {
         -o "${output_file}"
 }
 
-
-# Download the Swagger JSON
-download_swagger "$1/api/leaderboard/swagger.json" "leaderboard_swagger.json"
+cp "${1}" swagger.json
 
 # Modify the Swagger JSON to support application/x-protobuf
 jq '
@@ -42,7 +31,7 @@ jq '
       end
     )
   )
-' leaderboard_swagger.json > tmp/leaderboard_swagger.json && mv tmp/leaderboard_swagger.json leaderboard_swagger.json
+' swagger.json > tmp_swagger.json && mv tmp_swagger.json swagger.json
 
 jq '
   .paths |= with_entries(
@@ -58,34 +47,22 @@ jq '
       end
     )
   )
-' leaderboard_swagger.json > tmp/leaderboard_swagger.json && mv tmp/leaderboard_swagger.json leaderboard_swagger.json
+' swagger.json > tmp_swagger.json && mv tmp_swagger.json swagger.json
 
 ## Convert the Swagger JSON to OpenAPI 3.0
-convert_swagger_to_openapi "leaderboard_swagger.json" "leaderboard_openapi.json"
+convert_swagger_to_openapi "swagger.json" "openapi.json"
 # Add license information using jq
-jq '.info.license = {"name": "", "url": ""}' leaderboard_openapi.json > tmp_leaderboard_openapi.json && mv tmp_leaderboard_openapi.json leaderboard_openapi.json
+jq '.info.license = {"name": "", "url": ""}' openapi.json > tmp_openapi.json && mv tmp_openapi.json openapi.json
 
 
 # Generate the client
 openapi-python-client generate \
     --overwrite \
-    --url "$1/api/client/v1/api-docs" \
     --meta none \
+    --path "openapi.json" \
     --custom-template-path=templates/ \
     --config openapi-generator-config.yaml \
-    --output-path src/neptune_api
-
-openapi-python-client generate \
-    --overwrite \
-    --meta none \
-    --path "leaderboard_openapi.json" \
-    --custom-template-path=templates/ \
-    --config openapi-generator-config.yaml \
-    --output-path src/neptune_retrieval_api
-
-
-# Clean tmp directories
-rm -rf tmp
+    --output-path "src/${2}"
 
 
 cat scripts/preserve_files.txt | while read entry; do
