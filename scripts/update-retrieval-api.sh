@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
-# Usage: ./scripts/update.sh leaderboardSwagger.json neptune_retrieval_api
-# (with python 3.8)
+# Use with python 3.8
 
 # Show every command and exit on error
 set -ex
+
+if [ ! -f "leaderboardSwagger.json" ]; then
+  echo "leaderboardSwagger.json not found. Make sure it's in CWD when running the script"
+  exit 1
+fi
 
 # Function to convert Swagger 2.0 to OpenAPI 3.0
 convert_swagger_to_openapi() {
@@ -17,7 +21,7 @@ convert_swagger_to_openapi() {
         -o "${output_file}"
 }
 
-cp "${1}" swagger.json
+cp "leaderboardSwagger.json" swagger.json
 
 # Modify the Swagger JSON to support application/x-protobuf
 jq '
@@ -62,7 +66,7 @@ openapi-python-client generate \
     --path "openapi.json" \
     --custom-template-path=templates/ \
     --config openapi-generator-config.yaml \
-    --output-path "src/${2}"
+    --output-path "src/neptune_retrieval_api"
 
 
 cat scripts/preserve_files.txt | while read entry; do
