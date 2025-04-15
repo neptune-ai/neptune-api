@@ -52,7 +52,7 @@ def _parse_response(
     if response.status_code == HTTPStatus.FORBIDDEN:
         response_403 = cast(Any, None)
         return response_403
-    if response.status_code == HTTPStatus.CONTENT_TOO_LARGE:
+    if response.status_code == HTTPStatus.REQUEST_ENTITY_TOO_LARGE:
         response_413 = cast(Any, None)
         return response_413
     if client.raise_on_unexpected_status:
