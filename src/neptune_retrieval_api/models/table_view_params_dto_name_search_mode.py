@@ -16,23 +16,9 @@
 from enum import Enum
 
 
-class AttributeTypeDTO(str, Enum):
-    BOOL = "bool"
-    COMPLEX = "complex"
-    DATETIME = "datetime"
-    EXPERIMENTSTATE = "experimentState"
-    FILE = "file"
-    FILEREF = "fileRef"
-    FILESET = "fileSet"
-    FLOAT = "float"
-    FLOATSERIES = "floatSeries"
-    GITREF = "gitRef"
-    IMAGESERIES = "imageSeries"
-    INT = "int"
-    NOTEBOOKREF = "notebookRef"
-    STRING = "string"
-    STRINGSERIES = "stringSeries"
-    STRINGSET = "stringSet"
+class TableViewParamsDTONameSearchMode(str, Enum):
+    REGEXP = "regexp"
+    SUBSTRING = "substring"
 
     def __str__(self) -> str:
         return str(self.value)

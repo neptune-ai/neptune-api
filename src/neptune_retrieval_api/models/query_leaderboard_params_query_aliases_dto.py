@@ -32,42 +32,25 @@ from ..types import (
 )
 
 if TYPE_CHECKING:
-    from ..models.project_alias_group_dto import ProjectAliasGroupDTO
-    from ..models.report_node_dto import ReportNodeDTO
-    from ..models.report_version_metadata_dto import ReportVersionMetadataDTO
+    from ..models.query_leaderboard_params_name_alias_dto import QueryLeaderboardParamsNameAliasDTO
 
 
-T = TypeVar("T", bound="ReportVersionDTO")
+T = TypeVar("T", bound="QueryLeaderboardParamsQueryAliasesDTO")
 
 
 @_attrs_define
-class ReportVersionDTO:
+class QueryLeaderboardParamsQueryAliasesDTO:
     """
     Attributes:
-        metadata (ReportVersionMetadataDTO):
-        nodes (List['ReportNodeDTO']):
-        report_name (str):
-        experiment_aliases (Union[Unset, List['ProjectAliasGroupDTO']]): List of experiment aliases
-        run_aliases (Union[Unset, List['ProjectAliasGroupDTO']]): List of run id aliases
+        experiment_aliases (Union[Unset, List['QueryLeaderboardParamsNameAliasDTO']]):
+        run_aliases (Union[Unset, List['QueryLeaderboardParamsNameAliasDTO']]):
     """
 
-    metadata: "ReportVersionMetadataDTO"
-    nodes: List["ReportNodeDTO"]
-    report_name: str
-    experiment_aliases: Union[Unset, List["ProjectAliasGroupDTO"]] = UNSET
-    run_aliases: Union[Unset, List["ProjectAliasGroupDTO"]] = UNSET
+    experiment_aliases: Union[Unset, List["QueryLeaderboardParamsNameAliasDTO"]] = UNSET
+    run_aliases: Union[Unset, List["QueryLeaderboardParamsNameAliasDTO"]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        metadata = self.metadata.to_dict()
-
-        nodes = []
-        for nodes_item_data in self.nodes:
-            nodes_item = nodes_item_data.to_dict()
-            nodes.append(nodes_item)
-
-        report_name = self.report_name
-
         experiment_aliases: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.experiment_aliases, Unset):
             experiment_aliases = []
@@ -84,13 +67,7 @@ class ReportVersionDTO:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "metadata": metadata,
-                "nodes": nodes,
-                "reportName": report_name,
-            }
-        )
+        field_dict.update({})
         if experiment_aliases is not UNSET:
             field_dict["experimentAliases"] = experiment_aliases
         if run_aliases is not UNSET:
@@ -100,50 +77,34 @@ class ReportVersionDTO:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.project_alias_group_dto import ProjectAliasGroupDTO
-        from ..models.report_node_dto import ReportNodeDTO
-        from ..models.report_version_metadata_dto import ReportVersionMetadataDTO
+        from ..models.query_leaderboard_params_name_alias_dto import QueryLeaderboardParamsNameAliasDTO
 
         d = src_dict.copy()
-        metadata = ReportVersionMetadataDTO.from_dict(d.pop("metadata"))
-
-        nodes = []
-        _nodes = d.pop("nodes")
-        for nodes_item_data in _nodes:
-            nodes_item = ReportNodeDTO.from_dict(nodes_item_data)
-
-            nodes.append(nodes_item)
-
-        report_name = d.pop("reportName")
-
-        experiment_aliases: Union[Unset, List[ProjectAliasGroupDTO]] = UNSET
+        experiment_aliases: Union[Unset, List[QueryLeaderboardParamsNameAliasDTO]] = UNSET
         _experiment_aliases = d.pop("experimentAliases", UNSET)
         if not isinstance(_experiment_aliases, Unset):
             experiment_aliases = []
             for experiment_aliases_item_data in _experiment_aliases:
-                experiment_aliases_item = ProjectAliasGroupDTO.from_dict(experiment_aliases_item_data)
+                experiment_aliases_item = QueryLeaderboardParamsNameAliasDTO.from_dict(experiment_aliases_item_data)
 
                 experiment_aliases.append(experiment_aliases_item)
 
-        run_aliases: Union[Unset, List[ProjectAliasGroupDTO]] = UNSET
+        run_aliases: Union[Unset, List[QueryLeaderboardParamsNameAliasDTO]] = UNSET
         _run_aliases = d.pop("runAliases", UNSET)
         if not isinstance(_run_aliases, Unset):
             run_aliases = []
             for run_aliases_item_data in _run_aliases:
-                run_aliases_item = ProjectAliasGroupDTO.from_dict(run_aliases_item_data)
+                run_aliases_item = QueryLeaderboardParamsNameAliasDTO.from_dict(run_aliases_item_data)
 
                 run_aliases.append(run_aliases_item)
 
-        report_version_dto = cls(
-            metadata=metadata,
-            nodes=nodes,
-            report_name=report_name,
+        query_leaderboard_params_query_aliases_dto = cls(
             experiment_aliases=experiment_aliases,
             run_aliases=run_aliases,
         )
 
-        report_version_dto.additional_properties = d
-        return report_version_dto
+        query_leaderboard_params_query_aliases_dto.additional_properties = d
+        return query_leaderboard_params_query_aliases_dto
 
     @property
     def additional_keys(self) -> List[str]:
