@@ -28,6 +28,7 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.custom_metric_lineage import CustomMetricLineage
+from ..models.custom_metric_lineage_entity_type import CustomMetricLineageEntityType
 from ..types import (
     UNSET,
     Unset,
@@ -50,6 +51,7 @@ class CustomMetric:
         custom_y_formula (Union[Unset, str]):
         include_preview (Union[Unset, bool]):
         lineage (Union[Unset, CustomMetricLineage]):
+        lineage_entity_type (Union[Unset, CustomMetricLineageEntityType]):
     """
 
     attributes: List[str]
@@ -58,6 +60,7 @@ class CustomMetric:
     custom_y_formula: Union[Unset, str] = UNSET
     include_preview: Union[Unset, bool] = UNSET
     lineage: Union[Unset, CustomMetricLineage] = UNSET
+    lineage_entity_type: Union[Unset, CustomMetricLineageEntityType] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -75,6 +78,10 @@ class CustomMetric:
         if not isinstance(self.lineage, Unset):
             lineage = self.lineage.value
 
+        lineage_entity_type: Union[Unset, str] = UNSET
+        if not isinstance(self.lineage_entity_type, Unset):
+            lineage_entity_type = self.lineage_entity_type.value
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -90,6 +97,8 @@ class CustomMetric:
             field_dict["includePreview"] = include_preview
         if lineage is not UNSET:
             field_dict["lineage"] = lineage
+        if lineage_entity_type is not UNSET:
+            field_dict["lineageEntityType"] = lineage_entity_type
 
         return field_dict
 
@@ -115,6 +124,13 @@ class CustomMetric:
         else:
             lineage = CustomMetricLineage(_lineage)
 
+        _lineage_entity_type = d.pop("lineageEntityType", UNSET)
+        lineage_entity_type: Union[Unset, CustomMetricLineageEntityType]
+        if isinstance(_lineage_entity_type, Unset):
+            lineage_entity_type = UNSET
+        else:
+            lineage_entity_type = CustomMetricLineageEntityType(_lineage_entity_type)
+
         custom_metric = cls(
             attributes=attributes,
             custom_id=custom_id,
@@ -122,6 +138,7 @@ class CustomMetric:
             custom_y_formula=custom_y_formula,
             include_preview=include_preview,
             lineage=lineage,
+            lineage_entity_type=lineage_entity_type,
         )
 
         custom_metric.additional_properties = d
