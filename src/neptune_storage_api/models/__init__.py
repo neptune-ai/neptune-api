@@ -13,26 +13,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from enum import Enum
+"""Contains all the data models used in inputs/outputs"""
 
+from .create_signed_urls_request import CreateSignedUrlsRequest
+from .create_signed_urls_response import CreateSignedUrlsResponse
+from .file_to_sign import FileToSign
+from .permission import Permission
+from .signed_file import SignedFile
 
-class AttributeTypeDTO(str, Enum):
-    BOOL = "bool"
-    COMPLEX = "complex"
-    DATETIME = "datetime"
-    EXPERIMENTSTATE = "experimentState"
-    FILE = "file"
-    FILEREF = "fileRef"
-    FILESET = "fileSet"
-    FLOAT = "float"
-    FLOATSERIES = "floatSeries"
-    GITREF = "gitRef"
-    IMAGESERIES = "imageSeries"
-    INT = "int"
-    NOTEBOOKREF = "notebookRef"
-    STRING = "string"
-    STRINGSERIES = "stringSeries"
-    STRINGSET = "stringSet"
-
-    def __str__(self) -> str:
-        return str(self.value)
+__all__ = (
+    "CreateSignedUrlsRequest",
+    "CreateSignedUrlsResponse",
+    "FileToSign",
+    "Permission",
+    "SignedFile",
+)

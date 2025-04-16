@@ -103,6 +103,22 @@ class StringSet(google.protobuf.message.Message):
         ...
 global___StringSet = StringSet
 
+class FileRef(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    PATH_FIELD_NUMBER: builtins.int
+    SIZE_BYTES_FIELD_NUMBER: builtins.int
+    MIME_TYPE_FIELD_NUMBER: builtins.int
+    path: builtins.str
+    size_bytes: builtins.int
+    mime_type: builtins.str
+
+    def __init__(self, *, path: builtins.str=..., size_bytes: builtins.int=..., mime_type: builtins.str=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['mime_type', b'mime_type', 'path', b'path', 'size_bytes', b'size_bytes']) -> None:
+        ...
+global___FileRef = FileRef
+
 class Value(google.protobuf.message.Message):
     """Value is a union of all supported types that can be used to update a field.
     Different types of operations support different subset of this field, so please refer to the documentation.
@@ -114,6 +130,7 @@ class Value(google.protobuf.message.Message):
     STRING_FIELD_NUMBER: builtins.int
     TIMESTAMP_FIELD_NUMBER: builtins.int
     STRING_SET_FIELD_NUMBER: builtins.int
+    FILE_REF_FIELD_NUMBER: builtins.int
     float64: builtins.float
     int64: builtins.int
     bool: builtins.bool
@@ -127,16 +144,20 @@ class Value(google.protobuf.message.Message):
     def string_set(self) -> global___StringSet:
         ...
 
-    def __init__(self, *, float64: builtins.float=..., int64: builtins.int=..., bool: builtins.bool=..., string: builtins.str=..., timestamp: google.protobuf.timestamp_pb2.Timestamp | None=..., string_set: global___StringSet | None=...) -> None:
+    @property
+    def file_ref(self) -> global___FileRef:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['bool', b'bool', 'float64', b'float64', 'int64', b'int64', 'string', b'string', 'string_set', b'string_set', 'timestamp', b'timestamp', 'value', b'value']) -> builtins.bool:
+    def __init__(self, *, float64: builtins.float=..., int64: builtins.int=..., bool: builtins.bool=..., string: builtins.str=..., timestamp: google.protobuf.timestamp_pb2.Timestamp | None=..., string_set: global___StringSet | None=..., file_ref: global___FileRef | None=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['bool', b'bool', 'float64', b'float64', 'int64', b'int64', 'string', b'string', 'string_set', b'string_set', 'timestamp', b'timestamp', 'value', b'value']) -> None:
+    def HasField(self, field_name: typing_extensions.Literal['bool', b'bool', 'file_ref', b'file_ref', 'float64', b'float64', 'int64', b'int64', 'string', b'string', 'string_set', b'string_set', 'timestamp', b'timestamp', 'value', b'value']) -> builtins.bool:
         ...
 
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['value', b'value']) -> typing_extensions.Literal['float64', 'int64', 'bool', 'string', 'timestamp', 'string_set'] | None:
+    def ClearField(self, field_name: typing_extensions.Literal['bool', b'bool', 'file_ref', b'file_ref', 'float64', b'float64', 'int64', b'int64', 'string', b'string', 'string_set', b'string_set', 'timestamp', b'timestamp', 'value', b'value']) -> None:
+        ...
+
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['value', b'value']) -> typing_extensions.Literal['float64', 'int64', 'bool', 'string', 'timestamp', 'string_set', 'file_ref'] | None:
         ...
 global___Value = Value
 

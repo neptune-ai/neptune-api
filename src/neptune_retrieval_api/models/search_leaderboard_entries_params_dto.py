@@ -36,6 +36,7 @@ if TYPE_CHECKING:
     from ..models.query_leaderboard_params_attribute_filter_dto import QueryLeaderboardParamsAttributeFilterDTO
     from ..models.query_leaderboard_params_grouping_params_dto import QueryLeaderboardParamsGroupingParamsDTO
     from ..models.query_leaderboard_params_pagination_dto import QueryLeaderboardParamsPaginationDTO
+    from ..models.query_leaderboard_params_query_aliases_dto import QueryLeaderboardParamsQueryAliasesDTO
     from ..models.query_leaderboard_params_sorting_params_dto import QueryLeaderboardParamsSortingParamsDTO
     from ..models.query_leaderboard_params_suggestions_params_dto import QueryLeaderboardParamsSuggestionsParamsDTO
 
@@ -52,6 +53,7 @@ class SearchLeaderboardEntriesParamsDTO:
         grouping (Union[Unset, QueryLeaderboardParamsGroupingParamsDTO]):
         pagination (Union[Unset, QueryLeaderboardParamsPaginationDTO]):
         query (Union[Unset, NqlQueryParamsDTO]):
+        query_name_aliases (Union[Unset, QueryLeaderboardParamsQueryAliasesDTO]):
         sorting (Union[Unset, QueryLeaderboardParamsSortingParamsDTO]):
         suggestions (Union[Unset, QueryLeaderboardParamsSuggestionsParamsDTO]):
         truncate_string_to (Union[Unset, int]):
@@ -62,6 +64,7 @@ class SearchLeaderboardEntriesParamsDTO:
     grouping: Union[Unset, "QueryLeaderboardParamsGroupingParamsDTO"] = UNSET
     pagination: Union[Unset, "QueryLeaderboardParamsPaginationDTO"] = UNSET
     query: Union[Unset, "NqlQueryParamsDTO"] = UNSET
+    query_name_aliases: Union[Unset, "QueryLeaderboardParamsQueryAliasesDTO"] = UNSET
     sorting: Union[Unset, "QueryLeaderboardParamsSortingParamsDTO"] = UNSET
     suggestions: Union[Unset, "QueryLeaderboardParamsSuggestionsParamsDTO"] = UNSET
     truncate_string_to: Union[Unset, int] = UNSET
@@ -89,6 +92,10 @@ class SearchLeaderboardEntriesParamsDTO:
         if not isinstance(self.query, Unset):
             query = self.query.to_dict()
 
+        query_name_aliases: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.query_name_aliases, Unset):
+            query_name_aliases = self.query_name_aliases.to_dict()
+
         sorting: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.sorting, Unset):
             sorting = self.sorting.to_dict()
@@ -112,6 +119,8 @@ class SearchLeaderboardEntriesParamsDTO:
             field_dict["pagination"] = pagination
         if query is not UNSET:
             field_dict["query"] = query
+        if query_name_aliases is not UNSET:
+            field_dict["queryNameAliases"] = query_name_aliases
         if sorting is not UNSET:
             field_dict["sorting"] = sorting
         if suggestions is not UNSET:
@@ -127,6 +136,7 @@ class SearchLeaderboardEntriesParamsDTO:
         from ..models.query_leaderboard_params_attribute_filter_dto import QueryLeaderboardParamsAttributeFilterDTO
         from ..models.query_leaderboard_params_grouping_params_dto import QueryLeaderboardParamsGroupingParamsDTO
         from ..models.query_leaderboard_params_pagination_dto import QueryLeaderboardParamsPaginationDTO
+        from ..models.query_leaderboard_params_query_aliases_dto import QueryLeaderboardParamsQueryAliasesDTO
         from ..models.query_leaderboard_params_sorting_params_dto import QueryLeaderboardParamsSortingParamsDTO
         from ..models.query_leaderboard_params_suggestions_params_dto import QueryLeaderboardParamsSuggestionsParamsDTO
 
@@ -163,6 +173,13 @@ class SearchLeaderboardEntriesParamsDTO:
         else:
             query = NqlQueryParamsDTO.from_dict(_query)
 
+        _query_name_aliases = d.pop("queryNameAliases", UNSET)
+        query_name_aliases: Union[Unset, QueryLeaderboardParamsQueryAliasesDTO]
+        if isinstance(_query_name_aliases, Unset):
+            query_name_aliases = UNSET
+        else:
+            query_name_aliases = QueryLeaderboardParamsQueryAliasesDTO.from_dict(_query_name_aliases)
+
         _sorting = d.pop("sorting", UNSET)
         sorting: Union[Unset, QueryLeaderboardParamsSortingParamsDTO]
         if isinstance(_sorting, Unset):
@@ -185,6 +202,7 @@ class SearchLeaderboardEntriesParamsDTO:
             grouping=grouping,
             pagination=pagination,
             query=query,
+            query_name_aliases=query_name_aliases,
             sorting=sorting,
             suggestions=suggestions,
             truncate_string_to=truncate_string_to,

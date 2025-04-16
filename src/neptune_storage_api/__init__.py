@@ -13,26 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from enum import Enum
+"""A client library for accessing storagebridge"""
 
+from .client import (
+    AuthenticatedClient,
+    Client,
+)
 
-class AttributeTypeDTO(str, Enum):
-    BOOL = "bool"
-    COMPLEX = "complex"
-    DATETIME = "datetime"
-    EXPERIMENTSTATE = "experimentState"
-    FILE = "file"
-    FILEREF = "fileRef"
-    FILESET = "fileSet"
-    FLOAT = "float"
-    FLOATSERIES = "floatSeries"
-    GITREF = "gitRef"
-    IMAGESERIES = "imageSeries"
-    INT = "int"
-    NOTEBOOKREF = "notebookRef"
-    STRING = "string"
-    STRINGSERIES = "stringSeries"
-    STRINGSET = "stringSet"
-
-    def __str__(self) -> str:
-        return str(self.value)
+__all__ = (
+    "AuthenticatedClient",
+    "Client",
+)
