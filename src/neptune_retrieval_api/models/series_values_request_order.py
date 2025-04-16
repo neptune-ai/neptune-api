@@ -13,3 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from enum import Enum
+
+
+class SeriesValuesRequestOrder(str, Enum):
+    ASCENDING = "ascending"
+    DESCENDING = "descending"
+
+    def __str__(self) -> str:
+        return str(self.value)
