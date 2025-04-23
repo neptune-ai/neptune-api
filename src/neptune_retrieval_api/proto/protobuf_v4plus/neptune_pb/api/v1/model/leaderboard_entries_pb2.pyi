@@ -389,20 +389,18 @@ class ProtoStringSeriesAttributeDTO(google.protobuf.message.Message):
     ATTRIBUTE_TYPE_FIELD_NUMBER: builtins.int
     LAST_STEP_FIELD_NUMBER: builtins.int
     LAST_FIELD_NUMBER: builtins.int
-    SIZE_FIELD_NUMBER: builtins.int
     attribute_name: builtins.str
     attribute_type: builtins.str
     last_step: builtins.float
     last: builtins.str
-    size: builtins.int
 
-    def __init__(self, *, attribute_name: builtins.str=..., attribute_type: builtins.str=..., last_step: builtins.float | None=..., last: builtins.str | None=..., size: builtins.int | None=...) -> None:
+    def __init__(self, *, attribute_name: builtins.str=..., attribute_type: builtins.str=..., last_step: builtins.float | None=..., last: builtins.str | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing.Literal['_last', b'_last', '_last_step', b'_last_step', '_size', b'_size', 'last', b'last', 'last_step', b'last_step', 'size', b'size']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['_last', b'_last', '_last_step', b'_last_step', 'last', b'last', 'last_step', b'last_step']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing.Literal['_last', b'_last', '_last_step', b'_last_step', '_size', b'_size', 'attribute_name', b'attribute_name', 'attribute_type', b'attribute_type', 'last', b'last', 'last_step', b'last_step', 'size', b'size']) -> None:
+    def ClearField(self, field_name: typing.Literal['_last', b'_last', '_last_step', b'_last_step', 'attribute_name', b'attribute_name', 'attribute_type', b'attribute_type', 'last', b'last', 'last_step', b'last_step']) -> None:
         ...
 
     @typing.overload
@@ -411,9 +409,5 @@ class ProtoStringSeriesAttributeDTO(google.protobuf.message.Message):
 
     @typing.overload
     def WhichOneof(self, oneof_group: typing.Literal['_last_step', b'_last_step']) -> typing.Literal['last_step'] | None:
-        ...
-
-    @typing.overload
-    def WhichOneof(self, oneof_group: typing.Literal['_size', b'_size']) -> typing.Literal['size'] | None:
         ...
 global___ProtoStringSeriesAttributeDTO = ProtoStringSeriesAttributeDTO
