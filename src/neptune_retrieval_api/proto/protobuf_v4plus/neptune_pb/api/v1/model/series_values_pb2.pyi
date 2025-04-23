@@ -11,6 +11,71 @@ import typing
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
 @typing.final
+class ProtoSeriesValuesResponseDTO(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    SERIES_FIELD_NUMBER: builtins.int
+
+    @property
+    def series(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___ProtoSeriesValuesSingleSeriesResponseDTO]:
+        ...
+
+    def __init__(self, *, series: collections.abc.Iterable[global___ProtoSeriesValuesSingleSeriesResponseDTO] | None=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing.Literal['series', b'series']) -> None:
+        ...
+global___ProtoSeriesValuesResponseDTO = ProtoSeriesValuesResponseDTO
+
+@typing.final
+class ProtoSeriesValuesSingleSeriesResponseDTO(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    REQUESTID_FIELD_NUMBER: builtins.int
+    SEARCHAFTER_FIELD_NUMBER: builtins.int
+    STRING_SERIES_FIELD_NUMBER: builtins.int
+    requestId: builtins.str
+
+    @property
+    def searchAfter(self) -> global___ProtoSeriesValuesSearchAfterDTO:
+        ...
+
+    @property
+    def string_series(self) -> global___ProtoStringSeriesValuesDTO:
+        ...
+
+    def __init__(self, *, requestId: builtins.str=..., searchAfter: global___ProtoSeriesValuesSearchAfterDTO | None=..., string_series: global___ProtoStringSeriesValuesDTO | None=...) -> None:
+        ...
+
+    def HasField(self, field_name: typing.Literal['_searchAfter', b'_searchAfter', 'searchAfter', b'searchAfter', 'series', b'series', 'string_series', b'string_series']) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing.Literal['_searchAfter', b'_searchAfter', 'requestId', b'requestId', 'searchAfter', b'searchAfter', 'series', b'series', 'string_series', b'string_series']) -> None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal['_searchAfter', b'_searchAfter']) -> typing.Literal['searchAfter'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal['series', b'series']) -> typing.Literal['string_series'] | None:
+        ...
+global___ProtoSeriesValuesSingleSeriesResponseDTO = ProtoSeriesValuesSingleSeriesResponseDTO
+
+@typing.final
+class ProtoSeriesValuesSearchAfterDTO(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    FINISHED_FIELD_NUMBER: builtins.int
+    TOKEN_FIELD_NUMBER: builtins.int
+    finished: builtins.bool
+    token: builtins.str
+
+    def __init__(self, *, finished: builtins.bool=..., token: builtins.str=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing.Literal['finished', b'finished', 'token', b'token']) -> None:
+        ...
+global___ProtoSeriesValuesSearchAfterDTO = ProtoSeriesValuesSearchAfterDTO
+
+@typing.final
 class ProtoFloatSeriesValuesResponseDTO(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     SERIES_FIELD_NUMBER: builtins.int
@@ -85,3 +150,40 @@ class ProtoFloatPointValueDTO(google.protobuf.message.Message):
     def ClearField(self, field_name: typing.Literal['completion_ratio', b'completion_ratio', 'is_preview', b'is_preview', 'step', b'step', 'timestamp_millis', b'timestamp_millis', 'value', b'value']) -> None:
         ...
 global___ProtoFloatPointValueDTO = ProtoFloatPointValueDTO
+
+@typing.final
+class ProtoStringSeriesValuesDTO(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    VALUES_FIELD_NUMBER: builtins.int
+
+    @property
+    def values(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___ProtoStringPointValueDTO]:
+        ...
+
+    def __init__(self, *, values: collections.abc.Iterable[global___ProtoStringPointValueDTO] | None=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing.Literal['values', b'values']) -> None:
+        ...
+global___ProtoStringSeriesValuesDTO = ProtoStringSeriesValuesDTO
+
+@typing.final
+class ProtoStringPointValueDTO(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    TIMESTAMP_MILLIS_FIELD_NUMBER: builtins.int
+    STEP_FIELD_NUMBER: builtins.int
+    VALUE_FIELD_NUMBER: builtins.int
+    IS_PREVIEW_FIELD_NUMBER: builtins.int
+    COMPLETION_RATIO_FIELD_NUMBER: builtins.int
+    timestamp_millis: builtins.int
+    step: builtins.float
+    value: builtins.str
+    is_preview: builtins.bool
+    completion_ratio: builtins.float
+
+    def __init__(self, *, timestamp_millis: builtins.int=..., step: builtins.float=..., value: builtins.str=..., is_preview: builtins.bool=..., completion_ratio: builtins.float=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing.Literal['completion_ratio', b'completion_ratio', 'is_preview', b'is_preview', 'step', b'step', 'timestamp_millis', b'timestamp_millis', 'value', b'value']) -> None:
+        ...
+global___ProtoStringPointValueDTO = ProtoStringPointValueDTO

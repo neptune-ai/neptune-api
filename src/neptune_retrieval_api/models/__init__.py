@@ -204,6 +204,7 @@ from .proto_float_series_values_dto import ProtoFloatSeriesValuesDTO
 from .proto_float_series_values_response_dto import ProtoFloatSeriesValuesResponseDTO
 from .proto_leaderboard_entries_search_result_dto import ProtoLeaderboardEntriesSearchResultDTO
 from .proto_query_attributes_result_dto import ProtoQueryAttributesResultDTO
+from .proto_series_values_response_dto import ProtoSeriesValuesResponseDTO
 from .query_attribute_definitions_body_dto import QueryAttributeDefinitionsBodyDTO
 from .query_attribute_definitions_dto import QueryAttributeDefinitionsDTO
 from .query_attribute_definitions_prioritized_body_dto import QueryAttributeDefinitionsPrioritizedBodyDTO
@@ -250,6 +251,11 @@ from .search_attributes_style_settings_params_dto import SearchAttributesStyleSe
 from .search_leaderboard_entries_params_dto import SearchLeaderboardEntriesParamsDTO
 from .search_leaderboard_params_dto import SearchLeaderboardParamsDTO
 from .search_leaderboard_tags_attribute_path import SearchLeaderboardTagsAttributePath
+from .series_values_request import SeriesValuesRequest
+from .series_values_request_order import SeriesValuesRequestOrder
+from .series_values_request_search_after import SeriesValuesRequestSearchAfter
+from .series_values_request_series import SeriesValuesRequestSeries
+from .series_values_response_dto import SeriesValuesResponseDTO
 from .series_view_dto import SeriesViewDTO
 from .series_view_list_dto import SeriesViewListDTO
 from .series_view_point_dto import SeriesViewPointDTO
@@ -257,13 +263,16 @@ from .series_view_request_dto import SeriesViewRequestDTO
 from .signal import Signal
 from .signal_body import SignalBody
 from .single_custom_time_series_view import SingleCustomTimeSeriesView
+from .single_series_values_response_dto import SingleSeriesValuesResponseDTO
 from .single_time_series_view import SingleTimeSeriesView
 from .single_time_series_view_bucket import SingleTimeSeriesViewBucket
 from .steps import Steps
 from .string_attribute_dto import StringAttributeDTO
 from .string_point_value_dto import StringPointValueDTO
 from .string_series_attribute_dto import StringSeriesAttributeDTO
+from .string_series_value_dto import StringSeriesValueDTO
 from .string_series_values_dto import StringSeriesValuesDTO
+from .string_series_values_response_dto import StringSeriesValuesResponseDTO
 from .string_set_attribute_dto import StringSetAttributeDTO
 from .system_attributes_dto import SystemAttributesDTO
 from .table_view_params_dto import TableViewParamsDTO
@@ -475,6 +484,7 @@ __all__ = (
     "ProtoFloatSeriesValuesResponseDTO",
     "ProtoLeaderboardEntriesSearchResultDTO",
     "ProtoQueryAttributesResultDTO",
+    "ProtoSeriesValuesResponseDTO",
     "QueryAttributeDefinitionsBodyDTO",
     "QueryAttributeDefinitionsDTO",
     "QueryAttributeDefinitionsPrioritizedBodyDTO",
@@ -517,6 +527,11 @@ __all__ = (
     "SearchLeaderboardEntriesParamsDTO",
     "SearchLeaderboardParamsDTO",
     "SearchLeaderboardTagsAttributePath",
+    "SeriesValuesRequest",
+    "SeriesValuesRequestOrder",
+    "SeriesValuesRequestSearchAfter",
+    "SeriesValuesRequestSeries",
+    "SeriesValuesResponseDTO",
     "SeriesViewDTO",
     "SeriesViewListDTO",
     "SeriesViewPointDTO",
@@ -524,13 +539,16 @@ __all__ = (
     "Signal",
     "SignalBody",
     "SingleCustomTimeSeriesView",
+    "SingleSeriesValuesResponseDTO",
     "SingleTimeSeriesView",
     "SingleTimeSeriesViewBucket",
     "Steps",
     "StringAttributeDTO",
     "StringPointValueDTO",
     "StringSeriesAttributeDTO",
+    "StringSeriesValueDTO",
     "StringSeriesValuesDTO",
+    "StringSeriesValuesResponseDTO",
     "StringSetAttributeDTO",
     "SystemAttributesDTO",
     "TableViewParamsDTO",

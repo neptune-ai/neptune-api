@@ -14,6 +14,7 @@
 # limitations under the License.
 
 from http import HTTPStatus
+from io import BytesIO
 from typing import (
     Any,
     Dict,
@@ -29,50 +30,38 @@ from ...client import (
     AuthenticatedClient,
     Client,
 )
-from ...models.string_series_values_dto import StringSeriesValuesDTO
+from ...models.series_values_request import SeriesValuesRequest
 from ...types import (
-    UNSET,
+    File,
     Response,
-    Unset,
 )
 
 
 def _get_kwargs(
     *,
-    attribute: str,
-    experiment_id: Union[Unset, str] = UNSET,
-    limit: Union[Unset, int] = UNSET,
-    max_single_value_length: Union[Unset, int] = 1000,
-    offset: Union[Unset, int] = UNSET,
+    body: SeriesValuesRequest,
 ) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
-
-    params["attribute"] = attribute
-
-    params["experimentId"] = experiment_id
-
-    params["limit"] = limit
-
-    params["maxSingleValueLength"] = max_single_value_length
-
-    params["offset"] = offset
-
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+    headers: Dict[str, Any] = {}
 
     _kwargs: Dict[str, Any] = {
-        "method": "get",
-        "url": "/api/leaderboard/v1/attributes/series/string",
-        "params": params,
+        "method": "post",
+        "url": "/api/leaderboard/v1/proto/attributes/series",
     }
 
+    _body = body.to_dict()
+
+    _kwargs["json"] = _body
+    headers["Content-Type"] = "application/json"
+
+    _kwargs["headers"] = headers
     return _kwargs
 
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[Any, StringSeriesValuesDTO]]:
+) -> Optional[Union[Any, File]]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = StringSeriesValuesDTO.from_dict(response.json())
+        response_200 = File(payload=BytesIO(response.content))
 
         return response_200
     if response.status_code == HTTPStatus.BAD_REQUEST:
@@ -107,7 +96,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[Any, StringSeriesValuesDTO]]:
+) -> Response[Union[Any, File]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -119,35 +108,23 @@ def _build_response(
 def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    attribute: str,
-    experiment_id: Union[Unset, str] = UNSET,
-    limit: Union[Unset, int] = UNSET,
-    max_single_value_length: Union[Unset, int] = 1000,
-    offset: Union[Unset, int] = UNSET,
-) -> Response[Union[Any, StringSeriesValuesDTO]]:
-    """Get string series values
+    body: SeriesValuesRequest,
+) -> Response[Union[Any, File]]:
+    """Get series values
 
     Args:
-        attribute (str):
-        experiment_id (Union[Unset, str]):
-        limit (Union[Unset, int]):
-        max_single_value_length (Union[Unset, int]):  Default: 1000.
-        offset (Union[Unset, int]):
+        body (SeriesValuesRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, StringSeriesValuesDTO]]
+        Response[Union[Any, File]]
     """
 
     kwargs = _get_kwargs(
-        attribute=attribute,
-        experiment_id=experiment_id,
-        limit=limit,
-        max_single_value_length=max_single_value_length,
-        offset=offset,
+        body=body,
     )
 
     response = client.get_httpx_client().request(
@@ -160,71 +137,47 @@ def sync_detailed(
 def sync(
     *,
     client: Union[AuthenticatedClient, Client],
-    attribute: str,
-    experiment_id: Union[Unset, str] = UNSET,
-    limit: Union[Unset, int] = UNSET,
-    max_single_value_length: Union[Unset, int] = 1000,
-    offset: Union[Unset, int] = UNSET,
-) -> Optional[Union[Any, StringSeriesValuesDTO]]:
-    """Get string series values
+    body: SeriesValuesRequest,
+) -> Optional[Union[Any, File]]:
+    """Get series values
 
     Args:
-        attribute (str):
-        experiment_id (Union[Unset, str]):
-        limit (Union[Unset, int]):
-        max_single_value_length (Union[Unset, int]):  Default: 1000.
-        offset (Union[Unset, int]):
+        body (SeriesValuesRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, StringSeriesValuesDTO]
+        Union[Any, File]
     """
 
     return sync_detailed(
         client=client,
-        attribute=attribute,
-        experiment_id=experiment_id,
-        limit=limit,
-        max_single_value_length=max_single_value_length,
-        offset=offset,
+        body=body,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    attribute: str,
-    experiment_id: Union[Unset, str] = UNSET,
-    limit: Union[Unset, int] = UNSET,
-    max_single_value_length: Union[Unset, int] = 1000,
-    offset: Union[Unset, int] = UNSET,
-) -> Response[Union[Any, StringSeriesValuesDTO]]:
-    """Get string series values
+    body: SeriesValuesRequest,
+) -> Response[Union[Any, File]]:
+    """Get series values
 
     Args:
-        attribute (str):
-        experiment_id (Union[Unset, str]):
-        limit (Union[Unset, int]):
-        max_single_value_length (Union[Unset, int]):  Default: 1000.
-        offset (Union[Unset, int]):
+        body (SeriesValuesRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, StringSeriesValuesDTO]]
+        Response[Union[Any, File]]
     """
 
     kwargs = _get_kwargs(
-        attribute=attribute,
-        experiment_id=experiment_id,
-        limit=limit,
-        max_single_value_length=max_single_value_length,
-        offset=offset,
+        body=body,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -235,36 +188,24 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
-    attribute: str,
-    experiment_id: Union[Unset, str] = UNSET,
-    limit: Union[Unset, int] = UNSET,
-    max_single_value_length: Union[Unset, int] = 1000,
-    offset: Union[Unset, int] = UNSET,
-) -> Optional[Union[Any, StringSeriesValuesDTO]]:
-    """Get string series values
+    body: SeriesValuesRequest,
+) -> Optional[Union[Any, File]]:
+    """Get series values
 
     Args:
-        attribute (str):
-        experiment_id (Union[Unset, str]):
-        limit (Union[Unset, int]):
-        max_single_value_length (Union[Unset, int]):  Default: 1000.
-        offset (Union[Unset, int]):
+        body (SeriesValuesRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, StringSeriesValuesDTO]
+        Union[Any, File]
     """
 
     return (
         await asyncio_detailed(
             client=client,
-            attribute=attribute,
-            experiment_id=experiment_id,
-            limit=limit,
-            max_single_value_length=max_single_value_length,
-            offset=offset,
+            body=body,
         )
     ).parsed
