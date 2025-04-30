@@ -320,13 +320,29 @@ class AuthenticatedClient:
 
         **NOTE**: This will override any other settings on the client, including cookies, headers, and timeout.
         """
-        # TODO: Missing implementation
-        raise NotImplementedError
+        self._async_client = async_client
+        return self
 
     def get_async_httpx_client(self) -> httpx.AsyncClient:
         """Get the underlying httpx.AsyncClient, constructing a new one if not previously set"""
-        # TODO: Missing implementation
-        raise NotImplementedError
+        if self._client is None:
+            self._client = httpx.AsyncClient(
+                auth=NeptuneAuthenticator(
+                    credentials=self.credentials,
+                    client_id=self.client_id,
+                    token_refreshing_endpoint=self.token_refreshing_endpoint,
+                    api_key_exchange_factory=self.api_key_exchange_callback,
+                    client=self.get_token_refreshing_client(),
+                ),
+                base_url=self._base_url,
+                cookies=self._cookies,
+                headers=self._headers,
+                timeout=self._timeout,
+                verify=self._verify_ssl,
+                follow_redirects=self._follow_redirects,
+                **self._httpx_args,
+            )
+        return self._client
 
     async def __aenter__(self) -> "AuthenticatedClient":
         """Enter a context manager for underlying httpx.AsyncClient—you cannot enter twice (see httpx docs)"""
@@ -401,5 +417,9 @@ class NeptuneAuthenticator(httpx.Auth):
         yield request
 
     async def async_auth_flow(self, request: httpx.Request) -> typing.AsyncGenerator[httpx.Request, httpx.Response]:
-        # TODO: Missing implementation
+        self._refresh_token_if_expired()  # refresh it synchronously for now
+
+        if self._token is not None:
+            request.headers["Authorization"] = f"Bearer {self._token.access_token}"
+
         yield request
