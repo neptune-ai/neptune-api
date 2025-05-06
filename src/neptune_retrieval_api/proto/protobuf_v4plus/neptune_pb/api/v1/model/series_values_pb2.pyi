@@ -32,6 +32,7 @@ class ProtoSeriesValuesSingleSeriesResponseDTO(google.protobuf.message.Message):
     REQUESTID_FIELD_NUMBER: builtins.int
     SEARCHAFTER_FIELD_NUMBER: builtins.int
     STRING_SERIES_FIELD_NUMBER: builtins.int
+    SERIESVALUES_FIELD_NUMBER: builtins.int
     requestId: builtins.str
 
     @property
@@ -39,16 +40,20 @@ class ProtoSeriesValuesSingleSeriesResponseDTO(google.protobuf.message.Message):
         ...
 
     @property
-    def string_series(self) -> global___ProtoStringSeriesValuesDTO:
+    def string_series(self) -> global___ProtoSeriesValuesDTO:
+        """deprecated"""
+
+    @property
+    def seriesValues(self) -> global___ProtoSeriesValuesDTO:
         ...
 
-    def __init__(self, *, requestId: builtins.str=..., searchAfter: global___ProtoSeriesValuesSearchAfterDTO | None=..., string_series: global___ProtoStringSeriesValuesDTO | None=...) -> None:
+    def __init__(self, *, requestId: builtins.str=..., searchAfter: global___ProtoSeriesValuesSearchAfterDTO | None=..., string_series: global___ProtoSeriesValuesDTO | None=..., seriesValues: global___ProtoSeriesValuesDTO | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing.Literal['_searchAfter', b'_searchAfter', 'searchAfter', b'searchAfter', 'series', b'series', 'string_series', b'string_series']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['_searchAfter', b'_searchAfter', 'searchAfter', b'searchAfter', 'series', b'series', 'seriesValues', b'seriesValues', 'string_series', b'string_series']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing.Literal['_searchAfter', b'_searchAfter', 'requestId', b'requestId', 'searchAfter', b'searchAfter', 'series', b'series', 'string_series', b'string_series']) -> None:
+    def ClearField(self, field_name: typing.Literal['_searchAfter', b'_searchAfter', 'requestId', b'requestId', 'searchAfter', b'searchAfter', 'series', b'series', 'seriesValues', b'seriesValues', 'string_series', b'string_series']) -> None:
         ...
 
     @typing.overload
@@ -56,7 +61,7 @@ class ProtoSeriesValuesSingleSeriesResponseDTO(google.protobuf.message.Message):
         ...
 
     @typing.overload
-    def WhichOneof(self, oneof_group: typing.Literal['series', b'series']) -> typing.Literal['string_series'] | None:
+    def WhichOneof(self, oneof_group: typing.Literal['series', b'series']) -> typing.Literal['string_series', 'seriesValues'] | None:
         ...
 global___ProtoSeriesValuesSingleSeriesResponseDTO = ProtoSeriesValuesSingleSeriesResponseDTO
 
@@ -152,38 +157,124 @@ class ProtoFloatPointValueDTO(google.protobuf.message.Message):
 global___ProtoFloatPointValueDTO = ProtoFloatPointValueDTO
 
 @typing.final
-class ProtoStringSeriesValuesDTO(google.protobuf.message.Message):
+class ProtoSeriesValuesDTO(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     VALUES_FIELD_NUMBER: builtins.int
 
     @property
-    def values(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___ProtoStringPointValueDTO]:
+    def values(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___ProtoPointValueDTO]:
         ...
 
-    def __init__(self, *, values: collections.abc.Iterable[global___ProtoStringPointValueDTO] | None=...) -> None:
+    def __init__(self, *, values: collections.abc.Iterable[global___ProtoPointValueDTO] | None=...) -> None:
         ...
 
     def ClearField(self, field_name: typing.Literal['values', b'values']) -> None:
         ...
-global___ProtoStringSeriesValuesDTO = ProtoStringSeriesValuesDTO
+global___ProtoSeriesValuesDTO = ProtoSeriesValuesDTO
 
 @typing.final
-class ProtoStringPointValueDTO(google.protobuf.message.Message):
+class ProtoPointValueDTO(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     TIMESTAMP_MILLIS_FIELD_NUMBER: builtins.int
     STEP_FIELD_NUMBER: builtins.int
     VALUE_FIELD_NUMBER: builtins.int
     IS_PREVIEW_FIELD_NUMBER: builtins.int
     COMPLETION_RATIO_FIELD_NUMBER: builtins.int
+    OBJECT_FIELD_NUMBER: builtins.int
     timestamp_millis: builtins.int
     step: builtins.float
     value: builtins.str
+    'deprecated'
     is_preview: builtins.bool
     completion_ratio: builtins.float
 
-    def __init__(self, *, timestamp_millis: builtins.int=..., step: builtins.float=..., value: builtins.str=..., is_preview: builtins.bool=..., completion_ratio: builtins.float=...) -> None:
+    @property
+    def object(self) -> global___ProtoSeriesPointValueObjectDTO:
         ...
 
-    def ClearField(self, field_name: typing.Literal['completion_ratio', b'completion_ratio', 'is_preview', b'is_preview', 'step', b'step', 'timestamp_millis', b'timestamp_millis', 'value', b'value']) -> None:
+    def __init__(self, *, timestamp_millis: builtins.int=..., step: builtins.float=..., value: builtins.str | None=..., is_preview: builtins.bool=..., completion_ratio: builtins.float=..., object: global___ProtoSeriesPointValueObjectDTO | None=...) -> None:
         ...
-global___ProtoStringPointValueDTO = ProtoStringPointValueDTO
+
+    def HasField(self, field_name: typing.Literal['_object', b'_object', '_value', b'_value', 'object', b'object', 'value', b'value']) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing.Literal['_object', b'_object', '_value', b'_value', 'completion_ratio', b'completion_ratio', 'is_preview', b'is_preview', 'object', b'object', 'step', b'step', 'timestamp_millis', b'timestamp_millis', 'value', b'value']) -> None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal['_object', b'_object']) -> typing.Literal['object'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal['_value', b'_value']) -> typing.Literal['value'] | None:
+        ...
+global___ProtoPointValueDTO = ProtoPointValueDTO
+
+@typing.final
+class ProtoSeriesPointValueObjectDTO(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    STRINGVALUE_FIELD_NUMBER: builtins.int
+    HISTOGRAM_FIELD_NUMBER: builtins.int
+    FILEREF_FIELD_NUMBER: builtins.int
+    stringValue: builtins.str
+
+    @property
+    def histogram(self) -> global___ProtoHistogram:
+        ...
+
+    @property
+    def fileRef(self) -> global___ProtoFileRef:
+        ...
+
+    def __init__(self, *, stringValue: builtins.str=..., histogram: global___ProtoHistogram | None=..., fileRef: global___ProtoFileRef | None=...) -> None:
+        ...
+
+    def HasField(self, field_name: typing.Literal['fileRef', b'fileRef', 'histogram', b'histogram', 'stringValue', b'stringValue', 'value', b'value']) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing.Literal['fileRef', b'fileRef', 'histogram', b'histogram', 'stringValue', b'stringValue', 'value', b'value']) -> None:
+        ...
+
+    def WhichOneof(self, oneof_group: typing.Literal['value', b'value']) -> typing.Literal['stringValue', 'histogram', 'fileRef'] | None:
+        ...
+global___ProtoSeriesPointValueObjectDTO = ProtoSeriesPointValueObjectDTO
+
+@typing.final
+class ProtoHistogram(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    TYPE_FIELD_NUMBER: builtins.int
+    EDGES_FIELD_NUMBER: builtins.int
+    VALUES_FIELD_NUMBER: builtins.int
+    type: builtins.str
+
+    @property
+    def edges(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.float]:
+        ...
+
+    @property
+    def values(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.float]:
+        ...
+
+    def __init__(self, *, type: builtins.str=..., edges: collections.abc.Iterable[builtins.float] | None=..., values: collections.abc.Iterable[builtins.float] | None=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing.Literal['edges', b'edges', 'type', b'type', 'values', b'values']) -> None:
+        ...
+global___ProtoHistogram = ProtoHistogram
+
+@typing.final
+class ProtoFileRef(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    PATH_FIELD_NUMBER: builtins.int
+    SIZEBYTES_FIELD_NUMBER: builtins.int
+    MIMETYPE_FIELD_NUMBER: builtins.int
+    path: builtins.str
+    sizeBytes: builtins.int
+    mimeType: builtins.str
+
+    def __init__(self, *, path: builtins.str=..., sizeBytes: builtins.int=..., mimeType: builtins.str=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing.Literal['mimeType', b'mimeType', 'path', b'path', 'sizeBytes', b'sizeBytes']) -> None:
+        ...
+global___ProtoFileRef = ProtoFileRef
