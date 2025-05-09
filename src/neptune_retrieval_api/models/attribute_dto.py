@@ -39,10 +39,12 @@ if TYPE_CHECKING:
     from ..models.experiment_state_attribute_dto import ExperimentStateAttributeDTO
     from ..models.file_attribute_dto import FileAttributeDTO
     from ..models.file_ref_attribute_dto import FileRefAttributeDTO
+    from ..models.file_ref_series_attribute_dto import FileRefSeriesAttributeDTO
     from ..models.file_set_attribute_dto import FileSetAttributeDTO
     from ..models.float_attribute_dto import FloatAttributeDTO
     from ..models.float_series_attribute_dto import FloatSeriesAttributeDTO
     from ..models.git_info_dto import GitInfoDTO
+    from ..models.histogram_series_attribute_dto import HistogramSeriesAttributeDTO
     from ..models.image_series_attribute_dto import ImageSeriesAttributeDTO
     from ..models.int_attribute_dto import IntAttributeDTO
     from ..models.notebook_ref_attribute_dto import NotebookRefAttributeDTO
@@ -66,10 +68,12 @@ class AttributeDTO:
         experiment_state_properties (Union[Unset, ExperimentStateAttributeDTO]):
         file_properties (Union[Unset, FileAttributeDTO]):
         file_ref_properties (Union[Unset, FileRefAttributeDTO]):
+        file_ref_series_properties (Union[Unset, FileRefSeriesAttributeDTO]):
         file_set_properties (Union[Unset, FileSetAttributeDTO]):
         float_properties (Union[Unset, FloatAttributeDTO]):
         float_series_properties (Union[Unset, FloatSeriesAttributeDTO]):
         git_ref_properties (Union[Unset, GitInfoDTO]):
+        histogram_series_properties (Union[Unset, HistogramSeriesAttributeDTO]):
         image_series_properties (Union[Unset, ImageSeriesAttributeDTO]):
         int_properties (Union[Unset, IntAttributeDTO]):
         notebook_ref_properties (Union[Unset, NotebookRefAttributeDTO]):
@@ -86,10 +90,12 @@ class AttributeDTO:
     experiment_state_properties: Union[Unset, "ExperimentStateAttributeDTO"] = UNSET
     file_properties: Union[Unset, "FileAttributeDTO"] = UNSET
     file_ref_properties: Union[Unset, "FileRefAttributeDTO"] = UNSET
+    file_ref_series_properties: Union[Unset, "FileRefSeriesAttributeDTO"] = UNSET
     file_set_properties: Union[Unset, "FileSetAttributeDTO"] = UNSET
     float_properties: Union[Unset, "FloatAttributeDTO"] = UNSET
     float_series_properties: Union[Unset, "FloatSeriesAttributeDTO"] = UNSET
     git_ref_properties: Union[Unset, "GitInfoDTO"] = UNSET
+    histogram_series_properties: Union[Unset, "HistogramSeriesAttributeDTO"] = UNSET
     image_series_properties: Union[Unset, "ImageSeriesAttributeDTO"] = UNSET
     int_properties: Union[Unset, "IntAttributeDTO"] = UNSET
     notebook_ref_properties: Union[Unset, "NotebookRefAttributeDTO"] = UNSET
@@ -127,6 +133,10 @@ class AttributeDTO:
         if not isinstance(self.file_ref_properties, Unset):
             file_ref_properties = self.file_ref_properties.to_dict()
 
+        file_ref_series_properties: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.file_ref_series_properties, Unset):
+            file_ref_series_properties = self.file_ref_series_properties.to_dict()
+
         file_set_properties: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.file_set_properties, Unset):
             file_set_properties = self.file_set_properties.to_dict()
@@ -142,6 +152,10 @@ class AttributeDTO:
         git_ref_properties: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.git_ref_properties, Unset):
             git_ref_properties = self.git_ref_properties.to_dict()
+
+        histogram_series_properties: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.histogram_series_properties, Unset):
+            histogram_series_properties = self.histogram_series_properties.to_dict()
 
         image_series_properties: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.image_series_properties, Unset):
@@ -187,6 +201,8 @@ class AttributeDTO:
             field_dict["fileProperties"] = file_properties
         if file_ref_properties is not UNSET:
             field_dict["fileRefProperties"] = file_ref_properties
+        if file_ref_series_properties is not UNSET:
+            field_dict["fileRefSeriesProperties"] = file_ref_series_properties
         if file_set_properties is not UNSET:
             field_dict["fileSetProperties"] = file_set_properties
         if float_properties is not UNSET:
@@ -195,6 +211,8 @@ class AttributeDTO:
             field_dict["floatSeriesProperties"] = float_series_properties
         if git_ref_properties is not UNSET:
             field_dict["gitRefProperties"] = git_ref_properties
+        if histogram_series_properties is not UNSET:
+            field_dict["histogramSeriesProperties"] = histogram_series_properties
         if image_series_properties is not UNSET:
             field_dict["imageSeriesProperties"] = image_series_properties
         if int_properties is not UNSET:
@@ -218,10 +236,12 @@ class AttributeDTO:
         from ..models.experiment_state_attribute_dto import ExperimentStateAttributeDTO
         from ..models.file_attribute_dto import FileAttributeDTO
         from ..models.file_ref_attribute_dto import FileRefAttributeDTO
+        from ..models.file_ref_series_attribute_dto import FileRefSeriesAttributeDTO
         from ..models.file_set_attribute_dto import FileSetAttributeDTO
         from ..models.float_attribute_dto import FloatAttributeDTO
         from ..models.float_series_attribute_dto import FloatSeriesAttributeDTO
         from ..models.git_info_dto import GitInfoDTO
+        from ..models.histogram_series_attribute_dto import HistogramSeriesAttributeDTO
         from ..models.image_series_attribute_dto import ImageSeriesAttributeDTO
         from ..models.int_attribute_dto import IntAttributeDTO
         from ..models.notebook_ref_attribute_dto import NotebookRefAttributeDTO
@@ -276,6 +296,13 @@ class AttributeDTO:
         else:
             file_ref_properties = FileRefAttributeDTO.from_dict(_file_ref_properties)
 
+        _file_ref_series_properties = d.pop("fileRefSeriesProperties", UNSET)
+        file_ref_series_properties: Union[Unset, FileRefSeriesAttributeDTO]
+        if isinstance(_file_ref_series_properties, Unset):
+            file_ref_series_properties = UNSET
+        else:
+            file_ref_series_properties = FileRefSeriesAttributeDTO.from_dict(_file_ref_series_properties)
+
         _file_set_properties = d.pop("fileSetProperties", UNSET)
         file_set_properties: Union[Unset, FileSetAttributeDTO]
         if isinstance(_file_set_properties, Unset):
@@ -303,6 +330,13 @@ class AttributeDTO:
             git_ref_properties = UNSET
         else:
             git_ref_properties = GitInfoDTO.from_dict(_git_ref_properties)
+
+        _histogram_series_properties = d.pop("histogramSeriesProperties", UNSET)
+        histogram_series_properties: Union[Unset, HistogramSeriesAttributeDTO]
+        if isinstance(_histogram_series_properties, Unset):
+            histogram_series_properties = UNSET
+        else:
+            histogram_series_properties = HistogramSeriesAttributeDTO.from_dict(_histogram_series_properties)
 
         _image_series_properties = d.pop("imageSeriesProperties", UNSET)
         image_series_properties: Union[Unset, ImageSeriesAttributeDTO]
@@ -355,10 +389,12 @@ class AttributeDTO:
             experiment_state_properties=experiment_state_properties,
             file_properties=file_properties,
             file_ref_properties=file_ref_properties,
+            file_ref_series_properties=file_ref_series_properties,
             file_set_properties=file_set_properties,
             float_properties=float_properties,
             float_series_properties=float_series_properties,
             git_ref_properties=git_ref_properties,
+            histogram_series_properties=histogram_series_properties,
             image_series_properties=image_series_properties,
             int_properties=int_properties,
             notebook_ref_properties=notebook_ref_properties,

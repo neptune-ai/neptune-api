@@ -33,78 +33,75 @@ from ..types import (
 
 if TYPE_CHECKING:
     from ..models.series_value_object_dto import SeriesValueObjectDTO
-    from ..models.single_time_series_view_bucket import SingleTimeSeriesViewBucket
 
 
-T = TypeVar("T", bound="Point")
+T = TypeVar("T", bound="SeriesPointDTO")
 
 
 @_attrs_define
-class Point:
+class SeriesPointDTO:
     """
     Attributes:
-        interpolation (bool):
-        x (float):
-        bucket (Union[Unset, SingleTimeSeriesViewBucket]):
+        completion_ratio (float):
+        is_preview (bool):
+        step (float):
+        timestamp_millis (int):
         object_ (Union[Unset, SeriesValueObjectDTO]):
-        y (Union[Unset, float]):
+        value (Union[Unset, str]):
     """
 
-    interpolation: bool
-    x: float
-    bucket: Union[Unset, "SingleTimeSeriesViewBucket"] = UNSET
+    completion_ratio: float
+    is_preview: bool
+    step: float
+    timestamp_millis: int
     object_: Union[Unset, "SeriesValueObjectDTO"] = UNSET
-    y: Union[Unset, float] = UNSET
+    value: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        interpolation = self.interpolation
+        completion_ratio = self.completion_ratio
 
-        x = self.x
+        is_preview = self.is_preview
 
-        bucket: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.bucket, Unset):
-            bucket = self.bucket.to_dict()
+        step = self.step
+
+        timestamp_millis = self.timestamp_millis
 
         object_: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.object_, Unset):
             object_ = self.object_.to_dict()
 
-        y = self.y
+        value = self.value
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "interpolation": interpolation,
-                "x": x,
+                "completionRatio": completion_ratio,
+                "isPreview": is_preview,
+                "step": step,
+                "timestampMillis": timestamp_millis,
             }
         )
-        if bucket is not UNSET:
-            field_dict["bucket"] = bucket
         if object_ is not UNSET:
             field_dict["object"] = object_
-        if y is not UNSET:
-            field_dict["y"] = y
+        if value is not UNSET:
+            field_dict["value"] = value
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.series_value_object_dto import SeriesValueObjectDTO
-        from ..models.single_time_series_view_bucket import SingleTimeSeriesViewBucket
 
         d = src_dict.copy()
-        interpolation = d.pop("interpolation")
+        completion_ratio = d.pop("completionRatio")
 
-        x = d.pop("x")
+        is_preview = d.pop("isPreview")
 
-        _bucket = d.pop("bucket", UNSET)
-        bucket: Union[Unset, SingleTimeSeriesViewBucket]
-        if isinstance(_bucket, Unset):
-            bucket = UNSET
-        else:
-            bucket = SingleTimeSeriesViewBucket.from_dict(_bucket)
+        step = d.pop("step")
+
+        timestamp_millis = d.pop("timestampMillis")
 
         _object_ = d.pop("object", UNSET)
         object_: Union[Unset, SeriesValueObjectDTO]
@@ -113,18 +110,19 @@ class Point:
         else:
             object_ = SeriesValueObjectDTO.from_dict(_object_)
 
-        y = d.pop("y", UNSET)
+        value = d.pop("value", UNSET)
 
-        point = cls(
-            interpolation=interpolation,
-            x=x,
-            bucket=bucket,
+        series_point_dto = cls(
+            completion_ratio=completion_ratio,
+            is_preview=is_preview,
+            step=step,
+            timestamp_millis=timestamp_millis,
             object_=object_,
-            y=y,
+            value=value,
         )
 
-        point.additional_properties = d
-        return point
+        series_point_dto.additional_properties = d
+        return series_point_dto
 
     @property
     def additional_keys(self) -> List[str]:

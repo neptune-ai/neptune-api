@@ -26,6 +26,7 @@ from typing import (
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.attribute_type_dto import AttributeTypeDTO
 from ..types import (
     UNSET,
     Unset,
@@ -51,6 +52,7 @@ class View:
         from_ (Union[Unset, float]):
         point_filters (Union[Unset, PointFilters]):
         to (Union[Unset, float]):
+        types (Union[Unset, List[AttributeTypeDTO]]):
     """
 
     max_unique_x: int
@@ -60,6 +62,7 @@ class View:
     from_: Union[Unset, float] = UNSET
     point_filters: Union[Unset, "PointFilters"] = UNSET
     to: Union[Unset, float] = UNSET
+    types: Union[Unset, List[AttributeTypeDTO]] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -79,6 +82,13 @@ class View:
 
         to = self.to
 
+        types: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.types, Unset):
+            types = []
+            for types_item_data in self.types:
+                types_item = types_item_data.value
+                types.append(types_item)
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -95,6 +105,8 @@ class View:
             field_dict["pointFilters"] = point_filters
         if to is not UNSET:
             field_dict["to"] = to
+        if types is not UNSET:
+            field_dict["types"] = types
 
         return field_dict
 
@@ -124,6 +136,15 @@ class View:
 
         to = d.pop("to", UNSET)
 
+        types: Union[Unset, List[AttributeTypeDTO]] = UNSET
+        _types = d.pop("types", UNSET)
+        if not isinstance(_types, Unset):
+            types = []
+            for types_item_data in _types:
+                types_item = AttributeTypeDTO(types_item_data)
+
+                types.append(types_item)
+
         view = cls(
             max_unique_x=max_unique_x,
             plot_mode=plot_mode,
@@ -132,6 +153,7 @@ class View:
             from_=from_,
             point_filters=point_filters,
             to=to,
+            types=types,
         )
 
         view.additional_properties = d

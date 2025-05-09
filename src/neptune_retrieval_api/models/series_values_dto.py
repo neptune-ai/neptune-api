@@ -26,20 +26,20 @@ from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 if TYPE_CHECKING:
-    from ..models.string_series_value_dto import StringSeriesValueDTO
+    from ..models.series_point_dto import SeriesPointDTO
 
 
-T = TypeVar("T", bound="StringSeriesValuesResponseDTO")
+T = TypeVar("T", bound="SeriesValuesDTO")
 
 
 @_attrs_define
-class StringSeriesValuesResponseDTO:
+class SeriesValuesDTO:
     """
     Attributes:
-        values (List['StringSeriesValueDTO']):
+        values (List['SeriesPointDTO']):
     """
 
-    values: List["StringSeriesValueDTO"]
+    values: List["SeriesPointDTO"]
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -60,22 +60,22 @@ class StringSeriesValuesResponseDTO:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.string_series_value_dto import StringSeriesValueDTO
+        from ..models.series_point_dto import SeriesPointDTO
 
         d = src_dict.copy()
         values = []
         _values = d.pop("values")
         for values_item_data in _values:
-            values_item = StringSeriesValueDTO.from_dict(values_item_data)
+            values_item = SeriesPointDTO.from_dict(values_item_data)
 
             values.append(values_item)
 
-        string_series_values_response_dto = cls(
+        series_values_dto = cls(
             values=values,
         )
 
-        string_series_values_response_dto.additional_properties = d
-        return string_series_values_response_dto
+        series_values_dto.additional_properties = d
+        return series_values_dto
 
     @property
     def additional_keys(self) -> List[str]:
