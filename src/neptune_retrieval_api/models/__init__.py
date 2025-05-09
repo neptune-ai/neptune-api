@@ -86,6 +86,7 @@ from .file_attribute_dto import FileAttributeDTO
 from .file_entry import FileEntry
 from .file_entry_file_type import FileEntryFileType
 from .file_ref_attribute_dto import FileRefAttributeDTO
+from .file_ref_series_value_object_dto import FileRefSeriesValueObjectDTO
 from .file_set_attribute_dto import FileSetAttributeDTO
 from .filter_query_attribute_definitions_dto import FilterQueryAttributeDefinitionsDTO
 from .float_attribute_dto import FloatAttributeDTO
@@ -106,6 +107,7 @@ from .get_string_series_values_csv_expected_content_disposition import (
 )
 from .git_commit_dto import GitCommitDTO
 from .git_info_dto import GitInfoDTO
+from .histogram_series_value_object_dto import HistogramSeriesValueObjectDTO
 from .image import Image
 from .image_series_attribute_dto import ImageSeriesAttributeDTO
 from .image_series_values_dto import ImageSeriesValuesDTO
@@ -251,6 +253,9 @@ from .search_attributes_style_settings_params_dto import SearchAttributesStyleSe
 from .search_leaderboard_entries_params_dto import SearchLeaderboardEntriesParamsDTO
 from .search_leaderboard_params_dto import SearchLeaderboardParamsDTO
 from .search_leaderboard_tags_attribute_path import SearchLeaderboardTagsAttributePath
+from .series_point_dto import SeriesPointDTO
+from .series_value_object_dto import SeriesValueObjectDTO
+from .series_values_dto import SeriesValuesDTO
 from .series_values_request import SeriesValuesRequest
 from .series_values_request_order import SeriesValuesRequestOrder
 from .series_values_request_search_after import SeriesValuesRequestSearchAfter
@@ -270,9 +275,7 @@ from .steps import Steps
 from .string_attribute_dto import StringAttributeDTO
 from .string_point_value_dto import StringPointValueDTO
 from .string_series_attribute_dto import StringSeriesAttributeDTO
-from .string_series_value_dto import StringSeriesValueDTO
 from .string_series_values_dto import StringSeriesValuesDTO
-from .string_series_values_response_dto import StringSeriesValuesResponseDTO
 from .string_set_attribute_dto import StringSetAttributeDTO
 from .system_attributes_dto import SystemAttributesDTO
 from .table_view_params_dto import TableViewParamsDTO
@@ -374,6 +377,7 @@ __all__ = (
     "FileEntry",
     "FileEntryFileType",
     "FileRefAttributeDTO",
+    "FileRefSeriesValueObjectDTO",
     "FileSetAttributeDTO",
     "FilterQueryAttributeDefinitionsDTO",
     "FloatAttributeDTO",
@@ -392,6 +396,7 @@ __all__ = (
     "GetStringSeriesValuesCSVExpectedContentDisposition",
     "GitCommitDTO",
     "GitInfoDTO",
+    "HistogramSeriesValueObjectDTO",
     "Image",
     "ImageSeriesAttributeDTO",
     "ImageSeriesValuesDTO",
@@ -527,6 +532,9 @@ __all__ = (
     "SearchLeaderboardEntriesParamsDTO",
     "SearchLeaderboardParamsDTO",
     "SearchLeaderboardTagsAttributePath",
+    "SeriesPointDTO",
+    "SeriesValueObjectDTO",
+    "SeriesValuesDTO",
     "SeriesValuesRequest",
     "SeriesValuesRequestOrder",
     "SeriesValuesRequestSearchAfter",
@@ -546,9 +554,7 @@ __all__ = (
     "StringAttributeDTO",
     "StringPointValueDTO",
     "StringSeriesAttributeDTO",
-    "StringSeriesValueDTO",
     "StringSeriesValuesDTO",
-    "StringSeriesValuesResponseDTO",
     "StringSetAttributeDTO",
     "SystemAttributesDTO",
     "TableViewParamsDTO",

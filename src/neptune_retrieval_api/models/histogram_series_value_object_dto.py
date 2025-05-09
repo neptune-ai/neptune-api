@@ -19,52 +19,43 @@ from typing import (
     List,
     Type,
     TypeVar,
+    cast,
 )
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="StringSeriesValueDTO")
+T = TypeVar("T", bound="HistogramSeriesValueObjectDTO")
 
 
 @_attrs_define
-class StringSeriesValueDTO:
+class HistogramSeriesValueObjectDTO:
     """
     Attributes:
-        completion_ratio (float):
-        is_preview (bool):
-        step (float):
-        timestamp_millis (int):
-        value (str):
+        bin_values (List[float]):
+        bins_edges (List[float]):
+        type (str):
     """
 
-    completion_ratio: float
-    is_preview: bool
-    step: float
-    timestamp_millis: int
-    value: str
+    bin_values: List[float]
+    bins_edges: List[float]
+    type: str
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        completion_ratio = self.completion_ratio
+        bin_values = self.bin_values
 
-        is_preview = self.is_preview
+        bins_edges = self.bins_edges
 
-        step = self.step
-
-        timestamp_millis = self.timestamp_millis
-
-        value = self.value
+        type = self.type
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "completionRatio": completion_ratio,
-                "isPreview": is_preview,
-                "step": step,
-                "timestampMillis": timestamp_millis,
-                "value": value,
+                "binValues": bin_values,
+                "binsEdges": bins_edges,
+                "type": type,
             }
         )
 
@@ -73,26 +64,20 @@ class StringSeriesValueDTO:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        completion_ratio = d.pop("completionRatio")
+        bin_values = cast(List[float], d.pop("binValues"))
 
-        is_preview = d.pop("isPreview")
+        bins_edges = cast(List[float], d.pop("binsEdges"))
 
-        step = d.pop("step")
+        type = d.pop("type")
 
-        timestamp_millis = d.pop("timestampMillis")
-
-        value = d.pop("value")
-
-        string_series_value_dto = cls(
-            completion_ratio=completion_ratio,
-            is_preview=is_preview,
-            step=step,
-            timestamp_millis=timestamp_millis,
-            value=value,
+        histogram_series_value_object_dto = cls(
+            bin_values=bin_values,
+            bins_edges=bins_edges,
+            type=type,
         )
 
-        string_series_value_dto.additional_properties = d
-        return string_series_value_dto
+        histogram_series_value_object_dto.additional_properties = d
+        return histogram_series_value_object_dto
 
     @property
     def additional_keys(self) -> List[str]:

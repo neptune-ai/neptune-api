@@ -76,6 +76,14 @@ class _IngestCodeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._Enu
     'String Set value is too long. Maximum length is 1MiB.'
     FILE_REF_EXCEEDS_SIZE_LIMIT: _IngestCode.ValueType
     'File Ref value is too long. Maximum length is 4KiB.'
+    HISTOGRAM_BIN_EDGES_CONTAINS_NAN: _IngestCode.ValueType
+    'Histogram must not contain `NaN` values.'
+    HISTOGRAM_TOO_MANY_BINS: _IngestCode.ValueType
+    'Max allowed size of bin_edges array is 513 elements, which corresponds to 512 bins.'
+    HISTOGRAM_BIN_EDGES_NOT_INCREASING: _IngestCode.ValueType
+    'Bins must be increasing monotonically.'
+    HISTOGRAM_VALUES_LENGTH_DOESNT_MATCH_BINS: _IngestCode.ValueType
+    'Histogram values and bins arrays are not matching.\n    Following must always be true: `assert len(values) == len(bins) - 1`.\n    '
     INGEST_SUSPENDED: _IngestCode.ValueType
     'Ingest is currently suspended'
     INTERNAL: _IngestCode.ValueType
@@ -135,6 +143,14 @@ STRING_SET_EXCEEDS_SIZE_LIMIT: IngestCode.ValueType
 'String Set value is too long. Maximum length is 1MiB.'
 FILE_REF_EXCEEDS_SIZE_LIMIT: IngestCode.ValueType
 'File Ref value is too long. Maximum length is 4KiB.'
+HISTOGRAM_BIN_EDGES_CONTAINS_NAN: IngestCode.ValueType
+'Histogram must not contain `NaN` values.'
+HISTOGRAM_TOO_MANY_BINS: IngestCode.ValueType
+'Max allowed size of bin_edges array is 513 elements, which corresponds to 512 bins.'
+HISTOGRAM_BIN_EDGES_NOT_INCREASING: IngestCode.ValueType
+'Bins must be increasing monotonically.'
+HISTOGRAM_VALUES_LENGTH_DOESNT_MATCH_BINS: IngestCode.ValueType
+'Histogram values and bins arrays are not matching.\nFollowing must always be true: `assert len(values) == len(bins) - 1`.\n'
 INGEST_SUSPENDED: IngestCode.ValueType
 'Ingest is currently suspended'
 INTERNAL: IngestCode.ValueType

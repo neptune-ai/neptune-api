@@ -29,18 +29,30 @@ from ...client import (
     Client,
 )
 from ...models.series_values_request import SeriesValuesRequest
-from ...types import Response
+from ...types import (
+    UNSET,
+    Response,
+    Unset,
+)
 
 
 def _get_kwargs(
     *,
     body: SeriesValuesRequest,
+    use_deprecated_string_fields: Union[Unset, bool] = True,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
+
+    params: Dict[str, Any] = {}
+
+    params["useDeprecatedStringFields"] = use_deprecated_string_fields
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: Dict[str, Any] = {
         "method": "post",
         "url": "/api/leaderboard/v1/attributes/series",
+        "params": params,
     }
 
     _body = body.to_dict()
@@ -88,10 +100,12 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: SeriesValuesRequest,
+    use_deprecated_string_fields: Union[Unset, bool] = True,
 ) -> Response[Any]:
     """Get series values
 
     Args:
+        use_deprecated_string_fields (Union[Unset, bool]):  Default: True.
         body (SeriesValuesRequest):
 
     Raises:
@@ -104,6 +118,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         body=body,
+        use_deprecated_string_fields=use_deprecated_string_fields,
     )
 
     response = client.get_httpx_client().request(
@@ -117,10 +132,12 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: SeriesValuesRequest,
+    use_deprecated_string_fields: Union[Unset, bool] = True,
 ) -> Response[Any]:
     """Get series values
 
     Args:
+        use_deprecated_string_fields (Union[Unset, bool]):  Default: True.
         body (SeriesValuesRequest):
 
     Raises:
@@ -133,6 +150,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         body=body,
+        use_deprecated_string_fields=use_deprecated_string_fields,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)

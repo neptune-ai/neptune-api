@@ -32,8 +32,8 @@ from ..types import (
 )
 
 if TYPE_CHECKING:
+    from ..models.series_values_dto import SeriesValuesDTO
     from ..models.series_values_request_search_after import SeriesValuesRequestSearchAfter
-    from ..models.string_series_values_response_dto import StringSeriesValuesResponseDTO
 
 
 T = TypeVar("T", bound="SingleSeriesValuesResponseDTO")
@@ -45,12 +45,14 @@ class SingleSeriesValuesResponseDTO:
     Attributes:
         request_id (str):
         search_after (Union[Unset, SeriesValuesRequestSearchAfter]):
-        string_series (Union[Unset, StringSeriesValuesResponseDTO]):
+        series (Union[Unset, SeriesValuesDTO]):
+        string_series (Union[Unset, SeriesValuesDTO]):
     """
 
     request_id: str
     search_after: Union[Unset, "SeriesValuesRequestSearchAfter"] = UNSET
-    string_series: Union[Unset, "StringSeriesValuesResponseDTO"] = UNSET
+    series: Union[Unset, "SeriesValuesDTO"] = UNSET
+    string_series: Union[Unset, "SeriesValuesDTO"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -59,6 +61,10 @@ class SingleSeriesValuesResponseDTO:
         search_after: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.search_after, Unset):
             search_after = self.search_after.to_dict()
+
+        series: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.series, Unset):
+            series = self.series.to_dict()
 
         string_series: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.string_series, Unset):
@@ -73,6 +79,8 @@ class SingleSeriesValuesResponseDTO:
         )
         if search_after is not UNSET:
             field_dict["searchAfter"] = search_after
+        if series is not UNSET:
+            field_dict["series"] = series
         if string_series is not UNSET:
             field_dict["stringSeries"] = string_series
 
@@ -80,8 +88,8 @@ class SingleSeriesValuesResponseDTO:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.series_values_dto import SeriesValuesDTO
         from ..models.series_values_request_search_after import SeriesValuesRequestSearchAfter
-        from ..models.string_series_values_response_dto import StringSeriesValuesResponseDTO
 
         d = src_dict.copy()
         request_id = d.pop("requestId")
@@ -93,16 +101,24 @@ class SingleSeriesValuesResponseDTO:
         else:
             search_after = SeriesValuesRequestSearchAfter.from_dict(_search_after)
 
+        _series = d.pop("series", UNSET)
+        series: Union[Unset, SeriesValuesDTO]
+        if isinstance(_series, Unset):
+            series = UNSET
+        else:
+            series = SeriesValuesDTO.from_dict(_series)
+
         _string_series = d.pop("stringSeries", UNSET)
-        string_series: Union[Unset, StringSeriesValuesResponseDTO]
+        string_series: Union[Unset, SeriesValuesDTO]
         if isinstance(_string_series, Unset):
             string_series = UNSET
         else:
-            string_series = StringSeriesValuesResponseDTO.from_dict(_string_series)
+            string_series = SeriesValuesDTO.from_dict(_string_series)
 
         single_series_values_response_dto = cls(
             request_id=request_id,
             search_after=search_after,
+            series=series,
             string_series=string_series,
         )
 
