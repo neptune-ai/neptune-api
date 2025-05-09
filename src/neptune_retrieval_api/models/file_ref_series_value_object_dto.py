@@ -14,7 +14,6 @@
 # limitations under the License.
 
 from typing import (
-    TYPE_CHECKING,
     Any,
     Dict,
     List,
@@ -25,34 +24,37 @@ from typing import (
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-if TYPE_CHECKING:
-    from ..models.string_series_value_dto import StringSeriesValueDTO
-
-
-T = TypeVar("T", bound="StringSeriesValuesResponseDTO")
+T = TypeVar("T", bound="FileRefSeriesValueObjectDTO")
 
 
 @_attrs_define
-class StringSeriesValuesResponseDTO:
+class FileRefSeriesValueObjectDTO:
     """
     Attributes:
-        values (List['StringSeriesValueDTO']):
+        mime_type (str):
+        path (str):
+        size (int):
     """
 
-    values: List["StringSeriesValueDTO"]
+    mime_type: str
+    path: str
+    size: int
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        values = []
-        for values_item_data in self.values:
-            values_item = values_item_data.to_dict()
-            values.append(values_item)
+        mime_type = self.mime_type
+
+        path = self.path
+
+        size = self.size
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "values": values,
+                "mimeType": mime_type,
+                "path": path,
+                "size": size,
             }
         )
 
@@ -60,22 +62,21 @@ class StringSeriesValuesResponseDTO:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.string_series_value_dto import StringSeriesValueDTO
-
         d = src_dict.copy()
-        values = []
-        _values = d.pop("values")
-        for values_item_data in _values:
-            values_item = StringSeriesValueDTO.from_dict(values_item_data)
+        mime_type = d.pop("mimeType")
 
-            values.append(values_item)
+        path = d.pop("path")
 
-        string_series_values_response_dto = cls(
-            values=values,
+        size = d.pop("size")
+
+        file_ref_series_value_object_dto = cls(
+            mime_type=mime_type,
+            path=path,
+            size=size,
         )
 
-        string_series_values_response_dto.additional_properties = d
-        return string_series_values_response_dto
+        file_ref_series_value_object_dto.additional_properties = d
+        return file_ref_series_value_object_dto
 
     @property
     def additional_keys(self) -> List[str]:
