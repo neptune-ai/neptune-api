@@ -3,7 +3,7 @@
 ## Generating code from .proto files
 
 ```commandline
-scripts/generate-all-proto.sh /path/to/proto/files
+scripts/generate-proto.sh
 ```
 
 This command builds and runs two separate docker containers that generate protobuf code
