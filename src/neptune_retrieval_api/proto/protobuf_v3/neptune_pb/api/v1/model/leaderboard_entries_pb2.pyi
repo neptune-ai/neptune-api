@@ -7,6 +7,7 @@ import collections.abc
 import google.protobuf.descriptor
 import google.protobuf.internal.containers
 import google.protobuf.message
+from ..... import neptune_pb
 import sys
 import typing
 if sys.version_info >= (3, 8):
@@ -80,6 +81,8 @@ class ProtoAttributeDTO(google.protobuf.message.Message):
     FLOAT_SERIES_PROPERTIES_FIELD_NUMBER: builtins.int
     FILE_REF_PROPERTIES_FIELD_NUMBER: builtins.int
     STRING_SERIES_PROPERTIES_FIELD_NUMBER: builtins.int
+    FILE_REF_SERIES_PROPERTIES_FIELD_NUMBER: builtins.int
+    HISTOGRAM_SERIES_PROPERTIES_FIELD_NUMBER: builtins.int
     name: builtins.str
     type: builtins.str
 
@@ -119,13 +122,21 @@ class ProtoAttributeDTO(google.protobuf.message.Message):
     def string_series_properties(self) -> global___ProtoStringSeriesAttributeDTO:
         ...
 
-    def __init__(self, *, name: builtins.str=..., type: builtins.str=..., int_properties: global___ProtoIntAttributeDTO | None=..., float_properties: global___ProtoFloatAttributeDTO | None=..., string_properties: global___ProtoStringAttributeDTO | None=..., bool_properties: global___ProtoBoolAttributeDTO | None=..., datetime_properties: global___ProtoDatetimeAttributeDTO | None=..., string_set_properties: global___ProtoStringSetAttributeDTO | None=..., float_series_properties: global___ProtoFloatSeriesAttributeDTO | None=..., file_ref_properties: global___ProtoFileRefAttributeDTO | None=..., string_series_properties: global___ProtoStringSeriesAttributeDTO | None=...) -> None:
+    @property
+    def file_ref_series_properties(self) -> global___ProtoFileRefSeriesAttributeDTO:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['_bool_properties', b'_bool_properties', '_datetime_properties', b'_datetime_properties', '_file_ref_properties', b'_file_ref_properties', '_float_properties', b'_float_properties', '_float_series_properties', b'_float_series_properties', '_int_properties', b'_int_properties', '_string_properties', b'_string_properties', '_string_series_properties', b'_string_series_properties', '_string_set_properties', b'_string_set_properties', 'bool_properties', b'bool_properties', 'datetime_properties', b'datetime_properties', 'file_ref_properties', b'file_ref_properties', 'float_properties', b'float_properties', 'float_series_properties', b'float_series_properties', 'int_properties', b'int_properties', 'string_properties', b'string_properties', 'string_series_properties', b'string_series_properties', 'string_set_properties', b'string_set_properties']) -> builtins.bool:
+    @property
+    def histogram_series_properties(self) -> global___ProtoHistogramSeriesAttributeDTO:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['_bool_properties', b'_bool_properties', '_datetime_properties', b'_datetime_properties', '_file_ref_properties', b'_file_ref_properties', '_float_properties', b'_float_properties', '_float_series_properties', b'_float_series_properties', '_int_properties', b'_int_properties', '_string_properties', b'_string_properties', '_string_series_properties', b'_string_series_properties', '_string_set_properties', b'_string_set_properties', 'bool_properties', b'bool_properties', 'datetime_properties', b'datetime_properties', 'file_ref_properties', b'file_ref_properties', 'float_properties', b'float_properties', 'float_series_properties', b'float_series_properties', 'int_properties', b'int_properties', 'name', b'name', 'string_properties', b'string_properties', 'string_series_properties', b'string_series_properties', 'string_set_properties', b'string_set_properties', 'type', b'type']) -> None:
+    def __init__(self, *, name: builtins.str=..., type: builtins.str=..., int_properties: global___ProtoIntAttributeDTO | None=..., float_properties: global___ProtoFloatAttributeDTO | None=..., string_properties: global___ProtoStringAttributeDTO | None=..., bool_properties: global___ProtoBoolAttributeDTO | None=..., datetime_properties: global___ProtoDatetimeAttributeDTO | None=..., string_set_properties: global___ProtoStringSetAttributeDTO | None=..., float_series_properties: global___ProtoFloatSeriesAttributeDTO | None=..., file_ref_properties: global___ProtoFileRefAttributeDTO | None=..., string_series_properties: global___ProtoStringSeriesAttributeDTO | None=..., file_ref_series_properties: global___ProtoFileRefSeriesAttributeDTO | None=..., histogram_series_properties: global___ProtoHistogramSeriesAttributeDTO | None=...) -> None:
+        ...
+
+    def HasField(self, field_name: typing_extensions.Literal['_bool_properties', b'_bool_properties', '_datetime_properties', b'_datetime_properties', '_file_ref_properties', b'_file_ref_properties', '_file_ref_series_properties', b'_file_ref_series_properties', '_float_properties', b'_float_properties', '_float_series_properties', b'_float_series_properties', '_histogram_series_properties', b'_histogram_series_properties', '_int_properties', b'_int_properties', '_string_properties', b'_string_properties', '_string_series_properties', b'_string_series_properties', '_string_set_properties', b'_string_set_properties', 'bool_properties', b'bool_properties', 'datetime_properties', b'datetime_properties', 'file_ref_properties', b'file_ref_properties', 'file_ref_series_properties', b'file_ref_series_properties', 'float_properties', b'float_properties', 'float_series_properties', b'float_series_properties', 'histogram_series_properties', b'histogram_series_properties', 'int_properties', b'int_properties', 'string_properties', b'string_properties', 'string_series_properties', b'string_series_properties', 'string_set_properties', b'string_set_properties']) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['_bool_properties', b'_bool_properties', '_datetime_properties', b'_datetime_properties', '_file_ref_properties', b'_file_ref_properties', '_file_ref_series_properties', b'_file_ref_series_properties', '_float_properties', b'_float_properties', '_float_series_properties', b'_float_series_properties', '_histogram_series_properties', b'_histogram_series_properties', '_int_properties', b'_int_properties', '_string_properties', b'_string_properties', '_string_series_properties', b'_string_series_properties', '_string_set_properties', b'_string_set_properties', 'bool_properties', b'bool_properties', 'datetime_properties', b'datetime_properties', 'file_ref_properties', b'file_ref_properties', 'file_ref_series_properties', b'file_ref_series_properties', 'float_properties', b'float_properties', 'float_series_properties', b'float_series_properties', 'histogram_series_properties', b'histogram_series_properties', 'int_properties', b'int_properties', 'name', b'name', 'string_properties', b'string_properties', 'string_series_properties', b'string_series_properties', 'string_set_properties', b'string_set_properties', 'type', b'type']) -> None:
         ...
 
     @typing.overload
@@ -141,11 +152,19 @@ class ProtoAttributeDTO(google.protobuf.message.Message):
         ...
 
     @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_file_ref_series_properties', b'_file_ref_series_properties']) -> typing_extensions.Literal['file_ref_series_properties'] | None:
+        ...
+
+    @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal['_float_properties', b'_float_properties']) -> typing_extensions.Literal['float_properties'] | None:
         ...
 
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal['_float_series_properties', b'_float_series_properties']) -> typing_extensions.Literal['float_series_properties'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_histogram_series_properties', b'_histogram_series_properties']) -> typing_extensions.Literal['histogram_series_properties'] | None:
         ...
 
     @typing.overload
@@ -403,3 +422,67 @@ class ProtoStringSeriesAttributeDTO(google.protobuf.message.Message):
     def WhichOneof(self, oneof_group: typing_extensions.Literal['_last_step', b'_last_step']) -> typing_extensions.Literal['last_step'] | None:
         ...
 global___ProtoStringSeriesAttributeDTO = ProtoStringSeriesAttributeDTO
+
+class ProtoFileRefSeriesAttributeDTO(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    ATTRIBUTE_NAME_FIELD_NUMBER: builtins.int
+    ATTRIBUTE_TYPE_FIELD_NUMBER: builtins.int
+    LAST_STEP_FIELD_NUMBER: builtins.int
+    LAST_FIELD_NUMBER: builtins.int
+    attribute_name: builtins.str
+    attribute_type: builtins.str
+    last_step: builtins.float
+
+    @property
+    def last(self) -> neptune_pb.api.v1.model.series_values_pb2.ProtoFileRef:
+        ...
+
+    def __init__(self, *, attribute_name: builtins.str=..., attribute_type: builtins.str=..., last_step: builtins.float | None=..., last: neptune_pb.api.v1.model.series_values_pb2.ProtoFileRef | None=...) -> None:
+        ...
+
+    def HasField(self, field_name: typing_extensions.Literal['_last', b'_last', '_last_step', b'_last_step', 'last', b'last', 'last_step', b'last_step']) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['_last', b'_last', '_last_step', b'_last_step', 'attribute_name', b'attribute_name', 'attribute_type', b'attribute_type', 'last', b'last', 'last_step', b'last_step']) -> None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_last', b'_last']) -> typing_extensions.Literal['last'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_last_step', b'_last_step']) -> typing_extensions.Literal['last_step'] | None:
+        ...
+global___ProtoFileRefSeriesAttributeDTO = ProtoFileRefSeriesAttributeDTO
+
+class ProtoHistogramSeriesAttributeDTO(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    ATTRIBUTE_NAME_FIELD_NUMBER: builtins.int
+    ATTRIBUTE_TYPE_FIELD_NUMBER: builtins.int
+    LAST_STEP_FIELD_NUMBER: builtins.int
+    LAST_FIELD_NUMBER: builtins.int
+    attribute_name: builtins.str
+    attribute_type: builtins.str
+    last_step: builtins.float
+
+    @property
+    def last(self) -> neptune_pb.api.v1.model.series_values_pb2.ProtoHistogram:
+        ...
+
+    def __init__(self, *, attribute_name: builtins.str=..., attribute_type: builtins.str=..., last_step: builtins.float | None=..., last: neptune_pb.api.v1.model.series_values_pb2.ProtoHistogram | None=...) -> None:
+        ...
+
+    def HasField(self, field_name: typing_extensions.Literal['_last', b'_last', '_last_step', b'_last_step', 'last', b'last', 'last_step', b'last_step']) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['_last', b'_last', '_last_step', b'_last_step', 'attribute_name', b'attribute_name', 'attribute_type', b'attribute_type', 'last', b'last', 'last_step', b'last_step']) -> None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_last', b'_last']) -> typing_extensions.Literal['last'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_last_step', b'_last_step']) -> typing_extensions.Literal['last_step'] | None:
+        ...
+global___ProtoHistogramSeriesAttributeDTO = ProtoHistogramSeriesAttributeDTO

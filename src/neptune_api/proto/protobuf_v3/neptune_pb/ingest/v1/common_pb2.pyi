@@ -119,6 +119,102 @@ class FileRef(google.protobuf.message.Message):
         ...
 global___FileRef = FileRef
 
+class Histogram(google.protobuf.message.Message):
+    """Histogram represents a histogram with explicit bin edges."""
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    class Counts(google.protobuf.message.Message):
+        """Counts holds the number of entries in each bin."""
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+        VALUES_FIELD_NUMBER: builtins.int
+
+        @property
+        def values(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.int]:
+            ...
+
+        def __init__(self, *, values: collections.abc.Iterable[builtins.int] | None=...) -> None:
+            ...
+
+        def ClearField(self, field_name: typing_extensions.Literal['values', b'values']) -> None:
+            ...
+
+    class Densities(google.protobuf.message.Message):
+        """Densities holds the density (or weight) for each bin."""
+        DESCRIPTOR: google.protobuf.descriptor.Descriptor
+        VALUES_FIELD_NUMBER: builtins.int
+
+        @property
+        def values(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.float]:
+            ...
+
+        def __init__(self, *, values: collections.abc.Iterable[builtins.float] | None=...) -> None:
+            ...
+
+        def ClearField(self, field_name: typing_extensions.Literal['values', b'values']) -> None:
+            ...
+    BIN_EDGES_FIELD_NUMBER: builtins.int
+    COUNTS_FIELD_NUMBER: builtins.int
+    DENSITIES_FIELD_NUMBER: builtins.int
+
+    @property
+    def bin_edges(self) -> google.protobuf.internal.containers.RepeatedScalarFieldContainer[builtins.float]:
+        """bin_edges is a sorted list of boundary values defining the histogram bins.
+        Each bin is determined as follows:
+          - For i in [0..(len(bin_edges) - 2)], the bin spans [bin_edges[i], bin_edges[i+1}).
+          - The final bin spans [bin_edges[-2], bin_edges[-1]] (closed interval).
+
+        bin_edges must not contain NaN values. Infinity (-∞ or +∞) is allowed at the boundaries
+        to create unbounded bins. For example:
+            bin_edges = [0, 1, 2, 4, 8, +∞]
+          describes 5 bins:
+            [0,1), [1,2), [2,4), [4,8), [8,+∞]
+        """
+
+    @property
+    def counts(self) -> global___Histogram.Counts:
+        """counts specifies the total number of occurrences in each bin.
+        The length of counts.values must be bin_edges.length - 1.
+
+        Example:
+          counts.values = [1, 4, 3, 0, 2]
+          represents:
+            Range      Count   Bars
+            [0,1)         1      #
+            [1,2)         4      ####
+            [2,4)         3      ###
+            [4,8)         0
+            [8,+∞]        2      ##
+        """
+
+    @property
+    def densities(self) -> global___Histogram.Densities:
+        """densities specifies the density for each bin.
+        The length of densities.values must be bin_edges.length - 1.
+
+        Example:
+          densities.values = [0.1, 0.4, 0.15, 0.0, 0.0]
+          represents:
+            Range      Density   Bars
+            [0,1)       0.1       #
+            [1,2)       0.4       ####
+            [2,4)       0.15      ##
+            [4,8)       0.0
+            [8,+∞]      0.0
+        """
+
+    def __init__(self, *, bin_edges: collections.abc.Iterable[builtins.float] | None=..., counts: global___Histogram.Counts | None=..., densities: global___Histogram.Densities | None=...) -> None:
+        ...
+
+    def HasField(self, field_name: typing_extensions.Literal['counts', b'counts', 'densities', b'densities', 'values', b'values']) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['bin_edges', b'bin_edges', 'counts', b'counts', 'densities', b'densities', 'values', b'values']) -> None:
+        ...
+
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['values', b'values']) -> typing_extensions.Literal['counts', 'densities'] | None:
+        ...
+global___Histogram = Histogram
+
 class Value(google.protobuf.message.Message):
     """Value is a union of all supported types that can be used to update a field.
     Different types of operations support different subset of this field, so please refer to the documentation.
@@ -131,6 +227,7 @@ class Value(google.protobuf.message.Message):
     TIMESTAMP_FIELD_NUMBER: builtins.int
     STRING_SET_FIELD_NUMBER: builtins.int
     FILE_REF_FIELD_NUMBER: builtins.int
+    HISTOGRAM_FIELD_NUMBER: builtins.int
     float64: builtins.float
     int64: builtins.int
     bool: builtins.bool
@@ -148,16 +245,20 @@ class Value(google.protobuf.message.Message):
     def file_ref(self) -> global___FileRef:
         ...
 
-    def __init__(self, *, float64: builtins.float=..., int64: builtins.int=..., bool: builtins.bool=..., string: builtins.str=..., timestamp: google.protobuf.timestamp_pb2.Timestamp | None=..., string_set: global___StringSet | None=..., file_ref: global___FileRef | None=...) -> None:
+    @property
+    def histogram(self) -> global___Histogram:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['bool', b'bool', 'file_ref', b'file_ref', 'float64', b'float64', 'int64', b'int64', 'string', b'string', 'string_set', b'string_set', 'timestamp', b'timestamp', 'value', b'value']) -> builtins.bool:
+    def __init__(self, *, float64: builtins.float=..., int64: builtins.int=..., bool: builtins.bool=..., string: builtins.str=..., timestamp: google.protobuf.timestamp_pb2.Timestamp | None=..., string_set: global___StringSet | None=..., file_ref: global___FileRef | None=..., histogram: global___Histogram | None=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['bool', b'bool', 'file_ref', b'file_ref', 'float64', b'float64', 'int64', b'int64', 'string', b'string', 'string_set', b'string_set', 'timestamp', b'timestamp', 'value', b'value']) -> None:
+    def HasField(self, field_name: typing_extensions.Literal['bool', b'bool', 'file_ref', b'file_ref', 'float64', b'float64', 'histogram', b'histogram', 'int64', b'int64', 'string', b'string', 'string_set', b'string_set', 'timestamp', b'timestamp', 'value', b'value']) -> builtins.bool:
         ...
 
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['value', b'value']) -> typing_extensions.Literal['float64', 'int64', 'bool', 'string', 'timestamp', 'string_set', 'file_ref'] | None:
+    def ClearField(self, field_name: typing_extensions.Literal['bool', b'bool', 'file_ref', b'file_ref', 'float64', b'float64', 'histogram', b'histogram', 'int64', b'int64', 'string', b'string', 'string_set', b'string_set', 'timestamp', b'timestamp', 'value', b'value']) -> None:
+        ...
+
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['value', b'value']) -> typing_extensions.Literal['float64', 'int64', 'bool', 'string', 'timestamp', 'string_set', 'file_ref', 'histogram'] | None:
         ...
 global___Value = Value
 

@@ -19,80 +19,70 @@ from typing import (
     List,
     Type,
     TypeVar,
+    Union,
 )
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="StringSeriesValueDTO")
+from ..types import (
+    UNSET,
+    Unset,
+)
+
+T = TypeVar("T", bound="FileRefDTO")
 
 
 @_attrs_define
-class StringSeriesValueDTO:
+class FileRefDTO:
     """
     Attributes:
-        completion_ratio (float):
-        is_preview (bool):
-        step (float):
-        timestamp_millis (int):
-        value (str):
+        mime_type (Union[Unset, str]):
+        path (Union[Unset, str]):
+        size_bytes (Union[Unset, int]):
     """
 
-    completion_ratio: float
-    is_preview: bool
-    step: float
-    timestamp_millis: int
-    value: str
+    mime_type: Union[Unset, str] = UNSET
+    path: Union[Unset, str] = UNSET
+    size_bytes: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        completion_ratio = self.completion_ratio
+        mime_type = self.mime_type
 
-        is_preview = self.is_preview
+        path = self.path
 
-        step = self.step
-
-        timestamp_millis = self.timestamp_millis
-
-        value = self.value
+        size_bytes = self.size_bytes
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "completionRatio": completion_ratio,
-                "isPreview": is_preview,
-                "step": step,
-                "timestampMillis": timestamp_millis,
-                "value": value,
-            }
-        )
+        field_dict.update({})
+        if mime_type is not UNSET:
+            field_dict["mimeType"] = mime_type
+        if path is not UNSET:
+            field_dict["path"] = path
+        if size_bytes is not UNSET:
+            field_dict["sizeBytes"] = size_bytes
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        completion_ratio = d.pop("completionRatio")
+        mime_type = d.pop("mimeType", UNSET)
 
-        is_preview = d.pop("isPreview")
+        path = d.pop("path", UNSET)
 
-        step = d.pop("step")
+        size_bytes = d.pop("sizeBytes", UNSET)
 
-        timestamp_millis = d.pop("timestampMillis")
-
-        value = d.pop("value")
-
-        string_series_value_dto = cls(
-            completion_ratio=completion_ratio,
-            is_preview=is_preview,
-            step=step,
-            timestamp_millis=timestamp_millis,
-            value=value,
+        file_ref_dto = cls(
+            mime_type=mime_type,
+            path=path,
+            size_bytes=size_bytes,
         )
 
-        string_series_value_dto.additional_properties = d
-        return string_series_value_dto
+        file_ref_dto.additional_properties = d
+        return file_ref_dto
 
     @property
     def additional_keys(self) -> List[str]:

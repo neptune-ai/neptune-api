@@ -32,20 +32,30 @@ from ...client import (
 )
 from ...models.series_values_request import SeriesValuesRequest
 from ...types import (
+    UNSET,
     File,
     Response,
+    Unset,
 )
 
 
 def _get_kwargs(
     *,
     body: SeriesValuesRequest,
+    use_deprecated_string_fields: Union[Unset, bool] = True,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
+
+    params: Dict[str, Any] = {}
+
+    params["useDeprecatedStringFields"] = use_deprecated_string_fields
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: Dict[str, Any] = {
         "method": "post",
         "url": "/api/leaderboard/v1/proto/attributes/series",
+        "params": params,
     }
 
     _body = body.to_dict()
@@ -109,10 +119,12 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: SeriesValuesRequest,
+    use_deprecated_string_fields: Union[Unset, bool] = True,
 ) -> Response[Union[Any, File]]:
     """Get series values
 
     Args:
+        use_deprecated_string_fields (Union[Unset, bool]):  Default: True.
         body (SeriesValuesRequest):
 
     Raises:
@@ -125,6 +137,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         body=body,
+        use_deprecated_string_fields=use_deprecated_string_fields,
     )
 
     response = client.get_httpx_client().request(
@@ -138,10 +151,12 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     body: SeriesValuesRequest,
+    use_deprecated_string_fields: Union[Unset, bool] = True,
 ) -> Optional[Union[Any, File]]:
     """Get series values
 
     Args:
+        use_deprecated_string_fields (Union[Unset, bool]):  Default: True.
         body (SeriesValuesRequest):
 
     Raises:
@@ -155,6 +170,7 @@ def sync(
     return sync_detailed(
         client=client,
         body=body,
+        use_deprecated_string_fields=use_deprecated_string_fields,
     ).parsed
 
 
@@ -162,10 +178,12 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: SeriesValuesRequest,
+    use_deprecated_string_fields: Union[Unset, bool] = True,
 ) -> Response[Union[Any, File]]:
     """Get series values
 
     Args:
+        use_deprecated_string_fields (Union[Unset, bool]):  Default: True.
         body (SeriesValuesRequest):
 
     Raises:
@@ -178,6 +196,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         body=body,
+        use_deprecated_string_fields=use_deprecated_string_fields,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -189,10 +208,12 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     body: SeriesValuesRequest,
+    use_deprecated_string_fields: Union[Unset, bool] = True,
 ) -> Optional[Union[Any, File]]:
     """Get series values
 
     Args:
+        use_deprecated_string_fields (Union[Unset, bool]):  Default: True.
         body (SeriesValuesRequest):
 
     Raises:
@@ -207,5 +228,6 @@ async def asyncio(
         await asyncio_detailed(
             client=client,
             body=body,
+            use_deprecated_string_fields=use_deprecated_string_fields,
         )
     ).parsed
