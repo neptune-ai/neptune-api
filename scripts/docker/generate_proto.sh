@@ -11,6 +11,8 @@ if [ -z "${PROTOBUF_SRC_DIR}" ] || [ -z "${OUTPUT_DIR_BASE}" ] || [ -z "${OUTPUT
     exit 1
 fi
 
+mkdir -p "${OUTPUT_DIR_BASE}/neptune_api/proto/$OUTPUT_SUBMODULE_DIR"
+
 python -m grpc_tools.protoc \
   --python_out="${OUTPUT_DIR_BASE}/neptune_api/proto/$OUTPUT_SUBMODULE_DIR" \
   --mypy_out="${OUTPUT_DIR_BASE}/neptune_api/proto/$OUTPUT_SUBMODULE_DIR" \
