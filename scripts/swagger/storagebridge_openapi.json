@@ -1,0 +1,130 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "storagebridge",
+    "description": "",
+    "license": {
+      "name": ""
+    },
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/storagebridge/v1/azure/signedUrl": {
+      "post": {
+        "tags": [
+          "storagebridge"
+        ],
+        "operationId": "signed_url",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSignedUrlsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully signed URLs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSignedUrlsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Unauthorized"
+          },
+          "413": {
+            "description": "Payload Too Large"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateSignedUrlsRequest": {
+        "type": "object",
+        "required": [
+          "files"
+        ],
+        "properties": {
+          "files": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FileToSign"
+            }
+          }
+        }
+      },
+      "CreateSignedUrlsResponse": {
+        "type": "object",
+        "required": [
+          "files"
+        ],
+        "properties": {
+          "files": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SignedFile"
+            }
+          }
+        }
+      },
+      "FileToSign": {
+        "type": "object",
+        "required": [
+          "project_identifier",
+          "path",
+          "permission"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/Permission"
+          },
+          "project_identifier": {
+            "type": "string"
+          }
+        }
+      },
+      "Permission": {
+        "type": "string",
+        "enum": [
+          "read",
+          "write"
+        ]
+      },
+      "SignedFile": {
+        "type": "object",
+        "required": [
+          "project_identifier",
+          "path",
+          "url"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "project_identifier": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package neptune.api.v1.model;
+
+option java_multiple_files = true;
+option java_package = "ml.neptune.leaderboard.api.model.proto.generated";
+
+message ProtoSeriesValuesResponseDTO {
+    repeated ProtoSeriesValuesSingleSeriesResponseDTO series = 1;
+}
+
+message ProtoSeriesValuesSingleSeriesResponseDTO {
+    string requestId = 1;
+    optional ProtoSeriesValuesSearchAfterDTO searchAfter = 2;
+    oneof series {
+        ProtoSeriesValuesDTO string_series = 3; // deprecated
+        ProtoSeriesValuesDTO seriesValues = 4;
+    }
+}
+
+message ProtoSeriesValuesSearchAfterDTO {
+    bool finished = 1;
+    string token = 2;
+}
+
+message ProtoFloatSeriesValuesResponseDTO {
+    repeated ProtoFloatSeriesValuesSingleSeriesResponseDTO series = 1;
+}
+
+message ProtoFloatSeriesValuesSingleSeriesResponseDTO {
+    string requestId = 1;
+    ProtoFloatSeriesValuesDTO series = 2;
+}
+
+message ProtoFloatSeriesValuesDTO {
+    int64 total_item_count = 1;
+    repeated ProtoFloatPointValueDTO values = 2;
+}
+
+message ProtoFloatPointValueDTO {
+    int64 timestamp_millis = 1;
+    double step = 2;
+    double value = 3;
+    bool is_preview = 4;
+    float completion_ratio = 5;
+}
+
+message ProtoSeriesValuesDTO {
+    repeated ProtoPointValueDTO values = 1;
+}
+
+message ProtoPointValueDTO {
+    int64 timestamp_millis = 1;
+    double step = 2;
+    optional string value = 3; //deprecated
+    bool is_preview = 4;
+    float completion_ratio = 5;
+    optional ProtoSeriesPointValueObjectDTO object = 6;
+}
+
+message ProtoSeriesPointValueObjectDTO {
+    oneof value {
+        string stringValue = 1;
+        ProtoHistogram histogram = 2;
+        ProtoFileRef fileRef = 3;
+    }
+}
+
+message ProtoHistogram {
+    string type = 1;
+    repeated double edges = 2;
+    repeated double values = 3;
+}
+
+message ProtoFileRef {
+    string path = 1;
+    int64 sizeBytes = 2;
+    string mimeType = 3;
+}
