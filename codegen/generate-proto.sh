@@ -5,12 +5,7 @@
 
 set -ex
 
-protobuf_source_dir="${1:-}"
-if [ -z "${protobuf_source_dir}" ]; then
-  echo "Usage: $0 <protobuf_src_dir>"
-  exit 1
-fi
-
+protobuf_source_dir="${1:-proto}"
 orig_cwd=$(pwd)
 trap 'cd "$orig_cwd"' exit
 
