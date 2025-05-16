@@ -39,6 +39,6 @@ repos:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
-exclude: "^src/(neptune_api|neptune_retrieval_api)/proto/|^scripts/(swagger|proto)/"
+exclude: "^src/(neptune_api|neptune_retrieval_api)/proto/|^codegen/(swagger|proto)/"
 default_language_version:
     python: python3
