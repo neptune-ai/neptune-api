@@ -1,18 +1,3 @@
-#
-# Copyright (c) 2025, Neptune Labs Sp. z o.o.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 from typing import (
     Any,
     Dict,
@@ -24,11 +9,11 @@ from typing import (
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="RunOperation")
+T = TypeVar("T", bound="ProtoQueryAttributesResultDTO")
 
 
 @_attrs_define
-class RunOperation:
+class ProtoQueryAttributesResultDTO:
     """ """
 
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -42,10 +27,10 @@ class RunOperation:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        run_operation = cls()
+        proto_query_attributes_result_dto = cls()
 
-        run_operation.additional_properties = d
-        return run_operation
+        proto_query_attributes_result_dto.additional_properties = d
+        return proto_query_attributes_result_dto
 
     @property
     def additional_keys(self) -> List[str]:

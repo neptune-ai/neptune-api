@@ -19,7 +19,6 @@ from typing import (
     Dict,
     Optional,
     Union,
-    cast,
 )
 
 import httpx
@@ -29,8 +28,6 @@ from ...client import (
     AuthenticatedClient,
     Client,
 )
-from ...models.error import Error
-from ...models.project_dto import ProjectDTO
 from ...types import (
     UNSET,
     Response,
@@ -56,41 +53,24 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[Any, Error, ProjectDTO]]:
-    if response.status_code == HTTPStatus.OK:
-        response_200 = ProjectDTO.from_dict(response.json())
-
-        return response_200
-    if response.status_code == HTTPStatus.BAD_REQUEST:
-        response_400 = Error.from_dict(response.json())
-
-        return response_400
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
     if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = cast(Any, None)
-        return response_401
+        return None
     if response.status_code == HTTPStatus.FORBIDDEN:
-        response_403 = cast(Any, None)
-        return response_403
+        return None
     if response.status_code == HTTPStatus.NOT_FOUND:
-        response_404 = cast(Any, None)
-        return response_404
+        return None
     if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
-        response_408 = cast(Any, None)
-        return response_408
+        return None
     if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
-        response_422 = cast(Any, None)
-        return response_422
+        return None
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[Any, Error, ProjectDTO]]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[Any]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -103,9 +83,8 @@ def sync_detailed(
     *,
     client: AuthenticatedClient,
     project_identifier: str,
-) -> Response[Union[Any, Error, ProjectDTO]]:
-    """Get Project
-
+) -> Response[Any]:
+    """
     Args:
         project_identifier (str):
 
@@ -114,7 +93,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, Error, ProjectDTO]]
+        Response[Any]
     """
 
     kwargs = _get_kwargs(
@@ -128,37 +107,12 @@ def sync_detailed(
     return _build_response(client=client, response=response)
 
 
-def sync(
-    *,
-    client: AuthenticatedClient,
-    project_identifier: str,
-) -> Optional[Union[Any, Error, ProjectDTO]]:
-    """Get Project
-
-    Args:
-        project_identifier (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[Any, Error, ProjectDTO]
-    """
-
-    return sync_detailed(
-        client=client,
-        project_identifier=project_identifier,
-    ).parsed
-
-
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
     project_identifier: str,
-) -> Response[Union[Any, Error, ProjectDTO]]:
-    """Get Project
-
+) -> Response[Any]:
+    """
     Args:
         project_identifier (str):
 
@@ -167,7 +121,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, Error, ProjectDTO]]
+        Response[Any]
     """
 
     kwargs = _get_kwargs(
@@ -177,29 +131,3 @@ async def asyncio_detailed(
     response = await client.get_async_httpx_client().request(**kwargs)
 
     return _build_response(client=client, response=response)
-
-
-async def asyncio(
-    *,
-    client: AuthenticatedClient,
-    project_identifier: str,
-) -> Optional[Union[Any, Error, ProjectDTO]]:
-    """Get Project
-
-    Args:
-        project_identifier (str):
-
-    Raises:
-        errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
-        httpx.TimeoutException: If the request takes longer than Client.timeout.
-
-    Returns:
-        Union[Any, Error, ProjectDTO]
-    """
-
-    return (
-        await asyncio_detailed(
-            client=client,
-            project_identifier=project_identifier,
-        )
-    ).parsed
