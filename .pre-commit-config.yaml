@@ -1,10 +1,4 @@
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0
-    hooks:
-      - id: check-yaml
-      - id: end-of-file-fixer
-      - id: trailing-whitespace
   - repo: https://github.com/pycqa/isort
     rev: 5.13.2
     hooks:
@@ -39,6 +33,12 @@ repos:
       - id: insert-license
         files: ^src/(neptune_api|neptune_retrieval_api|neptune_storage_api).*[^/]+\.py$
         args: [ "--license-filepath", ".github/license_header.txt", "--allow-past-years"]
-exclude: "^src/(neptune_api|neptune_retrieval_api)/proto/"
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+exclude: "^src/(neptune_api|neptune_retrieval_api)/proto/|^codegen/(swagger|proto)/"
 default_language_version:
     python: python3
