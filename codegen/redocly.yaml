@@ -1,0 +1,17 @@
+apis:
+  neptune:
+    root: tmp/neptune.json
+  backend:
+    root: tmp/backend.json
+    decorators:
+      filter-in:
+        property: operationId
+        value: [ getClientConfig, exchangeApiToken, getProject ]
+  leaderboard:
+    root: tmp/leaderboard.json
+  #    decorators:
+  #      filter-in:
+  #        property: operationId
+  #        value: [ queryAttributesWithinProjectProto ]
+  storage:
+    root: tmp/storage.json
