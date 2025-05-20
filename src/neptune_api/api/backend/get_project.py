@@ -104,8 +104,7 @@ def sync_detailed(
     client: AuthenticatedClient,
     project_identifier: str,
 ) -> Response[Union[Any, Error, ProjectDTO]]:
-    """Get Project
-
+    """
     Args:
         project_identifier (str):
 
@@ -133,8 +132,7 @@ def sync(
     client: AuthenticatedClient,
     project_identifier: str,
 ) -> Optional[Union[Any, Error, ProjectDTO]]:
-    """Get Project
-
+    """
     Args:
         project_identifier (str):
 
@@ -157,8 +155,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient,
     project_identifier: str,
 ) -> Response[Union[Any, Error, ProjectDTO]]:
-    """Get Project
-
+    """
     Args:
         project_identifier (str):
 
@@ -184,8 +181,7 @@ async def asyncio(
     client: AuthenticatedClient,
     project_identifier: str,
 ) -> Optional[Union[Any, Error, ProjectDTO]]:
-    """Get Project
-
+    """
     Args:
         project_identifier (str):
 

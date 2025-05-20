@@ -25,6 +25,7 @@ from typing import (
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.api_error_type_dto import ApiErrorTypeDTO
 from ..types import (
     UNSET,
     Unset,
@@ -37,39 +38,72 @@ T = TypeVar("T", bound="Error")
 class Error:
     """
     Attributes:
-        message (Union[Unset, str]):
-        details (Union[Unset, str]):
+        code (int):
+        message (str):
+        type (Union[Unset, ApiErrorTypeDTO]):
+        error_type (Union[Unset, ApiErrorTypeDTO]):
     """
 
-    message: Union[Unset, str] = UNSET
-    details: Union[Unset, str] = UNSET
+    code: int
+    message: str
+    type: Union[Unset, ApiErrorTypeDTO] = UNSET
+    error_type: Union[Unset, ApiErrorTypeDTO] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        code = self.code
+
         message = self.message
 
-        details = self.details
+        type: Union[Unset, str] = UNSET
+        if not isinstance(self.type, Unset):
+            type = self.type.value
+
+        error_type: Union[Unset, str] = UNSET
+        if not isinstance(self.error_type, Unset):
+            error_type = self.error_type.value
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({})
-        if message is not UNSET:
-            field_dict["message"] = message
-        if details is not UNSET:
-            field_dict["details"] = details
+        field_dict.update(
+            {
+                "code": code,
+                "message": message,
+            }
+        )
+        if type is not UNSET:
+            field_dict["type"] = type
+        if error_type is not UNSET:
+            field_dict["errorType"] = error_type
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        message = d.pop("message", UNSET)
+        code = d.pop("code")
 
-        details = d.pop("details", UNSET)
+        message = d.pop("message")
+
+        _type = d.pop("type", UNSET)
+        type: Union[Unset, ApiErrorTypeDTO]
+        if isinstance(_type, Unset):
+            type = UNSET
+        else:
+            type = ApiErrorTypeDTO(_type)
+
+        _error_type = d.pop("errorType", UNSET)
+        error_type: Union[Unset, ApiErrorTypeDTO]
+        if isinstance(_error_type, Unset):
+            error_type = UNSET
+        else:
+            error_type = ApiErrorTypeDTO(_error_type)
 
         error = cls(
+            code=code,
             message=message,
-            details=details,
+            type=type,
+            error_type=error_type,
         )
 
         error.additional_properties = d
