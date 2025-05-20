@@ -15,7 +15,7 @@
 
 __all__ = ["exchange_api_key"]
 
-from neptune_api import Client
+from neptune_api import AuthenticatedClient
 from neptune_api.api.backend import exchange_api_token
 from neptune_api.credentials import Credentials
 from neptune_api.errors import (
@@ -26,7 +26,7 @@ from neptune_api.models import Error
 from neptune_api.types import OAuthToken
 
 
-def exchange_api_key(client: Client, credentials: Credentials) -> OAuthToken:
+def exchange_api_key(client: AuthenticatedClient, credentials: Credentials) -> OAuthToken:
     response = exchange_api_token.sync_detailed(client=client, x_neptune_api_token=credentials.api_key)
 
     # HTTP 401 is an indicator that the API token is rejected by the server
