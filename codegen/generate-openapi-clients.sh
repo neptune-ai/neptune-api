@@ -163,12 +163,25 @@ openapi-python-client generate \
     --path "$tmpdir/neptune.json" \
     --custom-template-path=templates/ \
     --config openapi-generator-config.yaml \
-    --output-path "$src_dir/neptune_api"
+    --output-path "$tmpdir/neptune_api"
 
-# Restore files that could've been overwritten by the generated code
-cat preserve_files.txt | while read entry; do
-    git checkout HEAD -- "../$entry"
+
+mkdir -p "$src_dir/neptune_api/api"
+
+# Replace the generated code in the source directory
+for dir in backend storage leaderboard; do
+  rm -fr "$src_dir/neptune_api/api/$dir"
+  mv "$tmpdir/neptune_api/api/$dir" "$src_dir/neptune_api/api/"
 done
+
+# Note that we DO NOT copy client.py and errors.py. These files were
+# modified by hand it's a deliberate decision to keep them this way.
+for file in __init__.py py.typed types.py; do
+  mv "$tmpdir/neptune_api/$file" "$src_dir/neptune_api/"
+done
+
+rm -fr "$src_dir"/neptune_api/models
+mv "$tmpdir/neptune_api/models" "$src_dir/neptune_api/"
 
 set +ex
 
