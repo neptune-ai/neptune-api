@@ -18,15 +18,16 @@ from typing import (
     Any,
     Dict,
     List,
+    Literal,
     Type,
     TypeVar,
     Union,
+    cast,
 )
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.report_node_dto_type import ReportNodeDTOType
 from ..types import (
     UNSET,
     Unset,
@@ -44,13 +45,13 @@ class ReportNodeDTO:
     """
     Attributes:
         id (str):
-        type (ReportNodeDTOType):
+        type (Literal['grid']):
         grid_properties (Union[Unset, ReportNodeGridDTO]):
         name (Union[Unset, str]):
     """
 
     id: str
-    type: ReportNodeDTOType
+    type: Literal["grid"]
     grid_properties: Union[Unset, "ReportNodeGridDTO"] = UNSET
     name: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
@@ -58,7 +59,7 @@ class ReportNodeDTO:
     def to_dict(self) -> Dict[str, Any]:
         id = self.id
 
-        type = self.type.value
+        type = self.type
 
         grid_properties: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.grid_properties, Unset):
@@ -88,7 +89,9 @@ class ReportNodeDTO:
         d = src_dict.copy()
         id = d.pop("id")
 
-        type = ReportNodeDTOType(d.pop("type"))
+        type = cast(Literal["grid"], d.pop("type"))
+        if type != "grid":
+            raise ValueError(f"type must match const 'grid', got '{type}'")
 
         _grid_properties = d.pop("gridProperties", UNSET)
         grid_properties: Union[Unset, ReportNodeGridDTO]

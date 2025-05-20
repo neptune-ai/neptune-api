@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""A client library for accessing Client API"""
+"""A client library for accessing Neptune Leaderboard REST API"""
 
 from .client import (
     AuthenticatedClient,
