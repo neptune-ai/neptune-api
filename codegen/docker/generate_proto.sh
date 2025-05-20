@@ -19,12 +19,7 @@ python -m grpc_tools.protoc \
   --proto_path="${PROTOBUF_SRC_DIR}" \
   "${PROTOBUF_SRC_DIR}/google_rpc/"*".proto" \
   "${PROTOBUF_SRC_DIR}/neptune_pb/ingest/v1/"*".proto" \
-  "${PROTOBUF_SRC_DIR}/neptune_pb/ingest/v1/pub/"*".proto"
-
-python -m grpc_tools.protoc \
-  --python_out="${OUTPUT_DIR_BASE}/neptune_retrieval_api/proto/$OUTPUT_SUBMODULE_DIR" \
-  --mypy_out="${OUTPUT_DIR_BASE}/neptune_retrieval_api/proto/$OUTPUT_SUBMODULE_DIR" \
-  --proto_path="${PROTOBUF_SRC_DIR}" \
+  "${PROTOBUF_SRC_DIR}/neptune_pb/ingest/v1/pub/"*".proto" \
   "${PROTOBUF_SRC_DIR}/neptune_pb/api/v1/model/"*".proto"
 
 # Note that we're passing the protoc-path argument to protol, which makes sure
@@ -36,11 +31,5 @@ protol --create-package --in-place \
   --proto-path "${PROTOBUF_SRC_DIR}" \
   "${PROTOBUF_SRC_DIR}/google_rpc/"*".proto" \
   "${PROTOBUF_SRC_DIR}/neptune_pb/ingest/v1/"*".proto" \
-  "${PROTOBUF_SRC_DIR}/neptune_pb/ingest/v1/pub/"*".proto"
-
-protol --create-package --in-place \
-  --python-out "${OUTPUT_DIR_BASE}/neptune_retrieval_api/proto/$OUTPUT_SUBMODULE_DIR" \
-  protoc \
-  --protoc-path="python -m grpc_tools.protoc" \
-  --proto-path "${PROTOBUF_SRC_DIR}" \
+  "${PROTOBUF_SRC_DIR}/neptune_pb/ingest/v1/pub/"*".proto" \
   "${PROTOBUF_SRC_DIR}/neptune_pb/api/v1/model/"*".proto"
