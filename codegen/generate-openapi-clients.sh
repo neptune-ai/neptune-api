@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
+#
+# This script merges files in the swagger directory into a single OpenAPI spec,
+# then generates Python code from it using openapi-python-client.
+#
 
-# Show every command and exit on error
 set -ex
 
 tmpdir=tmp
@@ -11,9 +14,9 @@ mkdir "$tmpdir"
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 src_dir="$script_dir/../src/"
 
-# Convert Swagger 2.0 to OpenAPI 3.1. We need two steps to do that:
-# - convert from swagger 2.0 to OpenAPI 3.0.1 using swagger-converter
-# - convert from OpenAPI 3.0.1 to OpenAPI 3.1 using openapi-format
+# Converts Swagger 2.0 to OpenAPI 3.1 in two steps:
+# - Swagger 2.0 → OpenAPI 3.0.1 (via swagger-converter)
+# - OpenAPI 3.0.1 → OpenAPI 3.1 (via openapi-format)
 convert_swagger_to_openapi() {
     local file_path=$1
     local tmp_file="$tmpdir/to-openapi.$RANDOM.json"
@@ -26,27 +29,13 @@ convert_swagger_to_openapi() {
     openapi-format "${tmp_file}" -o "${file_path}" --convertTo "3.1"
 }
 
-# This function modifies endpoints within a Swagger 2.0 spec file to:
+# Updates a Swagger 2.0 spec to:
+# - Keep only application/x-protobuf if both JSON and protobuf are listed
+# - Force binary schema for protobuf responses
+# - Set application/json as the default if no content type is defined
 #
-#  * If an endpoint defines more than one response content type and one of them is protobuf,
-#    keep only the application/x-protobuf content type & force binary format
-#  * If no content type is defined, set the content type to application/json
-#
-# Because openapi-python-client does not support generating protobuf messages
-# as responses, and an endpoint declares an application/json content type along with
-# protobuf content type, the generated code will read eg:
-#
-#     response_200 = ProtoAttributesDTO.from_dict(response.json())
-#
-# which obviously does not work.
-#
-# Keeping protobuf content type only, will result in generating code that simply returns
-# binary content, which then the library users parse manually as protobuf messages.
-#
-# On the other hand, some endpoints do not have a content type defined, which makes
-# the generated code NOT produce response objects as defined in the schema.
-# This is why we always set application/json as the default content type, if it's
-# not already specified.
+# This avoids invalid JSON parsing in generated clients and ensures correctly
+# returning protobuf as binary data.
 fix_content_types() {
   local file_path=$1
   local tmp_file="$tmpdir/protobuf-fix.$RANDOM.json"
@@ -97,8 +86,7 @@ add_empty_license() {
     && cp "$tmp_file" "$file_path"
 }
 
-# Filter endpoints using redocly to keep only the ones that are
-# defined in redocly.yml
+# Filter endpoints using redocly to keep only the ones that are defined in redocly.yml
 filter_endpoints() {
   local file_path=$1
   local api=$2
@@ -108,12 +96,8 @@ filter_endpoints() {
   cp "$tmp_file" "$file_path"
 }
 
-# Set the specified tag on all endpoints in a given file. This step
-# is required to ensure proper package structure that openapi-python-client
-# generates. The tag is used to construct the submodule path:
-#   src/neptune_api/api/<tag>/
-# which in turn translates to python package structure:
-#   from neptune_api.api.storage import signed_url
+# Sets the given tag on all endpoints to control submodule placement in openapi-python-client.
+# Example: tag "storage" → src/neptune_api/api/storage/ → import as neptune_api.api.storage
 set_tag_on_all_endpoints() {
   local file_path=$1
   local tag=$2
@@ -131,16 +115,14 @@ set_tag_on_all_endpoints() {
   ' "$file_path" > "$tmp_file" && cp "$tmp_file" "$file_path"
 }
 
-# Prepare an input file from swagger/ to be used in the final client spec.
-# This function will:
-# - apply protobuf fix for all the endpints (see above)
-# - convert input to OpenAPI 3.1
-# - filter endpoints to keep only the ones that are defined in redocly.yml
-# - set the <api> tag on all endpoints to the specified one
-# - add empty license information to be OpenAPI 3.1 compliant
+# Prepares a Swagger input file for the final client spec:
+# - Applies response content-type fix
+# - Converts to OpenAPI 3.1
+# - Filters endpoints based on redocly.yml
+# - Sets the specified <api> tag on all endpoints
+# - Adds an empty license field for OpenAPI 3.1 compliance
 #
-# The final output will be stored in $tmpdir/<api>.json. Note that this output
-# path must match what is defined in redocly.yml
+# Output is written to $tmpdir/<api>.json and must match the path in redocly.yml
 pre_process_file() {
   local input_path=$1
   local api=$2
