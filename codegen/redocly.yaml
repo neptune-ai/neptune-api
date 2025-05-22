@@ -7,8 +7,8 @@ apis:
       filter-in:
         property: operationId
         value: [ getClientConfig, exchangeApiToken, getProject ]
-  leaderboard:
-    root: tmp/leaderboard.json
+  retrieval:
+    root: tmp/retrieval.json
   #    decorators:
   #      filter-in:
   #        property: operationId

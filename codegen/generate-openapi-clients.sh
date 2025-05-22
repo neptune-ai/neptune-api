@@ -143,13 +143,13 @@ pre_process_file() {
 }
 
 # Prepare all the API specs for bundling into the final client spec.
-pre_process_file swagger/leaderboard.json "leaderboard"
+pre_process_file swagger/retrieval.json "retrieval"
 pre_process_file swagger/backend.json "backend"
 pre_process_file swagger/storagebridge_openapi.json "storage" false
 
 # Join all the API specs into a single one
 redocly join -o "$tmpdir/neptune.json" \
-  "$tmpdir/leaderboard.json" \
+  "$tmpdir/retrieval.json" \
   "$tmpdir/backend.json" \
   "$tmpdir/storage.json"
 
@@ -169,7 +169,7 @@ openapi-python-client generate \
 mkdir -p "$src_dir/neptune_api/api"
 
 # Replace the generated code in the source directory
-for dir in backend storage leaderboard; do
+for dir in backend storage retrieval; do
   rm -fr "$src_dir/neptune_api/api/$dir"
   mv "$tmpdir/neptune_api/api/$dir" "$src_dir/neptune_api/api/"
 done
