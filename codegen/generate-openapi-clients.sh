@@ -168,13 +168,9 @@ openapi-python-client generate \
     --output-path "$tmpdir/neptune_api"
 
 
-mkdir -p "$src_dir/neptune_api/api"
-
 # Replace the generated code in the source directory
-for dir in retrieval backend storage ingestion; do
-  rm -fr "$src_dir/neptune_api/api/$dir"
-  mv "$tmpdir/neptune_api/api/$dir" "$src_dir/neptune_api/api/"
-done
+rm -fr "$src_dir"/neptune_api/api
+mv "$tmpdir/neptune_api/api/" "$src_dir/neptune_api/"
 
 # Note that we DO NOT copy client.py. This file was modified by hand it's a
 # deliberate decision to keep it this way instead of modifying the template
