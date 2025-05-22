@@ -146,12 +146,14 @@ pre_process_file() {
 pre_process_file swagger/retrieval.json "retrieval"
 pre_process_file swagger/backend.json "backend"
 pre_process_file swagger/storagebridge_openapi.json "storage" false
+pre_process_file swagger/ingestion_openapi.json "ingestion" false
 
 # Join all the API specs into a single one
 redocly join -o "$tmpdir/neptune.json" \
   "$tmpdir/retrieval.json" \
   "$tmpdir/backend.json" \
-  "$tmpdir/storage.json"
+  "$tmpdir/storage.json" \
+  "$tmpdir/ingestion.json"
 
 # Add empty license to the final file
 add_empty_license "$tmpdir/neptune.json"
@@ -169,7 +171,7 @@ openapi-python-client generate \
 mkdir -p "$src_dir/neptune_api/api"
 
 # Replace the generated code in the source directory
-for dir in backend storage retrieval; do
+for dir in retrieval backend storage ingestion; do
   rm -fr "$src_dir/neptune_api/api/$dir"
   mv "$tmpdir/neptune_api/api/$dir" "$src_dir/neptune_api/api/"
 done

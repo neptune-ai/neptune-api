@@ -15,3 +15,5 @@ apis:
   #        value: [ queryAttributesWithinProjectProto ]
   storage:
     root: tmp/storage.json
+  ingestion:
+    root: tmp/ingestion.json
