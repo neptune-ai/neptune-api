@@ -174,9 +174,9 @@ for dir in backend storage leaderboard; do
   mv "$tmpdir/neptune_api/api/$dir" "$src_dir/neptune_api/api/"
 done
 
-# Note that we DO NOT copy client.py and errors.py. These files were
-# modified by hand it's a deliberate decision to keep them this way.
-for file in __init__.py py.typed types.py; do
+# Note that we DO NOT copy client.py. This file was modified by hand it's a
+# deliberate decision to keep it this way instead of modifying the template
+for file in __init__.py errors.py py.typed types.py; do
   mv "$tmpdir/neptune_api/$file" "$src_dir/neptune_api/"
 done
 
