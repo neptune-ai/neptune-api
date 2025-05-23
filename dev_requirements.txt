@@ -12,6 +12,5 @@ freezegun
 types-Pygments
 icecream
 
-openapi-python-client==0.21.5
 types-protobuf
 mypy-protobuf
