@@ -48,6 +48,7 @@ def test_exchange_key_error(mocker, credentials, status_code, expect_exception):
     client_mock.get_httpx_client.return_value = request_mock
     request_mock.request.return_value = mocker.MagicMock()
     request_mock.request.return_value.status_code = status_code
+    request_mock.request.return_value.json.return_value = {"code": status_code, "message": "Unauthorized"}
 
     # when
     with pytest.raises(expect_exception):

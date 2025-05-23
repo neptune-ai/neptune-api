@@ -53,29 +53,29 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[Union[Any, Error, NeptuneOauthToken]]:
+    if response.status_code == HTTPStatus.OK:
+        response_200 = NeptuneOauthToken.from_dict(response.json())
+
+        return response_200
     if response.status_code == HTTPStatus.BAD_REQUEST:
         response_400 = Error.from_dict(response.json())
 
         return response_400
+    if response.status_code == HTTPStatus.UNAUTHORIZED:
+        response_401 = cast(Any, None)
+        return response_401
+    if response.status_code == HTTPStatus.FORBIDDEN:
+        response_403 = cast(Any, None)
+        return response_403
     if response.status_code == HTTPStatus.NOT_FOUND:
         response_404 = cast(Any, None)
         return response_404
     if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
         response_408 = cast(Any, None)
         return response_408
-    if response.status_code == HTTPStatus.FORBIDDEN:
-        response_403 = cast(Any, None)
-        return response_403
     if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
         response_422 = cast(Any, None)
         return response_422
-    if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = cast(Any, None)
-        return response_401
-    if response.status_code == HTTPStatus.OK:
-        response_200 = NeptuneOauthToken.from_dict(response.json())
-
-        return response_200
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
@@ -95,11 +95,10 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient,
     x_neptune_api_token: str,
 ) -> Response[Union[Any, Error, NeptuneOauthToken]]:
-    """Exchange Neptune API token with OAuth 2.0 JWT
-
+    """
     Args:
         x_neptune_api_token (str):
 
@@ -124,11 +123,10 @@ def sync_detailed(
 
 def sync(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient,
     x_neptune_api_token: str,
 ) -> Optional[Union[Any, Error, NeptuneOauthToken]]:
-    """Exchange Neptune API token with OAuth 2.0 JWT
-
+    """
     Args:
         x_neptune_api_token (str):
 
@@ -148,11 +146,10 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient,
     x_neptune_api_token: str,
 ) -> Response[Union[Any, Error, NeptuneOauthToken]]:
-    """Exchange Neptune API token with OAuth 2.0 JWT
-
+    """
     Args:
         x_neptune_api_token (str):
 
@@ -175,11 +172,10 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient,
     x_neptune_api_token: str,
 ) -> Optional[Union[Any, Error, NeptuneOauthToken]]:
-    """Exchange Neptune API token with OAuth 2.0 JWT
-
+    """
     Args:
         x_neptune_api_token (str):
 

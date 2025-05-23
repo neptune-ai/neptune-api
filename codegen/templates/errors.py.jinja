@@ -19,6 +19,7 @@ __all__ = [
     "UnexpectedStatus",
     "InvalidApiTokenException",
     "UnableToExchangeApiKeyError",
+    "ApiKeyRejectedError",
     "UnableToDeserializeApiKeyError",
     "UnableToRefreshTokenError",
 ]
@@ -44,10 +45,18 @@ class InvalidApiTokenException(Exception):
 
 
 class UnableToExchangeApiKeyError(Exception):
-    """Raised when the API key exchange fails"""
+    """Raised when the API key exchange fails for any reason other than the API key being
+    explicitly rejected by the server"""
 
     def __init__(self, reason: str = "Unknown") -> None:
         super().__init__(f"Unable to exchange API key. Reason: {reason}")
+
+
+class ApiKeyRejectedError(Exception):
+    """Raised when the backend rejects an API key because of it being unknown or expired"""
+
+    def __init__(self) -> None:
+        super().__init__("Your API key was rejected by the Neptune backend because it is either unknown or expired.")
 
 
 class UnableToDeserializeApiKeyError(Exception):
