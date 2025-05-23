@@ -9,10 +9,18 @@ apis:
         value: [ getClientConfig, exchangeApiToken, getProject ]
   retrieval:
     root: tmp/retrieval.json
-  #    decorators:
-  #      filter-in:
-  #        property: operationId
-  #        value: [ queryAttributesWithinProjectProto ]
+    decorators:
+      filter-in:
+        property: operationId
+        value: [
+          getAttributesWithPathsFilterProto,
+          getMultipleFloatSeriesValuesProto,
+          getSeriesValuesProto,
+          queryAttributeDefinitionsProto,
+          queryAttributeDefinitionsWithinProject,
+          queryAttributesWithinProjectProto,
+          searchLeaderboardEntriesProto,
+        ]
   storage:
     root: tmp/storage.json
   ingestion:
