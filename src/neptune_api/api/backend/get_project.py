@@ -59,29 +59,33 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[Union[Any, Error, ProjectDTO]]:
-    if response.status_code == HTTPStatus.OK:
-        response_200 = ProjectDTO.from_dict(response.json())
+    try:
+        if response.status_code == HTTPStatus.OK:
+            response_200 = ProjectDTO.from_dict(response.json())
 
-        return response_200
-    if response.status_code == HTTPStatus.BAD_REQUEST:
-        response_400 = Error.from_dict(response.json())
+            return response_200
+        if response.status_code == HTTPStatus.BAD_REQUEST:
+            response_400 = Error.from_dict(response.json())
 
-        return response_400
-    if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = cast(Any, None)
-        return response_401
-    if response.status_code == HTTPStatus.FORBIDDEN:
-        response_403 = cast(Any, None)
-        return response_403
-    if response.status_code == HTTPStatus.NOT_FOUND:
-        response_404 = cast(Any, None)
-        return response_404
-    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
-        response_408 = cast(Any, None)
-        return response_408
-    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
-        response_422 = cast(Any, None)
-        return response_422
+            return response_400
+        if response.status_code == HTTPStatus.UNAUTHORIZED:
+            response_401 = cast(Any, None)
+            return response_401
+        if response.status_code == HTTPStatus.FORBIDDEN:
+            response_403 = cast(Any, None)
+            return response_403
+        if response.status_code == HTTPStatus.NOT_FOUND:
+            response_404 = cast(Any, None)
+            return response_404
+        if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
+            response_408 = cast(Any, None)
+            return response_408
+        if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
+            response_422 = cast(Any, None)
+            return response_422
+    except Exception as e:
+        raise errors.UnableToParseResponse(e, response) from e
+
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:

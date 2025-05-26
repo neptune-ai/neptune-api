@@ -70,34 +70,38 @@ def _get_kwargs(
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[Union[Any, File]]:
-    if response.status_code == HTTPStatus.OK:
-        response_200 = File(payload=BytesIO(response.content))
+    try:
+        if response.status_code == HTTPStatus.OK:
+            response_200 = File(payload=BytesIO(response.content))
 
-        return response_200
-    if response.status_code == HTTPStatus.BAD_REQUEST:
-        response_400 = cast(Any, None)
-        return response_400
-    if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = cast(Any, None)
-        return response_401
-    if response.status_code == HTTPStatus.FORBIDDEN:
-        response_403 = cast(Any, None)
-        return response_403
-    if response.status_code == HTTPStatus.NOT_FOUND:
-        response_404 = cast(Any, None)
-        return response_404
-    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
-        response_408 = cast(Any, None)
-        return response_408
-    if response.status_code == HTTPStatus.CONFLICT:
-        response_409 = cast(Any, None)
-        return response_409
-    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
-        response_422 = cast(Any, None)
-        return response_422
-    if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
-        response_429 = cast(Any, None)
-        return response_429
+            return response_200
+        if response.status_code == HTTPStatus.BAD_REQUEST:
+            response_400 = cast(Any, None)
+            return response_400
+        if response.status_code == HTTPStatus.UNAUTHORIZED:
+            response_401 = cast(Any, None)
+            return response_401
+        if response.status_code == HTTPStatus.FORBIDDEN:
+            response_403 = cast(Any, None)
+            return response_403
+        if response.status_code == HTTPStatus.NOT_FOUND:
+            response_404 = cast(Any, None)
+            return response_404
+        if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
+            response_408 = cast(Any, None)
+            return response_408
+        if response.status_code == HTTPStatus.CONFLICT:
+            response_409 = cast(Any, None)
+            return response_409
+        if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
+            response_422 = cast(Any, None)
+            return response_422
+        if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
+            response_429 = cast(Any, None)
+            return response_429
+    except Exception as e:
+        raise errors.UnableToParseResponse(e, response) from e
+
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
