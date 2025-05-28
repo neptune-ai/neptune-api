@@ -18,7 +18,7 @@ RUN pip install grpcio-tools==1.48.2 \
     protoletariat==3.3.9 \
     mypy-protobuf==3.3.0
 
-COPY generate_proto.sh /app/
-RUN chmod +x /app/generate_proto.sh
+COPY docker.generate-proto.sh /app/
+RUN chmod +x /app/docker.generate-proto.sh
 
-ENTRYPOINT ["./generate_proto.sh", "/app/proto_dir", "/app/output_dir", "protobuf_v3"]
+ENTRYPOINT ["./docker.generate-proto.sh", "/app/src", "protobuf_v3"]
