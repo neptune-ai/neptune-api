@@ -81,3 +81,7 @@ class UnableToParseResponse(Exception):
     def __init__(self, exception: BaseException, response: httpx.Response) -> None:
         self.exception = exception
         self.response = response
+        super().__init__(
+            f"Unable to parse server response: {exception}. "
+            f"Response: HTTP {response.status_code}: {response.content}"
+        )
