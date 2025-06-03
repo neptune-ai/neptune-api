@@ -24,6 +24,8 @@ from typing import (
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from ..models.provider import Provider
+
 T = TypeVar("T", bound="SignedFile")
 
 
@@ -33,11 +35,13 @@ class SignedFile:
     Attributes:
         path (str):
         project_identifier (str):
+        provider (Provider):
         url (str):
     """
 
     path: str
     project_identifier: str
+    provider: Provider
     url: str
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -45,6 +49,8 @@ class SignedFile:
         path = self.path
 
         project_identifier = self.project_identifier
+
+        provider = self.provider.value
 
         url = self.url
 
@@ -54,6 +60,7 @@ class SignedFile:
             {
                 "path": path,
                 "project_identifier": project_identifier,
+                "provider": provider,
                 "url": url,
             }
         )
@@ -67,11 +74,14 @@ class SignedFile:
 
         project_identifier = d.pop("project_identifier")
 
+        provider = Provider(d.pop("provider"))
+
         url = d.pop("url")
 
         signed_file = cls(
             path=path,
             project_identifier=project_identifier,
+            provider=provider,
             url=url,
         )
 
