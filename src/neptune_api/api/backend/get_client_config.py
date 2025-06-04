@@ -31,44 +31,68 @@ from ...client import (
 )
 from ...models.client_config import ClientConfig
 from ...models.error import Error
-from ...types import Response
+from ...types import (
+    UNSET,
+    Response,
+    Unset,
+)
 
 
-def _get_kwargs() -> Dict[str, Any]:
+def _get_kwargs(
+    *,
+    alpha: Union[Unset, str] = UNSET,
+    x_neptune_api_token: Union[Unset, str] = UNSET,
+) -> Dict[str, Any]:
+    headers: Dict[str, Any] = {}
+    if not isinstance(x_neptune_api_token, Unset):
+        headers["X-Neptune-Api-Token"] = x_neptune_api_token
+
+    params: Dict[str, Any] = {}
+
+    params["alpha"] = alpha
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+
     _kwargs: Dict[str, Any] = {
         "method": "get",
         "url": "/api/backend/v1/clients/config",
+        "params": params,
     }
 
+    _kwargs["headers"] = headers
     return _kwargs
 
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
 ) -> Optional[Union[Any, ClientConfig, Error]]:
-    if response.status_code == HTTPStatus.BAD_REQUEST:
-        response_400 = Error.from_dict(response.json())
+    try:
+        if response.status_code == HTTPStatus.OK:
+            response_200 = ClientConfig.from_dict(response.json())
 
-        return response_400
-    if response.status_code == HTTPStatus.NOT_FOUND:
-        response_404 = cast(Any, None)
-        return response_404
-    if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
-        response_408 = cast(Any, None)
-        return response_408
-    if response.status_code == HTTPStatus.FORBIDDEN:
-        response_403 = cast(Any, None)
-        return response_403
-    if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
-        response_422 = cast(Any, None)
-        return response_422
-    if response.status_code == HTTPStatus.UNAUTHORIZED:
-        response_401 = cast(Any, None)
-        return response_401
-    if response.status_code == HTTPStatus.OK:
-        response_200 = ClientConfig.from_dict(response.json())
+            return response_200
+        if response.status_code == HTTPStatus.BAD_REQUEST:
+            response_400 = Error.from_dict(response.json())
 
-        return response_200
+            return response_400
+        if response.status_code == HTTPStatus.UNAUTHORIZED:
+            response_401 = cast(Any, None)
+            return response_401
+        if response.status_code == HTTPStatus.FORBIDDEN:
+            response_403 = cast(Any, None)
+            return response_403
+        if response.status_code == HTTPStatus.NOT_FOUND:
+            response_404 = cast(Any, None)
+            return response_404
+        if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
+            response_408 = cast(Any, None)
+            return response_408
+        if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
+            response_422 = cast(Any, None)
+            return response_422
+    except Exception as e:
+        raise errors.UnableToParseResponse(e, response) from e
+
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
@@ -89,8 +113,13 @@ def _build_response(
 def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
+    alpha: Union[Unset, str] = UNSET,
+    x_neptune_api_token: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, ClientConfig, Error]]:
-    """Get Client Config
+    """
+    Args:
+        alpha (Union[Unset, str]):
+        x_neptune_api_token (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -100,7 +129,10 @@ def sync_detailed(
         Response[Union[Any, ClientConfig, Error]]
     """
 
-    kwargs = _get_kwargs()
+    kwargs = _get_kwargs(
+        alpha=alpha,
+        x_neptune_api_token=x_neptune_api_token,
+    )
 
     response = client.get_httpx_client().request(
         **kwargs,
@@ -112,8 +144,13 @@ def sync_detailed(
 def sync(
     *,
     client: Union[AuthenticatedClient, Client],
+    alpha: Union[Unset, str] = UNSET,
+    x_neptune_api_token: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, ClientConfig, Error]]:
-    """Get Client Config
+    """
+    Args:
+        alpha (Union[Unset, str]):
+        x_neptune_api_token (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -125,14 +162,21 @@ def sync(
 
     return sync_detailed(
         client=client,
+        alpha=alpha,
+        x_neptune_api_token=x_neptune_api_token,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
+    alpha: Union[Unset, str] = UNSET,
+    x_neptune_api_token: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, ClientConfig, Error]]:
-    """Get Client Config
+    """
+    Args:
+        alpha (Union[Unset, str]):
+        x_neptune_api_token (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -142,7 +186,10 @@ async def asyncio_detailed(
         Response[Union[Any, ClientConfig, Error]]
     """
 
-    kwargs = _get_kwargs()
+    kwargs = _get_kwargs(
+        alpha=alpha,
+        x_neptune_api_token=x_neptune_api_token,
+    )
 
     response = await client.get_async_httpx_client().request(**kwargs)
 
@@ -152,8 +199,13 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
+    alpha: Union[Unset, str] = UNSET,
+    x_neptune_api_token: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, ClientConfig, Error]]:
-    """Get Client Config
+    """
+    Args:
+        alpha (Union[Unset, str]):
+        x_neptune_api_token (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -166,5 +218,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            alpha=alpha,
+            x_neptune_api_token=x_neptune_api_token,
         )
     ).parsed

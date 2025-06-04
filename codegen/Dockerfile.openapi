@@ -1,0 +1,17 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y npm jq curl
+RUN npm install -g @redocly/cli@1.34.3 openapi-format@1.26.0
+RUN pip install openapi-python-client==0.21.5 ruff==0.6.9 isort==6.0.1
+
+COPY \
+    docker.generate-openapi-clients.sh \
+    openapi-generator-config.yaml \
+    redocly.yaml \
+    /app/
+
+RUN chmod +x /app/docker.generate-openapi-clients.sh
+
+ENTRYPOINT ["./docker.generate-openapi-clients.sh", "/app/src"]

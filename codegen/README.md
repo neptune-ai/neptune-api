@@ -33,19 +33,11 @@ and Python in particular.
 
 The generated code lands in the following directories:
 
-Protobuf 3:
+Protobuf 3: `src/neptune_api/proto/protobuf_v3`
+Protobuf 4+: `src/neptune_api/proto/protobuf_v4plus`
 
-* `src/neptune_api/proto/protobuf_v3`
-* `src/neptune_retrieval_api/proto/protobuf_v3`
-
-Protobuf 4+
-
-* `src/neptune_api/proto/protobuf_v4plus`
-* `src/neptune_retrieval_api/proto/protobuf_v4plus`
-
-There is a simple compatibility layer in `neptune_api/proto/__init__.py` and
-`neptune_retrieval_api/proto/__init__.py` that loads the correct module based on
-the installed `protobuf` version.
+There is a simple compatibility layer in `neptune_api/proto/__init__.py`  that loads the
+correct module based on the installed `protobuf` version.
 
 The `.pyi` files in the `proto` directories use the v3 versions, to minimize potential
 compatibility risks. It is an arbitrary choice. You can point your IDE to the v4+

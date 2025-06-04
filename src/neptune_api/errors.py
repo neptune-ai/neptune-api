@@ -15,12 +15,15 @@
 
 """Contains shared errors types that can be raised from API functions"""
 
+import httpx
+
 __all__ = [
     "UnexpectedStatus",
     "InvalidApiTokenException",
     "UnableToExchangeApiKeyError",
     "ApiKeyRejectedError",
     "UnableToDeserializeApiKeyError",
+    "UnableToParseResponse",
     "UnableToRefreshTokenError",
 ]
 
@@ -71,3 +74,15 @@ class UnableToRefreshTokenError(Exception):
 
     def __init__(self, reason: str = "Unknown") -> None:
         super().__init__(f"Unable to refresh token. Reason: {reason}")
+
+
+class UnableToParseResponse(Exception):
+    """Raise when there is an exception during parsing a response"""
+
+    def __init__(self, exception: BaseException, response: httpx.Response) -> None:
+        self.exception = exception
+        self.response = response
+        super().__init__(
+            f"Unable to parse server response: {exception}. "
+            f"Response: HTTP {response.status_code}: {response.content!r}"
+        )

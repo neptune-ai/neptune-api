@@ -1,9 +1,4 @@
 repos:
-  - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-        args: [--settings-path, pyproject.toml]
   - repo: https://github.com/psf/black
     rev: 24.2.0
     hooks:
@@ -13,6 +8,7 @@ repos:
     rev: v0.4.9
     hooks:
       - id: ruff
+        args: [--fix]
       - id: ruff-format
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.10.0
@@ -27,11 +23,16 @@ repos:
           - grpcio-tools
           - types-Pygments
           - types-protobuf
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: [--settings-path, pyproject.toml]
   - repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.5.4
     hooks:
       - id: insert-license
-        files: ^src/(neptune_api|neptune_retrieval_api|neptune_storage_api).*[^/]+\.py$
+        files: ^src/neptune_api.*[^/]+\.py$
         args: [ "--license-filepath", ".github/license_header.txt", "--allow-past-years"]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.3.0
@@ -39,6 +40,6 @@ repos:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
-exclude: "^src/(neptune_api|neptune_retrieval_api)/proto/|^codegen/(swagger|proto)/"
+exclude: "^src/neptune_api/proto/|^codegen/(swagger|proto)/"
 default_language_version:
     python: python3

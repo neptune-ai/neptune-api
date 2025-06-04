@@ -14,9 +14,11 @@
 # limitations under the License.
 
 from http import HTTPStatus
+from io import BytesIO
 from typing import (
     Any,
     Dict,
+    List,
     Optional,
     Union,
     cast,
@@ -29,22 +31,45 @@ from ...client import (
     AuthenticatedClient,
     Client,
 )
-from ...models.error import Error
-from ...models.neptune_oauth_token import NeptuneOauthToken
-from ...types import Response
+from ...models.search_leaderboard_entries_params_dto import SearchLeaderboardEntriesParamsDTO
+from ...types import (
+    UNSET,
+    File,
+    Response,
+    Unset,
+)
 
 
 def _get_kwargs(
     *,
-    x_neptune_api_token: str,
+    body: SearchLeaderboardEntriesParamsDTO,
+    project_identifier: str,
+    type: Union[Unset, List[str]] = UNSET,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
-    headers["X-Neptune-Api-Token"] = x_neptune_api_token
+
+    params: Dict[str, Any] = {}
+
+    params["projectIdentifier"] = project_identifier
+
+    json_type: Union[Unset, List[str]] = UNSET
+    if not isinstance(type, Unset):
+        json_type = type
+
+    params["type"] = json_type
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: Dict[str, Any] = {
-        "method": "get",
-        "url": "/api/backend/v1/authorization/oauth-token",
+        "method": "post",
+        "url": "/api/leaderboard/v1/proto/leaderboard/entries/search/",
+        "params": params,
     }
+
+    _body = body.to_dict()
+
+    _kwargs["json"] = _body
+    headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
     return _kwargs
@@ -52,15 +77,14 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[Any, Error, NeptuneOauthToken]]:
+) -> Optional[Union[Any, File]]:
     try:
         if response.status_code == HTTPStatus.OK:
-            response_200 = NeptuneOauthToken.from_dict(response.json())
+            response_200 = File(payload=BytesIO(response.content))
 
             return response_200
         if response.status_code == HTTPStatus.BAD_REQUEST:
-            response_400 = Error.from_dict(response.json())
-
+            response_400 = cast(Any, None)
             return response_400
         if response.status_code == HTTPStatus.UNAUTHORIZED:
             response_401 = cast(Any, None)
@@ -74,9 +98,15 @@ def _parse_response(
         if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
             response_408 = cast(Any, None)
             return response_408
+        if response.status_code == HTTPStatus.CONFLICT:
+            response_409 = cast(Any, None)
+            return response_409
         if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
             response_422 = cast(Any, None)
             return response_422
+        if response.status_code == HTTPStatus.TOO_MANY_REQUESTS:
+            response_429 = cast(Any, None)
+            return response_429
     except Exception as e:
         raise errors.UnableToParseResponse(e, response) from e
 
@@ -88,7 +118,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[Any, Error, NeptuneOauthToken]]:
+) -> Response[Union[Any, File]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -99,23 +129,30 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: AuthenticatedClient,
-    x_neptune_api_token: str,
-) -> Response[Union[Any, Error, NeptuneOauthToken]]:
-    """
+    client: Union[AuthenticatedClient, Client],
+    body: SearchLeaderboardEntriesParamsDTO,
+    project_identifier: str,
+    type: Union[Unset, List[str]] = UNSET,
+) -> Response[Union[Any, File]]:
+    """Get leaderboard
+
     Args:
-        x_neptune_api_token (str):
+        project_identifier (str):
+        type (Union[Unset, List[str]]):
+        body (SearchLeaderboardEntriesParamsDTO):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, Error, NeptuneOauthToken]]
+        Response[Union[Any, File]]
     """
 
     kwargs = _get_kwargs(
-        x_neptune_api_token=x_neptune_api_token,
+        body=body,
+        project_identifier=project_identifier,
+        type=type,
     )
 
     response = client.get_httpx_client().request(
@@ -127,46 +164,60 @@ def sync_detailed(
 
 def sync(
     *,
-    client: AuthenticatedClient,
-    x_neptune_api_token: str,
-) -> Optional[Union[Any, Error, NeptuneOauthToken]]:
-    """
+    client: Union[AuthenticatedClient, Client],
+    body: SearchLeaderboardEntriesParamsDTO,
+    project_identifier: str,
+    type: Union[Unset, List[str]] = UNSET,
+) -> Optional[Union[Any, File]]:
+    """Get leaderboard
+
     Args:
-        x_neptune_api_token (str):
+        project_identifier (str):
+        type (Union[Unset, List[str]]):
+        body (SearchLeaderboardEntriesParamsDTO):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, Error, NeptuneOauthToken]
+        Union[Any, File]
     """
 
     return sync_detailed(
         client=client,
-        x_neptune_api_token=x_neptune_api_token,
+        body=body,
+        project_identifier=project_identifier,
+        type=type,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
-    client: AuthenticatedClient,
-    x_neptune_api_token: str,
-) -> Response[Union[Any, Error, NeptuneOauthToken]]:
-    """
+    client: Union[AuthenticatedClient, Client],
+    body: SearchLeaderboardEntriesParamsDTO,
+    project_identifier: str,
+    type: Union[Unset, List[str]] = UNSET,
+) -> Response[Union[Any, File]]:
+    """Get leaderboard
+
     Args:
-        x_neptune_api_token (str):
+        project_identifier (str):
+        type (Union[Unset, List[str]]):
+        body (SearchLeaderboardEntriesParamsDTO):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, Error, NeptuneOauthToken]]
+        Response[Union[Any, File]]
     """
 
     kwargs = _get_kwargs(
-        x_neptune_api_token=x_neptune_api_token,
+        body=body,
+        project_identifier=project_identifier,
+        type=type,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -176,24 +227,31 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: AuthenticatedClient,
-    x_neptune_api_token: str,
-) -> Optional[Union[Any, Error, NeptuneOauthToken]]:
-    """
+    client: Union[AuthenticatedClient, Client],
+    body: SearchLeaderboardEntriesParamsDTO,
+    project_identifier: str,
+    type: Union[Unset, List[str]] = UNSET,
+) -> Optional[Union[Any, File]]:
+    """Get leaderboard
+
     Args:
-        x_neptune_api_token (str):
+        project_identifier (str):
+        type (Union[Unset, List[str]]):
+        body (SearchLeaderboardEntriesParamsDTO):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, Error, NeptuneOauthToken]
+        Union[Any, File]
     """
 
     return (
         await asyncio_detailed(
             client=client,
-            x_neptune_api_token=x_neptune_api_token,
+            body=body,
+            project_identifier=project_identifier,
+            type=type,
         )
     ).parsed

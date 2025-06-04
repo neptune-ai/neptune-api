@@ -29,22 +29,26 @@ from ...client import (
     AuthenticatedClient,
     Client,
 )
-from ...models.error import Error
-from ...models.neptune_oauth_token import NeptuneOauthToken
+from ...models.create_signed_urls_request import CreateSignedUrlsRequest
+from ...models.create_signed_urls_response import CreateSignedUrlsResponse
 from ...types import Response
 
 
 def _get_kwargs(
     *,
-    x_neptune_api_token: str,
+    body: CreateSignedUrlsRequest,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
-    headers["X-Neptune-Api-Token"] = x_neptune_api_token
 
     _kwargs: Dict[str, Any] = {
-        "method": "get",
-        "url": "/api/backend/v1/authorization/oauth-token",
+        "method": "post",
+        "url": "/api/storagebridge/v1/azure/signedUrl",
     }
+
+    _body = body.to_dict()
+
+    _kwargs["json"] = _body
+    headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
     return _kwargs
@@ -52,31 +56,21 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[Any, Error, NeptuneOauthToken]]:
+) -> Optional[Union[Any, CreateSignedUrlsResponse]]:
     try:
         if response.status_code == HTTPStatus.OK:
-            response_200 = NeptuneOauthToken.from_dict(response.json())
+            response_200 = CreateSignedUrlsResponse.from_dict(response.json())
 
             return response_200
-        if response.status_code == HTTPStatus.BAD_REQUEST:
-            response_400 = Error.from_dict(response.json())
-
-            return response_400
         if response.status_code == HTTPStatus.UNAUTHORIZED:
             response_401 = cast(Any, None)
             return response_401
         if response.status_code == HTTPStatus.FORBIDDEN:
             response_403 = cast(Any, None)
             return response_403
-        if response.status_code == HTTPStatus.NOT_FOUND:
-            response_404 = cast(Any, None)
-            return response_404
-        if response.status_code == HTTPStatus.REQUEST_TIMEOUT:
-            response_408 = cast(Any, None)
-            return response_408
-        if response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
-            response_422 = cast(Any, None)
-            return response_422
+        if response.status_code == HTTPStatus.REQUEST_ENTITY_TOO_LARGE:
+            response_413 = cast(Any, None)
+            return response_413
     except Exception as e:
         raise errors.UnableToParseResponse(e, response) from e
 
@@ -88,7 +82,7 @@ def _parse_response(
 
 def _build_response(
     *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[Any, Error, NeptuneOauthToken]]:
+) -> Response[Union[Any, CreateSignedUrlsResponse]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -99,23 +93,23 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: AuthenticatedClient,
-    x_neptune_api_token: str,
-) -> Response[Union[Any, Error, NeptuneOauthToken]]:
+    client: Union[AuthenticatedClient, Client],
+    body: CreateSignedUrlsRequest,
+) -> Response[Union[Any, CreateSignedUrlsResponse]]:
     """
     Args:
-        x_neptune_api_token (str):
+        body (CreateSignedUrlsRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, Error, NeptuneOauthToken]]
+        Response[Union[Any, CreateSignedUrlsResponse]]
     """
 
     kwargs = _get_kwargs(
-        x_neptune_api_token=x_neptune_api_token,
+        body=body,
     )
 
     response = client.get_httpx_client().request(
@@ -127,46 +121,46 @@ def sync_detailed(
 
 def sync(
     *,
-    client: AuthenticatedClient,
-    x_neptune_api_token: str,
-) -> Optional[Union[Any, Error, NeptuneOauthToken]]:
+    client: Union[AuthenticatedClient, Client],
+    body: CreateSignedUrlsRequest,
+) -> Optional[Union[Any, CreateSignedUrlsResponse]]:
     """
     Args:
-        x_neptune_api_token (str):
+        body (CreateSignedUrlsRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, Error, NeptuneOauthToken]
+        Union[Any, CreateSignedUrlsResponse]
     """
 
     return sync_detailed(
         client=client,
-        x_neptune_api_token=x_neptune_api_token,
+        body=body,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
-    client: AuthenticatedClient,
-    x_neptune_api_token: str,
-) -> Response[Union[Any, Error, NeptuneOauthToken]]:
+    client: Union[AuthenticatedClient, Client],
+    body: CreateSignedUrlsRequest,
+) -> Response[Union[Any, CreateSignedUrlsResponse]]:
     """
     Args:
-        x_neptune_api_token (str):
+        body (CreateSignedUrlsRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Any, Error, NeptuneOauthToken]]
+        Response[Union[Any, CreateSignedUrlsResponse]]
     """
 
     kwargs = _get_kwargs(
-        x_neptune_api_token=x_neptune_api_token,
+        body=body,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -176,24 +170,24 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: AuthenticatedClient,
-    x_neptune_api_token: str,
-) -> Optional[Union[Any, Error, NeptuneOauthToken]]:
+    client: Union[AuthenticatedClient, Client],
+    body: CreateSignedUrlsRequest,
+) -> Optional[Union[Any, CreateSignedUrlsResponse]]:
     """
     Args:
-        x_neptune_api_token (str):
+        body (CreateSignedUrlsRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Any, Error, NeptuneOauthToken]
+        Union[Any, CreateSignedUrlsResponse]
     """
 
     return (
         await asyncio_detailed(
             client=client,
-            x_neptune_api_token=x_neptune_api_token,
+            body=body,
         )
     ).parsed

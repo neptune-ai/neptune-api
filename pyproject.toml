@@ -24,11 +24,7 @@ authors = ["neptune.ai <contact@neptune.ai>"]
 repository = "https://github.com/neptune-ai/neptune-api"
 readme = "README.md"
 license = "Apache License 2.0"
-packages = [
-    { include = "neptune_api", from = "src" },
-    { include = "neptune_retrieval_api", from = "src" },
-    { include = "neptune_storage_api", from = "src" },
-]
+packages = [{ include = "neptune_api", from = "src" }]
 include = ["CHANGELOG.md", "src/neptune_api/py.typed"]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -75,18 +71,18 @@ exclude = '''
 profile = "black"
 line_length = 120
 force_grid_wrap = 2
-extend_skip = ["src/neptune_api/proto", "src/neptune_retrieval_api/proto"]
+extend_skip = ["src/neptune_api/proto"]
 
 [tool.ruff]
 line-length = 120
 target-version = "py38"
-exclude = ["src/neptune_api/proto", "src/neptune_retrieval_api/proto"]
+exclude = ["src/neptune_api/proto"]
 
 [tool.ruff.lint]
 select = ["F", "UP"]
 
 [tool.mypy]
-files = ['src/neptune_api', 'src/neptune_retrieval_api', 'src/neptune_storage_api']
+files = ['src/neptune_api']
 install_types = "True"
 non_interactive = "True"
 disallow_untyped_defs = "True"
