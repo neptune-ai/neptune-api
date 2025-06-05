@@ -42,7 +42,7 @@ def _get_kwargs(
 
     _kwargs: Dict[str, Any] = {
         "method": "post",
-        "url": "/api/storagebridge/v1/azure/signedUrl",
+        "url": "/api/storagebridge/v1/signedUrl",
     }
 
     _body = body.to_dict()
@@ -68,12 +68,12 @@ def _parse_response(
         if response.status_code == HTTPStatus.FORBIDDEN:
             response_403 = cast(Any, None)
             return response_403
-        if response.status_code == HTTPStatus.GONE:
-            response_410 = cast(Any, None)
-            return response_410
         if response.status_code == HTTPStatus.REQUEST_ENTITY_TOO_LARGE:
             response_413 = cast(Any, None)
             return response_413
+        if response.status_code == HTTPStatus.SERVICE_UNAVAILABLE:
+            response_503 = cast(Any, None)
+            return response_503
     except Exception as e:
         raise errors.UnableToParseResponse(e, response) from e
 
