@@ -42,8 +42,53 @@
           "403": {
             "description": "Unauthorized"
           },
+          "410": {
+            "description": "Azure storage not configured"
+          },
           "413": {
             "description": "Payload Too Large"
+          }
+        }
+      }
+    },
+    "/api/storagebridge/v1/signedUrl": {
+      "post": {
+        "tags": [
+          "storagebridge"
+        ],
+        "operationId": "signed_url_generic",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSignedUrlsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully signed URLs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSignedUrlsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated"
+          },
+          "403": {
+            "description": "Unauthorized"
+          },
+          "413": {
+            "description": "Payload Too Large"
+          },
+          "503": {
+            "description": "Storage not configured"
           }
         }
       }
@@ -105,12 +150,20 @@
           "write"
         ]
       },
+      "Provider": {
+        "type": "string",
+        "enum": [
+          "azure",
+          "gcp"
+        ]
+      },
       "SignedFile": {
         "type": "object",
         "required": [
           "project_identifier",
           "path",
-          "url"
+          "url",
+          "provider"
         ],
         "properties": {
           "path": {
@@ -118,6 +171,9 @@
           },
           "project_identifier": {
             "type": "string"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/Provider"
           },
           "url": {
             "type": "string",
