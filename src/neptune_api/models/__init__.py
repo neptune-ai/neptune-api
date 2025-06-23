@@ -56,7 +56,6 @@ from .query_leaderboard_params_pagination_with_continuation_token_dto import (
 from .query_leaderboard_params_query_aliases_dto import QueryLeaderboardParamsQueryAliasesDTO
 from .query_leaderboard_params_sorting_params_dto import QueryLeaderboardParamsSortingParamsDTO
 from .query_leaderboard_params_sorting_params_dto_dir import QueryLeaderboardParamsSortingParamsDTODir
-from .query_leaderboard_params_suggestions_params_dto import QueryLeaderboardParamsSuggestionsParamsDTO
 from .search_leaderboard_entries_params_dto import SearchLeaderboardEntriesParamsDTO
 from .security_dto import SecurityDTO
 from .series_values_request import SeriesValuesRequest
@@ -106,7 +105,6 @@ __all__ = (
     "QueryLeaderboardParamsQueryAliasesDTO",
     "QueryLeaderboardParamsSortingParamsDTO",
     "QueryLeaderboardParamsSortingParamsDTODir",
-    "QueryLeaderboardParamsSuggestionsParamsDTO",
     "SearchLeaderboardEntriesParamsDTO",
     "SecurityDTO",
     "SeriesValuesRequest",
