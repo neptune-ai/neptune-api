@@ -27,9 +27,6 @@
     "name" : "leaderboard",
     "description" : "Provides alias api"
   }, {
-    "name" : "notebooks",
-    "description" : "Provides notebooks api"
-  }, {
     "name" : "proto",
     "description" : "Proto Attributes Api Controller"
   }, {
@@ -757,71 +754,6 @@
             "description" : "OK",
             "schema" : {
               "$ref" : "#/definitions/DownloadPrepareRequest"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/attributes/files" : {
-      "get" : {
-        "summary" : "Get file attribute",
-        "operationId" : "getFileAttribute",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "attribute",
-          "in" : "query",
-          "description" : "attribute",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "experimentId",
-          "in" : "query",
-          "description" : "experimentId",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderIdentifier",
-          "in" : "query",
-          "description" : "holderIdentifier",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderType",
-          "in" : "query",
-          "description" : "holderType",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/FileAttributeDTO"
             }
           },
           "400" : {
@@ -1756,78 +1688,6 @@
             "description" : "OK",
             "schema" : {
               "$ref" : "#/definitions/ImageSeriesValuesDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/attributes/series/image/single" : {
-      "get" : {
-        "summary" : "Get image series single value",
-        "operationId" : "getImageSeriesValue",
-        "produces" : [ "*/*" ],
-        "parameters" : [ {
-          "name" : "attribute",
-          "in" : "query",
-          "description" : "attribute",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "experimentId",
-          "in" : "query",
-          "description" : "experimentId",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderIdentifier",
-          "in" : "query",
-          "description" : "holderIdentifier",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderType",
-          "in" : "query",
-          "description" : "holderType",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "index",
-          "in" : "query",
-          "description" : "index",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int32"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "type" : "file"
             }
           },
           "400" : {
@@ -2824,6 +2684,106 @@
         "deprecated" : false
       }
     },
+    "/api/leaderboard/v1/attributes/timeseries/histogram/view" : {
+      "post" : {
+        "summary" : "Get histogram series view",
+        "operationId" : "getHistogramTimeSeriesView",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "request",
+          "description" : "request",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/HistogramSeriesViewRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/HistogramSeriesViewResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "409" : {
+            "description" : "Conflict"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/leaderboard/v1/attributes/timeseries/points/source" : {
+      "post" : {
+        "summary" : "Get source runs of series data point",
+        "operationId" : "getSeriesPointSource",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "request",
+          "description" : "request",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/SeriesPointSourceRequestDTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/SeriesPointSourceResponseDTO"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "409" : {
+            "description" : "Conflict"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          }
+        },
+        "deprecated" : false
+      }
+    },
     "/api/leaderboard/v1/attributes/timeseries/view" : {
       "post" : {
         "summary" : "Get series view",
@@ -3126,135 +3086,6 @@
           }
         },
         "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/channels/view" : {
-      "post" : {
-        "summary" : "Get series view by channel UUIDs",
-        "operationId" : "getSeriesView",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "pointCount",
-          "in" : "query",
-          "description" : "pointCount",
-          "required" : false,
-          "type" : "integer",
-          "default" : 1000,
-          "format" : "int32"
-        }, {
-          "name" : "projectIdentifier",
-          "in" : "query",
-          "description" : "projectIdentifier",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "in" : "body",
-          "name" : "request",
-          "description" : "request",
-          "required" : true,
-          "schema" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/definitions/SeriesViewRequestDTO"
-            }
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/SeriesViewListDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/channels/{channelId}/values" : {
-      "get" : {
-        "summary" : "Get values of a channel",
-        "operationId" : "getChannelValues",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "channelId",
-          "in" : "path",
-          "description" : "channelId",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        }, {
-          "name" : "limit",
-          "in" : "query",
-          "description" : "limit",
-          "required" : false,
-          "type" : "integer",
-          "format" : "int32"
-        }, {
-          "name" : "offset",
-          "in" : "query",
-          "description" : "offset",
-          "required" : false,
-          "type" : "integer",
-          "format" : "int32"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/LimitedChannelValuesDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : true
       }
     },
     "/api/leaderboard/v1/dashboards" : {
@@ -4588,67 +4419,6 @@
         "deprecated" : false
       }
     },
-    "/api/leaderboard/v1/images/{experimentId}/{channelId}/{fileName}" : {
-      "get" : {
-        "summary" : "Get image",
-        "operationId" : "getChannelImage",
-        "produces" : [ "*/*" ],
-        "parameters" : [ {
-          "name" : "channelId",
-          "in" : "path",
-          "description" : "channelId",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        }, {
-          "name" : "experimentId",
-          "in" : "path",
-          "description" : "experimentId",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        }, {
-          "name" : "fileName",
-          "in" : "path",
-          "description" : "fileName",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "type" : "file"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
     "/api/leaderboard/v1/leaderboard/attributes/definitions/prioritized" : {
       "post" : {
         "summary" : "Queries prioritized attribute definitions, definitions that fulfill the priority queryare returned as first.",
@@ -5185,850 +4955,6 @@
             "description" : "OK",
             "schema" : {
               "$ref" : "#/definitions/TagsSearchResultDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/notebooks" : {
-      "get" : {
-        "summary" : "Get notebooks",
-        "operationId" : "listNotebooks",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "query",
-          "description" : "id",
-          "required" : false,
-          "type" : "array",
-          "items" : {
-            "type" : "string",
-            "format" : "uuid"
-          },
-          "collectionFormat" : "multi"
-        }, {
-          "name" : "limit",
-          "in" : "query",
-          "description" : "limit",
-          "required" : false,
-          "type" : "integer",
-          "default" : 100,
-          "format" : "int32"
-        }, {
-          "name" : "maxCreationTime",
-          "in" : "query",
-          "description" : "maxCreationTime",
-          "required" : false,
-          "type" : "string",
-          "format" : "date-time"
-        }, {
-          "name" : "minCreationTime",
-          "in" : "query",
-          "description" : "minCreationTime",
-          "required" : false,
-          "type" : "string",
-          "format" : "date-time"
-        }, {
-          "name" : "offset",
-          "in" : "query",
-          "description" : "offset",
-          "required" : false,
-          "type" : "integer",
-          "default" : 0,
-          "format" : "int32"
-        }, {
-          "name" : "owner",
-          "in" : "query",
-          "description" : "owner",
-          "required" : false,
-          "type" : "array",
-          "items" : {
-            "type" : "string"
-          },
-          "collectionFormat" : "multi"
-        }, {
-          "name" : "projectIdentifier",
-          "in" : "query",
-          "description" : "projectIdentifier",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "sortBy",
-          "in" : "query",
-          "description" : "sortBy",
-          "required" : false,
-          "type" : "array",
-          "items" : {
-            "type" : "string",
-            "enum" : [ "name", "owner", "updateTime" ]
-          },
-          "collectionFormat" : "multi",
-          "enum" : [ "name", "owner", "updateTime" ]
-        }, {
-          "name" : "sortDirection",
-          "in" : "query",
-          "description" : "sortDirection",
-          "required" : false,
-          "type" : "array",
-          "items" : {
-            "type" : "string",
-            "enum" : [ "ascending", "descending" ]
-          },
-          "collectionFormat" : "multi",
-          "enum" : [ "ascending", "descending" ]
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/NotebookListDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      },
-      "post" : {
-        "summary" : "Create notebook",
-        "operationId" : "createNotebook",
-        "consumes" : [ "application/octet-stream" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "projectIdentifier",
-          "in" : "query",
-          "description" : "projectIdentifier",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/NotebookWithNoContentDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/notebooks/checkpoints" : {
-      "get" : {
-        "summary" : "Get notebook checkpoints",
-        "operationId" : "listCheckpoints",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "query",
-          "description" : "id",
-          "required" : false,
-          "type" : "array",
-          "items" : {
-            "type" : "string",
-            "format" : "uuid"
-          },
-          "collectionFormat" : "multi"
-        }, {
-          "name" : "limit",
-          "in" : "query",
-          "description" : "limit",
-          "required" : false,
-          "type" : "integer",
-          "default" : 100,
-          "format" : "int32"
-        }, {
-          "name" : "maxCreationTime",
-          "in" : "query",
-          "description" : "maxCreationTime",
-          "required" : false,
-          "type" : "string",
-          "format" : "date-time"
-        }, {
-          "name" : "minCreationTime",
-          "in" : "query",
-          "description" : "minCreationTime",
-          "required" : false,
-          "type" : "string",
-          "format" : "date-time"
-        }, {
-          "name" : "notebookId",
-          "in" : "query",
-          "description" : "notebookId",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        }, {
-          "name" : "offset",
-          "in" : "query",
-          "description" : "offset",
-          "required" : false,
-          "type" : "integer",
-          "default" : 0,
-          "format" : "int32"
-        }, {
-          "name" : "owner",
-          "in" : "query",
-          "description" : "owner",
-          "required" : false,
-          "type" : "array",
-          "items" : {
-            "type" : "string"
-          },
-          "collectionFormat" : "multi"
-        }, {
-          "name" : "searchTerm",
-          "in" : "query",
-          "description" : "searchTerm",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/CheckpointListDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/notebooks/checkpoints/{id}" : {
-      "get" : {
-        "summary" : "Get notebook checkpoint",
-        "operationId" : "getCheckpoint",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "id",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/CheckpointDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      },
-      "delete" : {
-        "summary" : "Delete checkpoint",
-        "operationId" : "deleteCheckpoint",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "id",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        } ],
-        "responses" : {
-          "204" : {
-            "description" : "No Content"
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      },
-      "patch" : {
-        "summary" : "Update checkpoint",
-        "operationId" : "updateCheckpoint",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "checkpointUpdate",
-          "description" : "checkpointUpdate",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/CheckpointUpdateDTO"
-          }
-        }, {
-          "name" : "id",
-          "in" : "path",
-          "description" : "id",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/CheckpointDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/notebooks/checkpoints/{id}/content" : {
-      "get" : {
-        "summary" : "Get notebook checkpoint content",
-        "operationId" : "getCheckpointContent",
-        "produces" : [ "*/*" ],
-        "parameters" : [ {
-          "name" : "expectedContentDisposition",
-          "in" : "query",
-          "description" : "expectedContentDisposition",
-          "required" : false,
-          "type" : "string",
-          "default" : "attachment",
-          "enum" : [ "inline", "attachment" ]
-        }, {
-          "name" : "id",
-          "in" : "path",
-          "description" : "id",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "type" : "file"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      },
-      "post" : {
-        "summary" : "Upload checkpoint content",
-        "operationId" : "uploadCheckpointContent",
-        "consumes" : [ "application/octet-stream" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "id",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK"
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/notebooks/compare" : {
-      "get" : {
-        "summary" : "Compare notebook checkpoint content, response is in nbdime rest api format",
-        "operationId" : "compareCheckpointsContent",
-        "produces" : [ "*/*" ],
-        "parameters" : [ {
-          "name" : "sourceCheckpointId",
-          "in" : "query",
-          "description" : "sourceCheckpointId",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        }, {
-          "name" : "targetCheckpointId",
-          "in" : "query",
-          "description" : "targetCheckpointId",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "type" : "file"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/notebooks/{id}" : {
-      "get" : {
-        "summary" : "Get notebook",
-        "operationId" : "getNotebook",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "id",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/NotebookDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      },
-      "delete" : {
-        "summary" : "Delete notebook",
-        "operationId" : "deleteNotebook",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "id",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        } ],
-        "responses" : {
-          "204" : {
-            "description" : "No Content"
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      },
-      "patch" : {
-        "summary" : "Update notebook",
-        "operationId" : "updateNotebook",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "id",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        }, {
-          "in" : "body",
-          "name" : "notebookUpdate",
-          "description" : "notebookUpdate",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/NotebookUpdateDTO"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/NotebookDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/notebooks/{notebookId}/checkpoints" : {
-      "post" : {
-        "summary" : "Create checkpoint",
-        "operationId" : "createCheckpoint",
-        "consumes" : [ "application/octet-stream" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "description",
-          "in" : "query",
-          "description" : "description",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "jupyterPath",
-          "in" : "query",
-          "description" : "jupyterPath",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "name",
-          "in" : "query",
-          "description" : "name",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "notebookId",
-          "in" : "path",
-          "description" : "notebookId",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/NotebookDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : true
-      }
-    },
-    "/api/leaderboard/v1/notebooks/{notebookId}/checkpoints2" : {
-      "post" : {
-        "summary" : "Create checkpoint",
-        "operationId" : "createEmptyCheckpoint",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "checkpoint",
-          "description" : "checkpoint",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/NewCheckpointDTO"
-          }
-        }, {
-          "name" : "notebookId",
-          "in" : "path",
-          "description" : "notebookId",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/CheckpointDTO"
             }
           },
           "400" : {
@@ -7544,66 +6470,6 @@
         "deprecated" : false
       }
     },
-    "/api/leaderboard/v1/suggestions/decline" : {
-      "post" : {
-        "summary" : "Decline column suggestion from the project",
-        "operationId" : "suggestionDecline",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "projectIdentifier",
-          "in" : "query",
-          "description" : "projectIdentifier",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "in" : "body",
-          "name" : "suggestion",
-          "description" : "suggestion",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/LeaderboardFieldSuggestionDTO"
-          }
-        }, {
-          "name" : "viewId",
-          "in" : "query",
-          "description" : "viewId",
-          "required" : false,
-          "type" : "string",
-          "format" : "uuid"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK"
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : true
-      }
-    },
     "/api/leaderboard/v1/tracking" : {
       "post" : {
         "summary" : "List tracking data",
@@ -8099,17 +6965,11 @@
         "experimentStateProperties" : {
           "$ref" : "#/definitions/ExperimentStateAttributeDTO"
         },
-        "fileProperties" : {
-          "$ref" : "#/definitions/FileAttributeDTO"
-        },
         "fileRefProperties" : {
           "$ref" : "#/definitions/FileRefAttributeDTO"
         },
         "fileRefSeriesProperties" : {
           "$ref" : "#/definitions/FileRefSeriesAttributeDTO"
-        },
-        "fileSetProperties" : {
-          "$ref" : "#/definitions/FileSetAttributeDTO"
         },
         "floatProperties" : {
           "$ref" : "#/definitions/FloatAttributeDTO"
@@ -8123,17 +6983,11 @@
         "histogramSeriesProperties" : {
           "$ref" : "#/definitions/HistogramSeriesAttributeDTO"
         },
-        "imageSeriesProperties" : {
-          "$ref" : "#/definitions/ImageSeriesAttributeDTO"
-        },
         "intProperties" : {
           "$ref" : "#/definitions/IntAttributeDTO"
         },
         "name" : {
           "type" : "string"
-        },
-        "notebookRefProperties" : {
-          "$ref" : "#/definitions/NotebookRefAttributeDTO"
         },
         "stringProperties" : {
           "$ref" : "#/definitions/StringAttributeDTO"
@@ -8256,7 +7110,7 @@
     },
     "AttributeTypeDTO" : {
       "type" : "string",
-      "enum" : [ "complex", "experimentState", "float", "int", "bool", "string", "file", "datetime", "floatSeries", "stringSeries", "imageSeries", "stringSet", "fileSet", "gitRef", "notebookRef", "fileRef", "fileRefSeries", "histogramSeries" ]
+      "enum" : [ "complex", "experimentState", "float", "int", "bool", "string", "datetime", "floatSeries", "stringSeries", "stringSet", "gitRef", "fileRef", "fileRefSeries", "histogramSeries" ]
     },
     "AttributesDTO" : {
       "type" : "object",
@@ -8414,80 +7268,6 @@
       },
       "title" : "BulkOpResultDTO"
     },
-    "CheckpointDTO" : {
-      "type" : "object",
-      "required" : [ "creationTime", "description", "id", "name", "notebookId", "owner", "path", "removable", "size" ],
-      "properties" : {
-        "creationTime" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "description" : {
-          "type" : "string"
-        },
-        "id" : {
-          "type" : "string",
-          "format" : "uuid"
-        },
-        "name" : {
-          "type" : "string"
-        },
-        "notebookId" : {
-          "type" : "string",
-          "format" : "uuid"
-        },
-        "owner" : {
-          "type" : "string"
-        },
-        "path" : {
-          "type" : "string"
-        },
-        "removable" : {
-          "type" : "boolean"
-        },
-        "size" : {
-          "type" : "integer",
-          "format" : "int64"
-        }
-      },
-      "title" : "CheckpointDTO"
-    },
-    "CheckpointListDTO" : {
-      "type" : "object",
-      "required" : [ "entries", "matchingItemCount", "totalItemCount" ],
-      "properties" : {
-        "entries" : {
-          "type" : "array",
-          "description" : "The entries matching the given criteria.",
-          "items" : {
-            "$ref" : "#/definitions/CheckpointDTO"
-          }
-        },
-        "matchingItemCount" : {
-          "type" : "integer",
-          "format" : "int64",
-          "description" : "The total number of entries matching the given criteria."
-        },
-        "totalItemCount" : {
-          "type" : "integer",
-          "format" : "int64",
-          "description" : "The total number of entries."
-        }
-      },
-      "title" : "CheckpointListDTO"
-    },
-    "CheckpointUpdateDTO" : {
-      "type" : "object",
-      "properties" : {
-        "description" : {
-          "type" : "string"
-        },
-        "name" : {
-          "type" : "string"
-        }
-      },
-      "title" : "CheckpointUpdateDTO"
-    },
     "ClearFloatSeriesOperation" : {
       "type" : "object",
       "title" : "ClearFloatSeriesOperation"
@@ -8612,6 +7392,9 @@
         "lineageEntityType" : {
           "type" : "string",
           "enum" : [ "RUN", "EXPERIMENT" ]
+        },
+        "normalizeToFirstValue" : {
+          "type" : "boolean"
         }
       },
       "title" : "CustomMetric"
@@ -8850,19 +7633,6 @@
       },
       "title" : "DatetimeAttributeDTO"
     },
-    "DeleteFilesOperation" : {
-      "type" : "object",
-      "required" : [ "filePaths" ],
-      "properties" : {
-        "filePaths" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string"
-          }
-        }
-      },
-      "title" : "DeleteFilesOperation"
-    },
     "DeleteVariableOperation" : {
       "type" : "object",
       "title" : "DeleteVariableOperation"
@@ -8874,7 +7644,7 @@
         "errorType" : {
           "type" : "string",
           "description" : "Error type.",
-          "enum" : [ "ORGANIZATION_NOT_FOUND", "PROJECT_NOT_FOUND", "PROJECT_NOT_READY", "EXPERIMENT_NOT_FOUND", "ATTRIBUTES_CONTAINER_NOT_FOUND", "CHANNEL_NOT_FOUND", "LEADERBOARD_ENTRY_NOT_FOUND", "SERVICE_UNAVAILABLE", "INVALID_OFFSET", "INVALID_SORT_PARAMS", "INVALID_GROUPING_PARAMS", "ACCESS_DENIED", "INTERNAL_SERVER_ERROR", "INCORRECT_IDENTIFIER", "BAD_REQUEST", "UNAUTHORIZED", "FILE_NOT_FOUND", "NOTEBOOK_NOT_FOUND", "CHECKPOINT_NOT_FOUND", "VIEW_NOT_FOUND", "DASHBOARD_NOT_FOUND", "VERSION_BRANCH_NOT_FOUND", "CANNOT_DELETE_LAST_CHECKPOINT", "REQUEST_TIMEOUT", "DOWNLOAD_REQUEST_NOT_FOUND", "CHANNEL_ALREADY_EXISTS", "ATTRIBUTE_PATH_NOT_FOUND", "INVALID_ATTRIBUTE_TYPE", "MALFORMED_JSON_REQUEST", "TOO_MANY_REQUESTS_PER_USER", "TOO_MANY_OPERATIONS", "EXPERIMENT_ALREADY_EXISTS", "CONFLICT", "WORKSPACE_IN_READ_ONLY_MODE", "ATTRIBUTES_PER_EXPERIMENT_LIMIT_EXCEEDED", "AUTHORIZATION_TOKEN_EXPIRED", "JWT_VALIDATION_ERROR", "WRITE_ACCESS_DENIED_TO_ARCHIVED_PROJECT", "PROJECT_LIMITS_EXCEEDED", "ES_ENTITY_CONTENT_TOO_LONG", "REPORT_NOT_FOUND", "REPORT_VERSION_NOT_FOUND", "REPORT_WITH_NO_VERSIONS", "REPORT_DRAFT_NOT_FOUND", "REPORT_VERSION_OWNER_MISMATCH", "DRAFT_ALREADY_EXISTS", "ATTEMPTED_CONVERSION_FROM_PUBLISHED_VERSION_TO_DRAFT", "ATTEMPTED_CHANGE_OF_A_VERSION_AUTHOR", "ATTEMPTED_DELETION_OF_PUBLISHED_VERSION", "REPORT_PUBLISHING_CONFLICT", "DEPENDENCY_ON_INACCESSIBLE_PROJECTS", "INGEST_SUSPENDED" ]
+          "enum" : [ "ORGANIZATION_NOT_FOUND", "PROJECT_NOT_FOUND", "PROJECT_NOT_READY", "EXPERIMENT_NOT_FOUND", "ATTRIBUTES_CONTAINER_NOT_FOUND", "CHANNEL_NOT_FOUND", "LEADERBOARD_ENTRY_NOT_FOUND", "SERVICE_UNAVAILABLE", "INVALID_OFFSET", "INVALID_SORT_PARAMS", "INVALID_GROUPING_PARAMS", "ACCESS_DENIED", "INTERNAL_SERVER_ERROR", "INCORRECT_IDENTIFIER", "BAD_REQUEST", "UNAUTHORIZED", "FILE_NOT_FOUND", "VIEW_NOT_FOUND", "DASHBOARD_NOT_FOUND", "VERSION_BRANCH_NOT_FOUND", "CANNOT_DELETE_LAST_CHECKPOINT", "REQUEST_TIMEOUT", "DOWNLOAD_REQUEST_NOT_FOUND", "CHANNEL_ALREADY_EXISTS", "ATTRIBUTE_PATH_NOT_FOUND", "INVALID_ATTRIBUTE_TYPE", "MALFORMED_JSON_REQUEST", "TOO_MANY_REQUESTS_PER_USER", "TOO_MANY_OPERATIONS", "EXPERIMENT_ALREADY_EXISTS", "CONFLICT", "WORKSPACE_IN_READ_ONLY_MODE", "ATTRIBUTES_PER_EXPERIMENT_LIMIT_EXCEEDED", "AUTHORIZATION_TOKEN_EXPIRED", "JWT_VALIDATION_ERROR", "WRITE_ACCESS_DENIED_TO_ARCHIVED_PROJECT", "PROJECT_LIMITS_EXCEEDED", "ES_ENTITY_CONTENT_TOO_LONG", "REPORT_NOT_FOUND", "REPORT_VERSION_NOT_FOUND", "REPORT_WITH_NO_VERSIONS", "REPORT_DRAFT_NOT_FOUND", "REPORT_VERSION_OWNER_MISMATCH", "DRAFT_ALREADY_EXISTS", "ATTEMPTED_CONVERSION_FROM_PUBLISHED_VERSION_TO_DRAFT", "ATTEMPTED_CHANGE_OF_A_VERSION_AUTHOR", "ATTEMPTED_DELETION_OF_PUBLISHED_VERSION", "REPORT_PUBLISHING_CONFLICT", "DEPENDENCY_ON_INACCESSIBLE_PROJECTS", "INGEST_SUSPENDED" ]
         },
         "inaccessibleProjects" : {
           "type" : "array",
@@ -8889,6 +7659,22 @@
         }
       },
       "title" : "DependencyOnInaccessibleProjectsErrorDTO"
+    },
+    "DoubleOrInfinity" : {
+      "type" : "object",
+      "properties" : {
+        "specialValue" : {
+          "type" : "string",
+          "description" : "('Infinity', '-Infinity'). Mutually exclusive with value.",
+          "enum" : [ "MINUS_INFINITY", "INFINITY" ]
+        },
+        "value" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "The finite numeric value, if the edge is finite. Mutually exclusive with specialValue."
+        }
+      },
+      "title" : "DoubleOrInfinity"
     },
     "DownloadPrepareRequest" : {
       "type" : "object",
@@ -8989,10 +7775,6 @@
     "ExperimentCreationParams" : {
       "type" : "object",
       "properties" : {
-        "checkpointId" : {
-          "type" : "string",
-          "format" : "uuid"
-        },
         "customId" : {
           "type" : "string"
         },
@@ -9004,10 +7786,6 @@
         },
         "key" : {
           "type" : "string"
-        },
-        "notebookId" : {
-          "type" : "string",
-          "format" : "uuid"
         },
         "parentId" : {
           "type" : "string",
@@ -9073,29 +7851,6 @@
         }
       },
       "title" : "ExperimentsDataDTO"
-    },
-    "FileAttributeDTO" : {
-      "type" : "object",
-      "required" : [ "attributeName", "attributeType", "ext", "name", "size" ],
-      "properties" : {
-        "attributeName" : {
-          "type" : "string"
-        },
-        "attributeType" : {
-          "$ref" : "#/definitions/AttributeTypeDTO"
-        },
-        "ext" : {
-          "type" : "string"
-        },
-        "name" : {
-          "type" : "string"
-        },
-        "size" : {
-          "type" : "integer",
-          "format" : "int64"
-        }
-      },
-      "title" : "FileAttributeDTO"
     },
     "FileEntry" : {
       "type" : "object",
@@ -9176,23 +7931,6 @@
         }
       },
       "title" : "FileRefSeriesAttributeDTO"
-    },
-    "FileSetAttributeDTO" : {
-      "type" : "object",
-      "required" : [ "attributeName", "attributeType", "size" ],
-      "properties" : {
-        "attributeName" : {
-          "type" : "string"
-        },
-        "attributeType" : {
-          "$ref" : "#/definitions/AttributeTypeDTO"
-        },
-        "size" : {
-          "type" : "integer",
-          "format" : "int64"
-        }
-      },
-      "title" : "FileSetAttributeDTO"
     },
     "FilterQueryAttributeDefinitionsDTO" : {
       "type" : "object",
@@ -9473,42 +8211,73 @@
       },
       "title" : "HistogramSeriesAttributeDTO"
     },
-    "Image" : {
+    "HistogramSeriesViewRequest" : {
       "type" : "object",
-      "required" : [ "data" ],
+      "required" : [ "maxNumberOfBins", "metrics", "view", "xaxis" ],
       "properties" : {
-        "data" : {
-          "type" : "string"
+        "maxNumberOfBins" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "The max number of bins should be greater than 2."
         },
-        "name" : {
-          "type" : "string"
+        "metrics" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/CustomMetric"
+          }
         },
-        "description" : {
-          "type" : "string"
+        "view" : {
+          "$ref" : "#/definitions/View"
+        },
+        "xaxis" : {
+          "$ref" : "#/definitions/XAxis"
         }
       },
-      "title" : "Image"
+      "title" : "HistogramSeriesViewRequest"
     },
-    "ImageSeriesAttributeDTO" : {
+    "HistogramSeriesViewResponse" : {
       "type" : "object",
-      "required" : [ "attributeName", "attributeType", "channelId" ],
+      "required" : [ "edges", "elements", "type" ],
       "properties" : {
-        "attributeName" : {
-          "type" : "string"
+        "edges" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/DoubleOrInfinity"
+          }
         },
-        "attributeType" : {
-          "$ref" : "#/definitions/AttributeTypeDTO"
+        "elements" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/SingleHistogramSeriesView"
+          }
         },
-        "channelId" : {
+        "type" : {
           "type" : "string",
-          "format" : "uuid"
+          "enum" : [ "COUNTING", "DENSITY" ]
+        }
+      },
+      "title" : "HistogramSeriesViewResponse"
+    },
+    "HistogramValues" : {
+      "type" : "object",
+      "required" : [ "bucket", "values", "x" ],
+      "properties" : {
+        "bucket" : {
+          "$ref" : "#/definitions/SingleHistogramSeriesViewBucket"
         },
-        "lastStep" : {
+        "values" : {
+          "type" : "array",
+          "items" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        },
+        "x" : {
           "type" : "number",
           "format" : "double"
         }
       },
-      "title" : "ImageSeriesAttributeDTO"
+      "title" : "HistogramValues"
     },
     "ImageSeriesValuesDTO" : {
       "type" : "object",
@@ -9623,13 +8392,6 @@
           "format" : "int64",
           "description" : "The total number of entries matching the given criteria."
         },
-        "suggestions" : {
-          "type" : "array",
-          "description" : "The column suggestions to the user, most recommended columns first.",
-          "items" : {
-            "$ref" : "#/definitions/AttributeDefinitionDTO"
-          }
-        },
         "totalGroupCount" : {
           "type" : "integer",
           "format" : "int64",
@@ -9691,19 +8453,6 @@
         }
       },
       "title" : "LeaderboardFieldDTO"
-    },
-    "LeaderboardFieldSuggestionDTO" : {
-      "type" : "object",
-      "required" : [ "name", "type" ],
-      "properties" : {
-        "name" : {
-          "type" : "string"
-        },
-        "type" : {
-          "$ref" : "#/definitions/AttributeTypeDTO"
-        }
-      },
-      "title" : "LeaderboardFieldSuggestionDTO"
     },
     "LeaderboardFieldWithValueDTO" : {
       "type" : "object",
@@ -9830,7 +8579,7 @@
     },
     "LeaderboardViewDTO" : {
       "type" : "object",
-      "required" : [ "columnList", "defaultView", "experimentsOnly", "id", "name", "runsLineage", "showSelectedHiddenByFilter", "sortOptions", "suggestionsEnabled" ],
+      "required" : [ "columnList", "defaultView", "experimentsOnly", "id", "name", "runsLineage", "showSelectedHiddenByFilter", "sortOptions" ],
       "properties" : {
         "columnList" : {
           "$ref" : "#/definitions/LeaderboardViewColumnListDTO"
@@ -9872,9 +8621,6 @@
         },
         "sortOptions" : {
           "$ref" : "#/definitions/LeaderboardSortParamsDTO"
-        },
-        "suggestionsEnabled" : {
-          "type" : "boolean"
         }
       },
       "title" : "LeaderboardViewDTO"
@@ -9948,7 +8694,7 @@
     },
     "LeaderboardViewUpdateDTO" : {
       "type" : "object",
-      "required" : [ "columnList", "defaultView", "name", "sortOptions", "suggestionsEnabled" ],
+      "required" : [ "columnList", "defaultView", "name", "sortOptions" ],
       "properties" : {
         "columnList" : {
           "$ref" : "#/definitions/LeaderboardViewColumnListDTO"
@@ -9986,33 +8732,9 @@
         },
         "sortOptions" : {
           "$ref" : "#/definitions/LeaderboardSortParamsDTO"
-        },
-        "suggestionsEnabled" : {
-          "type" : "boolean"
         }
       },
       "title" : "LeaderboardViewUpdateDTO"
-    },
-    "LimitedChannelValuesDTO" : {
-      "type" : "object",
-      "required" : [ "channelId", "totalItemCount", "values" ],
-      "properties" : {
-        "channelId" : {
-          "type" : "string",
-          "format" : "uuid"
-        },
-        "totalItemCount" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "values" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/PointValueDTO"
-          }
-        }
-      },
-      "title" : "LimitedChannelValuesDTO"
     },
     "Line" : {
       "type" : "object",
@@ -10057,37 +8779,6 @@
         }
       },
       "title" : "LogFloatsOperation"
-    },
-    "LogImageEntry" : {
-      "type" : "object",
-      "required" : [ "timestampMilliseconds" ],
-      "properties" : {
-        "value" : {
-          "$ref" : "#/definitions/Image"
-        },
-        "step" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "timestampMilliseconds" : {
-          "type" : "integer",
-          "format" : "int64"
-        }
-      },
-      "title" : "LogImageEntry"
-    },
-    "LogImages" : {
-      "type" : "object",
-      "required" : [ "entries" ],
-      "properties" : {
-        "entries" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/LogImageEntry"
-          }
-        }
-      },
-      "title" : "LogImages"
     },
     "LogStringEntry" : {
       "type" : "object",
@@ -10159,22 +8850,6 @@
       },
       "title" : "NameAliasDTO"
     },
-    "NewCheckpointDTO" : {
-      "type" : "object",
-      "required" : [ "path" ],
-      "properties" : {
-        "path" : {
-          "type" : "string"
-        },
-        "name" : {
-          "type" : "string"
-        },
-        "description" : {
-          "type" : "string"
-        }
-      },
-      "title" : "NewCheckpointDTO"
-    },
     "NewDashboardDTO" : {
       "type" : "object",
       "required" : [ "layouts", "name", "type", "widgets" ],
@@ -10243,7 +8918,7 @@
     },
     "NewLeaderboardViewDTO" : {
       "type" : "object",
-      "required" : [ "columnList", "defaultView", "name", "sortOptions", "suggestionsEnabled" ],
+      "required" : [ "columnList", "defaultView", "name", "sortOptions" ],
       "properties" : {
         "columnList" : {
           "$ref" : "#/definitions/LeaderboardViewColumnListDTO"
@@ -10281,9 +8956,6 @@
         },
         "sortOptions" : {
           "$ref" : "#/definitions/LeaderboardSortParamsDTO"
-        },
-        "suggestionsEnabled" : {
-          "type" : "boolean"
         }
       },
       "title" : "NewLeaderboardViewDTO"
@@ -10392,161 +9064,6 @@
       },
       "title" : "NextPageDTO"
     },
-    "NotebookDTO" : {
-      "type" : "object",
-      "required" : [ "creationTime", "description", "id", "lastCheckpointId", "lastCheckpointTime", "name", "organizationId", "organizationName", "owner", "path", "projectId", "projectName", "removable", "size", "totalStorageSize" ],
-      "properties" : {
-        "creationTime" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "description" : {
-          "type" : "string"
-        },
-        "id" : {
-          "type" : "string",
-          "format" : "uuid"
-        },
-        "lastCheckpointId" : {
-          "type" : "string",
-          "format" : "uuid"
-        },
-        "lastCheckpointTime" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "name" : {
-          "type" : "string"
-        },
-        "organizationId" : {
-          "type" : "string",
-          "format" : "uuid"
-        },
-        "organizationName" : {
-          "type" : "string"
-        },
-        "owner" : {
-          "type" : "string"
-        },
-        "path" : {
-          "type" : "string"
-        },
-        "projectId" : {
-          "type" : "string",
-          "format" : "uuid"
-        },
-        "projectName" : {
-          "type" : "string"
-        },
-        "removable" : {
-          "type" : "boolean"
-        },
-        "size" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "totalStorageSize" : {
-          "type" : "integer",
-          "format" : "int64"
-        }
-      },
-      "title" : "NotebookDTO"
-    },
-    "NotebookListDTO" : {
-      "type" : "object",
-      "required" : [ "entries", "matchingItemCount", "totalItemCount" ],
-      "properties" : {
-        "entries" : {
-          "type" : "array",
-          "description" : "The entries matching the given criteria.",
-          "items" : {
-            "$ref" : "#/definitions/NotebookDTO"
-          }
-        },
-        "matchingItemCount" : {
-          "type" : "integer",
-          "format" : "int64",
-          "description" : "The total number of entries matching the given criteria."
-        },
-        "totalItemCount" : {
-          "type" : "integer",
-          "format" : "int64",
-          "description" : "The total number of entries."
-        }
-      },
-      "title" : "NotebookListDTO"
-    },
-    "NotebookRefAttributeDTO" : {
-      "type" : "object",
-      "required" : [ "attributeName", "attributeType", "notebookDeleted", "notebookId" ],
-      "properties" : {
-        "attributeName" : {
-          "type" : "string"
-        },
-        "attributeType" : {
-          "$ref" : "#/definitions/AttributeTypeDTO"
-        },
-        "checkpointCreated" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "checkpointDeleted" : {
-          "type" : "boolean"
-        },
-        "checkpointId" : {
-          "type" : "string",
-          "format" : "uuid"
-        },
-        "checkpointName" : {
-          "type" : "string"
-        },
-        "notebookDeleted" : {
-          "type" : "boolean"
-        },
-        "notebookId" : {
-          "type" : "string",
-          "format" : "uuid"
-        },
-        "notebookName" : {
-          "type" : "string"
-        }
-      },
-      "title" : "NotebookRefAttributeDTO"
-    },
-    "NotebookUpdateDTO" : {
-      "type" : "object",
-      "properties" : {
-        "description" : {
-          "type" : "string"
-        }
-      },
-      "title" : "NotebookUpdateDTO"
-    },
-    "NotebookWithNoContentDTO" : {
-      "type" : "object",
-      "required" : [ "creationTime", "description", "id", "owner", "projectId" ],
-      "properties" : {
-        "creationTime" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "description" : {
-          "type" : "string"
-        },
-        "id" : {
-          "type" : "string",
-          "format" : "uuid"
-        },
-        "owner" : {
-          "type" : "string"
-        },
-        "projectId" : {
-          "type" : "string",
-          "format" : "uuid"
-        }
-      },
-      "title" : "NotebookWithNoContentDTO"
-    },
     "NotebooksDataDTO" : {
       "type" : "object",
       "properties" : {
@@ -10611,9 +9128,6 @@
         "logStrings" : {
           "$ref" : "#/definitions/LogStringsOperation"
         },
-        "logImages" : {
-          "$ref" : "#/definitions/LogImages"
-        },
         "clearFloatSeries" : {
           "$ref" : "#/definitions/ClearFloatSeriesOperation"
         },
@@ -10634,9 +9148,6 @@
         },
         "clearStringSet" : {
           "$ref" : "#/definitions/ClearStringSetOperation"
-        },
-        "deleteFiles" : {
-          "$ref" : "#/definitions/DeleteFilesOperation"
         },
         "deleteAttribute" : {
           "$ref" : "#/definitions/DeleteVariableOperation"
@@ -10681,24 +9192,6 @@
         }
       },
       "title" : "Optional«OperationError»"
-    },
-    "OutputImageDTO" : {
-      "type" : "object",
-      "properties" : {
-        "description" : {
-          "type" : "string"
-        },
-        "imageUrl" : {
-          "type" : "string"
-        },
-        "name" : {
-          "type" : "string"
-        },
-        "thumbnailUrl" : {
-          "type" : "string"
-        }
-      },
-      "title" : "OutputImageDTO"
     },
     "PageDTO«DashboardVersionDTO»" : {
       "type" : "object",
@@ -10769,24 +9262,6 @@
         }
       },
       "title" : "PointFilters"
-    },
-    "PointValueDTO" : {
-      "type" : "object",
-      "required" : [ "timestampMillis", "y" ],
-      "properties" : {
-        "timestampMillis" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "x" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "y" : {
-          "$ref" : "#/definitions/YOutput"
-        }
-      },
-      "title" : "PointValueDTO"
     },
     "PrioritizedAttributeDefinitionDTO" : {
       "type" : "object",
@@ -11140,6 +9615,13 @@
     "QueryAttributesBodyDTO" : {
       "type" : "object",
       "properties" : {
+        "attributeFilter" : {
+          "type" : "array",
+          "description" : "Filter by attribute (match any), if null no type or property value filtering is applied",
+          "items" : {
+            "$ref" : "#/definitions/AttributeFilterDTO"
+          }
+        },
         "attributeNameFilter" : {
           "description" : "Filter by attribute name; attribute must match the filter to be returned",
           "$ref" : "#/definitions/AttributeNameFilterDTO"
@@ -11345,20 +9827,6 @@
         }
       },
       "title" : "QueryLeaderboardParamsSortingParamsDTO"
-    },
-    "QueryLeaderboardParamsSuggestionsParamsDTO" : {
-      "type" : "object",
-      "required" : [ "enabled" ],
-      "properties" : {
-        "enabled" : {
-          "type" : "boolean"
-        },
-        "viewId" : {
-          "type" : "string",
-          "format" : "uuid"
-        }
-      },
-      "title" : "QueryLeaderboardParamsSuggestionsParamsDTO"
     },
     "RelativeTimestamp" : {
       "type" : "object",
@@ -11743,9 +10211,6 @@
         "sorting" : {
           "$ref" : "#/definitions/QueryLeaderboardParamsSortingParamsDTO"
         },
-        "suggestions" : {
-          "$ref" : "#/definitions/QueryLeaderboardParamsSuggestionsParamsDTO"
-        },
         "truncateStringTo" : {
           "type" : "integer",
           "format" : "int32",
@@ -11763,6 +10228,43 @@
         }
       },
       "title" : "SearchLeaderboardParamsDTO"
+    },
+    "SeriesAttributeDTO" : {
+      "type" : "object",
+      "required" : [ "attribute", "holder" ],
+      "properties" : {
+        "attribute" : {
+          "type" : "string"
+        },
+        "holder" : {
+          "$ref" : "#/definitions/AttributesHolderIdentifier"
+        }
+      },
+      "title" : "SeriesAttributeDTO"
+    },
+    "SeriesAttributeSourceDTO" : {
+      "type" : "object",
+      "required" : [ "runId" ],
+      "properties" : {
+        "runId" : {
+          "type" : "string",
+          "format" : "uuid"
+        }
+      },
+      "title" : "SeriesAttributeSourceDTO"
+    },
+    "SeriesAttributeWithSourceDTO" : {
+      "type" : "object",
+      "required" : [ "attribute", "source" ],
+      "properties" : {
+        "attribute" : {
+          "type" : "string"
+        },
+        "source" : {
+          "$ref" : "#/definitions/SeriesAttributeSourceDTO"
+        }
+      },
+      "title" : "SeriesAttributeWithSourceDTO"
     },
     "SeriesPointDTO" : {
       "type" : "object",
@@ -11791,6 +10293,36 @@
         }
       },
       "title" : "SeriesPointDTO"
+    },
+    "SeriesPointSourceRequestDTO" : {
+      "type" : "object",
+      "required" : [ "attributes", "step" ],
+      "properties" : {
+        "attributes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/SeriesAttributeDTO"
+          }
+        },
+        "step" : {
+          "type" : "number",
+          "format" : "double"
+        }
+      },
+      "title" : "SeriesPointSourceRequestDTO"
+    },
+    "SeriesPointSourceResponseDTO" : {
+      "type" : "object",
+      "required" : [ "attributes" ],
+      "properties" : {
+        "attributes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/SeriesAttributeWithSourceDTO"
+          }
+        }
+      },
+      "title" : "SeriesPointSourceResponseDTO"
     },
     "SeriesValueObjectDTO" : {
       "type" : "object",
@@ -11890,129 +10422,6 @@
       },
       "title" : "SeriesValuesResponseDTO"
     },
-    "SeriesViewDTO" : {
-      "type" : "object",
-      "required" : [ "attributePath", "downsampled", "firstPointIndex", "holderIdentifier", "holderType", "lastPointIndex", "maxY", "minY", "projectId", "projectName", "values" ],
-      "properties" : {
-        "attributePath" : {
-          "type" : "string"
-        },
-        "downsampled" : {
-          "type" : "boolean"
-        },
-        "firstPointIndex" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "holderIdentifier" : {
-          "type" : "string"
-        },
-        "holderType" : {
-          "type" : "string"
-        },
-        "lastPointIndex" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "maxY" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "minY" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "projectId" : {
-          "type" : "string",
-          "format" : "uuid"
-        },
-        "projectName" : {
-          "type" : "string"
-        },
-        "values" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/SeriesViewPointDTO"
-          }
-        }
-      },
-      "title" : "SeriesViewDTO"
-    },
-    "SeriesViewListDTO" : {
-      "type" : "object",
-      "required" : [ "elements" ],
-      "properties" : {
-        "elements" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/SeriesViewDTO"
-          }
-        }
-      },
-      "title" : "SeriesViewListDTO"
-    },
-    "SeriesViewPointDTO" : {
-      "type" : "object",
-      "required" : [ "downsampled", "firstPointIndex", "lastPointIndex", "maxY", "minY", "timestamp", "x", "y" ],
-      "properties" : {
-        "downsampled" : {
-          "type" : "boolean"
-        },
-        "firstPointIndex" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "lastPointIndex" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "maxY" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "minY" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "timestamp" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "x" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "y" : {
-          "type" : "number",
-          "format" : "double"
-        }
-      },
-      "title" : "SeriesViewPointDTO"
-    },
-    "SeriesViewRequestDTO" : {
-      "type" : "object",
-      "required" : [ "attributePath", "holderIdentifier", "holderType" ],
-      "properties" : {
-        "attributePath" : {
-          "type" : "string"
-        },
-        "firstPointIndex" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "holderIdentifier" : {
-          "type" : "string"
-        },
-        "holderType" : {
-          "type" : "string"
-        },
-        "lastPointIndex" : {
-          "type" : "integer",
-          "format" : "int32"
-        }
-      },
-      "title" : "SeriesViewRequestDTO"
-    },
     "Signal" : {
       "type" : "object",
       "required" : [ "body", "experimentIdentifiers", "type" ],
@@ -12036,6 +10445,10 @@
       "type" : "object",
       "required" : [ "customId", "values" ],
       "properties" : {
+        "baseline" : {
+          "type" : "number",
+          "format" : "double"
+        },
         "customId" : {
           "type" : "string"
         },
@@ -12047,6 +10460,37 @@
         }
       },
       "title" : "SingleCustomTimeSeriesView"
+    },
+    "SingleHistogramSeriesView" : {
+      "type" : "object",
+      "required" : [ "customId", "values" ],
+      "properties" : {
+        "customId" : {
+          "type" : "string"
+        },
+        "values" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/HistogramValues"
+          }
+        }
+      },
+      "title" : "SingleHistogramSeriesView"
+    },
+    "SingleHistogramSeriesViewBucket" : {
+      "type" : "object",
+      "required" : [ "bucketNo", "count" ],
+      "properties" : {
+        "bucketNo" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "count" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      },
+      "title" : "SingleHistogramSeriesViewBucket"
     },
     "SingleSeriesValuesResponseDTO" : {
       "type" : "object",
@@ -12071,6 +10515,10 @@
       "type" : "object",
       "required" : [ "timeSeries", "values" ],
       "properties" : {
+        "baseline" : {
+          "type" : "number",
+          "format" : "double"
+        },
         "timeSeries" : {
           "$ref" : "#/definitions/TimeSeries"
         },
@@ -12237,9 +10685,6 @@
         "name" : {
           "$ref" : "#/definitions/StringAttributeDTO"
         },
-        "notebookRef" : {
-          "$ref" : "#/definitions/NotebookRefAttributeDTO"
-        },
         "owner" : {
           "$ref" : "#/definitions/StringAttributeDTO"
         },
@@ -12367,6 +10812,9 @@
         "lineageEntityType" : {
           "type" : "string",
           "enum" : [ "RUN", "EXPERIMENT" ]
+        },
+        "normalizeToFirstValue" : {
+          "type" : "boolean"
         }
       },
       "title" : "TimeSeries"
@@ -12386,6 +10834,12 @@
           "description" : "Deprecated, use metrics instead.",
           "items" : {
             "$ref" : "#/definitions/TimeSeries"
+          }
+        },
+        "types" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AttributeTypeDTO"
           }
         },
         "view" : {
@@ -12575,12 +11029,6 @@
           "type" : "number",
           "format" : "double"
         },
-        "types" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/AttributeTypeDTO"
-          }
-        },
         "xscale" : {
           "$ref" : "#/definitions/Scale"
         },
@@ -12602,7 +11050,7 @@
         },
         "type" : {
           "type" : "string",
-          "enum" : [ "experimentState", "float", "int", "bool", "string", "file", "datetime", "floatSeries", "stringSeries", "imageSeries", "stringSet", "fileSet", "gitRef", "notebookRef", "notSupported" ]
+          "enum" : [ "experimentState", "float", "int", "bool", "string", "file", "datetime", "floatSeries", "stringSeries", "imageSeries", "stringSet", "fileSet", "gitRef", "notebookRef", "histogramSeries", "fileSeries", "notSupported" ]
         }
       },
       "title" : "WidgetAttributeDTO"
@@ -12655,7 +11103,7 @@
         },
         "type" : {
           "type" : "string",
-          "enum" : [ "chart", "valueList", "file", "fileSet", "image", "imageComparison", "interactiveTable", "gallery", "notebook", "scatterPlot", "singleValue", "table", "textNode", "section" ]
+          "enum" : [ "chart", "valueList", "file", "fileSet", "image", "imageComparison", "interactiveTable", "gallery", "notebook", "scatterPlot", "singleValue", "table", "textNode", "section", "histogram", "fileSeries" ]
         }
       },
       "title" : "WidgetDTO"
@@ -12706,22 +11154,6 @@
         }
       },
       "title" : "XAxis"
-    },
-    "YOutput" : {
-      "type" : "object",
-      "properties" : {
-        "imageValue" : {
-          "$ref" : "#/definitions/OutputImageDTO"
-        },
-        "numericValue" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "textValue" : {
-          "type" : "string"
-        }
-      },
-      "title" : "YOutput"
     }
   }
 }
