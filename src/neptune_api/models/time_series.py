@@ -49,6 +49,7 @@ class TimeSeries:
         include_preview (Union[Unset, bool]):
         lineage (Union[Unset, TimeSeriesLineage]):
         lineage_entity_type (Union[Unset, TimeSeriesLineageEntityType]):
+        normalize_to_first_value (Union[Unset, bool]):
     """
 
     attribute: str
@@ -56,6 +57,7 @@ class TimeSeries:
     include_preview: Union[Unset, bool] = UNSET
     lineage: Union[Unset, TimeSeriesLineage] = UNSET
     lineage_entity_type: Union[Unset, TimeSeriesLineageEntityType] = UNSET
+    normalize_to_first_value: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,6 +75,8 @@ class TimeSeries:
         if not isinstance(self.lineage_entity_type, Unset):
             lineage_entity_type = self.lineage_entity_type.value
 
+        normalize_to_first_value = self.normalize_to_first_value
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -87,6 +91,8 @@ class TimeSeries:
             field_dict["lineage"] = lineage
         if lineage_entity_type is not UNSET:
             field_dict["lineageEntityType"] = lineage_entity_type
+        if normalize_to_first_value is not UNSET:
+            field_dict["normalizeToFirstValue"] = normalize_to_first_value
 
         return field_dict
 
@@ -115,12 +121,15 @@ class TimeSeries:
         else:
             lineage_entity_type = TimeSeriesLineageEntityType(_lineage_entity_type)
 
+        normalize_to_first_value = d.pop("normalizeToFirstValue", UNSET)
+
         time_series = cls(
             attribute=attribute,
             holder=holder,
             include_preview=include_preview,
             lineage=lineage,
             lineage_entity_type=lineage_entity_type,
+            normalize_to_first_value=normalize_to_first_value,
         )
 
         time_series.additional_properties = d

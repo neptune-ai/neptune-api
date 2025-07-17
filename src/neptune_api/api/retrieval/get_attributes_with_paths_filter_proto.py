@@ -44,8 +44,11 @@ def _get_kwargs(
     body: AttributeQueryDTO,
     holder_identifier: str,
     holder_type: Union[Unset, str] = UNSET,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
+    if not isinstance(x_neptune_client_metadata, Unset):
+        headers["X-Neptune-Client-Metadata"] = x_neptune_client_metadata
 
     params: Dict[str, Any] = {}
 
@@ -128,12 +131,14 @@ def sync_detailed(
     body: AttributeQueryDTO,
     holder_identifier: str,
     holder_type: Union[Unset, str] = UNSET,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, File]]:
     """Get attributes
 
     Args:
         holder_identifier (str):
         holder_type (Union[Unset, str]):
+        x_neptune_client_metadata (Union[Unset, str]):
         body (AttributeQueryDTO):
 
     Raises:
@@ -148,6 +153,7 @@ def sync_detailed(
         body=body,
         holder_identifier=holder_identifier,
         holder_type=holder_type,
+        x_neptune_client_metadata=x_neptune_client_metadata,
     )
 
     response = client.get_httpx_client().request(
@@ -163,12 +169,14 @@ def sync(
     body: AttributeQueryDTO,
     holder_identifier: str,
     holder_type: Union[Unset, str] = UNSET,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, File]]:
     """Get attributes
 
     Args:
         holder_identifier (str):
         holder_type (Union[Unset, str]):
+        x_neptune_client_metadata (Union[Unset, str]):
         body (AttributeQueryDTO):
 
     Raises:
@@ -184,6 +192,7 @@ def sync(
         body=body,
         holder_identifier=holder_identifier,
         holder_type=holder_type,
+        x_neptune_client_metadata=x_neptune_client_metadata,
     ).parsed
 
 
@@ -193,12 +202,14 @@ async def asyncio_detailed(
     body: AttributeQueryDTO,
     holder_identifier: str,
     holder_type: Union[Unset, str] = UNSET,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, File]]:
     """Get attributes
 
     Args:
         holder_identifier (str):
         holder_type (Union[Unset, str]):
+        x_neptune_client_metadata (Union[Unset, str]):
         body (AttributeQueryDTO):
 
     Raises:
@@ -213,6 +224,7 @@ async def asyncio_detailed(
         body=body,
         holder_identifier=holder_identifier,
         holder_type=holder_type,
+        x_neptune_client_metadata=x_neptune_client_metadata,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -226,12 +238,14 @@ async def asyncio(
     body: AttributeQueryDTO,
     holder_identifier: str,
     holder_type: Union[Unset, str] = UNSET,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, File]]:
     """Get attributes
 
     Args:
         holder_identifier (str):
         holder_type (Union[Unset, str]):
+        x_neptune_client_metadata (Union[Unset, str]):
         body (AttributeQueryDTO):
 
     Raises:
@@ -248,5 +262,6 @@ async def asyncio(
             body=body,
             holder_identifier=holder_identifier,
             holder_type=holder_type,
+            x_neptune_client_metadata=x_neptune_client_metadata,
         )
     ).parsed

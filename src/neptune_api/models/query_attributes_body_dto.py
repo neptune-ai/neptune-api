@@ -33,6 +33,7 @@ from ..types import (
 )
 
 if TYPE_CHECKING:
+    from ..models.attribute_filter_dto import AttributeFilterDTO
     from ..models.attribute_name_filter_dto import AttributeNameFilterDTO
     from ..models.next_page_dto import NextPageDTO
 
@@ -44,6 +45,8 @@ T = TypeVar("T", bound="QueryAttributesBodyDTO")
 class QueryAttributesBodyDTO:
     """
     Attributes:
+        attribute_filter (Union[Unset, List['AttributeFilterDTO']]): Filter by attribute (match any), if null no type or
+            property value filtering is applied
         attribute_name_filter (Union[Unset, AttributeNameFilterDTO]):
         attribute_names_filter (Union[Unset, List[str]]): Filter by attribute name, if null all attributes are
             considered
@@ -51,6 +54,7 @@ class QueryAttributesBodyDTO:
         next_page (Union[Unset, NextPageDTO]):
     """
 
+    attribute_filter: Union[Unset, List["AttributeFilterDTO"]] = UNSET
     attribute_name_filter: Union[Unset, "AttributeNameFilterDTO"] = UNSET
     attribute_names_filter: Union[Unset, List[str]] = UNSET
     experiment_ids_filter: Union[Unset, List[str]] = UNSET
@@ -58,6 +62,13 @@ class QueryAttributesBodyDTO:
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        attribute_filter: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.attribute_filter, Unset):
+            attribute_filter = []
+            for attribute_filter_item_data in self.attribute_filter:
+                attribute_filter_item = attribute_filter_item_data.to_dict()
+                attribute_filter.append(attribute_filter_item)
+
         attribute_name_filter: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.attribute_name_filter, Unset):
             attribute_name_filter = self.attribute_name_filter.to_dict()
@@ -77,6 +88,8 @@ class QueryAttributesBodyDTO:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
+        if attribute_filter is not UNSET:
+            field_dict["attributeFilter"] = attribute_filter
         if attribute_name_filter is not UNSET:
             field_dict["attributeNameFilter"] = attribute_name_filter
         if attribute_names_filter is not UNSET:
@@ -90,10 +103,20 @@ class QueryAttributesBodyDTO:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.attribute_filter_dto import AttributeFilterDTO
         from ..models.attribute_name_filter_dto import AttributeNameFilterDTO
         from ..models.next_page_dto import NextPageDTO
 
         d = src_dict.copy()
+        attribute_filter: Union[Unset, List[AttributeFilterDTO]] = UNSET
+        _attribute_filter = d.pop("attributeFilter", UNSET)
+        if not isinstance(_attribute_filter, Unset):
+            attribute_filter = []
+            for attribute_filter_item_data in _attribute_filter:
+                attribute_filter_item = AttributeFilterDTO.from_dict(attribute_filter_item_data)
+
+                attribute_filter.append(attribute_filter_item)
+
         _attribute_name_filter = d.pop("attributeNameFilter", UNSET)
         attribute_name_filter: Union[Unset, AttributeNameFilterDTO]
         if isinstance(_attribute_name_filter, Unset):
@@ -113,6 +136,7 @@ class QueryAttributesBodyDTO:
             next_page = NextPageDTO.from_dict(_next_page)
 
         query_attributes_body_dto = cls(
+            attribute_filter=attribute_filter,
             attribute_name_filter=attribute_name_filter,
             attribute_names_filter=attribute_names_filter,
             experiment_ids_filter=experiment_ids_filter,
