@@ -38,7 +38,6 @@ if TYPE_CHECKING:
     from ..models.query_leaderboard_params_pagination_dto import QueryLeaderboardParamsPaginationDTO
     from ..models.query_leaderboard_params_query_aliases_dto import QueryLeaderboardParamsQueryAliasesDTO
     from ..models.query_leaderboard_params_sorting_params_dto import QueryLeaderboardParamsSortingParamsDTO
-    from ..models.query_leaderboard_params_suggestions_params_dto import QueryLeaderboardParamsSuggestionsParamsDTO
 
 
 T = TypeVar("T", bound="SearchLeaderboardEntriesParamsDTO")
@@ -55,7 +54,6 @@ class SearchLeaderboardEntriesParamsDTO:
         query (Union[Unset, NqlQueryParamsDTO]):
         query_name_aliases (Union[Unset, QueryLeaderboardParamsQueryAliasesDTO]):
         sorting (Union[Unset, QueryLeaderboardParamsSortingParamsDTO]):
-        suggestions (Union[Unset, QueryLeaderboardParamsSuggestionsParamsDTO]):
         truncate_string_to (Union[Unset, int]):
     """
 
@@ -66,7 +64,6 @@ class SearchLeaderboardEntriesParamsDTO:
     query: Union[Unset, "NqlQueryParamsDTO"] = UNSET
     query_name_aliases: Union[Unset, "QueryLeaderboardParamsQueryAliasesDTO"] = UNSET
     sorting: Union[Unset, "QueryLeaderboardParamsSortingParamsDTO"] = UNSET
-    suggestions: Union[Unset, "QueryLeaderboardParamsSuggestionsParamsDTO"] = UNSET
     truncate_string_to: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -100,10 +97,6 @@ class SearchLeaderboardEntriesParamsDTO:
         if not isinstance(self.sorting, Unset):
             sorting = self.sorting.to_dict()
 
-        suggestions: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.suggestions, Unset):
-            suggestions = self.suggestions.to_dict()
-
         truncate_string_to = self.truncate_string_to
 
         field_dict: Dict[str, Any] = {}
@@ -123,8 +116,6 @@ class SearchLeaderboardEntriesParamsDTO:
             field_dict["queryNameAliases"] = query_name_aliases
         if sorting is not UNSET:
             field_dict["sorting"] = sorting
-        if suggestions is not UNSET:
-            field_dict["suggestions"] = suggestions
         if truncate_string_to is not UNSET:
             field_dict["truncateStringTo"] = truncate_string_to
 
@@ -138,7 +129,6 @@ class SearchLeaderboardEntriesParamsDTO:
         from ..models.query_leaderboard_params_pagination_dto import QueryLeaderboardParamsPaginationDTO
         from ..models.query_leaderboard_params_query_aliases_dto import QueryLeaderboardParamsQueryAliasesDTO
         from ..models.query_leaderboard_params_sorting_params_dto import QueryLeaderboardParamsSortingParamsDTO
-        from ..models.query_leaderboard_params_suggestions_params_dto import QueryLeaderboardParamsSuggestionsParamsDTO
 
         d = src_dict.copy()
         attribute_filters: Union[Unset, List[QueryLeaderboardParamsAttributeFilterDTO]] = UNSET
@@ -187,13 +177,6 @@ class SearchLeaderboardEntriesParamsDTO:
         else:
             sorting = QueryLeaderboardParamsSortingParamsDTO.from_dict(_sorting)
 
-        _suggestions = d.pop("suggestions", UNSET)
-        suggestions: Union[Unset, QueryLeaderboardParamsSuggestionsParamsDTO]
-        if isinstance(_suggestions, Unset):
-            suggestions = UNSET
-        else:
-            suggestions = QueryLeaderboardParamsSuggestionsParamsDTO.from_dict(_suggestions)
-
         truncate_string_to = d.pop("truncateStringTo", UNSET)
 
         search_leaderboard_entries_params_dto = cls(
@@ -204,7 +187,6 @@ class SearchLeaderboardEntriesParamsDTO:
             query=query,
             query_name_aliases=query_name_aliases,
             sorting=sorting,
-            suggestions=suggestions,
             truncate_string_to=truncate_string_to,
         )
 

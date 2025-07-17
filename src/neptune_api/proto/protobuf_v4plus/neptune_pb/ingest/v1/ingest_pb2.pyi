@@ -70,6 +70,8 @@ class _IngestCodeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._Enu
     'The timestamp of a series value is lesser than the most recently logged value. Identical timestamps are allowed.'
     FLOAT_VALUE_NAN_INF_UNSUPPORTED: _IngestCode.ValueType
     'Unsupported value type for float64 field or float64 series. Applies to Inf and NaN values.'
+    DATETIME_VALUE_OUT_OF_RANGE: _IngestCode.ValueType
+    'Timestamp allowed range is (1900-01-01 to 2299-12-31)'
     STRING_VALUE_EXCEEDS_SIZE_LIMIT: _IngestCode.ValueType
     'String value is too long. Maximum length is 1MiB.'
     STRING_SET_EXCEEDS_SIZE_LIMIT: _IngestCode.ValueType
@@ -137,6 +139,8 @@ SERIES_TIMESTAMP_DECREASING: IngestCode.ValueType
 'The timestamp of a series value is lesser than the most recently logged value. Identical timestamps are allowed.'
 FLOAT_VALUE_NAN_INF_UNSUPPORTED: IngestCode.ValueType
 'Unsupported value type for float64 field or float64 series. Applies to Inf and NaN values.'
+DATETIME_VALUE_OUT_OF_RANGE: IngestCode.ValueType
+'Timestamp allowed range is (1900-01-01 to 2299-12-31)'
 STRING_VALUE_EXCEEDS_SIZE_LIMIT: IngestCode.ValueType
 'String value is too long. Maximum length is 1MiB.'
 STRING_SET_EXCEEDS_SIZE_LIMIT: IngestCode.ValueType
