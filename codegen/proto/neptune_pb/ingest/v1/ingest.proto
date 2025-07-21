@@ -122,6 +122,9 @@ enum IngestCode {
   // Unsupported value type for float64 field or float64 series. Applies to Inf and NaN values.
   FLOAT_VALUE_NAN_INF_UNSUPPORTED = 32;
 
+  // Timestamp allowed range is (1900-01-01 to 2299-12-31)
+  DATETIME_VALUE_OUT_OF_RANGE = 33;
+
   // String value is too long. Maximum length is 1MiB.
   STRING_VALUE_EXCEEDS_SIZE_LIMIT = 36;
 

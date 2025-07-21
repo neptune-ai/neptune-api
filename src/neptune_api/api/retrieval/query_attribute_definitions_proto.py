@@ -43,7 +43,12 @@ def _get_kwargs(
     *,
     attribute_type: Union[Unset, List[str]] = UNSET,
     experiment_identifier: str,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
+    headers: Dict[str, Any] = {}
+    if not isinstance(x_neptune_client_metadata, Unset):
+        headers["X-Neptune-Client-Metadata"] = x_neptune_client_metadata
+
     params: Dict[str, Any] = {}
 
     json_attribute_type: Union[Unset, List[str]] = UNSET
@@ -62,6 +67,7 @@ def _get_kwargs(
         "params": params,
     }
 
+    _kwargs["headers"] = headers
     return _kwargs
 
 
@@ -122,12 +128,14 @@ def sync_detailed(
     client: Union[AuthenticatedClient, Client],
     attribute_type: Union[Unset, List[str]] = UNSET,
     experiment_identifier: str,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, File]]:
     """Queries attribute definitions of an experiment
 
     Args:
         attribute_type (Union[Unset, List[str]]):
         experiment_identifier (str):
+        x_neptune_client_metadata (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -140,6 +148,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         attribute_type=attribute_type,
         experiment_identifier=experiment_identifier,
+        x_neptune_client_metadata=x_neptune_client_metadata,
     )
 
     response = client.get_httpx_client().request(
@@ -154,12 +163,14 @@ def sync(
     client: Union[AuthenticatedClient, Client],
     attribute_type: Union[Unset, List[str]] = UNSET,
     experiment_identifier: str,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, File]]:
     """Queries attribute definitions of an experiment
 
     Args:
         attribute_type (Union[Unset, List[str]]):
         experiment_identifier (str):
+        x_neptune_client_metadata (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -173,6 +184,7 @@ def sync(
         client=client,
         attribute_type=attribute_type,
         experiment_identifier=experiment_identifier,
+        x_neptune_client_metadata=x_neptune_client_metadata,
     ).parsed
 
 
@@ -181,12 +193,14 @@ async def asyncio_detailed(
     client: Union[AuthenticatedClient, Client],
     attribute_type: Union[Unset, List[str]] = UNSET,
     experiment_identifier: str,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, File]]:
     """Queries attribute definitions of an experiment
 
     Args:
         attribute_type (Union[Unset, List[str]]):
         experiment_identifier (str):
+        x_neptune_client_metadata (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -199,6 +213,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         attribute_type=attribute_type,
         experiment_identifier=experiment_identifier,
+        x_neptune_client_metadata=x_neptune_client_metadata,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -211,12 +226,14 @@ async def asyncio(
     client: Union[AuthenticatedClient, Client],
     attribute_type: Union[Unset, List[str]] = UNSET,
     experiment_identifier: str,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, File]]:
     """Queries attribute definitions of an experiment
 
     Args:
         attribute_type (Union[Unset, List[str]]):
         experiment_identifier (str):
+        x_neptune_client_metadata (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -231,5 +248,6 @@ async def asyncio(
             client=client,
             attribute_type=attribute_type,
             experiment_identifier=experiment_identifier,
+            x_neptune_client_metadata=x_neptune_client_metadata,
         )
     ).parsed

@@ -32,16 +32,21 @@ from ...client import (
 )
 from ...models.float_time_series_values_request import FloatTimeSeriesValuesRequest
 from ...types import (
+    UNSET,
     File,
     Response,
+    Unset,
 )
 
 
 def _get_kwargs(
     *,
     body: FloatTimeSeriesValuesRequest,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
+    if not isinstance(x_neptune_client_metadata, Unset):
+        headers["X-Neptune-Client-Metadata"] = x_neptune_client_metadata
 
     _kwargs: Dict[str, Any] = {
         "method": "post",
@@ -113,10 +118,12 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: FloatTimeSeriesValuesRequest,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, File]]:
     """Get multiple float series values
 
     Args:
+        x_neptune_client_metadata (Union[Unset, str]):
         body (FloatTimeSeriesValuesRequest):
 
     Raises:
@@ -129,6 +136,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         body=body,
+        x_neptune_client_metadata=x_neptune_client_metadata,
     )
 
     response = client.get_httpx_client().request(
@@ -142,10 +150,12 @@ def sync(
     *,
     client: Union[AuthenticatedClient, Client],
     body: FloatTimeSeriesValuesRequest,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, File]]:
     """Get multiple float series values
 
     Args:
+        x_neptune_client_metadata (Union[Unset, str]):
         body (FloatTimeSeriesValuesRequest):
 
     Raises:
@@ -159,6 +169,7 @@ def sync(
     return sync_detailed(
         client=client,
         body=body,
+        x_neptune_client_metadata=x_neptune_client_metadata,
     ).parsed
 
 
@@ -166,10 +177,12 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: FloatTimeSeriesValuesRequest,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, File]]:
     """Get multiple float series values
 
     Args:
+        x_neptune_client_metadata (Union[Unset, str]):
         body (FloatTimeSeriesValuesRequest):
 
     Raises:
@@ -182,6 +195,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         body=body,
+        x_neptune_client_metadata=x_neptune_client_metadata,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -193,10 +207,12 @@ async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
     body: FloatTimeSeriesValuesRequest,
+    x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, File]]:
     """Get multiple float series values
 
     Args:
+        x_neptune_client_metadata (Union[Unset, str]):
         body (FloatTimeSeriesValuesRequest):
 
     Raises:
@@ -211,5 +227,6 @@ async def asyncio(
         await asyncio_detailed(
             client=client,
             body=body,
+            x_neptune_client_metadata=x_neptune_client_metadata,
         )
     ).parsed
