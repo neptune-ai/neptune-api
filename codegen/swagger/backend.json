@@ -5893,6 +5893,355 @@
           "oauth2" : [ ]
         } ]
       }
+    },
+    "/api/backend/v1/iaac/projects" : {
+      "delete" : {
+        "operationId" : "deleteProjectForIaaC",
+        "summary" : "",
+        "deprecated" : false,
+        "parameters" : [ {
+          "name" : "projectIdentifier",
+          "required" : true,
+          "in" : "query",
+          "type" : "string"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "200" : {
+            "description" : "No response"
+          }
+        },
+        "security" : [ {
+          "oauth2" : [ ]
+        } ]
+      },
+      "post" : {
+        "operationId" : "createProjectForIaaC",
+        "summary" : "",
+        "deprecated" : false,
+        "parameters" : [ {
+          "name" : "projectToCreate",
+          "required" : true,
+          "in" : "body",
+          "schema" : {
+            "$ref" : "#/definitions/NewProjectDTO"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "409" : {
+            "description" : "Conflict"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/ProjectWithRoleDTO"
+            }
+          }
+        },
+        "security" : [ {
+          "oauth2" : [ ]
+        } ]
+      },
+      "get" : {
+        "operationId" : "getProjectDetailsForIaaC",
+        "summary" : "",
+        "deprecated" : false,
+        "parameters" : [ {
+          "name" : "projectIdentifier",
+          "required" : true,
+          "in" : "query",
+          "type" : "string"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/ProjectWithRoleDTO"
+            }
+          }
+        },
+        "security" : [ {
+          "oauth2" : [ ]
+        } ]
+      },
+      "put" : {
+        "operationId" : "updateProjectForIaaC",
+        "summary" : "",
+        "deprecated" : false,
+        "parameters" : [ {
+          "name" : "projectIdentifier",
+          "required" : true,
+          "in" : "query",
+          "type" : "string"
+        }, {
+          "name" : "projectToUpdate",
+          "required" : true,
+          "in" : "body",
+          "schema" : {
+            "$ref" : "#/definitions/ProjectUpdateDTO"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/ProjectWithRoleDTO"
+            }
+          }
+        },
+        "security" : [ {
+          "oauth2" : [ ]
+        } ]
+      }
+    },
+    "/api/backend/v1/iaac/projects/members" : {
+      "delete" : {
+        "operationId" : "removeProjectMemberForIaaC",
+        "summary" : "",
+        "deprecated" : false,
+        "parameters" : [ {
+          "name" : "projectIdentifier",
+          "required" : true,
+          "in" : "query",
+          "type" : "string"
+        }, {
+          "name" : "email",
+          "required" : true,
+          "in" : "query",
+          "type" : "string"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "200" : {
+            "description" : "No response"
+          }
+        },
+        "security" : [ {
+          "oauth2" : [ ]
+        } ]
+      },
+      "get" : {
+        "operationId" : "listProjectMembersForIaaC",
+        "summary" : "",
+        "deprecated" : false,
+        "parameters" : [ {
+          "name" : "projectIdentifier",
+          "required" : true,
+          "in" : "query",
+          "type" : "string"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/IaaCProjectMembersListDTO"
+            }
+          }
+        },
+        "security" : [ {
+          "oauth2" : [ ]
+        } ]
+      },
+      "put" : {
+        "operationId" : "updateProjectMemberForIaaC",
+        "summary" : "",
+        "deprecated" : false,
+        "parameters" : [ {
+          "name" : "projectIdentifier",
+          "required" : true,
+          "in" : "query",
+          "type" : "string"
+        }, {
+          "name" : "email",
+          "required" : true,
+          "in" : "query",
+          "type" : "string"
+        }, {
+          "name" : "memberUpdate",
+          "required" : true,
+          "in" : "body",
+          "schema" : {
+            "$ref" : "#/definitions/IaaCProjectMemberUpdateDTO"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Bad Request",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/IaaCProjectMemberDTO"
+            }
+          }
+        },
+        "security" : [ {
+          "oauth2" : [ ]
+        } ]
+      }
     }
   },
   "definitions" : {
@@ -6292,6 +6641,9 @@
       "properties" : {
         "name" : {
           "type" : "string"
+        },
+        "isAdmin" : {
+          "type" : "boolean"
         }
       },
       "required" : [ "name" ]
@@ -6371,9 +6723,6 @@
         "displayName" : {
           "type" : "string"
         },
-        "name" : {
-          "type" : "string"
-        },
         "keyGeneratedAt" : {
           "type" : "string",
           "format" : "date-time"
@@ -6396,6 +6745,12 @@
           "type" : "string",
           "format" : "date-time"
         },
+        "name" : {
+          "type" : "string"
+        },
+        "isAdmin" : {
+          "type" : "boolean"
+        },
         "createdBy" : {
           "type" : "string"
         },
@@ -6403,7 +6758,7 @@
           "type" : "string"
         }
       },
-      "required" : [ "id", "name", "displayName", "organizationId", "created", "createdBy" ]
+      "required" : [ "id", "name", "displayName", "organizationId", "created", "createdBy", "isAdmin" ]
     },
     "MonitoringTimePackageDTO" : {
       "type" : "object",
@@ -6564,6 +6919,18 @@
         }
       },
       "required" : [ "maxStorageSize" ]
+    },
+    "IaaCProjectMembersListDTO" : {
+      "type" : "object",
+      "properties" : {
+        "members" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/IaaCProjectMemberDTO"
+          }
+        }
+      },
+      "required" : [ "members" ]
     },
     "NewOrganizationInvitationProjectEntryDTO" : {
       "type" : "object",
@@ -7033,6 +7400,18 @@
         }
       },
       "required" : [ "id", "name", "created", "paymentStatus", "avatarUrl", "avatarSource", "organizationType", "limitsEnforced", "pricingPlan", "organization", "userRole" ]
+    },
+    "IaaCProjectMemberDTO" : {
+      "type" : "object",
+      "properties" : {
+        "email" : {
+          "type" : "string"
+        },
+        "role" : {
+          "$ref" : "#/definitions/IaaCProjectRoleDTO"
+        }
+      },
+      "required" : [ "email", "role" ]
     },
     "UpgradePurchaseRequestDTO" : {
       "type" : "object",
@@ -7541,7 +7920,7 @@
     },
     "ApiErrorTypeDTO" : {
       "type" : "string",
-      "enum" : [ "LIMIT_OF_PROJECTS_REACHED", "LIMIT_OF_MEMBERS_IN_ORGANIZATION_REACHED", "WORKSPACE_READONLY", "USER_NOT_IN_PROJECT", "SERVICE_ACCOUNT_ALREADY_EXISTS_IN_ORGANIZATION", "SERVICE_ACCOUNT_NOT_IN_PROJECT", "LIMIT_OF_SERVICE_ACCOUNTS_IN_ORGANIZATION_REACHED", "CANNOT_ADD_MEMBERS_TO_PRIVATE_INDIVIDUAL_PROJECT", "CANNOT_ADD_MANAGER_TO_INDIVIDUAL_PROJECT", "CANNOT_ADD_OUTSIDERS_TO_TEAM_PROJECT", "CANNOT_LEAVE_TEAM_PROJECT", "ADMIN_CANNOT_LEAVE_PROJECT", "LIMIT_OF_PROJECT_MEMBERS_REACHED", "VISIBILITY_RESTRICTED", "PLAN_NOT_AVAILABLE", "PAYMENTS_NOT_SUPPORTED", "PROJECT_NAME_COLLISION", "PROJECT_KEY_COLLISION", "PROJECT_NAME_INVALID", "PROJECT_KEY_INVALID", "USER_STILL_OWNS_SOME_ORGANIZATIONS", "LIMIT_OF_ACTIVE_PROJECTS_REACHED", "ACTIVE_PROJECTS_QUOTA_COULD_NOT_BE_CHANGED", "LIMIT_OF_ACTIVE_PROJECTS_QUOTA_REACHED", "INSUFFICIENT_ACTIVE_PROJECTS_QUOTA" ]
+      "enum" : [ "LIMIT_OF_PROJECTS_REACHED", "LIMIT_OF_MEMBERS_IN_ORGANIZATION_REACHED", "WORKSPACE_READONLY", "USER_NOT_IN_PROJECT", "SERVICE_ACCOUNT_ALREADY_EXISTS_IN_ORGANIZATION", "SERVICE_ACCOUNT_NOT_IN_PROJECT", "LIMIT_OF_SERVICE_ACCOUNTS_IN_ORGANIZATION_REACHED", "CANNOT_ADD_MEMBERS_TO_PRIVATE_INDIVIDUAL_PROJECT", "CANNOT_ADD_MANAGER_TO_INDIVIDUAL_PROJECT", "CANNOT_ADD_OUTSIDERS_TO_TEAM_PROJECT", "CANNOT_LEAVE_TEAM_PROJECT", "ADMIN_CANNOT_LEAVE_PROJECT", "LIMIT_OF_PROJECT_MEMBERS_REACHED", "VISIBILITY_RESTRICTED", "PLAN_NOT_AVAILABLE", "PAYMENTS_NOT_SUPPORTED", "PROJECT_NAME_COLLISION", "PROJECT_KEY_COLLISION", "PROJECT_NAME_INVALID", "PROJECT_KEY_INVALID", "USER_STILL_OWNS_SOME_ORGANIZATIONS", "LIMIT_OF_ACTIVE_PROJECTS_REACHED", "ACTIVE_PROJECTS_QUOTA_COULD_NOT_BE_CHANGED", "LIMIT_OF_ACTIVE_PROJECTS_QUOTA_REACHED", "INSUFFICIENT_ACTIVE_PROJECTS_QUOTA", "CANNOT_MANAGE_ORGANIZATION_OWNER_IN_PROJECT", "PROJECT_VISIBILITY_NOT_SUPPORTED_FOR_IAAC" ]
     },
     "FlatPricingDTO" : {
       "type" : "object",
@@ -7596,6 +7975,15 @@
         }
       },
       "required" : [ "key", "value" ]
+    },
+    "IaaCProjectMemberUpdateDTO" : {
+      "type" : "object",
+      "properties" : {
+        "role" : {
+          "$ref" : "#/definitions/IaaCProjectRoleDTO"
+        }
+      },
+      "required" : [ "role" ]
     },
     "ProjectDTO" : {
       "type" : "object",
@@ -7717,6 +8105,10 @@
     "AvatarSourceEnum" : {
       "type" : "string",
       "enum" : [ "default", "thirdParty", "user", "inherited", "unicode" ]
+    },
+    "IaaCProjectRoleDTO" : {
+      "type" : "string",
+      "enum" : [ "owner", "member" ]
     },
     "OrganizationCreationParamsDTO" : {
       "type" : "object",

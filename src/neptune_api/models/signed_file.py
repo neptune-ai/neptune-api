@@ -14,17 +14,28 @@
 # limitations under the License.
 
 from typing import (
+    TYPE_CHECKING,
     Any,
     Dict,
     List,
     Type,
     TypeVar,
+    Union,
+    cast,
 )
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.provider import Provider
+from ..types import (
+    UNSET,
+    Unset,
+)
+
+if TYPE_CHECKING:
+    from ..models.multipart_upload import MultipartUpload
+
 
 T = TypeVar("T", bound="SignedFile")
 
@@ -37,15 +48,19 @@ class SignedFile:
         project_identifier (str):
         provider (Provider):
         url (str):
+        multipart (Union['MultipartUpload', None, Unset]):
     """
 
     path: str
     project_identifier: str
     provider: Provider
     url: str
+    multipart: Union["MultipartUpload", None, Unset] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        from ..models.multipart_upload import MultipartUpload
+
         path = self.path
 
         project_identifier = self.project_identifier
@@ -53,6 +68,14 @@ class SignedFile:
         provider = self.provider.value
 
         url = self.url
+
+        multipart: Union[Dict[str, Any], None, Unset]
+        if isinstance(self.multipart, Unset):
+            multipart = UNSET
+        elif isinstance(self.multipart, MultipartUpload):
+            multipart = self.multipart.to_dict()
+        else:
+            multipart = self.multipart
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -64,11 +87,15 @@ class SignedFile:
                 "url": url,
             }
         )
+        if multipart is not UNSET:
+            field_dict["multipart"] = multipart
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.multipart_upload import MultipartUpload
+
         d = src_dict.copy()
         path = d.pop("path")
 
@@ -78,11 +105,29 @@ class SignedFile:
 
         url = d.pop("url")
 
+        def _parse_multipart(data: object) -> Union["MultipartUpload", None, Unset]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                multipart_type_1 = MultipartUpload.from_dict(data)
+
+                return multipart_type_1
+            except:  # noqa: E722
+                pass
+            return cast(Union["MultipartUpload", None, Unset], data)
+
+        multipart = _parse_multipart(d.pop("multipart", UNSET))
+
         signed_file = cls(
             path=path,
             project_identifier=project_identifier,
             provider=provider,
             url=url,
+            multipart=multipart,
         )
 
         signed_file.additional_properties = d

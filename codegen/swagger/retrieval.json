@@ -25,13 +25,16 @@
     "description" : "Provides experiments api"
   }, {
     "name" : "leaderboard",
-    "description" : "Provides alias api"
+    "description" : "Provides leaderboard api"
   }, {
     "name" : "proto",
     "description" : "Proto Attributes Api Controller"
   }, {
     "name" : "reports",
     "description" : "Reports Api Controller"
+  }, {
+    "name" : "userAnalytics",
+    "description" : "User Analytics Api Controller"
   } ],
   "paths" : {
     "/api/leaderboard/v1/attributes" : {
@@ -212,148 +215,6 @@
         "deprecated" : false
       }
     },
-    "/api/leaderboard/v1/attributes/booleans" : {
-      "get" : {
-        "summary" : "Get boolean attribute",
-        "operationId" : "getBoolAttribute",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "attribute",
-          "in" : "query",
-          "description" : "attribute",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "experimentId",
-          "in" : "query",
-          "description" : "experimentId",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderIdentifier",
-          "in" : "query",
-          "description" : "holderIdentifier",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderType",
-          "in" : "query",
-          "description" : "holderType",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/BoolAttributeDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/attributes/datetimes" : {
-      "get" : {
-        "summary" : "Get datetime attribute",
-        "operationId" : "getDatetimeAttribute",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "attribute",
-          "in" : "query",
-          "description" : "attribute",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "experimentId",
-          "in" : "query",
-          "description" : "experimentId",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderIdentifier",
-          "in" : "query",
-          "description" : "holderIdentifier",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderType",
-          "in" : "query",
-          "description" : "holderType",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/DatetimeAttributeDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
     "/api/leaderboard/v1/attributes/floatSeries/csv" : {
       "get" : {
         "summary" : "Get values of a float series",
@@ -409,204 +270,6 @@
             "description" : "OK",
             "schema" : {
               "type" : "file"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/attributes/floatSeries/csv/multiple" : {
-      "post" : {
-        "summary" : "Get multiple float series in single ZIP",
-        "operationId" : "getMultipleFloatSeriesValuesCSV",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json", "application/zip" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "in" : "body",
-          "name" : "request",
-          "description" : "request",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/AttributesRequestsListDTO"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/DownloadPrepareRequest"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/attributes/floats" : {
-      "get" : {
-        "summary" : "Get float attribute",
-        "operationId" : "getFloatAttribute",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "attribute",
-          "in" : "query",
-          "description" : "attribute",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "experimentId",
-          "in" : "query",
-          "description" : "experimentId",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderIdentifier",
-          "in" : "query",
-          "description" : "holderIdentifier",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderType",
-          "in" : "query",
-          "description" : "holderType",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/FloatAttributeDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/attributes/integers" : {
-      "get" : {
-        "summary" : "Get integer attribute",
-        "operationId" : "getIntAttribute",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "attribute",
-          "in" : "query",
-          "description" : "attribute",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "experimentId",
-          "in" : "query",
-          "description" : "experimentId",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderIdentifier",
-          "in" : "query",
-          "description" : "holderIdentifier",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderType",
-          "in" : "query",
-          "description" : "holderType",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/IntAttributeDTO"
             }
           },
           "400" : {
@@ -725,7 +388,7 @@
     },
     "/api/leaderboard/v1/attributes/queryAttributeDefinitions" : {
       "get" : {
-        "summary" : "[deprecated] Queries attribute definitions of an experiment",
+        "summary" : "Queries attribute definitions of an experiment",
         "operationId" : "queryAttributeDefinitions",
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -749,6 +412,12 @@
           "in" : "query",
           "description" : "experimentIdentifier",
           "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "prefix",
+          "in" : "query",
+          "description" : "prefix",
+          "required" : false,
           "type" : "string"
         } ],
         "responses" : {
@@ -783,7 +452,7 @@
             "description" : "Too Many Requests"
           }
         },
-        "deprecated" : true
+        "deprecated" : false
       },
       "post" : {
         "summary" : "Queries attribute definitions of an experiment",
@@ -1087,148 +756,6 @@
         "deprecated" : true
       }
     },
-    "/api/leaderboard/v1/attributes/stringSets" : {
-      "get" : {
-        "summary" : "Get string set attribute",
-        "operationId" : "getStringSetAttribute",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "attribute",
-          "in" : "query",
-          "description" : "attribute",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "experimentId",
-          "in" : "query",
-          "description" : "experimentId",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderIdentifier",
-          "in" : "query",
-          "description" : "holderIdentifier",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderType",
-          "in" : "query",
-          "description" : "holderType",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/StringSetAttributeDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/attributes/strings" : {
-      "get" : {
-        "summary" : "Get string attribute",
-        "operationId" : "getStringAttribute",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "attribute",
-          "in" : "query",
-          "description" : "attribute",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "experimentId",
-          "in" : "query",
-          "description" : "experimentId",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderIdentifier",
-          "in" : "query",
-          "description" : "holderIdentifier",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "holderType",
-          "in" : "query",
-          "description" : "holderType",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/StringAttributeDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
     "/api/leaderboard/v1/attributes/style/putAttributeStyleSettings" : {
       "put" : {
         "summary" : "Creates or updates attribute style settings",
@@ -1483,71 +1010,6 @@
             "description" : "OK",
             "schema" : {
               "$ref" : "#/definitions/TimeSeriesViewResponse"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/audit" : {
-      "get" : {
-        "summary" : "Get organization audit data",
-        "operationId" : "getAuditInfo",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "organizationIdentifier",
-          "in" : "query",
-          "description" : "organizationIdentifier",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "projectIdentifier",
-          "in" : "query",
-          "description" : "projectIdentifier",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "username",
-          "in" : "query",
-          "description" : "username",
-          "required" : false,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/AuditInfo"
             }
           },
           "400" : {
@@ -2174,114 +1636,6 @@
             "description" : "OK",
             "schema" : {
               "$ref" : "#/definitions/DashboardVersionDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/download/downloadFile" : {
-      "get" : {
-        "summary" : "Get download stream",
-        "operationId" : "download",
-        "produces" : [ "*/*" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "id",
-          "in" : "query",
-          "description" : "id",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "type" : "file"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/download/downloadRequest" : {
-      "get" : {
-        "summary" : "Get download request",
-        "operationId" : "getDownloadPrepareRequest",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "id",
-          "in" : "query",
-          "description" : "id",
-          "required" : true,
-          "type" : "string",
-          "format" : "uuid"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/DownloadPrepareRequest"
             }
           },
           "400" : {
@@ -3509,6 +2863,62 @@
         "deprecated" : false
       }
     },
+    "/api/leaderboard/v1/leaderboard/entries/searchUserRuns" : {
+      "post" : {
+        "summary" : "Get leaderboard",
+        "operationId" : "searchUserRuns",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "X-Neptune-Client-Metadata",
+          "in" : "header",
+          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "params",
+          "description" : "params",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/SearchUserRunsParamsDTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/LeaderboardEntriesSearchResultDTO"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "409" : {
+            "description" : "Conflict"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          }
+        },
+        "deprecated" : false
+      }
+    },
     "/api/leaderboard/v1/leaderboard/tags/search" : {
       "post" : {
         "summary" : "Get tags defined in experiments within project",
@@ -3565,68 +2975,6 @@
             "description" : "OK",
             "schema" : {
               "$ref" : "#/definitions/TagsSearchResultDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/prepareForDownloadLeaderboardCsv" : {
-      "post" : {
-        "summary" : "Prepare download leaderboard as CSV",
-        "operationId" : "prepareForDownloadLeaderboardCsv",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "in" : "body",
-          "name" : "csvExporting",
-          "description" : "csvExporting",
-          "required" : true,
-          "schema" : {
-            "$ref" : "#/definitions/LeaderboardCsvExportParamsDTO"
-          }
-        }, {
-          "name" : "projectIdentifier",
-          "in" : "query",
-          "description" : "projectIdentifier",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "Created",
-            "schema" : {
-              "$ref" : "#/definitions/DownloadPrepareRequest"
             }
           },
           "400" : {
@@ -4879,6 +4227,62 @@
         "deprecated" : false
       }
     },
+    "/api/leaderboard/v1/runs:modifyTags" : {
+      "post" : {
+        "summary" : "Update tags in multiple projects",
+        "operationId" : "updateTagsBulk",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "X-Neptune-Client-Metadata",
+          "in" : "header",
+          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "updateTagsBulkParams",
+          "description" : "updateTagsBulkParams",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/UpdateTagsBulkParams"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/ProjectBulkOpResultDTO"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "409" : {
+            "description" : "Conflict"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          }
+        },
+        "deprecated" : false
+      }
+    },
     "/api/leaderboard/v1/runs:unarchive" : {
       "post" : {
         "summary" : "Unarchive Runs",
@@ -4968,6 +4372,62 @@
                 "$ref" : "#/definitions/TrackingDataDTO"
               }
             }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "409" : {
+            "description" : "Conflict"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/leaderboard/v1/userAnalytics/storeEvent" : {
+      "post" : {
+        "summary" : "Store event",
+        "operationId" : "storeEvent",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "X-Neptune-Client-Metadata",
+          "in" : "header",
+          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "event",
+          "description" : "event",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/UserEventDTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "201" : {
+            "description" : "Stored event"
           },
           "400" : {
             "description" : "Bad Request"
@@ -5626,19 +5086,6 @@
       },
       "title" : "AttributesHolderIdentifier"
     },
-    "AttributesRequestsListDTO" : {
-      "type" : "object",
-      "required" : [ "requests" ],
-      "properties" : {
-        "requests" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/RequestedAttributes"
-          }
-        }
-      },
-      "title" : "AttributesRequestsListDTO"
-    },
     "AttributesSearchResultDTO" : {
       "type" : "object",
       "required" : [ "entries" ],
@@ -5647,6 +5094,12 @@
           "type" : "array",
           "items" : {
             "$ref" : "#/definitions/AttributeDefinitionDTO"
+          }
+        },
+        "subPaths" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
           }
         }
       },
@@ -5663,20 +5116,6 @@
         }
       },
       "title" : "AttributesStyleSettingsResultDTO"
-    },
-    "AuditInfo" : {
-      "type" : "object",
-      "properties" : {
-        "accustomedExperimentCreatedAt" : {
-          "type" : "string",
-          "format" : "date-time"
-        },
-        "firstExperimentCreatedAt" : {
-          "type" : "string",
-          "format" : "date-time"
-        }
-      },
-      "title" : "AuditInfo"
     },
     "BoolAttributeDTO" : {
       "type" : "object",
@@ -6146,20 +5585,6 @@
         }
       },
       "title" : "DoubleOrInfinity"
-    },
-    "DownloadPrepareRequest" : {
-      "type" : "object",
-      "required" : [ "id" ],
-      "properties" : {
-        "downloadUrl" : {
-          "type" : "string"
-        },
-        "id" : {
-          "type" : "string",
-          "format" : "uuid"
-        }
-      },
-      "title" : "DownloadPrepareRequest"
     },
     "EpochMillis" : {
       "type" : "object",
@@ -6729,51 +6154,6 @@
         }
       },
       "title" : "IntAttributeDTO"
-    },
-    "LeaderboardCsvExportParamsDTO" : {
-      "type" : "object",
-      "required" : [ "exportFieldAggregations", "exportFieldNames", "exportFieldTypes", "exportFields", "zoneOffset" ],
-      "properties" : {
-        "exportFieldAggregations" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string",
-            "enum" : [ "last", "min", "max", "average", "variance", "auto" ]
-          }
-        },
-        "exportFieldNames" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string"
-          }
-        },
-        "exportFieldTypes" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/AttributeTypeDTO"
-          }
-        },
-        "exportFields" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string"
-          }
-        },
-        "query" : {
-          "type" : "string"
-        },
-        "sorting" : {
-          "$ref" : "#/definitions/LeaderboardSortParamsDTO"
-        },
-        "zoneOffset" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "zoneRegion" : {
-          "type" : "string"
-        }
-      },
-      "title" : "LeaderboardCsvExportParamsDTO"
     },
     "LeaderboardEntriesSearchResultDTO" : {
       "type" : "object",
@@ -7668,6 +7048,19 @@
       },
       "title" : "ProjectAliasGroupDTO"
     },
+    "ProjectBulkOpResultDTO" : {
+      "type" : "object",
+      "required" : [ "resultsByProject" ],
+      "properties" : {
+        "resultsByProject" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "$ref" : "#/definitions/BulkOpResultDTO"
+          }
+        }
+      },
+      "title" : "ProjectBulkOpResultDTO"
+    },
     "ProtoAttributesDTO" : {
       "type" : "object",
       "title" : "ProtoAttributesDTO"
@@ -8074,6 +7467,22 @@
       },
       "title" : "RemoveStringsOperation"
     },
+    "ReportGlobalConfigDTO" : {
+      "type" : "object",
+      "required" : [ "chartsConfig", "inheritRunColorFromGroup", "runsLineage" ],
+      "properties" : {
+        "chartsConfig" : {
+          "$ref" : "#/definitions/DashboardConfigDTO"
+        },
+        "inheritRunColorFromGroup" : {
+          "type" : "boolean"
+        },
+        "runsLineage" : {
+          "type" : "boolean"
+        }
+      },
+      "title" : "ReportGlobalConfigDTO"
+    },
     "ReportMetadataDTO" : {
       "type" : "object",
       "required" : [ "creationTime", "initialAuthor", "latestPublishTime", "latestVersionMetadata", "reportId" ],
@@ -8211,7 +7620,7 @@
     },
     "ReportVersionDTO" : {
       "type" : "object",
-      "required" : [ "metadata", "nodes", "reportName" ],
+      "required" : [ "globalConfig", "metadata", "nodes", "reportName" ],
       "properties" : {
         "experimentAliases" : {
           "type" : "array",
@@ -8219,6 +7628,9 @@
           "items" : {
             "$ref" : "#/definitions/ProjectAliasGroupDTO"
           }
+        },
+        "globalConfig" : {
+          "$ref" : "#/definitions/ReportGlobalConfigDTO"
         },
         "metadata" : {
           "$ref" : "#/definitions/ReportVersionMetadataDTO"
@@ -8309,25 +7721,6 @@
         }
       },
       "title" : "ReportVersionMetadataDTO"
-    },
-    "RequestedAttributes" : {
-      "type" : "object",
-      "required" : [ "attributes", "holderIdentifier", "holderType" ],
-      "properties" : {
-        "attributes" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string"
-          }
-        },
-        "holderIdentifier" : {
-          "type" : "string"
-        },
-        "holderType" : {
-          "type" : "string"
-        }
-      },
-      "title" : "RequestedAttributes"
     },
     "RunGroupDTO" : {
       "type" : "object",
@@ -8463,6 +7856,28 @@
         }
       },
       "title" : "SearchLeaderboardParamsDTO"
+    },
+    "SearchUserRunsParamsDTO" : {
+      "type" : "object",
+      "required" : [ "username" ],
+      "properties" : {
+        "experimentLeader" : {
+          "type" : "boolean"
+        },
+        "pagination" : {
+          "$ref" : "#/definitions/QueryLeaderboardParamsPaginationDTO"
+        },
+        "query" : {
+          "$ref" : "#/definitions/NqlQueryParamsDTO"
+        },
+        "sorting" : {
+          "$ref" : "#/definitions/QueryLeaderboardParamsSortingParamsDTO"
+        },
+        "username" : {
+          "type" : "string"
+        }
+      },
+      "title" : "SearchUserRunsParamsDTO"
     },
     "SeriesAttributeDTO" : {
       "type" : "object",
@@ -9163,6 +8578,19 @@
       },
       "title" : "UpdateDashboardVersionDTO"
     },
+    "UpdateTagsBulkParams" : {
+      "type" : "object",
+      "required" : [ "updatePerProject" ],
+      "properties" : {
+        "updatePerProject" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "$ref" : "#/definitions/UpdateTagsParams"
+          }
+        }
+      },
+      "title" : "UpdateTagsBulkParams"
+    },
     "UpdateTagsParams" : {
       "type" : "object",
       "required" : [ "experimentIdentifiers", "tagsToAdd", "tagsToDelete" ],
@@ -9191,6 +8619,42 @@
         }
       },
       "title" : "UpdateTagsParams"
+    },
+    "UserEventDTO" : {
+      "type" : "object",
+      "required" : [ "action", "actionVersion", "timestampMillis", "url" ],
+      "properties" : {
+        "action" : {
+          "type" : "string"
+        },
+        "actionVersion" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "Action version, expected to be in range 0-255 (1 byte)"
+        },
+        "metadata" : {
+          "type" : "string"
+        },
+        "organizationID" : {
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "projectId" : {
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "timestampMillis" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "url" : {
+          "type" : "string"
+        },
+        "username" : {
+          "type" : "string"
+        }
+      },
+      "title" : "UserEventDTO"
     },
     "View" : {
       "type" : "object",

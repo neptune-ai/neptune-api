@@ -19,12 +19,18 @@ from typing import (
     List,
     Type,
     TypeVar,
+    Union,
+    cast,
 )
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.permission import Permission
+from ..types import (
+    UNSET,
+    Unset,
+)
 
 T = TypeVar("T", bound="FileToSign")
 
@@ -36,11 +42,13 @@ class FileToSign:
         path (str):
         permission (Permission):
         project_identifier (str):
+        size (Union[None, Unset, int]):
     """
 
     path: str
     permission: Permission
     project_identifier: str
+    size: Union[None, Unset, int] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -49,6 +57,12 @@ class FileToSign:
         permission = self.permission.value
 
         project_identifier = self.project_identifier
+
+        size: Union[None, Unset, int]
+        if isinstance(self.size, Unset):
+            size = UNSET
+        else:
+            size = self.size
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -59,6 +73,8 @@ class FileToSign:
                 "project_identifier": project_identifier,
             }
         )
+        if size is not UNSET:
+            field_dict["size"] = size
 
         return field_dict
 
@@ -71,10 +87,20 @@ class FileToSign:
 
         project_identifier = d.pop("project_identifier")
 
+        def _parse_size(data: object) -> Union[None, Unset, int]:
+            if data is None:
+                return data
+            if isinstance(data, Unset):
+                return data
+            return cast(Union[None, Unset, int], data)
+
+        size = _parse_size(d.pop("size", UNSET))
+
         file_to_sign = cls(
             path=path,
             permission=permission,
             project_identifier=project_identifier,
+            size=size,
         )
 
         file_to_sign.additional_properties = d
