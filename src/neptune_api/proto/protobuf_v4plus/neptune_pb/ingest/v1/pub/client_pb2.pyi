@@ -78,3 +78,42 @@ class SubmitResponse(google.protobuf.message.Message):
     def ClearField(self, field_name: typing.Literal['request_id', b'request_id', 'request_ids', b'request_ids']) -> None:
         ...
 global___SubmitResponse = SubmitResponse
+
+@typing.final
+class StatusCheck(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    PROJECT_FIELD_NUMBER: builtins.int
+    REQUEST_ID_FIELD_NUMBER: builtins.int
+    project: builtins.str
+
+    @property
+    def request_id(self) -> global___RequestId:
+        ...
+
+    def __init__(self, *, project: builtins.str=..., request_id: global___RequestId | None=...) -> None:
+        ...
+
+    def HasField(self, field_name: typing.Literal['request_id', b'request_id']) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing.Literal['project', b'project', 'request_id', b'request_id']) -> None:
+        ...
+global___StatusCheck = StatusCheck
+
+@typing.final
+class BulkStatusCheck(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    PROJECT_FIELD_NUMBER: builtins.int
+    IDS_FIELD_NUMBER: builtins.int
+    project: builtins.str
+
+    @property
+    def ids(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___RequestId]:
+        """wire-compatibility with RequestIdList"""
+
+    def __init__(self, *, project: builtins.str=..., ids: collections.abc.Iterable[global___RequestId] | None=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing.Literal['ids', b'ids', 'project', b'project']) -> None:
+        ...
+global___BulkStatusCheck = BulkStatusCheck

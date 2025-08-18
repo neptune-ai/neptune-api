@@ -19,7 +19,7 @@ message RunOperation {
   string run_id = 2;
 
   // Optional. Will create project if it doesn't yet exist. This operation is idempotent.
-  bool create_missing_project = 3;
+  optional bool create_missing_project = 3;
 
   // Required. Operation to be performed on the run.
   oneof operation {
@@ -35,5 +35,5 @@ message RunOperation {
   }
   // API Key used for authorization of operations.
   // See https://docs.neptune.ai/setup/setting_api_token/ for more information on how to obtain an API Key.
-  bytes api_key = 12;
+  optional bytes api_key = 12;
 }

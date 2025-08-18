@@ -1,29 +1,42 @@
+#
+# Copyright (c) 2025, Neptune Labs Sp. z o.o.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional, Union, cast
+from typing import (
+    Any,
+    Dict,
+    Optional,
+    Union,
+)
 
 import httpx
 
-from ...client import AuthenticatedClient, Client
-from ...types import Response, UNSET
 from ... import errors
-
-from typing import Dict
+from ...client import (
+    AuthenticatedClient,
+    Client,
+)
 from ...models.complete_multipart_upload_request import CompleteMultipartUploadRequest
-from typing import cast
-
+from ...types import Response
 
 
 def _get_kwargs(
     *,
     body: CompleteMultipartUploadRequest,
-
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
-
-
-    
-
-    
 
     _kwargs: Dict[str, Any] = {
         "method": "post",
@@ -31,7 +44,6 @@ def _get_kwargs(
     }
 
     _body = body.to_dict()
-
 
     _kwargs["json"] = _body
     headers["Content-Type"] = "application/json"
@@ -74,9 +86,8 @@ def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: CompleteMultipartUploadRequest,
-
 ) -> Response[Any]:
-    """ 
+    """
     Args:
         body (CompleteMultipartUploadRequest):
 
@@ -86,12 +97,10 @@ def sync_detailed(
 
     Returns:
         Response[Any]
-     """
-
+    """
 
     kwargs = _get_kwargs(
         body=body,
-
     )
 
     response = client.get_httpx_client().request(
@@ -105,9 +114,8 @@ async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
     body: CompleteMultipartUploadRequest,
-
 ) -> Response[Any]:
-    """ 
+    """
     Args:
         body (CompleteMultipartUploadRequest):
 
@@ -117,17 +125,12 @@ async def asyncio_detailed(
 
     Returns:
         Response[Any]
-     """
-
+    """
 
     kwargs = _get_kwargs(
         body=body,
-
     )
 
-    response = await client.get_async_httpx_client().request(
-        **kwargs
-    )
+    response = await client.get_async_httpx_client().request(**kwargs)
 
     return _build_response(client=client, response=response)
-

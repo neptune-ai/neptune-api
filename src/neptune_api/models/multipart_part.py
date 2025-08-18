@@ -1,51 +1,59 @@
-from typing import Any, Dict, Type, TypeVar, Tuple, Optional, BinaryIO, TextIO, TYPE_CHECKING
+#
+# Copyright (c) 2025, Neptune Labs Sp. z o.o.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-from typing import List
-
+from typing import (
+    Any,
+    Dict,
+    List,
+    Type,
+    TypeVar,
+)
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
-
-from ..types import UNSET, Unset
-
-
-
-
-
-
 
 T = TypeVar("T", bound="MultipartPart")
 
 
 @_attrs_define
 class MultipartPart:
-    """ 
-        Attributes:
-            etag (str):
-            part_number (int):
-     """
+    """
+    Attributes:
+        etag (str):
+        part_number (int):
+    """
 
     etag: str
     part_number: int
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
-
 
     def to_dict(self) -> Dict[str, Any]:
         etag = self.etag
 
         part_number = self.part_number
 
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({
-            "etag": etag,
-            "part_number": part_number,
-        })
+        field_dict.update(
+            {
+                "etag": etag,
+                "part_number": part_number,
+            }
+        )
 
         return field_dict
-
-
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
@@ -58,7 +66,6 @@ class MultipartPart:
             etag=etag,
             part_number=part_number,
         )
-
 
         multipart_part.additional_properties = d
         return multipart_part

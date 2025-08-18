@@ -18,6 +18,9 @@
     "name" : "attributes",
     "description" : "Provides attributes api"
   }, {
+    "name" : "audited-sessions",
+    "description" : "User Sessions Api Controller"
+  }, {
     "name" : "dashboards",
     "description" : "Dashboards Api Controller"
   }, {
@@ -414,6 +417,20 @@
           "required" : true,
           "type" : "string"
         }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "limit",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "offset",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
           "name" : "prefix",
           "in" : "query",
           "description" : "prefix",
@@ -424,7 +441,7 @@
           "200" : {
             "description" : "OK",
             "schema" : {
-              "$ref" : "#/definitions/AttributesSearchResultDTO"
+              "$ref" : "#/definitions/AttributesTreeSearchResultDTO"
             }
           },
           "400" : {
@@ -1010,6 +1027,206 @@
             "description" : "OK",
             "schema" : {
               "$ref" : "#/definitions/TimeSeriesViewResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "409" : {
+            "description" : "Conflict"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/leaderboard/v1/audited-sessions/finish" : {
+      "post" : {
+        "summary" : "Finish session",
+        "operationId" : "finishAuditSession",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "*/*" ],
+        "parameters" : [ {
+          "name" : "X-Neptune-Client-Metadata",
+          "in" : "header",
+          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "409" : {
+            "description" : "Conflict"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/leaderboard/v1/audited-sessions/get" : {
+      "post" : {
+        "summary" : "Start or continue session",
+        "operationId" : "startOrContinueAuditSession",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "*/*" ],
+        "parameters" : [ {
+          "name" : "X-Neptune-Client-Metadata",
+          "in" : "header",
+          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/UserSessionInfoDTO"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "409" : {
+            "description" : "Conflict"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/leaderboard/v1/audited-sessions/storeEvent" : {
+      "post" : {
+        "summary" : "Store event",
+        "operationId" : "storeAuditEvent",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "*/*" ],
+        "parameters" : [ {
+          "name" : "X-Neptune-Client-Metadata",
+          "in" : "header",
+          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "event",
+          "description" : "event",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/SessionEventDTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "409" : {
+            "description" : "Conflict"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/leaderboard/v1/audited-sessions/{sessionId}" : {
+      "get" : {
+        "summary" : "Retrieve events",
+        "operationId" : "retrieveAuditSession",
+        "produces" : [ "*/*" ],
+        "parameters" : [ {
+          "name" : "X-Neptune-Client-Metadata",
+          "in" : "header",
+          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "sessionId",
+          "in" : "path",
+          "description" : "sessionId",
+          "required" : true,
+          "type" : "string",
+          "format" : "uuid"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/UserSessionDTO"
             }
           },
           "400" : {
@@ -1666,118 +1883,6 @@
         "deprecated" : false
       }
     },
-    "/api/leaderboard/v1/experimentStats/project" : {
-      "get" : {
-        "summary" : "Get experiment stats for project",
-        "operationId" : "experimentProjectStats",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "projectIdentifier",
-          "in" : "query",
-          "description" : "projectIdentifier",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/ExperimentStats"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/experimentStats/user" : {
-      "get" : {
-        "summary" : "Get experiment stats for user",
-        "operationId" : "experimentUserStats",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "organization",
-          "in" : "query",
-          "description" : "organization",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "username",
-          "in" : "query",
-          "description" : "username",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/ExperimentStats"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
     "/api/leaderboard/v1/experiments" : {
       "get" : {
         "summary" : "Get experiment",
@@ -2156,60 +2261,6 @@
         "deprecated" : false
       }
     },
-    "/api/leaderboard/v1/experiments/trash/deleteAll" : {
-      "post" : {
-        "summary" : "Delete experiments from trash",
-        "operationId" : "deleteAllExperiments",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "projectIdentifier",
-          "in" : "query",
-          "description" : "projectIdentifier",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/BulkOpResultDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
     "/api/leaderboard/v1/experiments/trash/restore" : {
       "post" : {
         "summary" : "Restore experiments from trash",
@@ -2233,60 +2284,6 @@
               "type" : "string"
             }
           }
-        }, {
-          "name" : "projectIdentifier",
-          "in" : "query",
-          "description" : "projectIdentifier",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "schema" : {
-              "$ref" : "#/definitions/BulkOpResultDTO"
-            }
-          },
-          "400" : {
-            "description" : "Bad Request"
-          },
-          "401" : {
-            "description" : "Unauthorized"
-          },
-          "403" : {
-            "description" : "Forbidden"
-          },
-          "404" : {
-            "description" : "Not Found"
-          },
-          "408" : {
-            "description" : "Request Timeout"
-          },
-          "409" : {
-            "description" : "Conflict"
-          },
-          "422" : {
-            "description" : "Unprocessable Entity"
-          },
-          "429" : {
-            "description" : "Too Many Requests"
-          }
-        },
-        "deprecated" : false
-      }
-    },
-    "/api/leaderboard/v1/experiments/trash/restoreAll" : {
-      "post" : {
-        "summary" : "Restore experiments from trash",
-        "operationId" : "restoreAllExperiments",
-        "consumes" : [ "application/json" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "X-Neptune-Client-Metadata",
-          "in" : "header",
-          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
-          "required" : false,
-          "type" : "string"
         }, {
           "name" : "projectIdentifier",
           "in" : "query",
@@ -5095,12 +5092,6 @@
           "items" : {
             "$ref" : "#/definitions/AttributeDefinitionDTO"
           }
-        },
-        "subPaths" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string"
-          }
         }
       },
       "title" : "AttributesSearchResultDTO"
@@ -5116,6 +5107,29 @@
         }
       },
       "title" : "AttributesStyleSettingsResultDTO"
+    },
+    "AttributesTreeSearchResultDTO" : {
+      "type" : "object",
+      "required" : [ "entries", "totalCount" ],
+      "properties" : {
+        "entries" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AttributeDefinitionDTO"
+          }
+        },
+        "subPaths" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "totalCount" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      },
+      "title" : "AttributesTreeSearchResultDTO"
     },
     "BoolAttributeDTO" : {
       "type" : "object",
@@ -5554,7 +5568,7 @@
         "errorType" : {
           "type" : "string",
           "description" : "Error type.",
-          "enum" : [ "ORGANIZATION_NOT_FOUND", "PROJECT_NOT_FOUND", "PROJECT_NOT_READY", "EXPERIMENT_NOT_FOUND", "ATTRIBUTES_CONTAINER_NOT_FOUND", "CHANNEL_NOT_FOUND", "LEADERBOARD_ENTRY_NOT_FOUND", "SERVICE_UNAVAILABLE", "INVALID_OFFSET", "INVALID_SORT_PARAMS", "INVALID_GROUPING_PARAMS", "ACCESS_DENIED", "INTERNAL_SERVER_ERROR", "INCORRECT_IDENTIFIER", "BAD_REQUEST", "UNAUTHORIZED", "FILE_NOT_FOUND", "VIEW_NOT_FOUND", "DASHBOARD_NOT_FOUND", "VERSION_BRANCH_NOT_FOUND", "CANNOT_DELETE_LAST_CHECKPOINT", "REQUEST_TIMEOUT", "DOWNLOAD_REQUEST_NOT_FOUND", "CHANNEL_ALREADY_EXISTS", "ATTRIBUTE_PATH_NOT_FOUND", "INVALID_ATTRIBUTE_TYPE", "MALFORMED_JSON_REQUEST", "TOO_MANY_REQUESTS_PER_USER", "CLICKHOUSE_OVERLOADED", "TOO_MANY_OPERATIONS", "EXPERIMENT_ALREADY_EXISTS", "CONFLICT", "WORKSPACE_IN_READ_ONLY_MODE", "ATTRIBUTES_PER_EXPERIMENT_LIMIT_EXCEEDED", "AUTHORIZATION_TOKEN_EXPIRED", "JWT_VALIDATION_ERROR", "WRITE_ACCESS_DENIED_TO_ARCHIVED_PROJECT", "PROJECT_LIMITS_EXCEEDED", "ES_ENTITY_CONTENT_TOO_LONG", "REPORT_NOT_FOUND", "REPORT_VERSION_NOT_FOUND", "REPORT_WITH_NO_VERSIONS", "REPORT_DRAFT_NOT_FOUND", "REPORT_VERSION_OWNER_MISMATCH", "DRAFT_ALREADY_EXISTS", "ATTEMPTED_CONVERSION_FROM_PUBLISHED_VERSION_TO_DRAFT", "ATTEMPTED_CHANGE_OF_A_VERSION_AUTHOR", "ATTEMPTED_DELETION_OF_PUBLISHED_VERSION", "REPORT_PUBLISHING_CONFLICT", "DEPENDENCY_ON_INACCESSIBLE_PROJECTS", "INGEST_SUSPENDED" ]
+          "enum" : [ "ORGANIZATION_NOT_FOUND", "PROJECT_NOT_FOUND", "PROJECT_NOT_READY", "EXPERIMENT_NOT_FOUND", "ATTRIBUTES_CONTAINER_NOT_FOUND", "CHANNEL_NOT_FOUND", "LEADERBOARD_ENTRY_NOT_FOUND", "SERVICE_UNAVAILABLE", "INVALID_OFFSET", "INVALID_SORT_PARAMS", "INVALID_GROUPING_PARAMS", "ACCESS_DENIED", "INTERNAL_SERVER_ERROR", "INCORRECT_IDENTIFIER", "BAD_REQUEST", "UNAUTHORIZED", "FILE_NOT_FOUND", "VIEW_NOT_FOUND", "DASHBOARD_NOT_FOUND", "VERSION_BRANCH_NOT_FOUND", "CANNOT_DELETE_LAST_CHECKPOINT", "REQUEST_TIMEOUT", "DOWNLOAD_REQUEST_NOT_FOUND", "CHANNEL_ALREADY_EXISTS", "ATTRIBUTE_PATH_NOT_FOUND", "INVALID_ATTRIBUTE_TYPE", "MALFORMED_JSON_REQUEST", "TOO_MANY_REQUESTS_PER_USER", "CLICKHOUSE_OVERLOADED", "TOO_MANY_OPERATIONS", "EXPERIMENT_ALREADY_EXISTS", "CONFLICT", "WORKSPACE_IN_READ_ONLY_MODE", "ATTRIBUTES_PER_EXPERIMENT_LIMIT_EXCEEDED", "AUTHORIZATION_TOKEN_EXPIRED", "JWT_VALIDATION_ERROR", "WRITE_ACCESS_DENIED_TO_ARCHIVED_PROJECT", "PROJECT_LIMITS_EXCEEDED", "ES_ENTITY_CONTENT_TOO_LONG", "REPORT_NOT_FOUND", "REPORT_VERSION_NOT_FOUND", "REPORT_WITH_NO_VERSIONS", "REPORT_DRAFT_NOT_FOUND", "REPORT_VERSION_OWNER_MISMATCH", "DRAFT_ALREADY_EXISTS", "ATTEMPTED_CONVERSION_FROM_PUBLISHED_VERSION_TO_DRAFT", "ATTEMPTED_CHANGE_OF_A_VERSION_AUTHOR", "ATTEMPTED_DELETION_OF_PUBLISHED_VERSION", "REPORT_PUBLISHING_CONFLICT", "DEPENDENCY_ON_INACCESSIBLE_PROJECTS", "INGEST_SUSPENDED", "SESSION_NOT_FOUND" ]
         },
         "inaccessibleProjects" : {
           "type" : "array",
@@ -5687,20 +5701,6 @@
     "ExperimentStateDTO" : {
       "type" : "string",
       "enum" : [ "running", "idle" ]
-    },
-    "ExperimentStats" : {
-      "type" : "object",
-      "required" : [ "experimentsCreatedPerDayCount" ],
-      "properties" : {
-        "experimentsCreatedPerDayCount" : {
-          "type" : "array",
-          "items" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        }
-      },
-      "title" : "ExperimentStats"
     },
     "ExperimentTypeDTO" : {
       "type" : "string",
@@ -7544,11 +7544,8 @@
     },
     "ReportNodeGridDTO" : {
       "type" : "object",
-      "required" : [ "aggregateByGroup", "chartsConfig", "colorsConfig", "inheritRunColorFromGroup", "isRunTableCollapsed", "isSectionCollapsed", "openRunGroups", "runGroups", "runsLineage", "selectedRunGroups", "widgetLayouts", "widgets" ],
+      "required" : [ "chartsConfig", "colorsConfig", "inheritRunColorFromGroup", "isRunTableCollapsed", "isSectionCollapsed", "openRunGroups", "runGroups", "runsLineage", "selectedRunGroups", "widgetLayouts", "widgets" ],
       "properties" : {
-        "aggregateByGroup" : {
-          "type" : "boolean"
-        },
         "chartsConfig" : {
           "$ref" : "#/definitions/DashboardConfigDTO"
         },
@@ -8072,6 +8069,19 @@
       },
       "title" : "SeriesValuesResponseDTO"
     },
+    "SessionEventDTO" : {
+      "type" : "object",
+      "required" : [ "eventBody", "eventType" ],
+      "properties" : {
+        "eventBody" : {
+          "type" : "string"
+        },
+        "eventType" : {
+          "type" : "string"
+        }
+      },
+      "title" : "SessionEventDTO"
+    },
     "Signal" : {
       "type" : "object",
       "required" : [ "body", "experimentIdentifiers", "type" ],
@@ -8485,6 +8495,21 @@
       },
       "title" : "TimeSeriesViewResponse"
     },
+    "TimedSessionEventDTO" : {
+      "type" : "object",
+      "required" : [ "event", "timestampMillis" ],
+      "properties" : {
+        "event" : {
+          "$ref" : "#/definitions/SessionEventDTO"
+        },
+        "timestampMillis" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Timestamp of the event, set in the backend"
+        }
+      },
+      "title" : "TimedSessionEventDTO"
+    },
     "TrackingDataDTO" : {
       "type" : "object",
       "properties" : {
@@ -8655,6 +8680,41 @@
         }
       },
       "title" : "UserEventDTO"
+    },
+    "UserSessionDTO" : {
+      "type" : "object",
+      "required" : [ "events", "sessionId" ],
+      "properties" : {
+        "events" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/TimedSessionEventDTO"
+          }
+        },
+        "sessionId" : {
+          "type" : "string",
+          "format" : "uuid"
+        }
+      },
+      "title" : "UserSessionDTO"
+    },
+    "UserSessionInfoDTO" : {
+      "type" : "object",
+      "required" : [ "creationTimeMillis", "sessionId" ],
+      "properties" : {
+        "creationTimeMillis" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "newSession" : {
+          "type" : "boolean"
+        },
+        "sessionId" : {
+          "type" : "string",
+          "format" : "uuid"
+        }
+      },
+      "title" : "UserSessionInfoDTO"
     },
     "View" : {
       "type" : "object",

@@ -174,7 +174,7 @@ message Run {
 
   // Optional. ForkPoint is used to identify the exact point in the parent history from which the new run continues.
   // If not specified, the new run will start with no inherited state.
-  ForkPoint fork_point = 2;
+  optional ForkPoint fork_point = 2;
 
   // Specifies Family for the new run. Run Family is used to group forking runs that share common ancestry.
   // By default, the new forking run will be in the same family as the parent run.
@@ -231,10 +231,10 @@ message Preview {
 message UpdateRunSnapshot {
   // Optional. Step value within the run. If not set, it will default to next full step of the run
   // (highest step across step values).
-  Step step = 1;
+  optional Step step = 1;
 
   // Timestamp field common to all included operations
-  google.protobuf.Timestamp timestamp = 2;
+  optional google.protobuf.Timestamp timestamp = 2;
 
   // Preview allows to control whether values are preview or committed.
   // When not specified, the values are considered committed.
