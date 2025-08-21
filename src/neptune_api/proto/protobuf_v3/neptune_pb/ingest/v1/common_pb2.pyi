@@ -334,6 +334,33 @@ class Owner(google.protobuf.message.Message):
         ...
 global___Owner = Owner
 
+class OffsetMetadata(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    BROKER_VERSION_FIELD_NUMBER: builtins.int
+    MESSAGE_OFFSET_FIELD_NUMBER: builtins.int
+    broker_version: builtins.int
+    'System-set. Version of configuration used by kafka for consumed topic (number of partitions, etc.). \n    Used with `message_offset` field to create robust ordering of operations\n    '
+    message_offset: builtins.int
+    'System-set. Message offset from kafka. Set on consumption from Kafka. \n    Used with `message_offset` field to create robust ordering of operations\n    '
+
+    def __init__(self, *, broker_version: builtins.int | None=..., message_offset: builtins.int | None=...) -> None:
+        ...
+
+    def HasField(self, field_name: typing_extensions.Literal['_broker_version', b'_broker_version', '_message_offset', b'_message_offset', 'broker_version', b'broker_version', 'message_offset', b'message_offset']) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['_broker_version', b'_broker_version', '_message_offset', b'_message_offset', 'broker_version', b'broker_version', 'message_offset', b'message_offset']) -> None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_broker_version', b'_broker_version']) -> typing_extensions.Literal['broker_version'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_message_offset', b'_message_offset']) -> typing_extensions.Literal['message_offset'] | None:
+        ...
+global___OffsetMetadata = OffsetMetadata
+
 class Run(google.protobuf.message.Message):
     """CreateRun can be used to create a new run. This can be done in two ways:
     1. Create a new run with no inherited state. You may specify a new run family that will be
@@ -354,6 +381,7 @@ class Run(google.protobuf.message.Message):
     REQUEST_ID_FIELD_NUMBER: builtins.int
     TRACKER_FIELD_NUMBER: builtins.int
     START_PROCESSING_TIME_FIELD_NUMBER: builtins.int
+    OFFSET_METADATA_FIELD_NUMBER: builtins.int
     run_id: builtins.str
     'Id of the run to be created. Optional if parent context has already specified run_id. If both are set, they\n    must be equal, otherwise the operation will fail.\n    '
     experiment_id: builtins.str
@@ -393,13 +421,17 @@ class Run(google.protobuf.message.Message):
         - data migrations of historical runs
         """
 
-    def __init__(self, *, run_id: builtins.str | None=..., experiment_id: builtins.str | None=..., fork_point: global___ForkPoint | None=..., family: builtins.str | None=..., creation_time: google.protobuf.timestamp_pb2.Timestamp | None=..., owner: global___Owner | None=..., request_id: builtins.str | None=..., tracker: builtins.str | None=..., start_processing_time: google.protobuf.timestamp_pb2.Timestamp | None=...) -> None:
+    @property
+    def offset_metadata(self) -> global___OffsetMetadata:
+        """System-set. Object contains infromation to provide robust ordering of operations."""
+
+    def __init__(self, *, run_id: builtins.str | None=..., experiment_id: builtins.str | None=..., fork_point: global___ForkPoint | None=..., family: builtins.str | None=..., creation_time: google.protobuf.timestamp_pb2.Timestamp | None=..., owner: global___Owner | None=..., request_id: builtins.str | None=..., tracker: builtins.str | None=..., start_processing_time: google.protobuf.timestamp_pb2.Timestamp | None=..., offset_metadata: global___OffsetMetadata | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['_creation_time', b'_creation_time', '_experiment_id', b'_experiment_id', '_family', b'_family', '_owner', b'_owner', '_request_id', b'_request_id', '_run_id', b'_run_id', '_start_processing_time', b'_start_processing_time', '_tracker', b'_tracker', 'creation_time', b'creation_time', 'experiment_id', b'experiment_id', 'family', b'family', 'fork_point', b'fork_point', 'owner', b'owner', 'request_id', b'request_id', 'run_id', b'run_id', 'start_processing_time', b'start_processing_time', 'tracker', b'tracker']) -> builtins.bool:
+    def HasField(self, field_name: typing_extensions.Literal['_creation_time', b'_creation_time', '_experiment_id', b'_experiment_id', '_family', b'_family', '_fork_point', b'_fork_point', '_offset_metadata', b'_offset_metadata', '_owner', b'_owner', '_request_id', b'_request_id', '_run_id', b'_run_id', '_start_processing_time', b'_start_processing_time', '_tracker', b'_tracker', 'creation_time', b'creation_time', 'experiment_id', b'experiment_id', 'family', b'family', 'fork_point', b'fork_point', 'offset_metadata', b'offset_metadata', 'owner', b'owner', 'request_id', b'request_id', 'run_id', b'run_id', 'start_processing_time', b'start_processing_time', 'tracker', b'tracker']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['_creation_time', b'_creation_time', '_experiment_id', b'_experiment_id', '_family', b'_family', '_owner', b'_owner', '_request_id', b'_request_id', '_run_id', b'_run_id', '_start_processing_time', b'_start_processing_time', '_tracker', b'_tracker', 'creation_time', b'creation_time', 'experiment_id', b'experiment_id', 'family', b'family', 'fork_point', b'fork_point', 'owner', b'owner', 'request_id', b'request_id', 'run_id', b'run_id', 'start_processing_time', b'start_processing_time', 'tracker', b'tracker']) -> None:
+    def ClearField(self, field_name: typing_extensions.Literal['_creation_time', b'_creation_time', '_experiment_id', b'_experiment_id', '_family', b'_family', '_fork_point', b'_fork_point', '_offset_metadata', b'_offset_metadata', '_owner', b'_owner', '_request_id', b'_request_id', '_run_id', b'_run_id', '_start_processing_time', b'_start_processing_time', '_tracker', b'_tracker', 'creation_time', b'creation_time', 'experiment_id', b'experiment_id', 'family', b'family', 'fork_point', b'fork_point', 'offset_metadata', b'offset_metadata', 'owner', b'owner', 'request_id', b'request_id', 'run_id', b'run_id', 'start_processing_time', b'start_processing_time', 'tracker', b'tracker']) -> None:
         ...
 
     @typing.overload
@@ -412,6 +444,14 @@ class Run(google.protobuf.message.Message):
 
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal['_family', b'_family']) -> typing_extensions.Literal['family'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_fork_point', b'_fork_point']) -> typing_extensions.Literal['fork_point'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_offset_metadata', b'_offset_metadata']) -> typing_extensions.Literal['offset_metadata'] | None:
         ...
 
     @typing.overload
@@ -520,6 +560,7 @@ class UpdateRunSnapshot(google.protobuf.message.Message):
     APPEND_FIELD_NUMBER: builtins.int
     REQUEST_ID_FIELD_NUMBER: builtins.int
     START_PROCESSING_TIME_FIELD_NUMBER: builtins.int
+    OFFSET_METADATA_FIELD_NUMBER: builtins.int
 
     @property
     def step(self) -> global___Step:
@@ -587,13 +628,21 @@ class UpdateRunSnapshot(google.protobuf.message.Message):
         - slow metric computation
         """
 
-    def __init__(self, *, step: global___Step | None=..., timestamp: google.protobuf.timestamp_pb2.Timestamp | None=..., preview: global___Preview | None=..., assign: collections.abc.Mapping[builtins.str, global___Value] | None=..., modify_sets: collections.abc.Mapping[builtins.str, global___ModifySet] | None=..., append: collections.abc.Mapping[builtins.str, global___Value] | None=..., request_id: builtins.str | None=..., start_processing_time: google.protobuf.timestamp_pb2.Timestamp | None=...) -> None:
+    @property
+    def offset_metadata(self) -> global___OffsetMetadata:
+        """System-set. Object contains infromation to provide robust ordering of operations."""
+
+    def __init__(self, *, step: global___Step | None=..., timestamp: google.protobuf.timestamp_pb2.Timestamp | None=..., preview: global___Preview | None=..., assign: collections.abc.Mapping[builtins.str, global___Value] | None=..., modify_sets: collections.abc.Mapping[builtins.str, global___ModifySet] | None=..., append: collections.abc.Mapping[builtins.str, global___Value] | None=..., request_id: builtins.str | None=..., start_processing_time: google.protobuf.timestamp_pb2.Timestamp | None=..., offset_metadata: global___OffsetMetadata | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['_preview', b'_preview', '_request_id', b'_request_id', '_start_processing_time', b'_start_processing_time', 'preview', b'preview', 'request_id', b'request_id', 'start_processing_time', b'start_processing_time', 'step', b'step', 'timestamp', b'timestamp']) -> builtins.bool:
+    def HasField(self, field_name: typing_extensions.Literal['_offset_metadata', b'_offset_metadata', '_preview', b'_preview', '_request_id', b'_request_id', '_start_processing_time', b'_start_processing_time', '_step', b'_step', '_timestamp', b'_timestamp', 'offset_metadata', b'offset_metadata', 'preview', b'preview', 'request_id', b'request_id', 'start_processing_time', b'start_processing_time', 'step', b'step', 'timestamp', b'timestamp']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['_preview', b'_preview', '_request_id', b'_request_id', '_start_processing_time', b'_start_processing_time', 'append', b'append', 'assign', b'assign', 'modify_sets', b'modify_sets', 'preview', b'preview', 'request_id', b'request_id', 'start_processing_time', b'start_processing_time', 'step', b'step', 'timestamp', b'timestamp']) -> None:
+    def ClearField(self, field_name: typing_extensions.Literal['_offset_metadata', b'_offset_metadata', '_preview', b'_preview', '_request_id', b'_request_id', '_start_processing_time', b'_start_processing_time', '_step', b'_step', '_timestamp', b'_timestamp', 'append', b'append', 'assign', b'assign', 'modify_sets', b'modify_sets', 'offset_metadata', b'offset_metadata', 'preview', b'preview', 'request_id', b'request_id', 'start_processing_time', b'start_processing_time', 'step', b'step', 'timestamp', b'timestamp']) -> None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_offset_metadata', b'_offset_metadata']) -> typing_extensions.Literal['offset_metadata'] | None:
         ...
 
     @typing.overload
@@ -606,6 +655,14 @@ class UpdateRunSnapshot(google.protobuf.message.Message):
 
     @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal['_start_processing_time', b'_start_processing_time']) -> typing_extensions.Literal['start_processing_time'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_step', b'_step']) -> typing_extensions.Literal['step'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_timestamp', b'_timestamp']) -> typing_extensions.Literal['timestamp'] | None:
         ...
 global___UpdateRunSnapshot = UpdateRunSnapshot
 

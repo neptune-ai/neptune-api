@@ -144,6 +144,16 @@ message Owner {
   }
 }
 
+message OffsetMetadata {
+  // System-set. Version of configuration used by kafka for consumed topic (number of partitions, etc.). 
+  // Used with `message_offset` field to create robust ordering of operations
+  optional uint32 broker_version = 1;
+
+  // System-set. Message offset from kafka. Set on consumption from Kafka. 
+  // Used with `message_offset` field to create robust ordering of operations
+  optional uint64 message_offset = 2;
+}
+
 // CreateRun can be used to create a new run. This can be done in two ways:
 // 1. Create a new run with no inherited state. You may specify a new run family that will be
 //    inherited by future runs forking from this one, otherwise the new family will be selected by the server.
@@ -164,7 +174,7 @@ message Run {
 
   // Optional. ForkPoint is used to identify the exact point in the parent history from which the new run continues.
   // If not specified, the new run will start with no inherited state.
-  ForkPoint fork_point = 2;
+  optional ForkPoint fork_point = 2;
 
   // Specifies Family for the new run. Run Family is used to group forking runs that share common ancestry.
   // By default, the new forking run will be in the same family as the parent run.
@@ -192,6 +202,9 @@ message Run {
   // - offline mode data generation,
   // - data migrations of historical runs
   optional google.protobuf.Timestamp start_processing_time = 11;
+
+  // System-set. Object contains infromation to provide robust ordering of operations.
+  optional OffsetMetadata offset_metadata = 12;
 }
 
 // Preview allows to control whether values are preview or committed.
@@ -218,10 +231,10 @@ message Preview {
 message UpdateRunSnapshot {
   // Optional. Step value within the run. If not set, it will default to next full step of the run
   // (highest step across step values).
-  Step step = 1;
+  optional Step step = 1;
 
   // Timestamp field common to all included operations
-  google.protobuf.Timestamp timestamp = 2;
+  optional google.protobuf.Timestamp timestamp = 2;
 
   // Preview allows to control whether values are preview or committed.
   // When not specified, the values are considered committed.
@@ -269,6 +282,9 @@ message UpdateRunSnapshot {
   // - data migrations of historical runs,
   // - slow metric computation
   optional google.protobuf.Timestamp start_processing_time = 11;
+
+  // System-set. Object contains infromation to provide robust ordering of operations.
+  optional OffsetMetadata offset_metadata = 12;
 }
 
 // UpdateSnapshots updates fields for a given step. Used to update current state of the run in a single step.

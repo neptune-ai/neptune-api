@@ -20,118 +20,86 @@ from typing import (
     List,
     Type,
     TypeVar,
-    Union,
-    cast,
 )
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.provider import Provider
-from ..types import (
-    UNSET,
-    Unset,
-)
-
 if TYPE_CHECKING:
-    from ..models.multipart_upload import MultipartUpload
+    from ..models.multipart_part import MultipartPart
 
 
-T = TypeVar("T", bound="SignedFile")
+T = TypeVar("T", bound="CompleteMultipartUploadRequest")
 
 
 @_attrs_define
-class SignedFile:
+class CompleteMultipartUploadRequest:
     """
     Attributes:
+        parts (List['MultipartPart']):
         path (str):
         project_identifier (str):
-        provider (Provider):
-        url (str):
-        multipart (Union['MultipartUpload', None, Unset]):
+        upload_id (str):
     """
 
+    parts: List["MultipartPart"]
     path: str
     project_identifier: str
-    provider: Provider
-    url: str
-    multipart: Union["MultipartUpload", None, Unset] = UNSET
+    upload_id: str
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        from ..models.multipart_upload import MultipartUpload
+        parts = []
+        for parts_item_data in self.parts:
+            parts_item = parts_item_data.to_dict()
+            parts.append(parts_item)
 
         path = self.path
 
         project_identifier = self.project_identifier
 
-        provider = self.provider.value
-
-        url = self.url
-
-        multipart: Union[Dict[str, Any], None, Unset]
-        if isinstance(self.multipart, Unset):
-            multipart = UNSET
-        elif isinstance(self.multipart, MultipartUpload):
-            multipart = self.multipart.to_dict()
-        else:
-            multipart = self.multipart
+        upload_id = self.upload_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
+                "parts": parts,
                 "path": path,
                 "project_identifier": project_identifier,
-                "provider": provider,
-                "url": url,
+                "upload_id": upload_id,
             }
         )
-        if multipart is not UNSET:
-            field_dict["multipart"] = multipart
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.multipart_upload import MultipartUpload
+        from ..models.multipart_part import MultipartPart
 
         d = src_dict.copy()
+        parts = []
+        _parts = d.pop("parts")
+        for parts_item_data in _parts:
+            parts_item = MultipartPart.from_dict(parts_item_data)
+
+            parts.append(parts_item)
+
         path = d.pop("path")
 
         project_identifier = d.pop("project_identifier")
 
-        provider = Provider(d.pop("provider"))
+        upload_id = d.pop("upload_id")
 
-        url = d.pop("url")
-
-        def _parse_multipart(data: object) -> Union["MultipartUpload", None, Unset]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            try:
-                if not isinstance(data, dict):
-                    raise TypeError()
-                multipart_type_1 = MultipartUpload.from_dict(data)
-
-                return multipart_type_1
-            except:  # noqa: E722
-                pass
-            return cast(Union["MultipartUpload", None, Unset], data)
-
-        multipart = _parse_multipart(d.pop("multipart", UNSET))
-
-        signed_file = cls(
+        complete_multipart_upload_request = cls(
+            parts=parts,
             path=path,
             project_identifier=project_identifier,
-            provider=provider,
-            url=url,
-            multipart=multipart,
+            upload_id=upload_id,
         )
 
-        signed_file.additional_properties = d
-        return signed_file
+        complete_multipart_upload_request.additional_properties = d
+        return complete_multipart_upload_request
 
     @property
     def additional_keys(self) -> List[str]:

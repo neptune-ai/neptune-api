@@ -19,92 +19,65 @@ from typing import (
     List,
     Type,
     TypeVar,
-    Union,
     cast,
 )
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.permission import Permission
-from ..types import (
-    UNSET,
-    Unset,
-)
-
-T = TypeVar("T", bound="FileToSign")
+T = TypeVar("T", bound="MultipartUpload")
 
 
 @_attrs_define
-class FileToSign:
+class MultipartUpload:
     """
     Attributes:
-        path (str):
-        permission (Permission):
-        project_identifier (str):
-        size (Union[None, Unset, int]):
+        part_size (int):
+        part_urls (List[str]):
+        upload_id (str):
     """
 
-    path: str
-    permission: Permission
-    project_identifier: str
-    size: Union[None, Unset, int] = UNSET
+    part_size: int
+    part_urls: List[str]
+    upload_id: str
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        path = self.path
+        part_size = self.part_size
 
-        permission = self.permission.value
+        part_urls = self.part_urls
 
-        project_identifier = self.project_identifier
-
-        size: Union[None, Unset, int]
-        if isinstance(self.size, Unset):
-            size = UNSET
-        else:
-            size = self.size
+        upload_id = self.upload_id
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "path": path,
-                "permission": permission,
-                "project_identifier": project_identifier,
+                "part_size": part_size,
+                "part_urls": part_urls,
+                "upload_id": upload_id,
             }
         )
-        if size is not UNSET:
-            field_dict["size"] = size
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        path = d.pop("path")
+        part_size = d.pop("part_size")
 
-        permission = Permission(d.pop("permission"))
+        part_urls = cast(List[str], d.pop("part_urls"))
 
-        project_identifier = d.pop("project_identifier")
+        upload_id = d.pop("upload_id")
 
-        def _parse_size(data: object) -> Union[None, Unset, int]:
-            if data is None:
-                return data
-            if isinstance(data, Unset):
-                return data
-            return cast(Union[None, Unset, int], data)
-
-        size = _parse_size(d.pop("size", UNSET))
-
-        file_to_sign = cls(
-            path=path,
-            permission=permission,
-            project_identifier=project_identifier,
-            size=size,
+        multipart_upload = cls(
+            part_size=part_size,
+            part_urls=part_urls,
+            upload_id=upload_id,
         )
 
-        file_to_sign.additional_properties = d
-        return file_to_sign
+        multipart_upload.additional_properties = d
+        return multipart_upload
 
     @property
     def additional_keys(self) -> List[str]:

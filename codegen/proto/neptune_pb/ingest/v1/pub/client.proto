@@ -28,3 +28,13 @@ message SubmitResponse {
     string request_id = 1; // wire-compatibility with RequestId. Will be deprecated
     repeated string request_ids = 2;
 }
+
+message StatusCheck {
+    string project = 1;
+    RequestId request_id = 2;
+}
+
+message BulkStatusCheck {
+    string project = 2;
+    repeated RequestId ids = 1; // wire-compatibility with RequestIdList
+}

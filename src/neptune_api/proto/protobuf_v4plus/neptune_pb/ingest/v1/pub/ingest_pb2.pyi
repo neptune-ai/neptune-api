@@ -43,15 +43,24 @@ class RunOperation(google.protobuf.message.Message):
     def update_batch(self) -> neptune_pb.ingest.v1.common_pb2.UpdateRunSnapshots:
         """repeated UpdateRunSnapshot"""
 
-    def __init__(self, *, project: builtins.str=..., run_id: builtins.str=..., create_missing_project: builtins.bool=..., create: neptune_pb.ingest.v1.common_pb2.Run | None=..., update: neptune_pb.ingest.v1.common_pb2.UpdateRunSnapshot | None=..., update_batch: neptune_pb.ingest.v1.common_pb2.UpdateRunSnapshots | None=..., api_key: builtins.bytes=...) -> None:
+    def __init__(self, *, project: builtins.str=..., run_id: builtins.str=..., create_missing_project: builtins.bool | None=..., create: neptune_pb.ingest.v1.common_pb2.Run | None=..., update: neptune_pb.ingest.v1.common_pb2.UpdateRunSnapshot | None=..., update_batch: neptune_pb.ingest.v1.common_pb2.UpdateRunSnapshots | None=..., api_key: builtins.bytes | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing.Literal['create', b'create', 'operation', b'operation', 'update', b'update', 'update_batch', b'update_batch']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['_api_key', b'_api_key', '_create_missing_project', b'_create_missing_project', 'api_key', b'api_key', 'create', b'create', 'create_missing_project', b'create_missing_project', 'operation', b'operation', 'update', b'update', 'update_batch', b'update_batch']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing.Literal['api_key', b'api_key', 'create', b'create', 'create_missing_project', b'create_missing_project', 'operation', b'operation', 'project', b'project', 'run_id', b'run_id', 'update', b'update', 'update_batch', b'update_batch']) -> None:
+    def ClearField(self, field_name: typing.Literal['_api_key', b'_api_key', '_create_missing_project', b'_create_missing_project', 'api_key', b'api_key', 'create', b'create', 'create_missing_project', b'create_missing_project', 'operation', b'operation', 'project', b'project', 'run_id', b'run_id', 'update', b'update', 'update_batch', b'update_batch']) -> None:
         ...
 
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal['_api_key', b'_api_key']) -> typing.Literal['api_key'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal['_create_missing_project', b'_create_missing_project']) -> typing.Literal['create_missing_project'] | None:
+        ...
+
+    @typing.overload
     def WhichOneof(self, oneof_group: typing.Literal['operation', b'operation']) -> typing.Literal['create', 'update', 'update_batch'] | None:
         ...
 global___RunOperation = RunOperation
