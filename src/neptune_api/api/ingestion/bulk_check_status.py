@@ -42,9 +42,9 @@ def _get_kwargs(
     body: File,
     project_identifier: str,
 ) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+    headers: dict[str, Any] = {}
 
-    params: Dict[str, Any] = {}
+    params: dict[str, Any] = {}
 
     params["projectIdentifier"] = project_identifier
 

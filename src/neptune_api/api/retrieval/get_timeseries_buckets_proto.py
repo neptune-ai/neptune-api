@@ -30,7 +30,6 @@ from ...client import (
     AuthenticatedClient,
     Client,
 )
-from ...models.search_leaderboard_entries_params_dto import SearchLeaderboardEntriesParamsDTO
 from ...types import (
     UNSET,
     File,
@@ -41,37 +40,22 @@ from ...types import (
 
 def _get_kwargs(
     *,
-    body: SearchLeaderboardEntriesParamsDTO,
-    project_identifier: str,
-    type_: Union[Unset, list[str]] = UNSET,
+    body: File,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     headers: dict[str, Any] = {}
     if not isinstance(x_neptune_client_metadata, Unset):
         headers["X-Neptune-Client-Metadata"] = x_neptune_client_metadata
 
-    params: dict[str, Any] = {}
-
-    params["projectIdentifier"] = project_identifier
-
-    json_type_: Union[Unset, list[str]] = UNSET
-    if not isinstance(type_, Unset):
-        json_type_ = type_
-
-    params["type"] = json_type_
-
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
-
     _kwargs: Dict[str, Any] = {
         "method": "post",
-        "url": "/api/leaderboard/v1/proto/leaderboard/entries/search/",
-        "params": params,
+        "url": "/api/leaderboard/v1/proto/attributes/timeseries/buckets",
     }
 
-    _body = body.to_dict()
+    _body = body.payload
 
-    _kwargs["json"] = _body
-    headers["Content-Type"] = "application/json"
+    _kwargs["content"] = _body
+    headers["Content-Type"] = "application/x-protobuf"
 
     _kwargs["headers"] = headers
     return _kwargs
@@ -132,18 +116,14 @@ def _build_response(
 def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    body: SearchLeaderboardEntriesParamsDTO,
-    project_identifier: str,
-    type_: Union[Unset, list[str]] = UNSET,
+    body: File,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, File]]:
-    """Get leaderboard
+    """Get series values raw
 
     Args:
-        project_identifier (str):
-        type_ (Union[Unset, list[str]]):
         x_neptune_client_metadata (Union[Unset, str]):
-        body (SearchLeaderboardEntriesParamsDTO):
+        body (File):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -155,8 +135,6 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         body=body,
-        project_identifier=project_identifier,
-        type_=type_,
         x_neptune_client_metadata=x_neptune_client_metadata,
     )
 
@@ -170,18 +148,14 @@ def sync_detailed(
 def sync(
     *,
     client: Union[AuthenticatedClient, Client],
-    body: SearchLeaderboardEntriesParamsDTO,
-    project_identifier: str,
-    type_: Union[Unset, list[str]] = UNSET,
+    body: File,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, File]]:
-    """Get leaderboard
+    """Get series values raw
 
     Args:
-        project_identifier (str):
-        type_ (Union[Unset, list[str]]):
         x_neptune_client_metadata (Union[Unset, str]):
-        body (SearchLeaderboardEntriesParamsDTO):
+        body (File):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -194,8 +168,6 @@ def sync(
     return sync_detailed(
         client=client,
         body=body,
-        project_identifier=project_identifier,
-        type_=type_,
         x_neptune_client_metadata=x_neptune_client_metadata,
     ).parsed
 
@@ -203,18 +175,14 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    body: SearchLeaderboardEntriesParamsDTO,
-    project_identifier: str,
-    type_: Union[Unset, list[str]] = UNSET,
+    body: File,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, File]]:
-    """Get leaderboard
+    """Get series values raw
 
     Args:
-        project_identifier (str):
-        type_ (Union[Unset, list[str]]):
         x_neptune_client_metadata (Union[Unset, str]):
-        body (SearchLeaderboardEntriesParamsDTO):
+        body (File):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -226,8 +194,6 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         body=body,
-        project_identifier=project_identifier,
-        type_=type_,
         x_neptune_client_metadata=x_neptune_client_metadata,
     )
 
@@ -239,18 +205,14 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
-    body: SearchLeaderboardEntriesParamsDTO,
-    project_identifier: str,
-    type_: Union[Unset, list[str]] = UNSET,
+    body: File,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, File]]:
-    """Get leaderboard
+    """Get series values raw
 
     Args:
-        project_identifier (str):
-        type_ (Union[Unset, list[str]]):
         x_neptune_client_metadata (Union[Unset, str]):
-        body (SearchLeaderboardEntriesParamsDTO):
+        body (File):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -264,8 +226,6 @@ async def asyncio(
         await asyncio_detailed(
             client=client,
             body=body,
-            project_identifier=project_identifier,
-            type_=type_,
             x_neptune_client_metadata=x_neptune_client_metadata,
         )
     ).parsed

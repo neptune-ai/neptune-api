@@ -13,12 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from collections.abc import Mapping
 from typing import (
     TYPE_CHECKING,
     Any,
-    Dict,
-    List,
-    Type,
     TypeVar,
     Union,
 )
@@ -50,16 +48,16 @@ class FloatTimeSeriesValuesRequestSeries:
     request_id: str
     series: "TimeSeries"
     after_step: Union[Unset, float] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         request_id = self.request_id
 
         series = self.series.to_dict()
 
         after_step = self.after_step
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -73,10 +71,10 @@ class FloatTimeSeriesValuesRequestSeries:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.time_series import TimeSeries
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         request_id = d.pop("requestId")
 
         series = TimeSeries.from_dict(d.pop("series"))
@@ -93,7 +91,7 @@ class FloatTimeSeriesValuesRequestSeries:
         return float_time_series_values_request_series
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

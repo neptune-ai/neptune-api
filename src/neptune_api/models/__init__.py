@@ -40,6 +40,7 @@ from .nql_query_params_dto import NqlQueryParamsDTO
 from .open_range_dto import OpenRangeDTO
 from .permission import Permission
 from .project_dto import ProjectDTO
+from .proto_get_timeseries_buckets_request import ProtoGetTimeseriesBucketsRequest
 from .provider import Provider
 from .query_attribute_definitions_body_dto import QueryAttributeDefinitionsBodyDTO
 from .query_attribute_definitions_result_dto import QueryAttributeDefinitionsResultDTO
@@ -96,6 +97,7 @@ __all__ = (
     "OpenRangeDTO",
     "Permission",
     "ProjectDTO",
+    "ProtoGetTimeseriesBucketsRequest",
     "Provider",
     "QueryAttributeDefinitionsBodyDTO",
     "QueryAttributeDefinitionsResultDTO",

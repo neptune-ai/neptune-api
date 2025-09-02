@@ -13,12 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from collections.abc import Mapping
 from typing import (
     TYPE_CHECKING,
     Any,
-    Dict,
-    List,
-    Type,
     TypeVar,
     Union,
 )
@@ -49,16 +47,16 @@ class QueryLeaderboardParamsSortingParamsDTO:
 
     sort_by: "QueryLeaderboardParamsFieldDTO"
     dir_: Union[Unset, QueryLeaderboardParamsSortingParamsDTODir] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         sort_by = self.sort_by.to_dict()
 
         dir_: Union[Unset, str] = UNSET
         if not isinstance(self.dir_, Unset):
             dir_ = self.dir_.value
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -71,10 +69,10 @@ class QueryLeaderboardParamsSortingParamsDTO:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.query_leaderboard_params_field_dto import QueryLeaderboardParamsFieldDTO
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         sort_by = QueryLeaderboardParamsFieldDTO.from_dict(d.pop("sortBy"))
 
         _dir_ = d.pop("dir", UNSET)
@@ -93,7 +91,7 @@ class QueryLeaderboardParamsSortingParamsDTO:
         return query_leaderboard_params_sorting_params_dto
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

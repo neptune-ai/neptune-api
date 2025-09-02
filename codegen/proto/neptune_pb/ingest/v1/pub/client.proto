@@ -7,6 +7,7 @@ option java_package = "ml.neptune.client.api.models";
 option java_outer_classname = "ClientIngestProto";
 
 import "neptune_pb/ingest/v1/pub/request_status.proto";
+import "neptune_pb/ingest/v1/ingest.proto";
 
 
 message RequestId {
@@ -37,4 +38,23 @@ message StatusCheck {
 message BulkStatusCheck {
     string project = 2;
     repeated RequestId ids = 1; // wire-compatibility with RequestIdList
+}
+
+message BulkCheckDetail {
+    string project = 1;
+    repeated RequestId ids = 2;
+    optional string next_cursor = 3;
+    optional int32 limit = 4;
+}
+
+message IngestResultDetail {
+  RequestId request_id = 1;
+  string path = 2;
+  IngestCode ingest_code = 3;
+  string error_detail = 4;
+}
+
+message BulkIngestResultDetail {
+  repeated IngestResultDetail details = 1;
+  string next_cursor = 2;
 }

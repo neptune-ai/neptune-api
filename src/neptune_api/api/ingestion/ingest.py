@@ -40,7 +40,7 @@ def _get_kwargs(
     *,
     body: File,
 ) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+    headers: dict[str, Any] = {}
 
     _kwargs: Dict[str, Any] = {
         "method": "post",

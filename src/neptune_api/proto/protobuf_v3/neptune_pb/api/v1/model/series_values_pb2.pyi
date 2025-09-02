@@ -271,3 +271,92 @@ class ProtoFileRef(google.protobuf.message.Message):
     def ClearField(self, field_name: typing_extensions.Literal['mimeType', b'mimeType', 'path', b'path', 'sizeBytes', b'sizeBytes']) -> None:
         ...
 global___ProtoFileRef = ProtoFileRef
+
+class ProtoTimeseriesBucketsDTO(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    ENTRIES_FIELD_NUMBER: builtins.int
+
+    @property
+    def entries(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___TimeseriesBuckets]:
+        ...
+
+    def __init__(self, *, entries: collections.abc.Iterable[global___TimeseriesBuckets] | None=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['entries', b'entries']) -> None:
+        ...
+global___ProtoTimeseriesBucketsDTO = ProtoTimeseriesBucketsDTO
+
+class TimeseriesBuckets(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    REQUESTID_FIELD_NUMBER: builtins.int
+    BUCKET_FIELD_NUMBER: builtins.int
+    requestId: builtins.str
+
+    @property
+    def bucket(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___TimeseriesBucket]:
+        ...
+
+    def __init__(self, *, requestId: builtins.str=..., bucket: collections.abc.Iterable[global___TimeseriesBucket] | None=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['bucket', b'bucket', 'requestId', b'requestId']) -> None:
+        ...
+global___TimeseriesBuckets = TimeseriesBuckets
+
+class TimeseriesBucket(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    INDEX_FIELD_NUMBER: builtins.int
+    FROMX_FIELD_NUMBER: builtins.int
+    TOX_FIELD_NUMBER: builtins.int
+    FIRST_FIELD_NUMBER: builtins.int
+    LAST_FIELD_NUMBER: builtins.int
+    LOCALMIN_FIELD_NUMBER: builtins.int
+    LOCALMAX_FIELD_NUMBER: builtins.int
+    FINITEPOINTCOUNT_FIELD_NUMBER: builtins.int
+    NANCOUNT_FIELD_NUMBER: builtins.int
+    POSITIVEINFCOUNT_FIELD_NUMBER: builtins.int
+    NEGATIVEINFCOUNT_FIELD_NUMBER: builtins.int
+    LOCALSUM_FIELD_NUMBER: builtins.int
+    index: builtins.int
+    fromX: builtins.float
+    toX: builtins.float
+
+    @property
+    def first(self) -> global___FinitePoint:
+        ...
+
+    @property
+    def last(self) -> global___FinitePoint:
+        ...
+    localMin: builtins.float
+    localMax: builtins.float
+    finitePointCount: builtins.int
+    nanCount: builtins.int
+    positiveInfCount: builtins.int
+    negativeInfCount: builtins.int
+    localSum: builtins.float
+
+    def __init__(self, *, index: builtins.int=..., fromX: builtins.float=..., toX: builtins.float=..., first: global___FinitePoint | None=..., last: global___FinitePoint | None=..., localMin: builtins.float=..., localMax: builtins.float=..., finitePointCount: builtins.int=..., nanCount: builtins.int=..., positiveInfCount: builtins.int=..., negativeInfCount: builtins.int=..., localSum: builtins.float=...) -> None:
+        ...
+
+    def HasField(self, field_name: typing_extensions.Literal['first', b'first', 'last', b'last']) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['finitePointCount', b'finitePointCount', 'first', b'first', 'fromX', b'fromX', 'index', b'index', 'last', b'last', 'localMax', b'localMax', 'localMin', b'localMin', 'localSum', b'localSum', 'nanCount', b'nanCount', 'negativeInfCount', b'negativeInfCount', 'positiveInfCount', b'positiveInfCount', 'toX', b'toX']) -> None:
+        ...
+global___TimeseriesBucket = TimeseriesBucket
+
+class FinitePoint(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    X_FIELD_NUMBER: builtins.int
+    Y_FIELD_NUMBER: builtins.int
+    x: builtins.float
+    y: builtins.float
+
+    def __init__(self, *, x: builtins.float=..., y: builtins.float=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['x', b'x', 'y', b'y']) -> None:
+        ...
+global___FinitePoint = FinitePoint

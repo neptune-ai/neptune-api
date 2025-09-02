@@ -13,12 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from collections.abc import Mapping
 from typing import (
     TYPE_CHECKING,
     Any,
-    Dict,
-    List,
-    Type,
     TypeVar,
     Union,
 )
@@ -47,7 +45,7 @@ T = TypeVar("T", bound="SearchLeaderboardEntriesParamsDTO")
 class SearchLeaderboardEntriesParamsDTO:
     """
     Attributes:
-        attribute_filters (Union[Unset, List['QueryLeaderboardParamsAttributeFilterDTO']]):
+        attribute_filters (Union[Unset, list['QueryLeaderboardParamsAttributeFilterDTO']]):
         experiment_leader (Union[Unset, bool]):
         grouping (Union[Unset, QueryLeaderboardParamsGroupingParamsDTO]):
         pagination (Union[Unset, QueryLeaderboardParamsPaginationDTO]):
@@ -57,7 +55,7 @@ class SearchLeaderboardEntriesParamsDTO:
         truncate_string_to (Union[Unset, int]):
     """
 
-    attribute_filters: Union[Unset, List["QueryLeaderboardParamsAttributeFilterDTO"]] = UNSET
+    attribute_filters: Union[Unset, list["QueryLeaderboardParamsAttributeFilterDTO"]] = UNSET
     experiment_leader: Union[Unset, bool] = UNSET
     grouping: Union[Unset, "QueryLeaderboardParamsGroupingParamsDTO"] = UNSET
     pagination: Union[Unset, "QueryLeaderboardParamsPaginationDTO"] = UNSET
@@ -65,10 +63,10 @@ class SearchLeaderboardEntriesParamsDTO:
     query_name_aliases: Union[Unset, "QueryLeaderboardParamsQueryAliasesDTO"] = UNSET
     sorting: Union[Unset, "QueryLeaderboardParamsSortingParamsDTO"] = UNSET
     truncate_string_to: Union[Unset, int] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
-        attribute_filters: Union[Unset, List[Dict[str, Any]]] = UNSET
+    def to_dict(self) -> dict[str, Any]:
+        attribute_filters: Union[Unset, list[dict[str, Any]]] = UNSET
         if not isinstance(self.attribute_filters, Unset):
             attribute_filters = []
             for attribute_filters_item_data in self.attribute_filters:
@@ -77,29 +75,29 @@ class SearchLeaderboardEntriesParamsDTO:
 
         experiment_leader = self.experiment_leader
 
-        grouping: Union[Unset, Dict[str, Any]] = UNSET
+        grouping: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.grouping, Unset):
             grouping = self.grouping.to_dict()
 
-        pagination: Union[Unset, Dict[str, Any]] = UNSET
+        pagination: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.pagination, Unset):
             pagination = self.pagination.to_dict()
 
-        query: Union[Unset, Dict[str, Any]] = UNSET
+        query: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.query, Unset):
             query = self.query.to_dict()
 
-        query_name_aliases: Union[Unset, Dict[str, Any]] = UNSET
+        query_name_aliases: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.query_name_aliases, Unset):
             query_name_aliases = self.query_name_aliases.to_dict()
 
-        sorting: Union[Unset, Dict[str, Any]] = UNSET
+        sorting: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.sorting, Unset):
             sorting = self.sorting.to_dict()
 
         truncate_string_to = self.truncate_string_to
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if attribute_filters is not UNSET:
@@ -122,7 +120,7 @@ class SearchLeaderboardEntriesParamsDTO:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.nql_query_params_dto import NqlQueryParamsDTO
         from ..models.query_leaderboard_params_attribute_filter_dto import QueryLeaderboardParamsAttributeFilterDTO
         from ..models.query_leaderboard_params_grouping_params_dto import QueryLeaderboardParamsGroupingParamsDTO
@@ -130,8 +128,8 @@ class SearchLeaderboardEntriesParamsDTO:
         from ..models.query_leaderboard_params_query_aliases_dto import QueryLeaderboardParamsQueryAliasesDTO
         from ..models.query_leaderboard_params_sorting_params_dto import QueryLeaderboardParamsSortingParamsDTO
 
-        d = src_dict.copy()
-        attribute_filters: Union[Unset, List[QueryLeaderboardParamsAttributeFilterDTO]] = UNSET
+        d = dict(src_dict)
+        attribute_filters: Union[Unset, list[QueryLeaderboardParamsAttributeFilterDTO]] = UNSET
         _attribute_filters = d.pop("attributeFilters", UNSET)
         if not isinstance(_attribute_filters, Unset):
             attribute_filters = []
@@ -194,7 +192,7 @@ class SearchLeaderboardEntriesParamsDTO:
         return search_leaderboard_entries_params_dto
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

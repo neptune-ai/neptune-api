@@ -9,6 +9,7 @@ import google.protobuf.internal.containers
 import google.protobuf.message
 from ..... import neptune_pb
 import sys
+import typing
 if sys.version_info >= (3, 8):
     import typing as typing_extensions
 else:
@@ -115,3 +116,76 @@ class BulkStatusCheck(google.protobuf.message.Message):
     def ClearField(self, field_name: typing_extensions.Literal['ids', b'ids', 'project', b'project']) -> None:
         ...
 global___BulkStatusCheck = BulkStatusCheck
+
+class BulkCheckDetail(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    PROJECT_FIELD_NUMBER: builtins.int
+    IDS_FIELD_NUMBER: builtins.int
+    NEXT_CURSOR_FIELD_NUMBER: builtins.int
+    LIMIT_FIELD_NUMBER: builtins.int
+    project: builtins.str
+
+    @property
+    def ids(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___RequestId]:
+        ...
+    next_cursor: builtins.str
+    limit: builtins.int
+
+    def __init__(self, *, project: builtins.str=..., ids: collections.abc.Iterable[global___RequestId] | None=..., next_cursor: builtins.str | None=..., limit: builtins.int | None=...) -> None:
+        ...
+
+    def HasField(self, field_name: typing_extensions.Literal['_limit', b'_limit', '_next_cursor', b'_next_cursor', 'limit', b'limit', 'next_cursor', b'next_cursor']) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['_limit', b'_limit', '_next_cursor', b'_next_cursor', 'ids', b'ids', 'limit', b'limit', 'next_cursor', b'next_cursor', 'project', b'project']) -> None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_limit', b'_limit']) -> typing_extensions.Literal['limit'] | None:
+        ...
+
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_next_cursor', b'_next_cursor']) -> typing_extensions.Literal['next_cursor'] | None:
+        ...
+global___BulkCheckDetail = BulkCheckDetail
+
+class IngestResultDetail(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    REQUEST_ID_FIELD_NUMBER: builtins.int
+    PATH_FIELD_NUMBER: builtins.int
+    INGEST_CODE_FIELD_NUMBER: builtins.int
+    ERROR_DETAIL_FIELD_NUMBER: builtins.int
+
+    @property
+    def request_id(self) -> global___RequestId:
+        ...
+    path: builtins.str
+    ingest_code: neptune_pb.ingest.v1.ingest_pb2.IngestCode.ValueType
+    error_detail: builtins.str
+
+    def __init__(self, *, request_id: global___RequestId | None=..., path: builtins.str=..., ingest_code: neptune_pb.ingest.v1.ingest_pb2.IngestCode.ValueType=..., error_detail: builtins.str=...) -> None:
+        ...
+
+    def HasField(self, field_name: typing_extensions.Literal['request_id', b'request_id']) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['error_detail', b'error_detail', 'ingest_code', b'ingest_code', 'path', b'path', 'request_id', b'request_id']) -> None:
+        ...
+global___IngestResultDetail = IngestResultDetail
+
+class BulkIngestResultDetail(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+    DETAILS_FIELD_NUMBER: builtins.int
+    NEXT_CURSOR_FIELD_NUMBER: builtins.int
+
+    @property
+    def details(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___IngestResultDetail]:
+        ...
+    next_cursor: builtins.str
+
+    def __init__(self, *, details: collections.abc.Iterable[global___IngestResultDetail] | None=..., next_cursor: builtins.str=...) -> None:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['details', b'details', 'next_cursor', b'next_cursor']) -> None:
+        ...
+global___BulkIngestResultDetail = BulkIngestResultDetail

@@ -22,53 +22,28 @@ from typing import (
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.attribute_type_dto import AttributeTypeDTO
-
-T = TypeVar("T", bound="AttributeDefinitionDTO")
+T = TypeVar("T", bound="ProtoGetTimeseriesBucketsRequest")
 
 
 @_attrs_define
-class AttributeDefinitionDTO:
-    """
-    Attributes:
-        name (str):
-        type_ (AttributeTypeDTO):
-    """
+class ProtoGetTimeseriesBucketsRequest:
+    """ """
 
-    name: str
-    type_: AttributeTypeDTO
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        name = self.name
-
-        type_ = self.type_.value
-
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "name": name,
-                "type": type_,
-            }
-        )
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        name = d.pop("name")
+        proto_get_timeseries_buckets_request = cls()
 
-        type_ = AttributeTypeDTO(d.pop("type"))
-
-        attribute_definition_dto = cls(
-            name=name,
-            type_=type_,
-        )
-
-        attribute_definition_dto.additional_properties = d
-        return attribute_definition_dto
+        proto_get_timeseries_buckets_request.additional_properties = d
+        return proto_get_timeseries_buckets_request
 
     @property
     def additional_keys(self) -> list[str]:

@@ -13,12 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from collections.abc import Mapping
 from typing import (
     TYPE_CHECKING,
     Any,
-    Dict,
-    List,
-    Type,
     TypeVar,
     Union,
 )
@@ -45,18 +43,18 @@ class FloatTimeSeriesValuesRequest:
     """
     Attributes:
         per_series_points_limit (int):
-        requests (List['FloatTimeSeriesValuesRequestSeries']):
+        requests (list['FloatTimeSeriesValuesRequestSeries']):
         order (Union[Unset, FloatTimeSeriesValuesRequestOrder]):
         step_range (Union[Unset, OpenRangeDTO]):
     """
 
     per_series_points_limit: int
-    requests: List["FloatTimeSeriesValuesRequestSeries"]
+    requests: list["FloatTimeSeriesValuesRequestSeries"]
     order: Union[Unset, FloatTimeSeriesValuesRequestOrder] = UNSET
     step_range: Union[Unset, "OpenRangeDTO"] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         per_series_points_limit = self.per_series_points_limit
 
         requests = []
@@ -68,11 +66,11 @@ class FloatTimeSeriesValuesRequest:
         if not isinstance(self.order, Unset):
             order = self.order.value
 
-        step_range: Union[Unset, Dict[str, Any]] = UNSET
+        step_range: Union[Unset, dict[str, Any]] = UNSET
         if not isinstance(self.step_range, Unset):
             step_range = self.step_range.to_dict()
 
-        field_dict: Dict[str, Any] = {}
+        field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -88,11 +86,11 @@ class FloatTimeSeriesValuesRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         from ..models.float_time_series_values_request_series import FloatTimeSeriesValuesRequestSeries
         from ..models.open_range_dto import OpenRangeDTO
 
-        d = src_dict.copy()
+        d = dict(src_dict)
         per_series_points_limit = d.pop("perSeriesPointsLimit")
 
         requests = []
@@ -127,7 +125,7 @@ class FloatTimeSeriesValuesRequest:
         return float_time_series_values_request
 
     @property
-    def additional_keys(self) -> List[str]:
+    def additional_keys(self) -> list[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

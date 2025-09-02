@@ -43,11 +43,11 @@ def _get_kwargs(
     alpha: Union[Unset, str] = UNSET,
     x_neptune_api_token: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+    headers: dict[str, Any] = {}
     if not isinstance(x_neptune_api_token, Unset):
         headers["X-Neptune-Api-Token"] = x_neptune_api_token
 
-    params: Dict[str, Any] = {}
+    params: dict[str, Any] = {}
 
     params["alpha"] = alpha
 

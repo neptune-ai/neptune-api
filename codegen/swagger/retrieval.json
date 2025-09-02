@@ -650,6 +650,13 @@
           "type" : "string",
           "enum" : [ "FULL", "NONE" ]
         }, {
+          "name" : "lineageEntityType",
+          "in" : "query",
+          "description" : "lineageEntityType",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "RUN", "EXPERIMENT" ]
+        }, {
           "name" : "skipToStep",
           "in" : "query",
           "description" : "skipToStep",
@@ -3242,6 +3249,13 @@
           "type" : "string",
           "enum" : [ "FULL", "NONE" ]
         }, {
+          "name" : "lineageEntityType",
+          "in" : "query",
+          "description" : "lineageEntityType",
+          "required" : false,
+          "type" : "string",
+          "enum" : [ "RUN", "EXPERIMENT" ]
+        }, {
           "name" : "skipToStep",
           "in" : "query",
           "description" : "skipToStep",
@@ -3308,6 +3322,62 @@
             "description" : "OK",
             "schema" : {
               "$ref" : "#/definitions/ProtoFloatSeriesValuesResponseDTO"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "409" : {
+            "description" : "Conflict"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/leaderboard/v1/proto/attributes/timeseries/buckets" : {
+      "post" : {
+        "summary" : "Get series values raw",
+        "operationId" : "getTimeseriesBucketsProto",
+        "consumes" : [ "application/x-protobuf" ],
+        "produces" : [ "application/json", "application/x-protobuf" ],
+        "parameters" : [ {
+          "name" : "X-Neptune-Client-Metadata",
+          "in" : "header",
+          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "request",
+          "description" : "request",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/ProtoGetTimeseriesBucketsRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/ProtoTimeseriesBucketsDTO"
             }
           },
           "400" : {
@@ -5322,6 +5392,10 @@
     "DashboardConfigDTO" : {
       "type" : "object",
       "properties" : {
+        "defaultStep" : {
+          "type" : "number",
+          "format" : "double"
+        },
         "metricsStepsRange" : {
           "$ref" : "#/definitions/OpenRangeDTO"
         },
@@ -5343,6 +5417,9 @@
         "smoothingWindowMode" : {
           "type" : "string",
           "enum" : [ "causal", "centered", "ema", "gaussian" ]
+        },
+        "snapToClosestLoggedStep" : {
+          "type" : "boolean"
         },
         "xaxisMetric" : {
           "$ref" : "#/definitions/AttributeDefinitionDTO"
@@ -7077,6 +7154,10 @@
       "type" : "object",
       "title" : "ProtoFloatSeriesValuesResponseDTO"
     },
+    "ProtoGetTimeseriesBucketsRequest" : {
+      "type" : "object",
+      "title" : "ProtoGetTimeseriesBucketsRequest"
+    },
     "ProtoLeaderboardEntriesSearchResultDTO" : {
       "type" : "object",
       "title" : "ProtoLeaderboardEntriesSearchResultDTO"
@@ -7088,6 +7169,10 @@
     "ProtoSeriesValuesResponseDTO" : {
       "type" : "object",
       "title" : "ProtoSeriesValuesResponseDTO"
+    },
+    "ProtoTimeseriesBucketsDTO" : {
+      "type" : "object",
+      "title" : "ProtoTimeseriesBucketsDTO"
     },
     "QueryAttributeDefinitionsBodyDTO" : {
       "type" : "object",
@@ -7449,6 +7534,21 @@
         }
       },
       "title" : "QueryLeaderboardParamsSortingParamsDTO"
+    },
+    "RangeDTO" : {
+      "type" : "object",
+      "required" : [ "from", "to" ],
+      "properties" : {
+        "from" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "to" : {
+          "type" : "number",
+          "format" : "double"
+        }
+      },
+      "title" : "RangeDTO"
     },
     "RelativeTimestamp" : {
       "type" : "object",
@@ -8117,6 +8217,12 @@
           "items" : {
             "$ref" : "#/definitions/Point"
           }
+        },
+        "xrange" : {
+          "$ref" : "#/definitions/RangeDTO"
+        },
+        "yrange" : {
+          "$ref" : "#/definitions/RangeDTO"
         }
       },
       "title" : "SingleCustomTimeSeriesView"
@@ -8187,13 +8293,19 @@
           "items" : {
             "$ref" : "#/definitions/Point"
           }
+        },
+        "xrange" : {
+          "$ref" : "#/definitions/RangeDTO"
+        },
+        "yrange" : {
+          "$ref" : "#/definitions/RangeDTO"
         }
       },
       "title" : "SingleTimeSeriesView"
     },
     "SingleTimeSeriesViewBucket" : {
       "type" : "object",
-      "required" : [ "bucketNo", "count", "maxY", "minY", "sum" ],
+      "required" : [ "bucketNo", "count", "maxY", "minY", "nanCount", "negativeInfCount", "positiveInfCount", "sum" ],
       "properties" : {
         "bucketNo" : {
           "type" : "integer",
@@ -8210,6 +8322,18 @@
         "minY" : {
           "type" : "number",
           "format" : "double"
+        },
+        "nanCount" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "negativeInfCount" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "positiveInfCount" : {
+          "type" : "integer",
+          "format" : "int64"
         },
         "sum" : {
           "type" : "number",
@@ -8812,7 +8936,7 @@
         },
         "type" : {
           "type" : "string",
-          "enum" : [ "chart", "valueList", "file", "fileSet", "image", "imageComparison", "interactiveTable", "gallery", "notebook", "scatterPlot", "singleValue", "table", "textNode", "section", "histogram", "fileSeries" ]
+          "enum" : [ "chart", "valueList", "file", "fileSet", "image", "imageComparison", "interactiveTable", "gallery", "notebook", "scatterPlot", "singleValue", "table", "textNode", "section", "dynamicSection", "histogram", "fileSeries" ]
         }
       },
       "title" : "WidgetDTO"

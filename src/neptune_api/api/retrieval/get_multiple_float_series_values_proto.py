@@ -44,7 +44,7 @@ def _get_kwargs(
     body: FloatTimeSeriesValuesRequest,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+    headers: dict[str, Any] = {}
     if not isinstance(x_neptune_client_metadata, Unset):
         headers["X-Neptune-Client-Metadata"] = x_neptune_client_metadata
 

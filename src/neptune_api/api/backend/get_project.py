@@ -41,7 +41,7 @@ def _get_kwargs(
     *,
     project_identifier: str,
 ) -> Dict[str, Any]:
-    params: Dict[str, Any] = {}
+    params: dict[str, Any] = {}
 
     params["projectIdentifier"] = project_identifier
 
