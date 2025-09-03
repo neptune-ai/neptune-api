@@ -62,7 +62,6 @@ RUN: LineageEntityType.ValueType
 global___LineageEntityType = LineageEntityType
 
 class ProtoGetTimeseriesBucketsRequest(google.protobuf.message.Message):
-    """Request for getting a minimal view of time series data"""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     EXPRESSIONS_FIELD_NUMBER: builtins.int
     VIEW_FIELD_NUMBER: builtins.int
@@ -89,38 +88,29 @@ class ProtoCustomExpression(google.protobuf.message.Message):
     """Custom metric configuration"""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     REQUESTID_FIELD_NUMBER: builtins.int
-    HOLDER_FIELD_NUMBER: builtins.int
+    RUNID_FIELD_NUMBER: builtins.int
     CUSTOMYFORMULA_FIELD_NUMBER: builtins.int
     INCLUDEPREVIEW_FIELD_NUMBER: builtins.int
     LINEAGE_FIELD_NUMBER: builtins.int
+    ENTITYTYPE_FIELD_NUMBER: builtins.int
     requestId: builtins.str
-    'Unique identifier for this custom metric, must be UUID'
-
-    @property
-    def holder(self) -> global___AttributesHolderIdentifier:
-        """The holder of the attributes (experiment, project, etc.)"""
+    'needs to be unique in the whole ProtoGetTimeseriesBucketsRequest'
+    runId: builtins.str
     customYFormula: builtins.str
-    'Optional custom Y formula for calculation'
     includePreview: builtins.bool
-    'Whether to include preview (uncommitted) data'
     lineage: global___ProtoLineage.ValueType
-    'Type of lineage to use'
+    entityType: global___LineageEntityType.ValueType
 
-    def __init__(self, *, requestId: builtins.str=..., holder: global___AttributesHolderIdentifier | None=..., customYFormula: builtins.str=..., includePreview: builtins.bool | None=..., lineage: global___ProtoLineage.ValueType | None=...) -> None:
+    def __init__(self, *, requestId: builtins.str=..., runId: builtins.str=..., customYFormula: builtins.str=..., includePreview: builtins.bool | None=..., lineage: global___ProtoLineage.ValueType=..., entityType: global___LineageEntityType.ValueType=...) -> None:
         ...
 
-    def HasField(self, field_name: typing_extensions.Literal['_includePreview', b'_includePreview', '_lineage', b'_lineage', 'holder', b'holder', 'includePreview', b'includePreview', 'lineage', b'lineage']) -> builtins.bool:
+    def HasField(self, field_name: typing_extensions.Literal['_includePreview', b'_includePreview', 'includePreview', b'includePreview']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['_includePreview', b'_includePreview', '_lineage', b'_lineage', 'customYFormula', b'customYFormula', 'holder', b'holder', 'includePreview', b'includePreview', 'lineage', b'lineage', 'requestId', b'requestId']) -> None:
+    def ClearField(self, field_name: typing_extensions.Literal['_includePreview', b'_includePreview', 'customYFormula', b'customYFormula', 'entityType', b'entityType', 'includePreview', b'includePreview', 'lineage', b'lineage', 'requestId', b'requestId', 'runId', b'runId']) -> None:
         ...
 
-    @typing.overload
     def WhichOneof(self, oneof_group: typing_extensions.Literal['_includePreview', b'_includePreview']) -> typing_extensions.Literal['includePreview'] | None:
-        ...
-
-    @typing.overload
-    def WhichOneof(self, oneof_group: typing_extensions.Literal['_lineage', b'_lineage']) -> typing_extensions.Literal['lineage'] | None:
         ...
 global___ProtoCustomExpression = ProtoCustomExpression
 
@@ -176,7 +166,7 @@ class ProtoPointFilters(google.protobuf.message.Message):
 
     @property
     def stepRange(self) -> global___ProtoOpenRange:
-        """Step range filter"""
+        ...
 
     def __init__(self, *, stepRange: global___ProtoOpenRange | None=...) -> None:
         ...
@@ -192,12 +182,10 @@ class ProtoPointFilters(google.protobuf.message.Message):
 global___ProtoPointFilters = ProtoPointFilters
 
 class ProtoOpenRange(google.protobuf.message.Message):
-    """Open range (with optional min and max)"""
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     FROM_FIELD_NUMBER: builtins.int
     TO_FIELD_NUMBER: builtins.int
     to: builtins.float
-    'Optional maximum value'
 
     def __init__(self, *, to: builtins.float | None=...) -> None:
         ...
@@ -285,17 +273,3 @@ class XCustom(google.protobuf.message.Message):
     def ClearField(self, field_name: typing_extensions.Literal['expression', b'expression']) -> None:
         ...
 global___XCustom = XCustom
-
-class AttributesHolderIdentifier(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-    ENTITYTYPE_FIELD_NUMBER: builtins.int
-    IDENTIFIER_FIELD_NUMBER: builtins.int
-    entityType: global___LineageEntityType.ValueType
-    identifier: builtins.str
-
-    def __init__(self, *, entityType: global___LineageEntityType.ValueType=..., identifier: builtins.str=...) -> None:
-        ...
-
-    def ClearField(self, field_name: typing_extensions.Literal['entityType', b'entityType', 'identifier', b'identifier']) -> None:
-        ...
-global___AttributesHolderIdentifier = AttributesHolderIdentifier
