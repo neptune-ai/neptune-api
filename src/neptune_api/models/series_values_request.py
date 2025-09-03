@@ -13,10 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections.abc import Mapping
 from typing import (
     TYPE_CHECKING,
     Any,
+    Dict,
+    List,
+    Type,
     TypeVar,
     Union,
 )
@@ -42,21 +44,21 @@ T = TypeVar("T", bound="SeriesValuesRequest")
 class SeriesValuesRequest:
     """
     Attributes:
-        requests (list['SeriesValuesRequestSeries']):
+        requests (List['SeriesValuesRequestSeries']):
         order (Union[Unset, SeriesValuesRequestOrder]):
         per_series_points_limit (Union[Unset, int]):
         size_limit_bytes (Union[Unset, int]):
         step_range (Union[Unset, OpenRangeDTO]):
     """
 
-    requests: list["SeriesValuesRequestSeries"]
+    requests: List["SeriesValuesRequestSeries"]
     order: Union[Unset, SeriesValuesRequestOrder] = UNSET
     per_series_points_limit: Union[Unset, int] = UNSET
     size_limit_bytes: Union[Unset, int] = UNSET
     step_range: Union[Unset, "OpenRangeDTO"] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         requests = []
         for requests_item_data in self.requests:
             requests_item = requests_item_data.to_dict()
@@ -70,11 +72,11 @@ class SeriesValuesRequest:
 
         size_limit_bytes = self.size_limit_bytes
 
-        step_range: Union[Unset, dict[str, Any]] = UNSET
+        step_range: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.step_range, Unset):
             step_range = self.step_range.to_dict()
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -93,11 +95,11 @@ class SeriesValuesRequest:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.open_range_dto import OpenRangeDTO
         from ..models.series_values_request_series import SeriesValuesRequestSeries
 
-        d = dict(src_dict)
+        d = src_dict.copy()
         requests = []
         _requests = d.pop("requests")
         for requests_item_data in _requests:
@@ -135,7 +137,7 @@ class SeriesValuesRequest:
         return series_values_request
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

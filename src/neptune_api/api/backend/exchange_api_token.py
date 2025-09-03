@@ -38,7 +38,7 @@ def _get_kwargs(
     *,
     x_neptune_api_token: str,
 ) -> Dict[str, Any]:
-    headers: dict[str, Any] = {}
+    headers: Dict[str, Any] = {}
     headers["X-Neptune-Api-Token"] = x_neptune_api_token
 
     _kwargs: Dict[str, Any] = {

@@ -13,9 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections.abc import Mapping
 from typing import (
     Any,
+    Dict,
+    List,
+    Type,
     TypeVar,
 )
 
@@ -37,16 +39,16 @@ class NeptuneOauthToken:
     access_token: str
     refresh_token: str
     username: str
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         access_token = self.access_token
 
         refresh_token = self.refresh_token
 
         username = self.username
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -59,8 +61,8 @@ class NeptuneOauthToken:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        d = dict(src_dict)
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        d = src_dict.copy()
         access_token = d.pop("accessToken")
 
         refresh_token = d.pop("refreshToken")
@@ -77,7 +79,7 @@ class NeptuneOauthToken:
         return neptune_oauth_token
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

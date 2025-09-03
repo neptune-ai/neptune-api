@@ -13,9 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections.abc import Mapping
 from typing import (
     Any,
+    Dict,
+    List,
+    Type,
     TypeVar,
     Union,
 )
@@ -41,14 +43,14 @@ class QueryLeaderboardParamsPaginationDTO:
 
     limit: Union[Unset, int] = UNSET
     offset: Union[Unset, int] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         limit = self.limit
 
         offset = self.offset
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if limit is not UNSET:
@@ -59,8 +61,8 @@ class QueryLeaderboardParamsPaginationDTO:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        d = dict(src_dict)
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        d = src_dict.copy()
         limit = d.pop("limit", UNSET)
 
         offset = d.pop("offset", UNSET)
@@ -74,7 +76,7 @@ class QueryLeaderboardParamsPaginationDTO:
         return query_leaderboard_params_pagination_dto
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

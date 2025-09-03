@@ -18,6 +18,7 @@ from io import BytesIO
 from typing import (
     Any,
     Dict,
+    List,
     Optional,
     Union,
     cast,
@@ -43,22 +44,22 @@ def _get_kwargs(
     *,
     body: SearchLeaderboardEntriesParamsDTO,
     project_identifier: str,
-    type_: Union[Unset, list[str]] = UNSET,
+    type: Union[Unset, List[str]] = UNSET,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
-    headers: dict[str, Any] = {}
+    headers: Dict[str, Any] = {}
     if not isinstance(x_neptune_client_metadata, Unset):
         headers["X-Neptune-Client-Metadata"] = x_neptune_client_metadata
 
-    params: dict[str, Any] = {}
+    params: Dict[str, Any] = {}
 
     params["projectIdentifier"] = project_identifier
 
-    json_type_: Union[Unset, list[str]] = UNSET
-    if not isinstance(type_, Unset):
-        json_type_ = type_
+    json_type: Union[Unset, List[str]] = UNSET
+    if not isinstance(type, Unset):
+        json_type = type
 
-    params["type"] = json_type_
+    params["type"] = json_type
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -134,14 +135,14 @@ def sync_detailed(
     client: Union[AuthenticatedClient, Client],
     body: SearchLeaderboardEntriesParamsDTO,
     project_identifier: str,
-    type_: Union[Unset, list[str]] = UNSET,
+    type: Union[Unset, List[str]] = UNSET,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, File]]:
     """Get leaderboard
 
     Args:
         project_identifier (str):
-        type_ (Union[Unset, list[str]]):
+        type (Union[Unset, List[str]]):
         x_neptune_client_metadata (Union[Unset, str]):
         body (SearchLeaderboardEntriesParamsDTO):
 
@@ -156,7 +157,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         body=body,
         project_identifier=project_identifier,
-        type_=type_,
+        type=type,
         x_neptune_client_metadata=x_neptune_client_metadata,
     )
 
@@ -172,14 +173,14 @@ def sync(
     client: Union[AuthenticatedClient, Client],
     body: SearchLeaderboardEntriesParamsDTO,
     project_identifier: str,
-    type_: Union[Unset, list[str]] = UNSET,
+    type: Union[Unset, List[str]] = UNSET,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, File]]:
     """Get leaderboard
 
     Args:
         project_identifier (str):
-        type_ (Union[Unset, list[str]]):
+        type (Union[Unset, List[str]]):
         x_neptune_client_metadata (Union[Unset, str]):
         body (SearchLeaderboardEntriesParamsDTO):
 
@@ -195,7 +196,7 @@ def sync(
         client=client,
         body=body,
         project_identifier=project_identifier,
-        type_=type_,
+        type=type,
         x_neptune_client_metadata=x_neptune_client_metadata,
     ).parsed
 
@@ -205,14 +206,14 @@ async def asyncio_detailed(
     client: Union[AuthenticatedClient, Client],
     body: SearchLeaderboardEntriesParamsDTO,
     project_identifier: str,
-    type_: Union[Unset, list[str]] = UNSET,
+    type: Union[Unset, List[str]] = UNSET,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, File]]:
     """Get leaderboard
 
     Args:
         project_identifier (str):
-        type_ (Union[Unset, list[str]]):
+        type (Union[Unset, List[str]]):
         x_neptune_client_metadata (Union[Unset, str]):
         body (SearchLeaderboardEntriesParamsDTO):
 
@@ -227,7 +228,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         body=body,
         project_identifier=project_identifier,
-        type_=type_,
+        type=type,
         x_neptune_client_metadata=x_neptune_client_metadata,
     )
 
@@ -241,14 +242,14 @@ async def asyncio(
     client: Union[AuthenticatedClient, Client],
     body: SearchLeaderboardEntriesParamsDTO,
     project_identifier: str,
-    type_: Union[Unset, list[str]] = UNSET,
+    type: Union[Unset, List[str]] = UNSET,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, File]]:
     """Get leaderboard
 
     Args:
         project_identifier (str):
-        type_ (Union[Unset, list[str]]):
+        type (Union[Unset, List[str]]):
         x_neptune_client_metadata (Union[Unset, str]):
         body (SearchLeaderboardEntriesParamsDTO):
 
@@ -265,7 +266,7 @@ async def asyncio(
             client=client,
             body=body,
             project_identifier=project_identifier,
-            type_=type_,
+            type=type,
             x_neptune_client_metadata=x_neptune_client_metadata,
         )
     ).parsed

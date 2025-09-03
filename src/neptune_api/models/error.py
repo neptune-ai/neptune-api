@@ -13,9 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections.abc import Mapping
 from typing import (
     Any,
+    Dict,
+    List,
+    Type,
     TypeVar,
     Union,
 )
@@ -38,30 +40,30 @@ class Error:
     Attributes:
         code (int):
         message (str):
-        type_ (Union[Unset, ApiErrorTypeDTO]):
+        type (Union[Unset, ApiErrorTypeDTO]):
         error_type (Union[Unset, ApiErrorTypeDTO]):
     """
 
     code: int
     message: str
-    type_: Union[Unset, ApiErrorTypeDTO] = UNSET
+    type: Union[Unset, ApiErrorTypeDTO] = UNSET
     error_type: Union[Unset, ApiErrorTypeDTO] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         code = self.code
 
         message = self.message
 
-        type_: Union[Unset, str] = UNSET
-        if not isinstance(self.type_, Unset):
-            type_ = self.type_.value
+        type: Union[Unset, str] = UNSET
+        if not isinstance(self.type, Unset):
+            type = self.type.value
 
         error_type: Union[Unset, str] = UNSET
         if not isinstance(self.error_type, Unset):
             error_type = self.error_type.value
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -69,26 +71,26 @@ class Error:
                 "message": message,
             }
         )
-        if type_ is not UNSET:
-            field_dict["type"] = type_
+        if type is not UNSET:
+            field_dict["type"] = type
         if error_type is not UNSET:
             field_dict["errorType"] = error_type
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        d = dict(src_dict)
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        d = src_dict.copy()
         code = d.pop("code")
 
         message = d.pop("message")
 
-        _type_ = d.pop("type", UNSET)
-        type_: Union[Unset, ApiErrorTypeDTO]
-        if isinstance(_type_, Unset):
-            type_ = UNSET
+        _type = d.pop("type", UNSET)
+        type: Union[Unset, ApiErrorTypeDTO]
+        if isinstance(_type, Unset):
+            type = UNSET
         else:
-            type_ = ApiErrorTypeDTO(_type_)
+            type = ApiErrorTypeDTO(_type)
 
         _error_type = d.pop("errorType", UNSET)
         error_type: Union[Unset, ApiErrorTypeDTO]
@@ -100,7 +102,7 @@ class Error:
         error = cls(
             code=code,
             message=message,
-            type_=type_,
+            type=type,
             error_type=error_type,
         )
 
@@ -108,7 +110,7 @@ class Error:
         return error
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

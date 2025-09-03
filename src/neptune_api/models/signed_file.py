@@ -13,10 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections.abc import Mapping
 from typing import (
     TYPE_CHECKING,
     Any,
+    Dict,
+    List,
+    Type,
     TypeVar,
     Union,
     cast,
@@ -54,9 +56,9 @@ class SignedFile:
     provider: Provider
     url: str
     multipart: Union["MultipartUpload", None, Unset] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         from ..models.multipart_upload import MultipartUpload
 
         path = self.path
@@ -67,7 +69,7 @@ class SignedFile:
 
         url = self.url
 
-        multipart: Union[None, Unset, dict[str, Any]]
+        multipart: Union[Dict[str, Any], None, Unset]
         if isinstance(self.multipart, Unset):
             multipart = UNSET
         elif isinstance(self.multipart, MultipartUpload):
@@ -75,7 +77,7 @@ class SignedFile:
         else:
             multipart = self.multipart
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -91,10 +93,10 @@ class SignedFile:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.multipart_upload import MultipartUpload
 
-        d = dict(src_dict)
+        d = src_dict.copy()
         path = d.pop("path")
 
         project_identifier = d.pop("project_identifier")
@@ -132,7 +134,7 @@ class SignedFile:
         return signed_file
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

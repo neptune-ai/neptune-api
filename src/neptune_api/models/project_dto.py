@@ -13,12 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections.abc import Mapping
 from typing import (
     Any,
+    Dict,
+    List,
+    Type,
     TypeVar,
 )
-from uuid import UUID
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -33,33 +34,33 @@ class ProjectDTO:
         name (str):
         organization_name (str):
         version (int):
-        id (UUID):
+        id (str):
         project_key (str):
-        organization_id (UUID):
+        organization_id (str):
     """
 
     name: str
     organization_name: str
     version: int
-    id: UUID
+    id: str
     project_key: str
-    organization_id: UUID
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    organization_id: str
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         name = self.name
 
         organization_name = self.organization_name
 
         version = self.version
 
-        id = str(self.id)
+        id = self.id
 
         project_key = self.project_key
 
-        organization_id = str(self.organization_id)
+        organization_id = self.organization_id
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -75,19 +76,19 @@ class ProjectDTO:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        d = dict(src_dict)
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        d = src_dict.copy()
         name = d.pop("name")
 
         organization_name = d.pop("organizationName")
 
         version = d.pop("version")
 
-        id = UUID(d.pop("id"))
+        id = d.pop("id")
 
         project_key = d.pop("projectKey")
 
-        organization_id = UUID(d.pop("organizationId"))
+        organization_id = d.pop("organizationId")
 
         project_dto = cls(
             name=name,
@@ -102,7 +103,7 @@ class ProjectDTO:
         return project_dto
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

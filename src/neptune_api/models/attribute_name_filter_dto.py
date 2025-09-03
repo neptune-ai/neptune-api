@@ -13,9 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections.abc import Mapping
 from typing import (
     Any,
+    Dict,
+    List,
+    Type,
     TypeVar,
     Union,
     cast,
@@ -36,39 +38,39 @@ T = TypeVar("T", bound="AttributeNameFilterDTO")
 class AttributeNameFilterDTO:
     """
     Attributes:
-        must_match_any (Union[Unset, list['AttributeNameFilterDTO']]): A list of filters representing disjunctions of
+        must_match_any (Union[Unset, List['AttributeNameFilterDTO']]): A list of filters representing disjunctions of
             conjunctive simple filters. The implementation is currently limited to 1 level of nesting. E.g. `(a AND b AND
             NOT c) OR (d AND e) OR (f AND g)` is supported, but `(a OR (b OR c))` is not supported. The latter should be
             expressed as `(a OR b OR c)`. `(a AND (b OR c))` is also not supported. Mutually exclusive with
             `mustMatchRegexes` and `mustNotMatchRegexes`.
-        must_match_regexes (Union[Unset, list[str]]): An attribute must match all of the regexes from the list to be
+        must_match_regexes (Union[Unset, List[str]]): An attribute must match all of the regexes from the list to be
             returned. Mutually exclusive with `mustMatchAny`
-        must_not_match_regexes (Union[Unset, list[str]]): An attribute must match none of the regexes from the list to
+        must_not_match_regexes (Union[Unset, List[str]]): An attribute must match none of the regexes from the list to
             be returned. Mutually exclusive with `mustMatchAny`
     """
 
-    must_match_any: Union[Unset, list["AttributeNameFilterDTO"]] = UNSET
-    must_match_regexes: Union[Unset, list[str]] = UNSET
-    must_not_match_regexes: Union[Unset, list[str]] = UNSET
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    must_match_any: Union[Unset, List["AttributeNameFilterDTO"]] = UNSET
+    must_match_regexes: Union[Unset, List[str]] = UNSET
+    must_not_match_regexes: Union[Unset, List[str]] = UNSET
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
-        must_match_any: Union[Unset, list[dict[str, Any]]] = UNSET
+    def to_dict(self) -> Dict[str, Any]:
+        must_match_any: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.must_match_any, Unset):
             must_match_any = []
             for must_match_any_item_data in self.must_match_any:
                 must_match_any_item = must_match_any_item_data.to_dict()
                 must_match_any.append(must_match_any_item)
 
-        must_match_regexes: Union[Unset, list[str]] = UNSET
+        must_match_regexes: Union[Unset, List[str]] = UNSET
         if not isinstance(self.must_match_regexes, Unset):
             must_match_regexes = self.must_match_regexes
 
-        must_not_match_regexes: Union[Unset, list[str]] = UNSET
+        must_not_match_regexes: Union[Unset, List[str]] = UNSET
         if not isinstance(self.must_not_match_regexes, Unset):
             must_not_match_regexes = self.must_not_match_regexes
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
         if must_match_any is not UNSET:
@@ -81,9 +83,9 @@ class AttributeNameFilterDTO:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        d = dict(src_dict)
-        must_match_any: Union[Unset, list[AttributeNameFilterDTO]] = UNSET
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        d = src_dict.copy()
+        must_match_any: Union[Unset, List[AttributeNameFilterDTO]] = UNSET
         _must_match_any = d.pop("mustMatchAny", UNSET)
         if not isinstance(_must_match_any, Unset):
             must_match_any = []
@@ -92,9 +94,9 @@ class AttributeNameFilterDTO:
 
                 must_match_any.append(must_match_any_item)
 
-        must_match_regexes = cast(list[str], d.pop("mustMatchRegexes", UNSET))
+        must_match_regexes = cast(List[str], d.pop("mustMatchRegexes", UNSET))
 
-        must_not_match_regexes = cast(list[str], d.pop("mustNotMatchRegexes", UNSET))
+        must_not_match_regexes = cast(List[str], d.pop("mustNotMatchRegexes", UNSET))
 
         attribute_name_filter_dto = cls(
             must_match_any=must_match_any,
@@ -106,7 +108,7 @@ class AttributeNameFilterDTO:
         return attribute_name_filter_dto
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

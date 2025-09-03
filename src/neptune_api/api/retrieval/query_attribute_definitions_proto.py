@@ -18,6 +18,7 @@ from io import BytesIO
 from typing import (
     Any,
     Dict,
+    List,
     Optional,
     Union,
     cast,
@@ -40,17 +41,17 @@ from ...types import (
 
 def _get_kwargs(
     *,
-    attribute_type: Union[Unset, list[str]] = UNSET,
+    attribute_type: Union[Unset, List[str]] = UNSET,
     experiment_identifier: str,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
-    headers: dict[str, Any] = {}
+    headers: Dict[str, Any] = {}
     if not isinstance(x_neptune_client_metadata, Unset):
         headers["X-Neptune-Client-Metadata"] = x_neptune_client_metadata
 
-    params: dict[str, Any] = {}
+    params: Dict[str, Any] = {}
 
-    json_attribute_type: Union[Unset, list[str]] = UNSET
+    json_attribute_type: Union[Unset, List[str]] = UNSET
     if not isinstance(attribute_type, Unset):
         json_attribute_type = attribute_type
 
@@ -125,14 +126,14 @@ def _build_response(
 def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    attribute_type: Union[Unset, list[str]] = UNSET,
+    attribute_type: Union[Unset, List[str]] = UNSET,
     experiment_identifier: str,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, File]]:
     """Queries attribute definitions of an experiment
 
     Args:
-        attribute_type (Union[Unset, list[str]]):
+        attribute_type (Union[Unset, List[str]]):
         experiment_identifier (str):
         x_neptune_client_metadata (Union[Unset, str]):
 
@@ -160,14 +161,14 @@ def sync_detailed(
 def sync(
     *,
     client: Union[AuthenticatedClient, Client],
-    attribute_type: Union[Unset, list[str]] = UNSET,
+    attribute_type: Union[Unset, List[str]] = UNSET,
     experiment_identifier: str,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, File]]:
     """Queries attribute definitions of an experiment
 
     Args:
-        attribute_type (Union[Unset, list[str]]):
+        attribute_type (Union[Unset, List[str]]):
         experiment_identifier (str):
         x_neptune_client_metadata (Union[Unset, str]):
 
@@ -190,14 +191,14 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    attribute_type: Union[Unset, list[str]] = UNSET,
+    attribute_type: Union[Unset, List[str]] = UNSET,
     experiment_identifier: str,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, File]]:
     """Queries attribute definitions of an experiment
 
     Args:
-        attribute_type (Union[Unset, list[str]]):
+        attribute_type (Union[Unset, List[str]]):
         experiment_identifier (str):
         x_neptune_client_metadata (Union[Unset, str]):
 
@@ -223,14 +224,14 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
-    attribute_type: Union[Unset, list[str]] = UNSET,
+    attribute_type: Union[Unset, List[str]] = UNSET,
     experiment_identifier: str,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, File]]:
     """Queries attribute definitions of an experiment
 
     Args:
-        attribute_type (Union[Unset, list[str]]):
+        attribute_type (Union[Unset, List[str]]):
         experiment_identifier (str):
         x_neptune_client_metadata (Union[Unset, str]):
 

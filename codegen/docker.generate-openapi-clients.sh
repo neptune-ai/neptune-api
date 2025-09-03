@@ -163,6 +163,8 @@ redocly join -o "$tmpdir/neptune.json" \
 # Add empty license to the final file
 add_empty_license "$tmpdir/neptune.json"
 
+# cp "$src_dir/neptune.json" "$tmpdir/neptune.json"
+
 # Generate python code from the OpenAPI spec
 openapi-python-client generate \
     --overwrite \

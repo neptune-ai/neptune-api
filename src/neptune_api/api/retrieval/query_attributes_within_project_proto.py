@@ -45,11 +45,11 @@ def _get_kwargs(
     project_identifier: str,
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
-    headers: dict[str, Any] = {}
+    headers: Dict[str, Any] = {}
     if not isinstance(x_neptune_client_metadata, Unset):
         headers["X-Neptune-Client-Metadata"] = x_neptune_client_metadata
 
-    params: dict[str, Any] = {}
+    params: Dict[str, Any] = {}
 
     params["projectIdentifier"] = project_identifier
 

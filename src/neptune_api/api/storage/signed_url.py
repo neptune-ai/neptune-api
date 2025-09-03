@@ -38,7 +38,7 @@ def _get_kwargs(
     *,
     body: CreateSignedUrlsRequest,
 ) -> Dict[str, Any]:
-    headers: dict[str, Any] = {}
+    headers: Dict[str, Any] = {}
 
     _kwargs: Dict[str, Any] = {
         "method": "post",

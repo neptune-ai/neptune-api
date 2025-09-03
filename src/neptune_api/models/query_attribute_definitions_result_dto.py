@@ -13,10 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections.abc import Mapping
 from typing import (
     TYPE_CHECKING,
     Any,
+    Dict,
+    List,
+    Type,
     TypeVar,
 )
 
@@ -35,15 +37,15 @@ T = TypeVar("T", bound="QueryAttributeDefinitionsResultDTO")
 class QueryAttributeDefinitionsResultDTO:
     """
     Attributes:
-        entries (list['AttributeDefinitionDTO']):
+        entries (List['AttributeDefinitionDTO']):
         next_page (NextPageDTO):
     """
 
-    entries: list["AttributeDefinitionDTO"]
+    entries: List["AttributeDefinitionDTO"]
     next_page: "NextPageDTO"
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         entries = []
         for entries_item_data in self.entries:
             entries_item = entries_item_data.to_dict()
@@ -51,7 +53,7 @@ class QueryAttributeDefinitionsResultDTO:
 
         next_page = self.next_page.to_dict()
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -63,11 +65,11 @@ class QueryAttributeDefinitionsResultDTO:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.attribute_definition_dto import AttributeDefinitionDTO
         from ..models.next_page_dto import NextPageDTO
 
-        d = dict(src_dict)
+        d = src_dict.copy()
         entries = []
         _entries = d.pop("entries")
         for entries_item_data in _entries:
@@ -86,7 +88,7 @@ class QueryAttributeDefinitionsResultDTO:
         return query_attribute_definitions_result_dto
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

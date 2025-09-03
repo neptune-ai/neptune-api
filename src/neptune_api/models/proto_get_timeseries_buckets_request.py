@@ -13,9 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections.abc import Mapping
 from typing import (
     Any,
+    Dict,
+    List,
+    Type,
     TypeVar,
 )
 
@@ -29,24 +31,24 @@ T = TypeVar("T", bound="ProtoGetTimeseriesBucketsRequest")
 class ProtoGetTimeseriesBucketsRequest:
     """ """
 
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
-        field_dict: dict[str, Any] = {}
+    def to_dict(self) -> Dict[str, Any]:
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
 
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
-        d = dict(src_dict)
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        d = src_dict.copy()
         proto_get_timeseries_buckets_request = cls()
 
         proto_get_timeseries_buckets_request.additional_properties = d
         return proto_get_timeseries_buckets_request
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:

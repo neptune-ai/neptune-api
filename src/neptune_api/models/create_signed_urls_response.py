@@ -13,10 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from collections.abc import Mapping
 from typing import (
     TYPE_CHECKING,
     Any,
+    Dict,
+    List,
+    Type,
     TypeVar,
 )
 
@@ -34,19 +36,19 @@ T = TypeVar("T", bound="CreateSignedUrlsResponse")
 class CreateSignedUrlsResponse:
     """
     Attributes:
-        files (list['SignedFile']):
+        files (List['SignedFile']):
     """
 
-    files: list["SignedFile"]
-    additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
+    files: List["SignedFile"]
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
-    def to_dict(self) -> dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         files = []
         for files_item_data in self.files:
             files_item = files_item_data.to_dict()
             files.append(files_item)
 
-        field_dict: dict[str, Any] = {}
+        field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
@@ -57,10 +59,10 @@ class CreateSignedUrlsResponse:
         return field_dict
 
     @classmethod
-    def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+    def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.signed_file import SignedFile
 
-        d = dict(src_dict)
+        d = src_dict.copy()
         files = []
         _files = d.pop("files")
         for files_item_data in _files:
@@ -76,7 +78,7 @@ class CreateSignedUrlsResponse:
         return create_signed_urls_response
 
     @property
-    def additional_keys(self) -> list[str]:
+    def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
     def __getitem__(self, key: str) -> Any:
