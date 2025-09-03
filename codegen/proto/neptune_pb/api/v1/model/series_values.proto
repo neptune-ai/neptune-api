@@ -87,9 +87,9 @@ message TimeseriesBuckets {
 }
 
 message TimeseriesBucket {
-    int64  index=1;
-    double fromX =2;
-    double toX =3 ;
+    int64  index = 1;
+    double fromX = 2;
+    double toX = 3;
     FinitePoint first = 4;
     FinitePoint last = 5;
     double localMin = 6;
@@ -98,10 +98,10 @@ message TimeseriesBucket {
     int64  nanCount = 9;
     int64  positiveInfCount = 10;
     int64  negativeInfCount = 11;
-    double localSum =12;
+    double localSum = 12;
 }
 
 message FinitePoint {
-    double x =1;
-    double y =2;
+    double x = 1;
+    double y = 2;
 }

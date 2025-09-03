@@ -5,7 +5,6 @@ package neptune.api.v1.model;
 option java_multiple_files = true;
 option java_package = "ml.neptune.leaderboard.api.model.proto.generated";
 
-// Request for getting a minimal view of time series data
 message ProtoGetTimeseriesBucketsRequest {
     repeated ProtoCustomExpression expressions = 1;
     ProtoView view = 2;
@@ -13,16 +12,12 @@ message ProtoGetTimeseriesBucketsRequest {
 
 // Custom metric configuration
 message ProtoCustomExpression {
-    // Unique identifier for this custom metric, must be UUID
-    string requestId = 1;
-    // The holder of the attributes (experiment, project, etc.)
-    AttributesHolderIdentifier holder = 2;
-    // Optional custom Y formula for calculation
+    string requestId = 1; // needs to be unique in the whole ProtoGetTimeseriesBucketsRequest
+    string runId = 2;
     string customYFormula = 3;
-    // Whether to include preview (uncommitted) data
     optional bool includePreview = 4;
-    // Type of lineage to use
-    optional ProtoLineage lineage = 5;
+    ProtoLineage lineage = 5;
+    LineageEntityType entityType = 6;
 }
 
 // View configuration
@@ -38,15 +33,11 @@ message ProtoView {
 
 // Point filters
 message ProtoPointFilters {
-    // Step range filter
     optional ProtoOpenRange stepRange = 1;
 }
 
-// Open range (with optional min and max)
 message ProtoOpenRange {
-    // Optional minimum value
     optional double from = 1;
-    // Optional maximum value
     optional double to = 2;
 }
 
@@ -65,24 +56,16 @@ message XCustom {
     string expression = 1;
 }
 
-message AttributesHolderIdentifier {
-    LineageEntityType entityType = 1;
-    string identifier = 2;
-}
-
-
 enum ProtoScale {
     linear = 0;
     log = 1;
 }
-
 
 // Enum for lineage types
 enum ProtoLineage {
     FULL = 0;
     ONLY_OWNED = 1;
 }
-
 
 enum LineageEntityType {
     EXPERIMENT = 0;

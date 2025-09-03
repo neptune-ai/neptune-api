@@ -3354,9 +3354,9 @@
     },
     "/api/leaderboard/v1/proto/attributes/timeseries/buckets" : {
       "post" : {
-        "summary" : "Get series values raw",
+        "summary" : "Get bucketed timeseries data",
         "operationId" : "getTimeseriesBucketsProto",
-        "consumes" : [ "application/x-protobuf" ],
+        "consumes" : [ "application/json", "application/x-protobuf" ],
         "produces" : [ "application/json", "application/x-protobuf" ],
         "parameters" : [ {
           "name" : "X-Neptune-Client-Metadata",
