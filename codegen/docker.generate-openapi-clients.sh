@@ -35,9 +35,11 @@ convert_swagger_to_openapi() {
 }
 
 # Updates a Swagger 2.0 spec to:
-# - Keep only application/x-protobuf if both JSON and protobuf are listed
+# - Keep only application/x-protobuf if both JSON and protobuf are listed in "produces"
 # - Force binary schema for protobuf responses
 # - Set application/json as the default if no content type is defined
+# - Keep only application/x-protobuf if both JSON and protobuf are listed in "consumes"
+#   - in this case, convert the in-body argument to be of type string and format binary
 #
 # This avoids invalid JSON parsing in generated clients and ensures correctly
 # returning protobuf as binary data.
@@ -70,12 +72,35 @@ fix_content_types() {
       end
     )
   )
- |
+  |
   .paths |= with_entries(
     .value |= with_entries(
       if (.value.produces | not)
       then .value.produces = ["application/json"]
       else .
+      end
+    )
+  )
+  |
+  .paths |= with_entries(
+    .value |= with_entries(
+      if .value.consumes? and (.value.consumes | index("application/json")) and (.value.consumes | index("application/x-protobuf"))
+      then
+        .value.consumes = ["application/x-protobuf"]
+        |
+        .value.parameters |= map(
+          if .in == "body"
+          then
+            .schema = {
+              "type": "string",
+              "format": "binary"
+            }
+          else
+            .
+          end
+        )
+      else
+        .
       end
     )
   )
