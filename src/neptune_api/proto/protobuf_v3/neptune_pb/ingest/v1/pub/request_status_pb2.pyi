@@ -35,14 +35,23 @@ class RequestStatus(google.protobuf.message.Message):
         def ClearField(self, field_name: typing_extensions.Literal['code', b'code', 'count', b'count', 'detail', b'detail']) -> None:
             ...
     CODE_BY_COUNT_FIELD_NUMBER: builtins.int
+    SHARED_ERROR_MESSAGE_FIELD_NUMBER: builtins.int
 
     @property
     def code_by_count(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___RequestStatus.CodeByCount]:
         ...
+    shared_error_message: builtins.str
+    'in case error spans all operations of request'
 
-    def __init__(self, *, code_by_count: collections.abc.Iterable[global___RequestStatus.CodeByCount] | None=...) -> None:
+    def __init__(self, *, code_by_count: collections.abc.Iterable[global___RequestStatus.CodeByCount] | None=..., shared_error_message: builtins.str | None=...) -> None:
         ...
 
-    def ClearField(self, field_name: typing_extensions.Literal['code_by_count', b'code_by_count']) -> None:
+    def HasField(self, field_name: typing_extensions.Literal['_shared_error_message', b'_shared_error_message', 'shared_error_message', b'shared_error_message']) -> builtins.bool:
+        ...
+
+    def ClearField(self, field_name: typing_extensions.Literal['_shared_error_message', b'_shared_error_message', 'code_by_count', b'code_by_count', 'shared_error_message', b'shared_error_message']) -> None:
+        ...
+
+    def WhichOneof(self, oneof_group: typing_extensions.Literal['_shared_error_message', b'_shared_error_message']) -> typing_extensions.Literal['shared_error_message'] | None:
         ...
 global___RequestStatus = RequestStatus
