@@ -30,6 +30,7 @@ from ...client import (
     AuthenticatedClient,
     Client,
 )
+from ...models.proto_get_timeseries_buckets_request import ProtoGetTimeseriesBucketsRequest
 from ...types import (
     UNSET,
     File,
@@ -40,7 +41,10 @@ from ...types import (
 
 def _get_kwargs(
     *,
-    body: File,
+    body: Union[
+        ProtoGetTimeseriesBucketsRequest,
+        ProtoGetTimeseriesBucketsRequest,
+    ],
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
@@ -52,10 +56,16 @@ def _get_kwargs(
         "url": "/api/leaderboard/v1/proto/attributes/timeseries/buckets",
     }
 
-    _body = body.payload
+    if isinstance(body, ProtoGetTimeseriesBucketsRequest):
+        _json_body = body.to_dict()
 
-    _kwargs["content"] = _body
-    headers["Content-Type"] = "application/x-protobuf"
+        _kwargs["json"] = _json_body
+        headers["Content-Type"] = "application/json"
+    if isinstance(body, ProtoGetTimeseriesBucketsRequest):
+        _content_body = body.payload
+
+        _kwargs["content"] = _content_body
+        headers["Content-Type"] = "application/x-protobuf"
 
     _kwargs["headers"] = headers
     return _kwargs
@@ -116,14 +126,18 @@ def _build_response(
 def sync_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    body: File,
+    body: Union[
+        ProtoGetTimeseriesBucketsRequest,
+        ProtoGetTimeseriesBucketsRequest,
+    ],
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, File]]:
-    """Get series values raw
+    """Get bucketed timeseries data
 
     Args:
         x_neptune_client_metadata (Union[Unset, str]):
-        body (File):
+        body (ProtoGetTimeseriesBucketsRequest):
+        body (ProtoGetTimeseriesBucketsRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -148,14 +162,18 @@ def sync_detailed(
 def sync(
     *,
     client: Union[AuthenticatedClient, Client],
-    body: File,
+    body: Union[
+        ProtoGetTimeseriesBucketsRequest,
+        ProtoGetTimeseriesBucketsRequest,
+    ],
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, File]]:
-    """Get series values raw
+    """Get bucketed timeseries data
 
     Args:
         x_neptune_client_metadata (Union[Unset, str]):
-        body (File):
+        body (ProtoGetTimeseriesBucketsRequest):
+        body (ProtoGetTimeseriesBucketsRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -175,14 +193,18 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Union[AuthenticatedClient, Client],
-    body: File,
+    body: Union[
+        ProtoGetTimeseriesBucketsRequest,
+        ProtoGetTimeseriesBucketsRequest,
+    ],
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Response[Union[Any, File]]:
-    """Get series values raw
+    """Get bucketed timeseries data
 
     Args:
         x_neptune_client_metadata (Union[Unset, str]):
-        body (File):
+        body (ProtoGetTimeseriesBucketsRequest):
+        body (ProtoGetTimeseriesBucketsRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -205,14 +227,18 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Union[AuthenticatedClient, Client],
-    body: File,
+    body: Union[
+        ProtoGetTimeseriesBucketsRequest,
+        ProtoGetTimeseriesBucketsRequest,
+    ],
     x_neptune_client_metadata: Union[Unset, str] = UNSET,
 ) -> Optional[Union[Any, File]]:
-    """Get series values raw
+    """Get bucketed timeseries data
 
     Args:
         x_neptune_client_metadata (Union[Unset, str]):
-        body (File):
+        body (ProtoGetTimeseriesBucketsRequest):
+        body (ProtoGetTimeseriesBucketsRequest):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
