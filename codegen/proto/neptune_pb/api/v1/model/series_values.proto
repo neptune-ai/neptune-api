@@ -77,3 +77,31 @@ message ProtoFileRef {
     int64 sizeBytes = 2;
     string mimeType = 3;
 }
+
+message ProtoTimeseriesBucketsDTO {
+    repeated TimeseriesBuckets entries = 1;
+}
+message TimeseriesBuckets {
+    string requestId = 1;
+    repeated TimeseriesBucket bucket = 2;
+}
+
+message TimeseriesBucket {
+    int64  index = 1;
+    double fromX = 2;
+    double toX = 3;
+    FinitePoint first = 4;
+    FinitePoint last = 5;
+    double localMin = 6;
+    double localMax = 7;
+    int64  finitePointCount = 8;
+    int64  nanCount = 9;
+    int64  positiveInfCount = 10;
+    int64  negativeInfCount = 11;
+    double localSum = 12;
+}
+
+message FinitePoint {
+    double x = 1;
+    double y = 2;
+}
