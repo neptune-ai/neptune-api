@@ -11,6 +11,8 @@ import "neptune_pb/ingest/v1/ingest.proto";
 
 message RequestStatus {
     repeated CodeByCount code_by_count = 1;
+    optional string shared_error_message = 2; // in case error spans all operations of request
+
 
     // in case all operations are successful {"OK": 1}, otherwise errors are reported
     message CodeByCount {
