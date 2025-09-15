@@ -36,10 +36,8 @@ convert_swagger_to_openapi() {
 
 # Updates a Swagger 2.0 spec to:
 # - Keep only application/x-protobuf if both JSON and protobuf are listed in "produces"
-# - Force binary schema for protobuf responses
 # - Set application/json as the default if no content type is defined
 # - Keep only application/x-protobuf if both JSON and protobuf are listed in "consumes"
-#   - in this case, convert the in-body argument to be of type string and format binary
 #
 # This avoids invalid JSON parsing in generated clients and ensures correctly
 # returning protobuf as binary data.
@@ -61,20 +59,6 @@ fix_content_types() {
   |
   .paths |= with_entries(
     .value |= with_entries(
-      if .value.produces? and (.value.produces | index("application/x-protobuf"))
-      then
-        .value.responses."200".schema = {
-          "type": "string",
-          "format": "binary"
-        }
-      else
-        .
-      end
-    )
-  )
-  |
-  .paths |= with_entries(
-    .value |= with_entries(
       if (.value.produces | not)
       then .value.produces = ["application/json"]
       else .
@@ -87,18 +71,6 @@ fix_content_types() {
       if .value.consumes? and (.value.consumes | index("application/json")) and (.value.consumes | index("application/x-protobuf"))
       then
         .value.consumes = ["application/x-protobuf"]
-        |
-        .value.parameters |= map(
-          if .in == "body"
-          then
-            .schema = {
-              "type": "string",
-              "format": "binary"
-            }
-          else
-            .
-          end
-        )
       else
         .
       end
@@ -110,7 +82,6 @@ fix_content_types() {
 # Fixes OpenAPI 3.1 specs to ensure that any response or requestBody
 # with content-type application/x-protobuf has schema type string and format binary.
 # This ensures that the generated client code correctly handles protobuf as binary data.
-# (problem originally detected in ingestion_openapi.json)
 fix_binary_format() {
   local file_path=$1
   local tmp_file="$tmpdir/format-fix.$RANDOM.json"
