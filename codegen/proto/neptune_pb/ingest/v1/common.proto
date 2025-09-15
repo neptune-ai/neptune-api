@@ -196,6 +196,9 @@ message Run {
   // value will be stored as sys/diagnostics/tracker_client
   optional string tracker = 8;
 
+  // Optional. Flag that enables copy all user-defined atoms to the child run. Defaults to false
+  optional bool inherit_configs = 9;
+
   // System-set. This field marks the time when the Run was queued for Neptune to process.
   //
   // It may significantly differ from the `creation_time` in cases of:
