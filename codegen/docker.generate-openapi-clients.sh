@@ -107,6 +107,53 @@ fix_content_types() {
 ' "$file_path" > "$tmp_file" && cp "$tmp_file" "$file_path"
 }
 
+# Fixes OpenAPI 3.1 specs to ensure that any response or requestBody
+# with content-type application/x-protobuf has schema type string and format binary.
+# This ensures that the generated client code correctly handles protobuf as binary data.
+# (problem originally detected in ingestion_openapi.json)
+fix_binary_format() {
+  local file_path=$1
+  local tmp_file="$tmpdir/format-fix.$RANDOM.json"
+
+  jq '
+  .paths |= with_entries(
+    .value |= with_entries(
+      if .value.requestBody? and (.value.requestBody.content | has("application/x-protobuf"))
+      then
+        .value.requestBody.content = {
+          "application/x-protobuf": {
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          }
+        }
+      else
+        .
+      end
+    )
+  )
+  |
+  .paths |= with_entries(
+    .value |= with_entries(
+      if .value.responses? and (.value.responses."200".content | has("application/x-protobuf"))
+      then
+        .value.responses."200".content = {
+          "application/x-protobuf": {
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          }
+        }
+      else
+        .
+      end
+    )
+  )
+' "$file_path" > "$tmp_file" && cp "$tmp_file" "$file_path"
+}
+
 # OpenAPI requires a license object, so add an empty one.
 add_empty_license() {
   local file_path=$1
@@ -166,6 +213,8 @@ pre_process_file() {
   if [ "$convert_to_openapi" = true ]; then
     convert_swagger_to_openapi "$file_path"
   fi
+
+  fix_binary_format "$file_path"
 
   filter_endpoints "$file_path" "$api"
   set_tag_on_all_endpoints "$file_path" "$api"
