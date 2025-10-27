@@ -76,15 +76,20 @@ class ForkPoint(google.protobuf.message.Message):
         New run may start numbering steps from the next micro step after the fork step.
         """
 
-    def __init__(self, *, parent_project: builtins.str=..., parent_run_id: builtins.str=..., step: global___Step | None=..., requested_parent_id: builtins.str | None=...) -> None:
+    def __init__(self, *, parent_project: builtins.str | None=..., parent_run_id: builtins.str=..., step: global___Step | None=..., requested_parent_id: builtins.str | None=...) -> None:
         ...
 
-    def HasField(self, field_name: typing.Literal['_requested_parent_id', b'_requested_parent_id', 'requested_parent_id', b'requested_parent_id', 'step', b'step']) -> builtins.bool:
+    def HasField(self, field_name: typing.Literal['_parent_project', b'_parent_project', '_requested_parent_id', b'_requested_parent_id', 'parent_project', b'parent_project', 'requested_parent_id', b'requested_parent_id', 'step', b'step']) -> builtins.bool:
         ...
 
-    def ClearField(self, field_name: typing.Literal['_requested_parent_id', b'_requested_parent_id', 'parent_project', b'parent_project', 'parent_run_id', b'parent_run_id', 'requested_parent_id', b'requested_parent_id', 'step', b'step']) -> None:
+    def ClearField(self, field_name: typing.Literal['_parent_project', b'_parent_project', '_requested_parent_id', b'_requested_parent_id', 'parent_project', b'parent_project', 'parent_run_id', b'parent_run_id', 'requested_parent_id', b'requested_parent_id', 'step', b'step']) -> None:
         ...
 
+    @typing.overload
+    def WhichOneof(self, oneof_group: typing.Literal['_parent_project', b'_parent_project']) -> typing.Literal['parent_project'] | None:
+        ...
+
+    @typing.overload
     def WhichOneof(self, oneof_group: typing.Literal['_requested_parent_id', b'_requested_parent_id']) -> typing.Literal['requested_parent_id'] | None:
         ...
 global___ForkPoint = ForkPoint
