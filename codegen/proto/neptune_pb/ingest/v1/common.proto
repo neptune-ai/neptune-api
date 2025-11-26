@@ -22,7 +22,7 @@ message Step {
 // ForkPoint is used to mark the parent and its last inherited state during Forking.
 message ForkPoint {
   // Optional. Parent project qualified name. If not set, it will default to the context project.
-  string parent_project = 1;
+  optional string parent_project = 1;
   // Required. The id of the parent run within the parent project.
   string parent_run_id = 2;
   // Fork Step, which is the last step that a new run will inherit from its parent.

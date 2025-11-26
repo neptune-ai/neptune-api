@@ -32,6 +32,7 @@ from .file_to_sign import FileToSign
 from .float_time_series_values_request import FloatTimeSeriesValuesRequest
 from .float_time_series_values_request_order import FloatTimeSeriesValuesRequestOrder
 from .float_time_series_values_request_series import FloatTimeSeriesValuesRequestSeries
+from .global_search_params_dto import GlobalSearchParamsDTO
 from .multipart_part import MultipartPart
 from .multipart_upload import MultipartUpload
 from .neptune_oauth_token import NeptuneOauthToken
@@ -88,6 +89,7 @@ __all__ = (
     "FloatTimeSeriesValuesRequest",
     "FloatTimeSeriesValuesRequestOrder",
     "FloatTimeSeriesValuesRequestSeries",
+    "GlobalSearchParamsDTO",
     "MultipartPart",
     "MultipartUpload",
     "NeptuneOauthToken",

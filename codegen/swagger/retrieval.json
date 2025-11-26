@@ -303,6 +303,62 @@
         "deprecated" : false
       }
     },
+    "/api/leaderboard/v1/attributes/listForRuns" : {
+      "post" : {
+        "summary" : "Get attributes for runs and experiments",
+        "operationId" : "getAttributesForRunsAndExperiments",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "X-Neptune-Client-Metadata",
+          "in" : "header",
+          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "attributeQuery",
+          "description" : "attributeQuery",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/RunsAttributesQueryDTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/RunsAttributesDTO"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "409" : {
+            "description" : "Conflict"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          }
+        },
+        "deprecated" : false
+      }
+    },
     "/api/leaderboard/v1/attributes/operations" : {
       "post" : {
         "summary" : "Execute operations",
@@ -3470,6 +3526,62 @@
         "deprecated" : false
       }
     },
+    "/api/leaderboard/v1/proto/leaderboard/entries/global/search/" : {
+      "post" : {
+        "summary" : "Search leaderboard entries across all accessible projects and workspaces",
+        "operationId" : "searchGlobalLeaderboardEntriesProto",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json", "application/x-protobuf" ],
+        "parameters" : [ {
+          "name" : "X-Neptune-Client-Metadata",
+          "in" : "header",
+          "description" : "Custom metadata header for Neptune client information (max 200 characters)",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "params",
+          "description" : "params",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/GlobalSearchParamsDTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/ProtoLeaderboardEntriesSearchResultDTO"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "408" : {
+            "description" : "Request Timeout"
+          },
+          "409" : {
+            "description" : "Conflict"
+          },
+          "422" : {
+            "description" : "Unprocessable Entity"
+          },
+          "429" : {
+            "description" : "Too Many Requests"
+          }
+        },
+        "deprecated" : false
+      }
+    },
     "/api/leaderboard/v1/proto/leaderboard/entries/search/" : {
       "post" : {
         "summary" : "Get leaderboard",
@@ -5299,6 +5411,27 @@
       },
       "title" : "ColorsDTO"
     },
+    "SecondaryStylingDTO" : {
+      "type" : "object",
+      "properties" : {
+        "enabled" : {
+          "type" : "boolean"
+        },
+        "rules" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "sampleMetrics" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "title" : "SecondaryStylingDTO"
+    },
     "ComplexAttributeDTO" : {
       "type" : "object",
       "required" : [ "attributeName", "attributeType", "content", "typeDefinition" ],
@@ -5392,12 +5525,15 @@
     "DashboardConfigDTO" : {
       "type" : "object",
       "properties" : {
-        "defaultStep" : {
-          "type" : "number",
-          "format" : "double"
+        "locked" : {
+          "type" : "boolean"
         },
         "metricsStepsRange" : {
           "$ref" : "#/definitions/OpenRangeDTO"
+        },
+        "outliersDisplayMode" : {
+          "type" : "string",
+          "enum" : [ "none", "outline" ]
         },
         "showMetricBy" : {
           "type" : "string",
@@ -5418,9 +5554,6 @@
           "type" : "string",
           "enum" : [ "causal", "centered", "ema", "gaussian" ]
         },
-        "snapToClosestLoggedStep" : {
-          "type" : "boolean"
-        },
         "xaxisMetric" : {
           "$ref" : "#/definitions/AttributeDefinitionDTO"
         },
@@ -5435,6 +5568,9 @@
         },
         "yaxisScale" : {
           "type" : "string"
+        },
+        "secondaryStyling" : {
+          "$ref" : "#/definitions/SecondaryStylingDTO"
         }
       },
       "title" : "DashboardConfigDTO"
@@ -5476,6 +5612,9 @@
         "lastUpdatedTime" : {
           "type" : "string",
           "format" : "date-time"
+        },
+        "layout" : {
+          "$ref" : "#/definitions/LayoutConfigDTO"
         },
         "layouts" : {
           "$ref" : "#/definitions/DashboardLayoutsDTO"
@@ -5676,6 +5815,23 @@
         }
       },
       "title" : "DoubleOrInfinity"
+    },
+    "EntryAttributesDTO" : {
+      "type" : "object",
+      "required" : [ "attributes", "experimentId" ],
+      "properties" : {
+        "attributes" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AttributeDTO"
+          }
+        },
+        "experimentId" : {
+          "type" : "string",
+          "format" : "uuid"
+        }
+      },
+      "title" : "EntryAttributesDTO"
     },
     "EpochMillis" : {
       "type" : "object",
@@ -6087,6 +6243,34 @@
       },
       "title" : "GitInfoDTO"
     },
+    "GlobalSearchParamsDTO" : {
+      "type" : "object",
+      "properties" : {
+        "experimentLeader" : {
+          "type" : "boolean"
+        },
+        "pagination" : {
+          "$ref" : "#/definitions/QueryLeaderboardParamsPaginationDTO"
+        },
+        "query" : {
+          "$ref" : "#/definitions/NqlQueryParamsDTO"
+        },
+        "sorting" : {
+          "$ref" : "#/definitions/QueryLeaderboardParamsSortingParamsDTO"
+        }
+      },
+      "title" : "GlobalSearchParamsDTO"
+    },
+    "GridModeConfigDTO" : {
+      "type" : "object",
+      "required" : [ "columnsCount" ],
+      "properties" : {
+        "columnsCount" : {
+          "type" : "string"
+        }
+      },
+      "title" : "GridModeConfigDTO"
+    },
     "HistogramDTO" : {
       "type" : "object",
       "properties" : {
@@ -6231,6 +6415,30 @@
         }
       },
       "title" : "IntAttributeDTO"
+    },
+    "LayoutConfigDTO" : {
+      "type" : "object",
+      "required" : [ "config", "mode" ],
+      "properties" : {
+        "config" : {
+          "$ref" : "#/definitions/LayoutConfigDataDTO"
+        },
+        "mode" : {
+          "type" : "string",
+          "enum" : [ "GRID", "CUSTOM" ]
+        }
+      },
+      "title" : "LayoutConfigDTO"
+    },
+    "LayoutConfigDataDTO" : {
+      "type" : "object",
+      "required" : [ "gridMode" ],
+      "properties" : {
+        "gridMode" : {
+          "$ref" : "#/definitions/GridModeConfigDTO"
+        }
+      },
+      "title" : "LayoutConfigDataDTO"
     },
     "LeaderboardEntriesSearchResultDTO" : {
       "type" : "object",
@@ -6739,6 +6947,9 @@
         "isDraft" : {
           "type" : "boolean"
         },
+        "layout" : {
+          "$ref" : "#/definitions/LayoutConfigDTO"
+        },
         "layouts" : {
           "$ref" : "#/definitions/DashboardLayoutsDTO"
         },
@@ -6845,6 +7056,9 @@
         },
         "icon" : {
           "type" : "string"
+        },
+        "layout" : {
+          "$ref" : "#/definitions/LayoutConfigDTO"
         },
         "layouts" : {
           "$ref" : "#/definitions/DashboardLayoutsDTO"
@@ -7577,8 +7791,14 @@
         "inheritRunColorFromGroup" : {
           "type" : "boolean"
         },
+        "layout" : {
+          "$ref" : "#/definitions/LayoutConfigDTO"
+        },
         "runsLineage" : {
           "type" : "boolean"
+        },
+        "secondaryStyling" : {
+          "$ref" : "#/definitions/SecondaryStylingDTO"
         }
       },
       "title" : "ReportGlobalConfigDTO"
@@ -7877,6 +8097,72 @@
       },
       "title" : "RunListDTO"
     },
+    "RunsAttributesDTO" : {
+      "type" : "object",
+      "required" : [ "organizationId", "organizationName", "projectId", "projectName" ],
+      "properties" : {
+        "experimentsAttributes" : {
+          "type" : "object",
+          "description" : "Map of experiment name to its attributes",
+          "additionalProperties" : {
+            "$ref" : "#/definitions/EntryAttributesDTO"
+          }
+        },
+        "organizationId" : {
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "organizationName" : {
+          "type" : "string"
+        },
+        "projectId" : {
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "projectName" : {
+          "type" : "string"
+        },
+        "runsAttributes" : {
+          "type" : "object",
+          "description" : "Map of run id to its attributes",
+          "additionalProperties" : {
+            "$ref" : "#/definitions/EntryAttributesDTO"
+          }
+        }
+      },
+      "title" : "RunsAttributesDTO"
+    },
+    "RunsAttributesQueryDTO" : {
+      "type" : "object",
+      "required" : [ "attributePathsFilter", "projectIdentifier" ],
+      "properties" : {
+        "attributePathsFilter" : {
+          "type" : "array",
+          "description" : "Filter attribute paths",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "experimentNames" : {
+          "type" : "array",
+          "description" : "List of experiment names",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "projectIdentifier" : {
+          "type" : "string"
+        },
+        "runsIds" : {
+          "type" : "array",
+          "description" : "List of run ids",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "title" : "RunsAttributesQueryDTO"
+    },
     "Scale" : {
       "type" : "object",
       "properties" : {
@@ -7956,7 +8242,6 @@
     },
     "SearchUserRunsParamsDTO" : {
       "type" : "object",
-      "required" : [ "username" ],
       "properties" : {
         "experimentLeader" : {
           "type" : "boolean"
@@ -8678,6 +8963,9 @@
         "icon" : {
           "type" : "string"
         },
+        "layout" : {
+          "$ref" : "#/definitions/LayoutConfigDTO"
+        },
         "layouts" : {
           "$ref" : "#/definitions/DashboardLayoutsDTO"
         },
@@ -8936,7 +9224,7 @@
         },
         "type" : {
           "type" : "string",
-          "enum" : [ "chart", "valueList", "file", "fileSet", "image", "imageComparison", "interactiveTable", "gallery", "notebook", "scatterPlot", "singleValue", "table", "textNode", "section", "dynamicSection", "histogram", "fileSeries" ]
+          "enum" : [ "chart", "valueList", "file", "fileSet", "image", "imageComparison", "interactiveTable", "gallery", "notebook", "scatterPlot", "singleValue", "table", "textNode", "section", "dynamicSection", "histogram", "fileSeries", "userDefinedFunction" ]
         }
       },
       "title" : "WidgetDTO"

@@ -13,6 +13,7 @@ apis:
       filter-in:
         property: operationId
         value: [
+          searchGlobalLeaderboardEntriesProto,
           getAttributesWithPathsFilterProto,
           getMultipleFloatSeriesValuesProto,
           getSeriesValuesProto,
