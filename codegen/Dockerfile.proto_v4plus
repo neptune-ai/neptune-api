@@ -14,4 +14,4 @@ RUN pip install grpcio-tools==1.60 \
 COPY docker.generate-proto.sh /app/
 RUN chmod +x /app/docker.generate-proto.sh
 
-ENTRYPOINT ["./docker.generate-proto.sh", "/app/src", "protobuf_v4plus"]
+ENTRYPOINT ["./docker.generate-proto.sh", "/app/src"]
