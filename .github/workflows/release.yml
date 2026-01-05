@@ -46,7 +46,7 @@ jobs:
     needs: [ build-package ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           name: package
           path: dist
@@ -66,7 +66,7 @@ jobs:
       - test-clean-install
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           name: package
           path: dist/
