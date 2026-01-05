@@ -26,5 +26,5 @@ This will output the code in `src/` at the root of the repository.
 This command builds and runs a Docker container that generates protobuf code
 using toolchains compatible with protobuf==5.29.4 (effectively protobuf 4+).
 
-We run the generation tools in a docker container, to ensure specific versions: grpcio-tools
+We run the generation tools in a Docker container, to ensure specific versions: grpcio-tools
 and Python in particular.
