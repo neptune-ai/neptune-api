@@ -24,7 +24,7 @@ from typing import (
 
 from attr import define
 
-from neptune_api.errors import (
+from .errors import (
     InvalidApiTokenException,
     UnableToDeserializeApiKeyError,
 )

@@ -35,9 +35,9 @@ from attrs import (
     field,
 )
 
-from neptune_api.credentials import Credentials
-from neptune_api.errors import UnableToRefreshTokenError
-from neptune_api.types import OAuthToken
+from .credentials import Credentials
+from .errors import UnableToRefreshTokenError
+from .types import OAuthToken
 
 # Disable httpx logging, httpx logs requests at INFO level
 logging.getLogger("httpx").setLevel(logging.WARN)

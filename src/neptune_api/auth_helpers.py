@@ -17,18 +17,18 @@ __all__ = ["exchange_api_key"]
 
 from typing import cast
 
-from neptune_api import (
+from .api.backend import exchange_api_token
+from .client import (
     AuthenticatedClient,
     Client,
 )
-from neptune_api.api.backend import exchange_api_token
-from neptune_api.credentials import Credentials
-from neptune_api.errors import (
+from .credentials import Credentials
+from .errors import (
     ApiKeyRejectedError,
     UnableToExchangeApiKeyError,
 )
-from neptune_api.models import Error
-from neptune_api.types import OAuthToken
+from .models import Error
+from .types import OAuthToken
 
 
 def exchange_api_key(client: Client, credentials: Credentials) -> OAuthToken:

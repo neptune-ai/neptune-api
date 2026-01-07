@@ -35,7 +35,7 @@ from attrs import (
     field,
 )
 
-from neptune_api.errors import InvalidApiTokenException
+from .errors import InvalidApiTokenException
 
 MINIMAL_EXPIRATION_SECONDS = 30
 DECODING_OPTIONS = {
