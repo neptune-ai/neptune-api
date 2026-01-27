@@ -1,3 +1,4 @@
+#sudo su 
 # neptune-api
 A client library for accessing Neptune API
 
